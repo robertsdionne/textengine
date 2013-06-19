@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		463E3D671767FB9000A4466B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463E3D661767FB9000A4466B /* main.cpp */; };
+		46B9A60A1771F0F800E43B24 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9A6091771F0F800E43B24 /* main.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,8 +23,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		463E3D631767FB9000A4466B /* textengine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = textengine; sourceTree = BUILT_PRODUCTS_DIR; };
-		463E3D661767FB9000A4466B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		46B9A6091771F0F800E43B24 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		46D21C101771F2B900C896A4 /* textengine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = textengine; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,25 +41,25 @@
 		463E3D5A1767FB9000A4466B = {
 			isa = PBXGroup;
 			children = (
-				463E3D651767FB9000A4466B /* textengine */,
-				463E3D641767FB9000A4466B /* Products */,
+				46D21C0E1771F2A600C896A4 /* binary */,
+				46B9A6081771F0F800E43B24 /* source */,
 			);
 			sourceTree = "<group>";
 		};
-		463E3D641767FB9000A4466B /* Products */ = {
+		46B9A6081771F0F800E43B24 /* source */ = {
 			isa = PBXGroup;
 			children = (
-				463E3D631767FB9000A4466B /* textengine */,
+				46B9A6091771F0F800E43B24 /* main.cpp */,
 			);
-			name = Products;
+			path = source;
 			sourceTree = "<group>";
 		};
-		463E3D651767FB9000A4466B /* textengine */ = {
+		46D21C0E1771F2A600C896A4 /* binary */ = {
 			isa = PBXGroup;
 			children = (
-				463E3D661767FB9000A4466B /* main.cpp */,
+				46D21C101771F2B900C896A4 /* textengine */,
 			);
-			path = textengine;
+			path = binary;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -79,7 +79,7 @@
 			);
 			name = textengine;
 			productName = textengine;
-			productReference = 463E3D631767FB9000A4466B /* textengine */;
+			productReference = 46D21C101771F2B900C896A4 /* textengine */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -99,7 +99,7 @@
 				en,
 			);
 			mainGroup = 463E3D5A1767FB9000A4466B;
-			productRefGroup = 463E3D641767FB9000A4466B /* Products */;
+			productRefGroup = 463E3D5A1767FB9000A4466B;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -113,7 +113,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				463E3D671767FB9000A4466B /* main.cpp in Sources */,
+				46B9A60A1771F0F800E43B24 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,6 +132,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/binary";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -164,6 +165,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/binary";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -180,6 +182,7 @@
 		463E3D6D1767FB9000A4466B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/binary";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -187,6 +190,7 @@
 		463E3D6E1767FB9000A4466B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/binary";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -210,6 +214,7 @@
 				463E3D6E1767FB9000A4466B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
