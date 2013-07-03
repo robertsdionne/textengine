@@ -12,6 +12,8 @@
 		468E01451783DF9200301C1C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01441783DF9200301C1C /* OpenGL.framework */; };
 		468E01471783DFA100301C1C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01461783DFA100301C1C /* IOKit.framework */; };
 		468E01511783ED4D00301C1C /* mover.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 468E014F1783ED4D00301C1C /* mover.cpp */; };
+		468E015A1783F03D00301C1C /* simplexnoise1234.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 468EFC681783DC1E00301C1C /* simplexnoise1234.cpp */; };
+		468E015D1783F10600301C1C /* libsimplexnoise1234.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01561783F02800301C1C /* libsimplexnoise1234.a */; };
 		46B9A60A1771F0F800E43B24 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9A6091771F0F800E43B24 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -22,6 +24,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 468EFED11783DCA300301C1C;
 			remoteInfo = glfw;
+		};
+		468E015B1783F10100301C1C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 463E3D5B1767FB9000A4466B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 468E01551783F02800301C1C;
+			remoteInfo = simplexnoise1234;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -317,6 +326,7 @@
 		468E014E1783E9BD00301C1C /* base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base.h; sourceTree = "<group>"; };
 		468E014F1783ED4D00301C1C /* mover.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mover.cpp; sourceTree = "<group>"; };
 		468E01501783ED4D00301C1C /* mover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mover.h; sourceTree = "<group>"; };
+		468E01561783F02800301C1C /* libsimplexnoise1234.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsimplexnoise1234.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		468EF9841783DC1C00301C1C /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		468EF9851783DC1C00301C1C /* copying.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = copying.txt; sourceTree = "<group>"; };
 		468EF9861783DC1C00301C1C /* CTestConfig.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = CTestConfig.cmake; sourceTree = "<group>"; };
@@ -1330,10 +1340,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				468E01431783DF4C00301C1C /* Cocoa.framework in Frameworks */,
 				468E01471783DFA100301C1C /* IOKit.framework in Frameworks */,
 				468E01451783DF9200301C1C /* OpenGL.framework in Frameworks */,
-				468E01431783DF4C00301C1C /* Cocoa.framework in Frameworks */,
 				468E01411783DEC600301C1C /* libglfw3.a in Frameworks */,
+				468E015D1783F10600301C1C /* libsimplexnoise1234.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		468E01531783F02800301C1C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3314,12 +3332,23 @@
 			isa = PBXGroup;
 			children = (
 				468E01401783DEAF00301C1C /* libglfw3.a */,
+				468E01561783F02800301C1C /* libsimplexnoise1234.a */,
 				46D21C101771F2B900C896A4 /* textengine */,
 			);
 			path = binary;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		468E01541783F02800301C1C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXLegacyTarget section */
 		468EFED11783DCA300301C1C /* glfw */ = {
@@ -3351,11 +3380,29 @@
 			);
 			dependencies = (
 				468E013D1783DE7700301C1C /* PBXTargetDependency */,
+				468E015C1783F10100301C1C /* PBXTargetDependency */,
 			);
 			name = textengine;
 			productName = textengine;
 			productReference = 46D21C101771F2B900C896A4 /* textengine */;
 			productType = "com.apple.product-type.tool";
+		};
+		468E01551783F02800301C1C /* simplexnoise1234 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 468E01571783F02800301C1C /* Build configuration list for PBXNativeTarget "simplexnoise1234" */;
+			buildPhases = (
+				468E01521783F02800301C1C /* Sources */,
+				468E01531783F02800301C1C /* Frameworks */,
+				468E01541783F02800301C1C /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = simplexnoise1234;
+			productName = simplexnoise1234;
+			productReference = 468E01561783F02800301C1C /* libsimplexnoise1234.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
@@ -3380,6 +3427,7 @@
 			targets = (
 				463E3D621767FB9000A4466B /* textengine */,
 				468EFED11783DCA300301C1C /* glfw */,
+				468E01551783F02800301C1C /* simplexnoise1234 */,
 			);
 		};
 /* End PBXProject section */
@@ -3394,6 +3442,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		468E01521783F02800301C1C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				468E015A1783F03D00301C1C /* simplexnoise1234.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -3401,6 +3457,11 @@
 			isa = PBXTargetDependency;
 			target = 468EFED11783DCA300301C1C /* glfw */;
 			targetProxy = 468E013C1783DE7700301C1C /* PBXContainerItemProxy */;
+		};
+		468E015C1783F10100301C1C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 468E01551783F02800301C1C /* simplexnoise1234 */;
+			targetProxy = 468E015B1783F10100301C1C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -3432,7 +3493,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "libraries/glfw-3.0.1/include";
+				HEADER_SEARCH_PATHS = (
+					"libraries/glfw-3.0.1/include",
+					"libraries/glm-0.9.4.4",
+					libraries/simplexnoise1234,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -3460,7 +3525,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "libraries/glfw-3.0.1/include";
+				HEADER_SEARCH_PATHS = (
+					"libraries/glfw-3.0.1/include",
+					"libraries/glm-0.9.4.4",
+					libraries/simplexnoise1234,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 			};
@@ -3474,10 +3543,6 @@
 					"DEBUG=1",
 					"GLFW_INCLUDE_GLCOREARB=1",
 					"GL_GLEXT_PROTOTYPES=1",
-				);
-				HEADER_SEARCH_PATHS = (
-					"libraries/glfw-3.0.1/include",
-					"libraries/glm-0.9.4.4",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3495,14 +3560,28 @@
 					"GLFW_INCLUDE_GLCOREARB=1",
 					"GL_GLEXT_PROTOTYPES=1",
 				);
-				HEADER_SEARCH_PATHS = (
-					"libraries/glfw-3.0.1/include",
-					"libraries/glm-0.9.4.4",
-				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/libraries/glfw-3.0.1/src\"",
 				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		468E01581783F02800301C1C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		468E01591783F02800301C1C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -3550,6 +3629,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		468E01571783F02800301C1C /* Build configuration list for PBXNativeTarget "simplexnoise1234" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				468E01581783F02800301C1C /* Debug */,
+				468E01591783F02800301C1C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		468EFED21783DCA300301C1C /* Build configuration list for PBXLegacyTarget "glfw" */ = {
 			isa = XCConfigurationList;

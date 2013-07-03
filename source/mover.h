@@ -16,6 +16,10 @@ namespace textengine {
     glm::vec3 GetPosition() override;
 
     void Update() override;
+
+  protected:
+    glm::vec3 position;
+    glm::vec3 velocity;
   };
 
 }  // namespace textengine
