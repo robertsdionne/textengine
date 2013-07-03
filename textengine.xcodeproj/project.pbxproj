@@ -312,6 +312,8 @@
 		468E01421783DF4C00301C1C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		468E01441783DF9200301C1C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		468E01461783DFA100301C1C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		468E014C1783E8FB00301C1C /* object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = object.h; sourceTree = "<group>"; };
+		468E014E1783E9BD00301C1C /* base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base.h; sourceTree = "<group>"; };
 		468EF9841783DC1C00301C1C /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		468EF9851783DC1C00301C1C /* copying.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = copying.txt; sourceTree = "<group>"; };
 		468EF9861783DC1C00301C1C /* CTestConfig.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; path = CTestConfig.cmake; sourceTree = "<group>"; };
@@ -3296,7 +3298,9 @@
 		46B9A6081771F0F800E43B24 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				468E014E1783E9BD00301C1C /* base.h */,
 				46B9A6091771F0F800E43B24 /* main.cpp */,
+				468E014C1783E8FB00301C1C /* object.h */,
 			);
 			path = source;
 			sourceTree = "<group>";
