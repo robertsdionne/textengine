@@ -12,8 +12,10 @@ namespace textengine {
 
   public:
     virtual glm::vec3 GetPosition() = 0;
+
+    virtual void Update() = 0;
   };
 
-};
+}  // namespace textengine
 
 #endif  // TEXTENGINE_OBJECT_H_

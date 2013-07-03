@@ -3,11 +3,11 @@
 
 #define INTERFACE(interface)\
 public:\
-  virtual ~interface() {}\
+  virtual ~interface() = default;\
   interface(interface const &) = delete;\
   interface &operator =(interface const &) = delete;\
 protected:\
-  interface() {}\
+  interface() = default;\
 private:
 
 #endif  // TEXTENGINE_BASE_H_
