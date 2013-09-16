@@ -1,11 +1,14 @@
 #ifndef TEXTENGINE_BASE_H_
 #define TEXTENGINE_BASE_H_
 
-#define INTERFACE(interface)\
+/**
+ * Allows us to save some typing when defining a purely abstract base class.
+ */
+#define DECLARE_INTERFACE(interface)\
 public:\
   virtual ~interface() = default;\
-  interface(interface const &) = delete;\
-  interface &operator =(interface const &) = delete;\
+  interface(const interface &) = delete;\
+  interface &operator =(const interface &) = delete;\
 protected:\
   interface() = default;\
 private:
