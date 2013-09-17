@@ -1,18 +1,10 @@
-#include <GLFW/glfw3.h>
-#include <iostream>
-#include <simplexnoise1234.h>
-#include <string>
+#include "glfwapplication.h"
+#include "textenginerenderer.h"
 
-#include "mover.h"
-
-int main(int argument_count, const char *arguments[]) {
-  glfwInit();
-  textengine::Mover mover;
-  while (true) {
-    mover.Update();
-    std::cout << mover.GetPosition().x << " "
-        << mover.GetPosition().y << " "
-        << mover.GetPosition().z << " " << std::endl;
-  }
+int main(int argument_count, char *arguments[]) {
+  textengine::TextEngineRenderer renderer;
+  textengine::GlfwApplication application(argument_count, arguments,
+                                          1280, 800, "textengine", &renderer);
+  application.Run();
   return 0;
 }

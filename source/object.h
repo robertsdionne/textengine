@@ -8,7 +8,7 @@
 namespace textengine {
 
   class Object {
-    INTERFACE(Object);
+    DECLARE_INTERFACE(Object);
 
   public:
     virtual glm::vec3 GetPosition() = 0;

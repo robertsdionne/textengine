@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4607741F17E8EC0100896A15 /* textenginerenderer.cpp */; };
 		468E01431783DF4C00301C1C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01421783DF4C00301C1C /* Cocoa.framework */; };
 		468E01451783DF9200301C1C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01441783DF9200301C1C /* OpenGL.framework */; };
 		468E01471783DFA100301C1C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01461783DFA100301C1C /* IOKit.framework */; };
@@ -48,6 +49,7 @@
 		46B9841117E69EAC00B59145 /* window.c in Sources */ = {isa = PBXBuildFile; fileRef = 46B9839017E69EAC00B59145 /* window.c */; };
 		46B9841717E69EAC00B59145 /* x11_platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B9839617E69EAC00B59145 /* x11_platform.h */; };
 		46B9842E17E69ED300B59145 /* libglfw.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B9824C17E69E9C00B59145 /* libglfw.a */; };
+		46B9875917E6A62500B59145 /* glfwapplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9875517E6A62500B59145 /* glfwapplication.cpp */; };
 		46B9A60A1771F0F800E43B24 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9A6091771F0F800E43B24 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +83,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4607741F17E8EC0100896A15 /* textenginerenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textenginerenderer.cpp; sourceTree = "<group>"; };
+		4607742017E8EC0100896A15 /* textenginerenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textenginerenderer.h; sourceTree = "<group>"; };
 		468E01421783DF4C00301C1C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		468E01441783DF9200301C1C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		468E01461783DFA100301C1C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -1149,6 +1153,10 @@
 		46B9871117E6A11D00B59145 /* glm.natvis */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = glm.natvis; sourceTree = "<group>"; };
 		46B9871217E6A11D00B59145 /* usertype.dat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = usertype.dat; sourceTree = "<group>"; };
 		46B9875117E6A37700B59145 /* checks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = checks.h; sourceTree = "<group>"; };
+		46B9875517E6A62500B59145 /* glfwapplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = glfwapplication.cpp; sourceTree = "<group>"; };
+		46B9875617E6A62500B59145 /* glfwapplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glfwapplication.h; sourceTree = "<group>"; };
+		46B9875717E6A62500B59145 /* application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = application.h; sourceTree = "<group>"; };
+		46B9875817E6A62500B59145 /* renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = renderer.h; sourceTree = "<group>"; };
 		46B9A6091771F0F800E43B24 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		46D21C101771F2B900C896A4 /* textengine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = textengine; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -2535,12 +2543,18 @@
 		46B9A6081771F0F800E43B24 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				46B9875717E6A62500B59145 /* application.h */,
 				468E014E1783E9BD00301C1C /* base.h */,
 				46B9875117E6A37700B59145 /* checks.h */,
+				46B9875517E6A62500B59145 /* glfwapplication.cpp */,
+				46B9875617E6A62500B59145 /* glfwapplication.h */,
 				46B9A6091771F0F800E43B24 /* main.cpp */,
 				468E014F1783ED4D00301C1C /* mover.cpp */,
 				468E01501783ED4D00301C1C /* mover.h */,
 				468E014C1783E8FB00301C1C /* object.h */,
+				46B9875817E6A62500B59145 /* renderer.h */,
+				4607741F17E8EC0100896A15 /* textenginerenderer.cpp */,
+				4607742017E8EC0100896A15 /* textenginerenderer.h */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -2679,6 +2693,8 @@
 			files = (
 				46B9A60A1771F0F800E43B24 /* main.cpp in Sources */,
 				468E01511783ED4D00301C1C /* mover.cpp in Sources */,
+				46B9875917E6A62500B59145 /* glfwapplication.cpp in Sources */,
+				4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2900,6 +2916,7 @@
 				46B9824F17E69E9C00B59145 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
