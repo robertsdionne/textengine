@@ -8,23 +8,22 @@
 
 namespace textengine {
 
+  class Keyboard;
   class Renderer;
 
   class GlfwApplication : public Application {
   public:
     GlfwApplication(int argument_count, char *arguments[], int width, int height,
-                    const std::string &title, Renderer *renderer);
+                    const std::string &title, Renderer &renderer, Keyboard &keyboard);
 
     virtual ~GlfwApplication();
 
     virtual void Run() override;
 
   protected:
-    static void Display();
+    static void HandleKeyboard(GLFWwindow *window, int key, int scancode, int action, int mods);
 
-    static void Keyboard(GLFWwindow *window, int key, int scancode, int action, int mods);
-
-    static void Reshape(GLFWwindow *window, int width, int height);
+    static void HandleReshape(GLFWwindow *window, int width, int height);
 
   protected:
     static GlfwApplication *glfw_application;
@@ -35,7 +34,8 @@ namespace textengine {
     char **arguments;
     int width, height;
     const std::string title;
-    Renderer *renderer;
+    Renderer &renderer;
+    Keyboard &keyboard;
   };
 
 }  // namespace textengine

@@ -3,6 +3,7 @@
 
 #include "checks.h"
 #include "glfwapplication.h"
+#include "keyboard.h"
 #include "renderer.h"
 
 namespace textengine {
@@ -10,9 +11,9 @@ namespace textengine {
   GlfwApplication *GlfwApplication::glfw_application = nullptr;
 
   GlfwApplication::GlfwApplication(int argument_count, char *arguments[], int width, int height,
-                                   const std::string &title, Renderer *renderer)
+                                   const std::string &title, Renderer &renderer, Keyboard &keyboard)
   : argument_count(argument_count), arguments(arguments), width(width), height(height),
-    title(title), renderer(renderer) {
+    title(title), renderer(renderer), keyboard(keyboard) {
     glfw_application = this;
   }
 
@@ -20,18 +21,29 @@ namespace textengine {
     glfw_application = nullptr;
   }
 
-  void GlfwApplication::Display() {
-    if (glfw_application && glfw_application->renderer) {
-      glfw_application->renderer->Render();
+  void GlfwApplication::HandleKeyboard(GLFWwindow *window, int key,
+                                       int scancode, int action, int mods) {
+    if (glfw_application) {
+      switch (action) {
+        case GLFW_PRESS:
+        case GLFW_REPEAT: {
+          glfw_application->keyboard.OnKeyDown(key);
+          if (key == GLFW_KEY_ESCAPE) {
+            glfwSetWindowShouldClose(glfw_application->window, true);
+          }
+          break;
+        }
+        case GLFW_RELEASE: {
+          glfw_application->keyboard.OnKeyUp(key);
+          break;
+        }
+      }
     }
   }
 
-  void GlfwApplication::Keyboard(GLFWwindow *window, int key, int scancode, int action, int mods) {
-  }
-
-  void GlfwApplication::Reshape(GLFWwindow *window, int width, int height) {
-    if (glfw_application && glfw_application->renderer) {
-      glfw_application->renderer->Change(width, height);
+  void GlfwApplication::HandleReshape(GLFWwindow *window, int width, int height) {
+    if (glfw_application) {
+      glfw_application->renderer.Change(width, height);
     }
   }
 
@@ -44,18 +56,17 @@ namespace textengine {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
     CHECK_STATE(window != nullptr);
-    glfwSetKeyCallback(window, Keyboard);
-    glfwSetWindowSizeCallback(window, Reshape);
+    glfwSetKeyCallback(window, HandleKeyboard);
+    glfwSetWindowSizeCallback(window, HandleReshape);
     glfwMakeContextCurrent(window);
-    if (renderer) {
-      renderer->Create();
-    }
-    Reshape(window, width, height);
+    renderer.Create();
+    HandleReshape(window, width, height);
     while (!glfwWindowShouldClose(window)) {
-      Display();
+      renderer.Render();
       glfwSwapBuffers(window);
       glfwPollEvents();
     }
+    glfwTerminate();
   }
 
 }  // namespace empathy
