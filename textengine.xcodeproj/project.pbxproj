@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4607741F17E8EC0100896A15 /* textenginerenderer.cpp */; };
 		460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B117EA1C3B00D765F5 /* keyboard.cpp */; };
+		460F81B617EA322400D765F5 /* prompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B417EA322400D765F5 /* prompt.cpp */; };
 		468E01431783DF4C00301C1C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01421783DF4C00301C1C /* Cocoa.framework */; };
 		468E01451783DF9200301C1C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01441783DF9200301C1C /* OpenGL.framework */; };
 		468E01471783DFA100301C1C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01461783DFA100301C1C /* IOKit.framework */; };
@@ -87,6 +88,8 @@
 		4607742017E8EC0100896A15 /* textenginerenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textenginerenderer.h; sourceTree = "<group>"; };
 		460F81B117EA1C3B00D765F5 /* keyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = keyboard.cpp; sourceTree = "<group>"; };
 		460F81B217EA1C3B00D765F5 /* keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyboard.h; sourceTree = "<group>"; };
+		460F81B417EA322400D765F5 /* prompt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = prompt.cpp; sourceTree = "<group>"; };
+		460F81B517EA322400D765F5 /* prompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prompt.h; sourceTree = "<group>"; };
 		468E01421783DF4C00301C1C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		468E01441783DF9200301C1C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		468E01461783DFA100301C1C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -2552,6 +2555,8 @@
 				460F81B217EA1C3B00D765F5 /* keyboard.h */,
 				46B9A6091771F0F800E43B24 /* main.cpp */,
 				468E014C1783E8FB00301C1C /* object.h */,
+				460F81B417EA322400D765F5 /* prompt.cpp */,
+				460F81B517EA322400D765F5 /* prompt.h */,
 				46B9875817E6A62500B59145 /* renderer.h */,
 				4607741F17E8EC0100896A15 /* textenginerenderer.cpp */,
 				4607742017E8EC0100896A15 /* textenginerenderer.h */,
@@ -2695,6 +2700,7 @@
 				46B9875917E6A62500B59145 /* glfwapplication.cpp in Sources */,
 				4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */,
 				460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */,
+				460F81B617EA322400D765F5 /* prompt.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
