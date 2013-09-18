@@ -5,8 +5,8 @@
 #include "textenginerenderer.h"
 
 constexpr const char *kPrompt = "> ";
-constexpr int kWindowHeight = 800;
-constexpr int kWindowWidth = 1280;
+constexpr int kWindowHeight = 480;
+constexpr int kWindowWidth = 640;
 constexpr const char *kWindowTitle = "textengine";
 
 int main(int argument_count, char *arguments[]) {
