@@ -11,7 +11,6 @@
 		468E01431783DF4C00301C1C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01421783DF4C00301C1C /* Cocoa.framework */; };
 		468E01451783DF9200301C1C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01441783DF9200301C1C /* OpenGL.framework */; };
 		468E01471783DFA100301C1C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01461783DFA100301C1C /* IOKit.framework */; };
-		468E01511783ED4D00301C1C /* mover.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 468E014F1783ED4D00301C1C /* mover.cpp */; };
 		468E015A1783F03D00301C1C /* simplexnoise1234.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 468EFC681783DC1E00301C1C /* simplexnoise1234.cpp */; };
 		468E015D1783F10600301C1C /* libsimplexnoise1234.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01561783F02800301C1C /* libsimplexnoise1234.a */; };
 		46B983AD17E69EAC00B59145 /* eglext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B9826117E69EAB00B59145 /* eglext.h */; };
@@ -90,8 +89,6 @@
 		468E01461783DFA100301C1C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		468E014C1783E8FB00301C1C /* object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = object.h; sourceTree = "<group>"; };
 		468E014E1783E9BD00301C1C /* base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base.h; sourceTree = "<group>"; };
-		468E014F1783ED4D00301C1C /* mover.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mover.cpp; sourceTree = "<group>"; };
-		468E01501783ED4D00301C1C /* mover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mover.h; sourceTree = "<group>"; };
 		468E01561783F02800301C1C /* libsimplexnoise1234.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsimplexnoise1234.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		468EFC681783DC1E00301C1C /* simplexnoise1234.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = simplexnoise1234.cpp; sourceTree = "<group>"; };
 		468EFC691783DC1E00301C1C /* simplexnoise1234.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = simplexnoise1234.h; sourceTree = "<group>"; };
@@ -2549,8 +2546,6 @@
 				46B9875517E6A62500B59145 /* glfwapplication.cpp */,
 				46B9875617E6A62500B59145 /* glfwapplication.h */,
 				46B9A6091771F0F800E43B24 /* main.cpp */,
-				468E014F1783ED4D00301C1C /* mover.cpp */,
-				468E01501783ED4D00301C1C /* mover.h */,
 				468E014C1783E8FB00301C1C /* object.h */,
 				46B9875817E6A62500B59145 /* renderer.h */,
 				4607741F17E8EC0100896A15 /* textenginerenderer.cpp */,
@@ -2692,7 +2687,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				46B9A60A1771F0F800E43B24 /* main.cpp in Sources */,
-				468E01511783ED4D00301C1C /* mover.cpp in Sources */,
 				46B9875917E6A62500B59145 /* glfwapplication.cpp in Sources */,
 				4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */,
 			);
