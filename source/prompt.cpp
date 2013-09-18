@@ -6,8 +6,7 @@
 
 namespace textengine {
 
-  Prompt::Prompt(const std::string &prompt)
-  : prompt(prompt) {}
+  Prompt::Prompt(const std::string &prompt) : prompt(prompt) {}
 
   void Prompt::Join() {
     thread.join();
