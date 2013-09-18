@@ -25,9 +25,9 @@ namespace textengine {
 
     static void HandleReshape(GLFWwindow *window, int width, int height);
 
-  protected:
     static GlfwApplication *glfw_application;
 
+  private:
     GLFWmonitor *monitor;
     GLFWwindow *window;
     int argument_count;
