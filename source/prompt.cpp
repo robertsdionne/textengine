@@ -2,11 +2,12 @@
 #include <string>
 #include <thread>
 
+#include "commandqueue.h"
 #include "prompt.h"
 
 namespace textengine {
 
-  Prompt::Prompt(const std::string &prompt) : prompt(prompt) {}
+  Prompt::Prompt(CommandQueue &queue, const std::string &prompt) : queue(queue), prompt(prompt) {}
 
   void Prompt::Join() {
     thread.join();
@@ -20,6 +21,7 @@ namespace textengine {
       }
       std::cout << prompt;
       std::getline(std::cin, command);
+      queue.PushCommand(command);
     }
   }
 

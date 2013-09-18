@@ -5,10 +5,12 @@
 #include <thread>
 
 namespace textengine {
+
+  class CommandQueue;
   
   class Prompt {
   public:
-    Prompt(const std::string &prompt);
+    Prompt(CommandQueue &queue, const std::string &prompt);
 
     virtual ~Prompt() = default;
 
@@ -20,7 +22,8 @@ namespace textengine {
     void Loop();
 
   private:
-    std::string prompt;
+    CommandQueue &queue;
+    const std::string &prompt;
     std::thread thread;
   };
 

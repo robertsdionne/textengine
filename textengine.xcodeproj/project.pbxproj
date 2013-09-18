@@ -10,6 +10,7 @@
 		4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4607741F17E8EC0100896A15 /* textenginerenderer.cpp */; };
 		460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B117EA1C3B00D765F5 /* keyboard.cpp */; };
 		460F81B617EA322400D765F5 /* prompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B417EA322400D765F5 /* prompt.cpp */; };
+		460F81B917EA37C700D765F5 /* commandqueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B717EA37C700D765F5 /* commandqueue.cpp */; };
 		468E01431783DF4C00301C1C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01421783DF4C00301C1C /* Cocoa.framework */; };
 		468E01451783DF9200301C1C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01441783DF9200301C1C /* OpenGL.framework */; };
 		468E01471783DFA100301C1C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01461783DFA100301C1C /* IOKit.framework */; };
@@ -90,6 +91,8 @@
 		460F81B217EA1C3B00D765F5 /* keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyboard.h; sourceTree = "<group>"; };
 		460F81B417EA322400D765F5 /* prompt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = prompt.cpp; sourceTree = "<group>"; };
 		460F81B517EA322400D765F5 /* prompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prompt.h; sourceTree = "<group>"; };
+		460F81B717EA37C700D765F5 /* commandqueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commandqueue.cpp; sourceTree = "<group>"; };
+		460F81B817EA37C700D765F5 /* commandqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commandqueue.h; sourceTree = "<group>"; };
 		468E01421783DF4C00301C1C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		468E01441783DF9200301C1C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		468E01461783DFA100301C1C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -2549,6 +2552,8 @@
 				46B9875717E6A62500B59145 /* application.h */,
 				468E014E1783E9BD00301C1C /* base.h */,
 				46B9875117E6A37700B59145 /* checks.h */,
+				460F81B717EA37C700D765F5 /* commandqueue.cpp */,
+				460F81B817EA37C700D765F5 /* commandqueue.h */,
 				46B9875517E6A62500B59145 /* glfwapplication.cpp */,
 				46B9875617E6A62500B59145 /* glfwapplication.h */,
 				460F81B117EA1C3B00D765F5 /* keyboard.cpp */,
@@ -2701,6 +2706,7 @@
 				4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */,
 				460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */,
 				460F81B617EA322400D765F5 /* prompt.cpp in Sources */,
+				460F81B917EA37C700D765F5 /* commandqueue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

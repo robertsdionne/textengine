@@ -1,3 +1,4 @@
+#include "commandqueue.h"
 #include "glfwapplication.h"
 #include "keyboard.h"
 #include "prompt.h"
@@ -9,7 +10,8 @@ constexpr int kWindowWidth = 1280;
 constexpr const char *kWindowTitle = "textengine";
 
 int main(int argument_count, char *arguments[]) {
-  textengine::Prompt prompt(kPrompt);
+  textengine::CommandQueue queue;
+  textengine::Prompt prompt(queue, kPrompt);
   prompt.Run();
   textengine::TextEngineRenderer renderer;
   textengine::Keyboard keyboard;
