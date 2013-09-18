@@ -4,7 +4,7 @@
 namespace textengine {
 
   void TextEngineRenderer::Change(int width, int height) {
-
+    glViewport(0, 0, width, height);
   }
 
   void TextEngineRenderer::Create() {
