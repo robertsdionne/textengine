@@ -69,4 +69,4 @@ namespace textengine {
     glfwTerminate();
   }
 
-}  // namespace empathy
+}  // namespace textengine
