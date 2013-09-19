@@ -4,10 +4,10 @@
 #include "prompt.h"
 #include "textenginerenderer.h"
 
-constexpr const char *kPrompt = "> ";
+constexpr const char *kPrompt = u8"> ";
 constexpr int kWindowHeight = 480;
 constexpr int kWindowWidth = 640;
-constexpr const char *kWindowTitle = "textengine";
+constexpr const char *kWindowTitle = u8"textengine";
 
 int main(int argument_count, char *arguments[]) {
   textengine::CommandQueue queue;

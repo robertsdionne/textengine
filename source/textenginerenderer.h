@@ -17,16 +17,6 @@ namespace textengine {
     virtual void Create();
 
     virtual void Render();
-
-  private:
-    Shader vertex_shader, fragment_shader;
-    Program program;
-    Buffer vertex_buffer;
-    VertexArray vertex_array;
-
-    static constexpr const char *kVertexShaderSource = "#version 150\r\nvoid main() {}";
-
-    static constexpr const char *kFragmentShaderSource = "#version 150\r\nvoid main() {}";
   };
 
 }  // namespace textengine

@@ -51,7 +51,7 @@ namespace textengine {
       if (length) {
         FAIL(info_log);
       } else {
-        FAIL("Failed to link program.");
+        FAIL(u8"Failed to link program.");
       }
     }
   }

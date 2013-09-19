@@ -1,5 +1,4 @@
 #include <GLFW/glfw3.h>
-#include <fstream>
 #include <string>
 
 #include "checks.h"
@@ -12,12 +11,12 @@ namespace textengine {
 
   Drawable::~Drawable() {}
 
-  void Drawable::Create(const std::string &vertex_shader_filename,
-                        const std::string &fragment_shader_filename,
+  void Drawable::Create(const std::string &vertex_shader_source,
+                        const std::string &fragment_shader_source,
                         const float *data, GLsizeiptr size, GLsizei count) {
     this->count = count;
-    vertex_shader.Create(GL_VERTEX_SHADER, {ReadShader(vertex_shader_filename)});
-    fragment_shader.Create(GL_FRAGMENT_SHADER, {ReadShader(fragment_shader_filename)});
+    vertex_shader.Create(GL_VERTEX_SHADER, {vertex_shader_source});
+    fragment_shader.Create(GL_FRAGMENT_SHADER, {fragment_shader_source});
     program.Create({&vertex_shader, &fragment_shader});
     buffer.Create(GL_ARRAY_BUFFER);
     buffer.Data(size, data, GL_STATIC_DRAW);
@@ -30,17 +29,8 @@ namespace textengine {
     glDrawArrays(GL_TRIANGLES, 0, count);
   }
 
-  std::string Drawable::ReadShader(const std::string &filename) {
-    std::ifstream in(filename);
-    CHECK_STATE(!in.fail());
-    std::string source;
-    in.seekg(0, std::ios::end);
-    source.reserve(in.tellg());
-    in.seekg(0, std::ios::beg);
-    source.assign(std::istreambuf_iterator<char>(in),
-                  std::istreambuf_iterator<char>());
-    in.close();
-    return source;
+  GLint Drawable::GetUniformLocation(const std::string &name) {
+    return program.GetUniformLocation(name);
   }
 
 }  // namespace empathy

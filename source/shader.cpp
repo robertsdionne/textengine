@@ -60,7 +60,7 @@ namespace textengine {
       if (length) {
         FAIL(info_log);
       } else {
-        FAIL("Failed to compile shader.");
+        FAIL(u8"Failed to compile shader.");
       }
     }
   }

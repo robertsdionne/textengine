@@ -1,7 +1,7 @@
 #ifndef TEXTENGINE_DRAWABLE_H_
 #define TEXTENGINE_DRAWABLE_H_
 
-#include <fstream>
+#include <GLFW/glfw3.h>
 #include <string>
 #include <vector>
 
@@ -18,16 +18,15 @@ namespace textengine {
 
     virtual ~Drawable();
 
-    void Create(const std::string &vertex_shader_filename,
-                const std::string &fragment_shader_filename,
+    void Create(const std::string &vertex_shader_source,
+                const std::string &fragment_shader_source,
                 const float *data,
                 GLsizeiptr size,
                 GLsizei count);
 
     void Draw();
 
-  private:
-    std::string ReadShader(const std::string &filename);
+    GLint GetUniformLocation(const std::string &name);
 
   private:
     Shader vertex_shader, fragment_shader;

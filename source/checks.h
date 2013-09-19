@@ -32,7 +32,7 @@ inline void Fail(const std::string &message, int line, const std::string &file);
  */
 inline void CheckState(const std::string &message, bool state, int line, const std::string &file) {
   if (!state) {
-    Fail(message + " violated", line, file);
+    Fail(message + u8" violated", line, file);
   }
 }
 
@@ -40,7 +40,7 @@ inline void CheckState(const std::string &message, bool state, int line, const s
  * Prints the given error message and notes the line and the source file name.
  */
 inline void Fail(const std::string &message, int line, const std::string &file) {
-  std::cerr << "ERROR: " << message << " on line " << line << " of " << file << std::endl;
+  std::cerr << u8"ERROR: " << message << u8" on line " << line << u8" of " << file << std::endl;
   exit(1);
 }
 
