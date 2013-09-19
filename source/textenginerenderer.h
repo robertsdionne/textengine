@@ -10,8 +10,14 @@
 
 namespace textengine {
 
+  class Updater;
+
   class TextEngineRenderer : public Renderer {
   public:
+    TextEngineRenderer(Updater &updater);
+
+    virtual ~TextEngineRenderer() = default;
+
     virtual void Change(int width, int height);
 
     virtual void Create();
@@ -19,6 +25,7 @@ namespace textengine {
     virtual void Render();
     
   private:
+    Updater &updater;
     GLuint fragment_shader, program, vertex_array, vertex_buffer, vertex_shader;
   };
 

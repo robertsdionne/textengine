@@ -10,11 +10,13 @@ namespace textengine {
 
   class Keyboard;
   class Renderer;
+  class Updater;
 
   class GlfwApplication : public Application {
   public:
     GlfwApplication(int argument_count, char *arguments[], int width, int height,
-                    const std::string &title, Renderer &renderer, Keyboard &keyboard);
+                    const std::string &title, Updater &updater, Renderer &renderer,
+                    Keyboard &keyboard);
 
     virtual ~GlfwApplication();
 
@@ -33,6 +35,7 @@ namespace textengine {
     char **arguments;
     int width, height;
     const std::string title;
+    Updater &updater;
     Renderer &renderer;
     Keyboard &keyboard;
   };

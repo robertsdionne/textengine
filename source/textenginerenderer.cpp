@@ -2,9 +2,13 @@
 
 #include "checks.h"
 #include "drawtools.h"
+#include "gamestate.h"
 #include "textenginerenderer.h"
+#include "updater.h"
 
 namespace textengine {
+
+  TextEngineRenderer::TextEngineRenderer(Updater &updater) : updater(updater) {}
 
   void TextEngineRenderer::Change(int width, int height) {
     glViewport(0, 0, 2 * width, 2 * height);
@@ -93,13 +97,13 @@ namespace textengine {
     CHECK_STATE(!glGetError());
   }
 
-  void TextEngineRenderer::Render() {
+  void TextEngineRenderer::Render() {    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //drawtools::DrawCircle(glm::vec2(0, 0), 1, glm::vec4(1, 0, 0, 1));  }
-
+    GameState current_state = updater.GetCurrentState();
     glUseProgram(program);
-    glUniform2f(glGetUniformLocation(program, u8"shape_position"), 0, 0);
-    glUniform2f(glGetUniformLocation(program, u8"shape_size"), 1, 1);
+    glUniform2f(glGetUniformLocation(program, u8"shape_position"),
+                current_state.player_position.x, current_state.player_position.y);
+    glUniform2f(glGetUniformLocation(program, u8"shape_size"), 0.05, 0.05);
     glUniform4f(glGetUniformLocation(program, u8"shape_color"), 1, 0, 0, 1);
     glBindVertexArray(vertex_array);
     glDrawArrays(GL_TRIANGLES, 0, 100*3);

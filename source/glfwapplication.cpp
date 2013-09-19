@@ -5,15 +5,17 @@
 #include "glfwapplication.h"
 #include "keyboard.h"
 #include "renderer.h"
+#include "updater.h"
 
 namespace textengine {
 
   GlfwApplication *GlfwApplication::glfw_application = nullptr;
 
   GlfwApplication::GlfwApplication(int argument_count, char *arguments[], int width, int height,
-                                   const std::string &title, Renderer &renderer, Keyboard &keyboard)
+                                   const std::string &title, Updater &updater, Renderer &renderer,
+                                   Keyboard &keyboard)
   : argument_count(argument_count), arguments(arguments), width(width), height(height),
-    title(title), renderer(renderer), keyboard(keyboard) {
+    title(title), updater(updater), renderer(renderer), keyboard(keyboard) {
     glfw_application = this;
   }
 
@@ -61,6 +63,7 @@ namespace textengine {
     renderer.Create();
     HandleReshape(window, width, height);
     while (!glfwWindowShouldClose(window)) {
+      updater.Update();
       renderer.Render();
       glfwSwapBuffers(window);
       glfwPollEvents();
