@@ -49,7 +49,6 @@ namespace textengine {
 
   void GlfwApplication::Run() {
     CHECK_STATE(glfwInit() != -1);
-    monitor = glfwGetPrimaryMonitor();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);

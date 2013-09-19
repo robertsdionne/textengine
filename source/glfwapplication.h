@@ -28,7 +28,6 @@ namespace textengine {
     static GlfwApplication *glfw_application;
 
   private:
-    GLFWmonitor *monitor;
     GLFWwindow *window;
     int argument_count;
     char **arguments;
