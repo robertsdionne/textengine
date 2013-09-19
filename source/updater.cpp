@@ -17,6 +17,24 @@ namespace textengine {
   }
 
   void Updater::Update() {
+    if (queue.HasCommand()) {
+      std::string command = queue.PopCommand();
+      if ("move down" == command) {
+        current_state = GameState(current_state.player_position,
+                                  current_state.player_target + glm::vec2(0, -0.1));
+      }
+      if ("move up" == command) {
+        current_state = GameState(current_state.player_position,
+                                  current_state.player_target + glm::vec2(0, 0.1));
+      }
+      if ("move left" == command) {
+        current_state = GameState(current_state.player_position,
+                                  current_state.player_target + glm::vec2(-0.1, 0));    }
+      if ("move right" == command) {
+        current_state = GameState(current_state.player_position,
+                                  current_state.player_target + glm::vec2(0.1, 0));
+      }
+    }
     if (keyboard.IsKeyDown(GLFW_KEY_DOWN)) {
       current_state = GameState(current_state.player_position,
                                 current_state.player_target + glm::vec2(0, -0.1));
@@ -33,7 +51,7 @@ namespace textengine {
                                 current_state.player_target + glm::vec2(0.1, 0));
     }
     glm::vec2 new_position = glm::mix(current_state.player_position,
-                                      current_state.player_target, 0.01f);
+                                      current_state.player_target, 0.1f);
     current_state = GameState(new_position, current_state.player_target);
   }
 
