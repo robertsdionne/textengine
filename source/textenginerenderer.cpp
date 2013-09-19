@@ -87,9 +87,9 @@ namespace textengine {
     glGenVertexArrays(1, &vertex_array);
     glBindVertexArray(vertex_array);
     glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-    glVertexAttribPointer(glGetAttribLocation(program, "vertex_position"),
+    glVertexAttribPointer(glGetAttribLocation(program, u8"vertex_position"),
                           2, GL_FLOAT, false, 0, nullptr);
-    glEnableVertexAttribArray(glGetAttribLocation(program, "vertex_position"));
+    glEnableVertexAttribArray(glGetAttribLocation(program, u8"vertex_position"));
     CHECK_STATE(!glGetError());
   }
 
