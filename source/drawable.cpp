@@ -21,16 +21,24 @@ namespace textengine {
     buffer.Create(GL_ARRAY_BUFFER);
     buffer.Data(size, data, GL_STATIC_DRAW);
     vertex_array.Create();
+    vertex_array.Bind();
+    buffer.Bind();
+    vertex_array.VertexAttribPointer(0, 2, GL_FLOAT, false, 0, nullptr);
+    vertex_array.EnableVertexAttribArray(0);
+    CHECK_STATE(!glGetError());
   }
 
   void Drawable::Draw() {
-    program.Use();
     vertex_array.Bind();
     glDrawArrays(GL_TRIANGLES, 0, count);
   }
 
   GLint Drawable::GetUniformLocation(const std::string &name) {
     return program.GetUniformLocation(name);
+  }
+
+  void Drawable::Use() {
+    program.Use();
   }
 
 }  // namespace empathy

@@ -14,7 +14,7 @@ namespace textengine {
     uniform vec2 shape_position;
     uniform vec2 shape_size;
 
-    in vec2 vertex_position;
+    layout(location = 0) in vec2 vertex_position;
 
     void main() {
       gl_Position = shape_position + vertex_position * shape_size;

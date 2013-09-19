@@ -28,6 +28,8 @@ namespace textengine {
 
     GLint GetUniformLocation(const std::string &name);
 
+    void Use();
+
   private:
     Shader vertex_shader, fragment_shader;
     Program program;

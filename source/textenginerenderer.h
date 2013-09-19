@@ -17,6 +17,9 @@ namespace textengine {
     virtual void Create();
 
     virtual void Render();
+    
+  private:
+    GLuint fragment_shader, program, vertex_array, vertex_buffer, vertex_shader;
   };
 
 }  // namespace textengine

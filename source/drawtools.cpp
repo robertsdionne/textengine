@@ -11,6 +11,7 @@ namespace textengine {
 
     void DrawCircle(glm::vec2 position, float size, glm::vec4 color) {
       MaybeAllocateCircleDrawable();
+      circle->Use();
       glUniform2f(circle->GetUniformLocation(u8"shape_position"), position.x, position.y);
       glUniform2f(circle->GetUniformLocation(u8"shape_size"), size, size);
       glUniform4f(circle->GetUniformLocation(u8"shape_color"), color.r, color.g, color.b, color.a);
@@ -19,6 +20,7 @@ namespace textengine {
 
     void DrawSquare(glm::vec2 position, glm::vec2 size, glm::vec4 color) {
       MaybeAllocateSquareDrawable();
+      square->Use();
       glUniform2f(circle->GetUniformLocation(u8"shape_position"), position.x, position.y);
       glUniform2f(circle->GetUniformLocation(u8"shape_size"), size.x, size.y);
       glUniform4f(circle->GetUniformLocation(u8"shape_color"), color.r, color.g, color.b, color.a);
@@ -27,6 +29,7 @@ namespace textengine {
 
     void DrawTriangle(glm::vec2 position, float size, glm::vec4 color) {
       MaybeAllocateTriangleDrawable();
+      triangle->Use();
       glUniform2f(circle->GetUniformLocation(u8"shape_position"), position.x, position.y);
       glUniform2f(circle->GetUniformLocation(u8"shape_size"), size, size);
       glUniform4f(circle->GetUniformLocation(u8"shape_color"), color.r, color.g, color.b, color.a);
@@ -48,7 +51,7 @@ namespace textengine {
         }
         circle = std::unique_ptr<Drawable>(new Drawable());
         circle->Create(vertex_shader_source, fragment_shader_source,
-                       circle_data, kCircleResolution * 6, kCircleResolution);
+                       circle_data, sizeof(float) * kCircleResolution * 6, kCircleResolution);
       }
     }
 
@@ -63,7 +66,8 @@ namespace textengine {
           0.5, -0.5
         };
         square = std::unique_ptr<Drawable>(new Drawable());
-        square->Create(vertex_shader_source, fragment_shader_source, square_data, 6, 2);
+        square->Create(vertex_shader_source, fragment_shader_source,
+                       square_data, sizeof(float) * 6, 2);
       }
     }
 
@@ -75,7 +79,8 @@ namespace textengine {
           0.5, -0.5
         };
         triangle = std::unique_ptr<Drawable>(new Drawable());
-        triangle->Create(vertex_shader_source, fragment_shader_source, triangle_data, 3, 1);
+        triangle->Create(vertex_shader_source, fragment_shader_source,
+                         triangle_data, sizeof(float) * 3, 1);
       }
     }
 
