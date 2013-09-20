@@ -20,7 +20,7 @@ int main(int argument_count, char *arguments[]) {
   prompt.Run();
   textengine::CommandTokenizer tokenizer;
   textengine::CommandParser parser{tokenizer};
-  textengine::GameState initial_state{glm::vec2(), glm::vec2()};
+  textengine::GameState initial_state;
   textengine::Updater updater{queue, parser, initial_state};
   textengine::TextEngineRenderer renderer{updater};
   textengine::GlfwApplication application{argument_count, arguments, kWindowWidth, kWindowHeight,

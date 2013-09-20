@@ -108,6 +108,15 @@ namespace textengine {
     glBindVertexArray(vertex_array);
     glDrawArrays(GL_TRIANGLES, 0, 100*3);
     CHECK_STATE(!glGetError());
+    glUseProgram(program);
+    glUniform2f(glGetUniformLocation(program, u8"shape_position"),
+                current_state.player_position.x + current_state.player_direction.x * 0.1,
+                current_state.player_position.y + current_state.player_direction.y * 0.1);
+    glUniform2f(glGetUniformLocation(program, u8"shape_size"), 0.01, 0.01);
+    glUniform4f(glGetUniformLocation(program, u8"shape_color"), 1, 0, 0, 1);
+    glBindVertexArray(vertex_array);
+    glDrawArrays(GL_TRIANGLES, 0, 100*3);
+    CHECK_STATE(!glGetError());
   }
 
 }  // namespace textengine

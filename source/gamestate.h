@@ -7,12 +7,16 @@ namespace textengine {
 
   class GameState {
   public:
-    GameState(glm::vec2 player_position, glm::vec2 player_target);
+    GameState();
+
+    GameState(glm::vec2 player_position, glm::vec2 player_direction);
 
     virtual ~GameState() = default;
 
     glm::vec2 player_position;
     glm::vec2 player_target;
+    glm::vec2 player_direction;
+    glm::vec2 player_direction_target;
   };
 
 }  // namespace textengine
