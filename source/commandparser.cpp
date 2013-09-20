@@ -43,13 +43,13 @@ namespace textengine {
     } else if ("west" == *token || "w" == *token) {
       current_state.player_target += glm::vec2(-0.2, 0);
     } else if ("northeast" == *token || "ne" == *token) {
-      current_state.player_target += glm::vec2(0.2, 0.2);
+      current_state.player_target += glm::normalize(glm::vec2(1, 1)) * 0.2f;
     } else if ("northwest" == *token || "nw" == *token) {
-      current_state.player_target += glm::vec2(-0.2, 0.2);
+      current_state.player_target += glm::normalize(glm::vec2(-1, 1)) * 0.2f;
     } else if ("southeast" == *token || "se" == *token) {
-      current_state.player_target += glm::vec2(0.2, -0.2);
+      current_state.player_target += glm::normalize(glm::vec2(1, -1)) * 0.2f;
     } else if ("southwest" == *token || "sw" == *token) {
-      current_state.player_target += glm::vec2(-0.2, -0.2);
+      current_state.player_target += glm::normalize(glm::vec2(-1, -1)) * 0.2f;
     } else {
       std::cout << "I do not know where you want to go." << std::endl;
     }
@@ -84,13 +84,13 @@ namespace textengine {
     } else if ("west" == *token || "w" == *token) {
       current_state.player_target += glm::vec2(-0.2, 0);
     } else if ("northeast" == *token || "ne" == *token) {
-      current_state.player_target += glm::vec2(0.2, 0.2);
+      current_state.player_target += glm::normalize(glm::vec2(1, 1)) * 0.2f;
     } else if ("northwest" == *token || "nw" == *token) {
-      current_state.player_target += glm::vec2(-0.2, 0.2);
+      current_state.player_target += glm::normalize(glm::vec2(-1, 1)) * 0.2f;
     } else if ("southeast" == *token || "se" == *token) {
-      current_state.player_target += glm::vec2(0.2, -0.2);
+      current_state.player_target += glm::normalize(glm::vec2(1, -1)) * 0.2f;
     } else if ("southwest" == *token || "sw" == *token) {
-      current_state.player_target += glm::vec2(-0.2, -0.2);
+      current_state.player_target += glm::normalize(glm::vec2(-1, -1)) * 0.2f;
     } else if ("exit" == *token || "quit" == *token) {
       return Quit(current_state);
     } else {
