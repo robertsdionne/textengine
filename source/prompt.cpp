@@ -17,11 +17,11 @@ namespace textengine {
     std::string command;
     while (true) {
       if (!command.empty()) {
+        queue.PushCommand(command);
         std::cout << command << std::endl << std::endl;
       }
       std::cout << prompt;
       std::getline(std::cin, command);
-      queue.PushCommand(command);
     }
   }
 

@@ -1,15 +1,34 @@
 #ifndef TEXTENGINE_COMMANDPARSER_H_
 #define TEXTENGINE_COMMANDPARSER_H_
 
+#include <string>
+#include <vector>
+
+#include "gamestate.h"
+
 namespace textengine {
+
+  class CommandQueue;
+  class CommandTokenizer;
 
   class CommandParser {
   public:
-    CommandParser() = default;
+    CommandParser(CommandTokenizer &tokenizer);
 
     virtual ~CommandParser() = default;
 
+    GameState Parse(GameState current_state, std::string command);
+
+  private:
+    typedef std::vector<std::string>::const_iterator TokenIterator;
+
+    GameState Move(GameState current_state, TokenIterator cursor);
+
+    GameState Parse(GameState current_state, TokenIterator cursor);
     
+    GameState Quit(GameState current_state);
+
+    CommandTokenizer &tokenizer;
   };
 
 }  // namespace textengine

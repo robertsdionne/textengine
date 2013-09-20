@@ -1,5 +1,3 @@
-#include <GLFW/glfw3.h>
-
 #include "commandparser.h"
 #include "commandqueue.h"
 #include "gamestate.h"
@@ -8,51 +6,25 @@
 
 namespace textengine {
 
-  Updater::Updater(Keyboard &keyboard, CommandQueue &queue,
-                   CommandParser &parser, const GameState &initial_state)
-  : keyboard(keyboard), queue(queue), parser(parser), current_state(initial_state) {}
+  Updater::Updater(CommandQueue &queue, CommandParser &parser, const GameState &initial_state)
+  : queue(queue), parser(parser), current_state(initial_state) {}
 
   GameState Updater::GetCurrentState() {
     return current_state;
   }
 
   void Updater::Update() {
+    current_state = Update(current_state);
+  }
+
+  GameState Updater::Update(const GameState current_state) {
+    GameState next_state = current_state;
     if (queue.HasCommand()) {
-      std::string command = queue.PopCommand();
-      if ("move down" == command) {
-        current_state = GameState(current_state.player_position,
-                                  current_state.player_target + glm::vec2(0, -0.1));
-      }
-      if ("move up" == command) {
-        current_state = GameState(current_state.player_position,
-                                  current_state.player_target + glm::vec2(0, 0.1));
-      }
-      if ("move left" == command) {
-        current_state = GameState(current_state.player_position,
-                                  current_state.player_target + glm::vec2(-0.1, 0));    }
-      if ("move right" == command) {
-        current_state = GameState(current_state.player_position,
-                                  current_state.player_target + glm::vec2(0.1, 0));
-      }
+      next_state = parser.Parse(next_state, queue.PopCommand());
     }
-    if (keyboard.IsKeyDown(GLFW_KEY_DOWN)) {
-      current_state = GameState(current_state.player_position,
-                                current_state.player_target + glm::vec2(0, -0.1));
-    }
-    if (keyboard.IsKeyDown(GLFW_KEY_UP)) {
-      current_state = GameState(current_state.player_position,
-                                current_state.player_target + glm::vec2(0, 0.1));
-    }
-    if (keyboard.IsKeyDown(GLFW_KEY_LEFT)) {
-      current_state = GameState(current_state.player_position,
-                                current_state.player_target + glm::vec2(-0.1, 0));    }
-    if (keyboard.IsKeyDown(GLFW_KEY_RIGHT)) {
-      current_state = GameState(current_state.player_position,
-                                current_state.player_target + glm::vec2(0.1, 0));
-    }
-    glm::vec2 new_position = glm::mix(current_state.player_position,
-                                      current_state.player_target, 0.1f);
-    current_state = GameState(new_position, current_state.player_target);
+    next_state.player_position = glm::mix(next_state.player_position,
+                                          next_state.player_target, 0.1f);
+    return next_state;
   }
 
 }  // namespace textengine

@@ -11,8 +11,7 @@ namespace textengine {
 
   class Updater {
   public:
-    Updater(Keyboard &keyboard, CommandQueue &queue,
-            CommandParser &parser, const GameState &initial_state);
+    Updater(CommandQueue &queue, CommandParser &parser, const GameState &initial_state);
 
     virtual ~Updater() = default;
 
@@ -21,7 +20,9 @@ namespace textengine {
     void Update();
 
   private:
-    Keyboard &keyboard;
+    GameState Update(GameState current_state);
+
+  private:
     CommandQueue &queue;
     CommandParser &parser;
     GameState current_state;

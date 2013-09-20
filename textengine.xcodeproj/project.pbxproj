@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4600EB9117EBC8F9003BA3C3 /* commandtokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4600EB8F17EBC8F9003BA3C3 /* commandtokenizer.cpp */; };
 		4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4607741F17E8EC0100896A15 /* textenginerenderer.cpp */; };
 		460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B117EA1C3B00D765F5 /* keyboard.cpp */; };
 		460F81B617EA322400D765F5 /* prompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B417EA322400D765F5 /* prompt.cpp */; };
@@ -94,6 +95,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4600EB8F17EBC8F9003BA3C3 /* commandtokenizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commandtokenizer.cpp; sourceTree = "<group>"; };
+		4600EB9017EBC8F9003BA3C3 /* commandtokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commandtokenizer.h; sourceTree = "<group>"; };
 		4607741F17E8EC0100896A15 /* textenginerenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textenginerenderer.cpp; sourceTree = "<group>"; };
 		4607742017E8EC0100896A15 /* textenginerenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textenginerenderer.h; sourceTree = "<group>"; };
 		460F81B117EA1C3B00D765F5 /* keyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = keyboard.cpp; sourceTree = "<group>"; };
@@ -2585,6 +2588,8 @@
 				466E70FC17EB944400CD9E9D /* commandparser.h */,
 				460F81B717EA37C700D765F5 /* commandqueue.cpp */,
 				460F81B817EA37C700D765F5 /* commandqueue.h */,
+				4600EB8F17EBC8F9003BA3C3 /* commandtokenizer.cpp */,
+				4600EB9017EBC8F9003BA3C3 /* commandtokenizer.h */,
 				462B4A6817EA9760006FE9BB /* drawable.cpp */,
 				462B4A6917EA9760006FE9BB /* drawable.h */,
 				468E039E17EB2B4500F4CF1C /* drawtools.cpp */,
@@ -2761,6 +2766,7 @@
 				466E70FA17EB92F900CD9E9D /* gamestate.cpp in Sources */,
 				466E70FD17EB944400CD9E9D /* commandparser.cpp in Sources */,
 				466E710017EB96D600CD9E9D /* updater.cpp in Sources */,
+				4600EB9117EBC8F9003BA3C3 /* commandtokenizer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
