@@ -18,7 +18,6 @@ namespace textengine {
     while (true) {
       if (!command.empty()) {
         queue.PushCommand(command);
-        std::cout << command << std::endl << std::endl;
       }
       std::cout << prompt;
       std::getline(std::cin, command);
