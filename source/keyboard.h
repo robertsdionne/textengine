@@ -18,8 +18,10 @@ namespace textengine {
 
     void OnKeyUp(int key);
 
+    void Update();
+
   private:
-    std::map<int, bool>keys;
+    std::map<int, bool>keys, previous_keys;
   };
 
 }  // namespace textengine

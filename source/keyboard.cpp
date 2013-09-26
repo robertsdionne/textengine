@@ -14,4 +14,8 @@ namespace textengine {
     keys[key] = false;
   }
 
+  void Keyboard::Update() {
+    previous_keys = keys;
+  }
+
 }  // namespace textengine

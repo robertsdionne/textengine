@@ -15,10 +15,11 @@ namespace textengine {
   constexpr const char *TextEngineRenderer::kEdgeGeometryShaderSource;
   constexpr const char *TextEngineRenderer::kFragmentShaderSource;
 
-  TextEngineRenderer::TextEngineRenderer(Updater &updater) : updater(updater) {}
+  TextEngineRenderer::TextEngineRenderer(Updater &updater, Mesh &mesh)
+  : updater(updater), mesh(mesh) {}
 
   void TextEngineRenderer::Change(int width, int height) {
-    glViewport(0, 0, 2 * width, 2 * height);
+    glViewport(0, 0, width, height);
   }
 
   void TextEngineRenderer::Create() {
@@ -128,9 +129,6 @@ namespace textengine {
     glEnableVertexAttribArray(glGetAttribLocation(program, u8"vertex_position"));
     CHECK_STATE(!glGetError());
 
-    Mesh mesh;
-    mesh.AddDefaultFace(glm::vec2(0, 0));
-    mesh.AddDefaultFace(glm::vec2(0.5, 0.5));
     std::unique_ptr<float[]> world_data = mesh.Triangulate();
     std::unique_ptr<float[]> edge_data = mesh.Wireframe();
     std::unique_ptr<float[]> point_data = mesh.Points();

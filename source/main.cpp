@@ -1,9 +1,12 @@
+#include <glm/glm.hpp>
+
 #include "commandparser.h"
 #include "commandqueue.h"
 #include "commandtokenizer.h"
 #include "gamestate.h"
 #include "glfwapplication.h"
 #include "keyboard.h"
+#include "mesh.h"
 #include "prompt.h"
 #include "textenginerenderer.h"
 #include "updater.h"
@@ -22,7 +25,10 @@ int main(int argument_count, char *arguments[]) {
   textengine::CommandParser parser{tokenizer};
   textengine::GameState initial_state;
   textengine::Updater updater{queue, parser, initial_state};
-  textengine::TextEngineRenderer renderer{updater};
+  textengine::Mesh mesh;
+  mesh.AddDefaultFace(glm::vec2(0, 0));
+  mesh.AddDefaultFace(glm::vec2(0.5, 0.5));
+  textengine::TextEngineRenderer renderer{updater, mesh};
   textengine::GlfwApplication application{argument_count, arguments, kWindowWidth, kWindowHeight,
                                           kWindowTitle, updater, renderer, keyboard};
   application.Run();

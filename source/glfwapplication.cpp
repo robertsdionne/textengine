@@ -55,12 +55,15 @@ namespace textengine {
     window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
     CHECK_STATE(window != nullptr);
     glfwSetKeyCallback(window, HandleKeyboard);
-    glfwSetWindowSizeCallback(window, HandleReshape);
+    glfwSetFramebufferSizeCallback(window, HandleReshape);
     glfwMakeContextCurrent(window);
     renderer.Create();
-    HandleReshape(window, width, height);
+    int framebuffer_width, framebuffer_height;
+    glfwGetFramebufferSize(window, &framebuffer_width, &framebuffer_height);
+    HandleReshape(window, framebuffer_width, framebuffer_height);
     while (!glfwWindowShouldClose(window)) {
       updater.Update();
+      keyboard.Update();
       renderer.Render();
       glfwSwapBuffers(window);
       glfwPollEvents();
