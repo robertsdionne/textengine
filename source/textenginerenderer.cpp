@@ -5,6 +5,7 @@
 #include "drawtools.h"
 #include "gamestate.h"
 #include "mesh.h"
+#include "mesheditor.h"
 #include "textenginerenderer.h"
 #include "updater.h"
 
@@ -15,8 +16,8 @@ namespace textengine {
   constexpr const char *TextEngineRenderer::kEdgeGeometryShaderSource;
   constexpr const char *TextEngineRenderer::kFragmentShaderSource;
 
-  TextEngineRenderer::TextEngineRenderer(Updater &updater, Mesh &mesh)
-  : updater(updater), mesh(mesh) {}
+  TextEngineRenderer::TextEngineRenderer(Updater &updater, Mesh &mesh, MeshEditor &editor)
+  : updater(updater), mesh(mesh), editor(editor) {}
 
   void TextEngineRenderer::Change(int width, int height) {
     glViewport(0, 0, width, height);
@@ -130,8 +131,9 @@ namespace textengine {
     CHECK_STATE(!glGetError());
 
     std::unique_ptr<float[]> world_data = mesh.Triangulate();
-    std::unique_ptr<float[]> edge_data = mesh.Wireframe();
-    std::unique_ptr<float[]> point_data = mesh.Points();
+    std::unique_ptr<float[]> edge_data = editor.HighlightedWireframe();
+    std::unique_ptr<float[]> point_data = editor.HighlightedPoints();
+    
     glGenBuffers(1, &world_vertex_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, world_vertex_buffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 3 * 2, world_data.get(), GL_STATIC_DRAW);
@@ -201,6 +203,8 @@ namespace textengine {
     glBindVertexArray(point_vertex_array);
     glDrawArrays(GL_POINTS, 0, 3 * 2);
     CHECK_STATE(!glGetError());
+
+    editor.Update();
     
 //    glUseProgram(program);
 //    glUniform2f(glGetUniformLocation(program, u8"shape_position"),

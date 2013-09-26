@@ -7,6 +7,7 @@
 #include "glfwapplication.h"
 #include "keyboard.h"
 #include "mesh.h"
+#include "mesheditor.h"
 #include "prompt.h"
 #include "textenginerenderer.h"
 #include "updater.h"
@@ -26,9 +27,10 @@ int main(int argument_count, char *arguments[]) {
   textengine::GameState initial_state;
   textengine::Updater updater{queue, parser, initial_state};
   textengine::Mesh mesh;
-  mesh.AddDefaultFace(glm::vec2(0, 0));
+  mesh.AddDefaultFace(glm::vec2(0.1, 0.1));
   mesh.AddDefaultFace(glm::vec2(0.5, 0.5));
-  textengine::TextEngineRenderer renderer{updater, mesh};
+  textengine::MeshEditor editor{keyboard, mesh};
+  textengine::TextEngineRenderer renderer{updater, mesh, editor};
   textengine::GlfwApplication application{argument_count, arguments, kWindowWidth, kWindowHeight,
                                           kWindowTitle, updater, renderer, keyboard};
   application.Run();

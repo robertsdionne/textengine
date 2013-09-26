@@ -12,11 +12,12 @@
 namespace textengine {
 
   class Mesh;
+  class MeshEditor;
   class Updater;
 
   class TextEngineRenderer : public Renderer {
   public:
-    TextEngineRenderer(Updater &updater, Mesh &mesh);
+    TextEngineRenderer(Updater &updater, Mesh &mesh, MeshEditor &editor);
 
     virtual ~TextEngineRenderer() = default;
 
@@ -108,6 +109,7 @@ namespace textengine {
 
     Updater &updater;
     Mesh &mesh;
+    MeshEditor &editor;
     GLuint edge_geometry_shader, fragment_shader, point_geometry_shader, vertex_shader;
     GLuint edge_program, point_program, program;
     GLuint vertex_array, vertex_buffer;

@@ -13,15 +13,6 @@ namespace textengine {
 
     virtual ~Mesh() = default;
 
-    void AddDefaultFace(glm::vec2 position);
-
-    std::unique_ptr<float[]> Points() const;
-
-    std::unique_ptr<float[]> Triangulate() const;
-
-    std::unique_ptr<float[]> Wireframe() const;
-
-  private:
     struct HalfEdge;
 
     struct Face {
@@ -39,6 +30,21 @@ namespace textengine {
       Vertex *start;
     };
 
+    const std::vector<std::unique_ptr<HalfEdge>> &get_half_edges() const;
+
+    const std::vector<std::unique_ptr<Face>> &get_faces() const;
+
+    const std::vector<std::unique_ptr<Vertex>> &get_vertices() const;
+
+    void AddDefaultFace(glm::vec2 position);
+
+    std::unique_ptr<float[]> Points() const;
+
+    std::unique_ptr<float[]> Triangulate() const;
+
+    std::unique_ptr<float[]> Wireframe() const;
+
+  private:
     std::vector<std::unique_ptr<HalfEdge>> half_edges;
     std::vector<std::unique_ptr<Face>> faces;
     std::vector<std::unique_ptr<Vertex>> vertices;

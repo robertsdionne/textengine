@@ -6,6 +6,18 @@
 
 namespace textengine {
 
+  const std::vector<std::unique_ptr<Mesh::HalfEdge>> &Mesh::get_half_edges() const {
+    return half_edges;
+  }
+
+  const std::vector<std::unique_ptr<Mesh::Face>> &Mesh::get_faces() const {
+    return faces;
+  }
+
+  const std::vector<std::unique_ptr<Mesh::Vertex>> &Mesh::get_vertices() const {
+    return vertices;
+  }
+  
   void Mesh::AddDefaultFace(glm::vec2 position) {
     const auto point0 = glm::vec2(0, 0), point1 = glm::vec2(0.1, 0), point2 = glm::vec2(0, 0.1);
     auto vertex0 = new Vertex, vertex1 = new Vertex, vertex2 = new Vertex;
