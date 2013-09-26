@@ -11,29 +11,29 @@ namespace textengine {
 
     void DrawCircle(glm::vec2 position, float size, glm::vec4 color) {
       MaybeAllocateCircleDrawable();
-      circle->Use();
-      glUniform2f(circle->GetUniformLocation(u8"shape_position"), position.x, position.y);
-      glUniform2f(circle->GetUniformLocation(u8"shape_size"), size, size);
-      glUniform4f(circle->GetUniformLocation(u8"shape_color"), color.r, color.g, color.b, color.a);
-      circle->Draw();
+//      circle->Use();
+//      glUniform2f(circle->GetUniformLocation(u8"shape_position"), position.x, position.y);
+//      glUniform2f(circle->GetUniformLocation(u8"shape_size"), size, size);
+//      glUniform4f(circle->GetUniformLocation(u8"shape_color"), color.r, color.g, color.b, color.a);
+//      circle->Draw();
     }
 
     void DrawSquare(glm::vec2 position, glm::vec2 size, glm::vec4 color) {
       MaybeAllocateSquareDrawable();
-      square->Use();
-      glUniform2f(circle->GetUniformLocation(u8"shape_position"), position.x, position.y);
-      glUniform2f(circle->GetUniformLocation(u8"shape_size"), size.x, size.y);
-      glUniform4f(circle->GetUniformLocation(u8"shape_color"), color.r, color.g, color.b, color.a);
-      square->Draw();
+//      square->Use();
+//      glUniform2f(circle->GetUniformLocation(u8"shape_position"), position.x, position.y);
+//      glUniform2f(circle->GetUniformLocation(u8"shape_size"), size.x, size.y);
+//      glUniform4f(circle->GetUniformLocation(u8"shape_color"), color.r, color.g, color.b, color.a);
+//      square->Draw();
     }
 
     void DrawTriangle(glm::vec2 position, float size, glm::vec4 color) {
       MaybeAllocateTriangleDrawable();
-      triangle->Use();
-      glUniform2f(circle->GetUniformLocation(u8"shape_position"), position.x, position.y);
-      glUniform2f(circle->GetUniformLocation(u8"shape_size"), size, size);
-      glUniform4f(circle->GetUniformLocation(u8"shape_color"), color.r, color.g, color.b, color.a);
-      triangle->Draw();
+//      triangle->Use();
+//      glUniform2f(circle->GetUniformLocation(u8"shape_position"), position.x, position.y);
+//      glUniform2f(circle->GetUniformLocation(u8"shape_size"), size, size);
+//      glUniform4f(circle->GetUniformLocation(u8"shape_color"), color.r, color.g, color.b, color.a);
+//      triangle->Draw();
     }
 
     void MaybeAllocateCircleDrawable() {
@@ -50,8 +50,8 @@ namespace textengine {
           circle_data[i + 5] = 0.0f;
         }
         circle = std::unique_ptr<Drawable>(new Drawable());
-        circle->Create(vertex_shader_source, fragment_shader_source,
-                       circle_data, sizeof(float) * kCircleResolution * 6, kCircleResolution);
+//        circle->Create(vertex_shader_source, fragment_shader_source,
+//                       circle_data, sizeof(float) * kCircleResolution * 6, kCircleResolution);
       }
     }
 
@@ -66,8 +66,8 @@ namespace textengine {
           0.5, -0.5
         };
         square = std::unique_ptr<Drawable>(new Drawable());
-        square->Create(vertex_shader_source, fragment_shader_source,
-                       square_data, sizeof(float) * 6, 2);
+//        square->Create(vertex_shader_source, fragment_shader_source,
+//                       square_data, sizeof(float) * 6, 2);
       }
     }
 
@@ -79,8 +79,8 @@ namespace textengine {
           0.5, -0.5
         };
         triangle = std::unique_ptr<Drawable>(new Drawable());
-        triangle->Create(vertex_shader_source, fragment_shader_source,
-                         triangle_data, sizeof(float) * 3, 1);
+//        triangle->Create(vertex_shader_source, fragment_shader_source,
+//                         triangle_data, sizeof(float) * 3, 1);
       }
     }
 

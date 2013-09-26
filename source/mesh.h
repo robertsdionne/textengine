@@ -5,6 +5,8 @@
 #include <memory>
 #include <vector>
 
+#include "drawable.h"
+
 namespace textengine {
 
   class Mesh {
@@ -38,11 +40,13 @@ namespace textengine {
 
     void AddDefaultFace(glm::vec2 position);
 
-    std::unique_ptr<float[]> Points() const;
+    Vertex *ExtrudeEdge(HalfEdge *edge);
 
-    std::unique_ptr<float[]> Triangulate() const;
+    Drawable Points() const;
 
-    std::unique_ptr<float[]> Wireframe() const;
+    Drawable Triangulate() const;
+
+    Drawable Wireframe() const;
 
   private:
     std::vector<std::unique_ptr<HalfEdge>> half_edges;

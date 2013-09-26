@@ -1,6 +1,8 @@
 #ifndef TEXTENGINE_MESHEDITOR_H_
 #define TEXTENGINE_MESHEDITOR_H_
 
+#include <glm/glm.hpp>
+
 namespace textengine {
 
   class Keyboard;
@@ -15,9 +17,9 @@ namespace textengine {
 
     virtual ~MeshEditor() = default;
 
-    std::unique_ptr<float[]> HighlightedPoints() const;
+    Drawable HighlightedPoints() const;
 
-    std::unique_ptr<float[]> HighlightedWireframe() const;
+    Drawable HighlightedWireframe() const;
 
     void Update();
 
@@ -27,6 +29,7 @@ namespace textengine {
     Mesh &mesh;
     Mesh::Vertex *selected_vertex0, *selected_vertex1;
     Mesh::HalfEdge *selected_edge;
+    glm::vec2 start_position, start_cursor_position;
   };
 
 }  // namespace textengine

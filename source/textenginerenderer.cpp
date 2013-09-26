@@ -129,15 +129,8 @@ namespace textengine {
                           2, GL_FLOAT, false, 0, nullptr);
     glEnableVertexAttribArray(glGetAttribLocation(program, u8"vertex_position"));
     CHECK_STATE(!glGetError());
-
-    std::unique_ptr<float[]> world_data = mesh.Triangulate();
-    std::unique_ptr<float[]> edge_data = editor.HighlightedWireframe();
-    std::unique_ptr<float[]> point_data = editor.HighlightedPoints();
     
     glGenBuffers(1, &world_vertex_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, world_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 3 * 2, world_data.get(), GL_STATIC_DRAW);
-    CHECK_STATE(!glGetError());
 
     glGenVertexArrays(1, &world_vertex_array);
     glBindVertexArray(world_vertex_array);
@@ -148,9 +141,6 @@ namespace textengine {
     CHECK_STATE(!glGetError());
 
     glGenBuffers(1, &edge_vertex_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, edge_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 3 * 2 * 2, edge_data.get(), GL_STATIC_DRAW);
-    CHECK_STATE(!glGetError());
 
     glGenVertexArrays(1, &edge_vertex_array);
     glBindVertexArray(edge_vertex_array);
@@ -161,9 +151,6 @@ namespace textengine {
     CHECK_STATE(!glGetError());
 
     glGenBuffers(1, &point_vertex_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, point_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 3 * 2, point_data.get(), GL_STATIC_DRAW);
-    CHECK_STATE(!glGetError());
 
     glGenVertexArrays(1, &point_vertex_array);
     glBindVertexArray(point_vertex_array);
@@ -174,7 +161,28 @@ namespace textengine {
     CHECK_STATE(!glGetError());
   }
 
-  void TextEngineRenderer::Render() {    
+  void TextEngineRenderer::Render() {
+    Drawable world_data = mesh.Triangulate();
+    
+    glBindBuffer(GL_ARRAY_BUFFER, world_vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(float) * world_data.data_size, world_data.data.get(), GL_STREAM_DRAW);
+    CHECK_STATE(!glGetError());
+
+    Drawable edge_data = editor.HighlightedWireframe();
+
+    glBindBuffer(GL_ARRAY_BUFFER, edge_vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(float) * edge_data.data_size, edge_data.data.get(), GL_STREAM_DRAW);
+    CHECK_STATE(!glGetError());
+    
+    Drawable point_data = editor.HighlightedPoints();
+
+    glBindBuffer(GL_ARRAY_BUFFER, point_vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER,
+                 sizeof(float) * point_data.data_size, point_data.data.get(), GL_STREAM_DRAW);
+    CHECK_STATE(!glGetError());
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     GameState current_state = updater.GetCurrentState();
@@ -183,7 +191,7 @@ namespace textengine {
     glUniform2f(glGetUniformLocation(program, u8"shape_size"), 2, 2);
     glUniform4f(glGetUniformLocation(program, u8"shape_color"), 0.640000, 0.640000, 0.640000, 1);
     glBindVertexArray(world_vertex_array);
-    glDrawArrays(GL_TRIANGLES, 0, 3 * 2);
+    glDrawArrays(world_data.element_type, 0, world_data.element_count);
     CHECK_STATE(!glGetError());
 
     glUseProgram(edge_program);
@@ -192,7 +200,7 @@ namespace textengine {
     glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.640000, 0.320000, 0.320000, 1);
     glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
     glBindVertexArray(edge_vertex_array);
-    glDrawArrays(GL_LINES, 0, 3 * 2 * 2);
+    glDrawArrays(edge_data.element_type, 0, edge_data.element_count);
     CHECK_STATE(!glGetError());
 
     glUseProgram(point_program);
@@ -201,7 +209,7 @@ namespace textengine {
     glUniform4f(glGetUniformLocation(point_program, u8"shape_color"), 0.320640, 0.320000, 0.640000, 1);
     glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.02);
     glBindVertexArray(point_vertex_array);
-    glDrawArrays(GL_POINTS, 0, 3 * 2);
+    glDrawArrays(point_data.element_type, 0, point_data.element_count);
     CHECK_STATE(!glGetError());
 
     editor.Update();

@@ -87,10 +87,10 @@ namespace textengine {
     glfwGetFramebufferSize(window, &framebuffer_width, &framebuffer_height);
     HandleReshape(window, framebuffer_width, framebuffer_height);
     while (!glfwWindowShouldClose(window)) {
+      renderer.Render();
       updater.Update();
       keyboard.Update();
       mouse.Update();
-      renderer.Render();
       glfwSwapBuffers(window);
       glfwPollEvents();
     }

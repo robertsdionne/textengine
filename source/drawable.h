@@ -2,6 +2,7 @@
 #define TEXTENGINE_DRAWABLE_H_
 
 #include <GLFW/glfw3.h>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -12,30 +13,11 @@
 
 namespace textengine {
 
-  class Drawable {
-  public:
-    Drawable();
-
-    virtual ~Drawable();
-
-    void Create(const std::string &vertex_shader_source,
-                const std::string &fragment_shader_source,
-                const float *data,
-                GLsizeiptr size,
-                GLsizei count);
-
-    void Draw();
-
-    GLint GetUniformLocation(const std::string &name);
-
-    void Use();
-
-  private:
-    Shader vertex_shader, fragment_shader;
-    Program program;
-    Buffer buffer;
-    VertexArray vertex_array;
-    GLsizei count;
+  struct Drawable {
+    std::unique_ptr<float[]> data;
+    size_t data_size;
+    GLenum element_type;
+    GLsizei element_count;
   };
 
 }  // namespace textengine

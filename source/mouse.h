@@ -14,6 +14,8 @@ namespace textengine {
 
     glm::vec2 get_cursor_position() const;
 
+    bool HasMouseMoved() const;
+
     bool IsButtonDown(int button);
 
     bool IsButtonJustPressed(int button);

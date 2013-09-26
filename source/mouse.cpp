@@ -8,6 +8,10 @@ namespace textengine {
   glm::vec2 Mouse::get_cursor_position() const {
     return cursor_position;
   }
+
+  bool Mouse::HasMouseMoved() const {
+    return glm::vec2(0, 0) != cursor_position - previous_cursor_position;
+  }
   
   bool Mouse::IsButtonDown(const int button) {
     return buttons[button];
