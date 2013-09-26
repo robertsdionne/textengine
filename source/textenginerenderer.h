@@ -27,6 +27,7 @@ namespace textengine {
   private:
     Updater &updater;
     GLuint fragment_shader, program, vertex_array, vertex_buffer, vertex_shader;
+    GLuint world_vertex_buffer, world_vertex_array;
   };
 
 }  // namespace textengine

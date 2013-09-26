@@ -22,13 +22,16 @@ namespace textengine {
   private:
     typedef std::vector<std::string>::const_iterator TokenIterator;
 
-    GameState Move(GameState current_state, TokenIterator token);
+    GameState Move(GameState current_state,
+                   const std::vector<std::string> &tokens, TokenIterator token);
 
-    GameState Parse(GameState current_state, TokenIterator token);
+    GameState Parse(GameState current_state,
+                    const std::vector<std::string> &tokens, TokenIterator token);
     
     GameState Quit(GameState current_state);
 
-    GameState Turn(GameState current_state, TokenIterator token);
+    GameState Turn(GameState current_state,
+                   const std::vector<std::string> &tokens, TokenIterator token);
 
     CommandTokenizer &tokenizer;
   };

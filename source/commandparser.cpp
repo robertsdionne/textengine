@@ -16,15 +16,16 @@ namespace textengine {
 
   GameState CommandParser::Parse(GameState current_state, std::string command) {
     const std::vector<std::string> tokens = tokenizer.Tokenize(command);
-    return Parse(current_state, tokens.begin());
+    return Parse(current_state, tokens, tokens.begin());
   }
 
-  GameState CommandParser::Move(GameState current_state, TokenIterator token) {
-    if (TokenIterator() == token) {
-      return current_state;
+  GameState CommandParser::Move(GameState current_state,
+                                const std::vector<std::string> &tokens, TokenIterator token) {
+    if (tokens.end() == token) {
+      current_state.player_target += current_state.player_direction * 0.2f;
     } else if ("forward" == *token) {
       current_state.player_target += current_state.player_direction * 0.2f;
-    } else if ("backward" == *token) {
+    } else if ("backward" == *token || "back" == *token) {
       current_state.player_target += current_state.player_direction * -0.2f;
     } else if ("left" == *token) {
       glm::vec2 orthogonal = glm::vec2(-current_state.player_direction.y,
@@ -56,24 +57,25 @@ namespace textengine {
     return current_state;
   }
 
-  GameState CommandParser::Parse(GameState current_state, TokenIterator token) {
-    if (TokenIterator() == token) {
+  GameState CommandParser::Parse(GameState current_state,
+                                 const std::vector<std::string> &tokens, TokenIterator token) {
+    if (tokens.end() == token) {
       return current_state;
     } else if ("go" == *token || "move" == *token || "step" == *token || "walk" == *token) {
-      return Move(current_state, std::next(token));
+      return Move(current_state, tokens, std::next(token));
     } else if ("face" == *token || "rotate" == *token || "turn" == *token) {
-      return Turn(current_state, std::next(token));
+      return Turn(current_state, tokens, std::next(token));
     } else if ("forward" == *token) {
-      current_state.player_target += current_state.player_direction * 0.2f;
-    } else if ("backward" == *token) {
-      current_state.player_target += current_state.player_direction * -0.2f;
+      current_state.player_target += current_state.player_direction_target * 0.2f;
+    } else if ("backward" == *token || "back" == *token) {
+      current_state.player_target += current_state.player_direction_target * -0.2f;
     } else if ("left" == *token) {
-      glm::vec2 orthogonal = glm::vec2(-current_state.player_direction.y,
-                                       current_state.player_direction.x);
+      glm::vec2 orthogonal = glm::vec2(-current_state.player_direction_target.y,
+                                       current_state.player_direction_target.x);
       current_state.player_target += orthogonal * 0.2f;
     } else if ("right" == *token) {
-      glm::vec2 orthogonal = glm::vec2(-current_state.player_direction.y,
-                                       current_state.player_direction.x);
+      glm::vec2 orthogonal = glm::vec2(-current_state.player_direction_target.y,
+                                       current_state.player_direction_target.x);
       current_state.player_target += orthogonal * -0.2f;
     } else if ("north" == *token || "n" == *token) {
       current_state.player_target += glm::vec2(0, 0.2);
@@ -104,15 +106,18 @@ namespace textengine {
     return current_state;
   }
 
-  GameState CommandParser::Turn(GameState current_state, TokenIterator token) {
-    if (TokenIterator() == token) {
+  GameState CommandParser::Turn(GameState current_state,
+                                const std::vector<std::string> &tokens, TokenIterator token) {
+    if (tokens.end() == token) {
       return current_state;
     } else if ("left" == *token) {
-      current_state.player_direction_target = glm::vec2(-current_state.player_direction.y,
-                                                        current_state.player_direction.x);
+      current_state.player_direction_target = glm::vec2(-current_state.player_direction_target.y,
+                                                        current_state.player_direction_target.x);
     } else if ("right" == *token) {
-      current_state.player_direction_target = -glm::vec2(-current_state.player_direction.y,
-                                                         current_state.player_direction.x);
+      current_state.player_direction_target = -glm::vec2(-current_state.player_direction_target.y,
+                                                         current_state.player_direction_target.x);
+    } else if ("around" == *token) {
+      current_state.player_direction_target = -current_state.player_direction_target;
     } else if ("north" == *token || "n" == *token) {
       current_state.player_direction_target = glm::vec2(0, 1);
     } else if ("south" == *token || "s" == *token) {
@@ -129,6 +134,8 @@ namespace textengine {
       current_state.player_direction_target = glm::normalize(glm::vec2(1, -1));
     } else if ("southwest" == *token || "sw" == *token) {
       current_state.player_direction_target = glm::normalize(glm::vec2(-1, -1));
+    } else {
+      std::cout << "I do not know where you want to turn." << std::endl;
     }
     return current_state;
   }
