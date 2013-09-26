@@ -134,214 +134,6 @@ namespace textengine {
     std::unique_ptr<float[]> world_data = mesh.Triangulate();
     std::unique_ptr<float[]> edge_data = mesh.Wireframe();
     std::unique_ptr<float[]> point_data = mesh.Points();
-
-//    float world_data[] = {
-//      0.400000, 0.140000,
-//      0.440000, 0.260000,
-//      0.440000, 0.140000,
-//      
-//      0.600000, 0.400000,
-//      0.480000, 0.400000,
-//      0.480000, 0.440000,
-//      
-//      0.640000, 0.480000,
-//      0.640000, 0.600000,
-//      0.680000, 0.600000,
-//
-//      0.680000, 0.240000,
-//      0.640000, 0.360000,
-//      0.680000, 0.360000,
-//
-//      0.300000, 0.640000,
-//      0.180000, 0.640000,
-//      0.180000, 0.680000,
-//
-//      0.600000, 0.640000,
-//      0.480000, 0.640000,
-//      0.480000, 0.680000,
-//
-//      0.400000, 0.140000,
-//      0.400000, 0.260000,
-//      0.440000, 0.260000,
-//
-//      0.600000, 0.440000,
-//      0.600000, 0.400000,
-//      0.480000, 0.440000,
-//
-//      0.680000, 0.480000,
-//      0.640000, 0.480000,
-//      0.680000, 0.600000,
-//
-//      0.640000, 0.240000,
-//      0.640000, 0.360000,
-//      0.680000, 0.240000,
-//
-//      0.300000, 0.680000,
-//      0.300000, 0.640000,
-//      0.180000, 0.680000,
-//
-//      0.600000, 0.680000,
-//      0.600000, 0.640000,
-//      0.480000, 0.680000,
-//
-//      0.680000, 0.200000,
-//      1.000000, 0.640000,
-//      1.000000, 0.200000,
-//
-//      0.680000, 0.600000,
-//      0.680000, 0.640000,
-//      1.000000, 0.640000,
-//
-//      0.680000, 0.480000,
-//      0.680000, 0.600000,
-//      1.000000, 0.640000,
-//
-//      0.680000, 0.360000,
-//      0.680000, 0.480000,
-//      1.000000, 0.640000,
-//
-//      0.680000, 0.240000,
-//      0.680000, 0.360000,
-//      1.000000, 0.640000,
-//
-//
-//      0.680000, 0.240000,
-//      0.680000, 0.200000,
-//      1.000000, 0.640000,
-//
-//      -0.000000, 0.300000,
-//      0.400000, -0.000000,
-//      -0.000000, 0.000000,
-//
-//      0.100000, 0.400000,
-//      0.400000, 0.400000,
-//      0.400000, 0.260000,
-//
-//      -0.000000, 0.300000,
-//      0.100000, 0.400000,
-//      0.400000, 0.260000,
-//
-//      0.400000, -0.000000,
-//      -0.000000, 0.300000,
-//      0.400000, 0.140000,
-//
-//      -0.000000, 0.300000,
-//      0.400000, 0.260000,
-//      0.400000, 0.140000,
-//
-//      0.640000, 0.360000,
-//      0.600000, 0.400000,
-//      0.640000, 0.400000,
-//
-//      0.640000, 0.440000,
-//      0.600000, 0.440000,
-//      0.640000, 0.480000,
-//
-//      0.640000, 0.160000,
-//      0.840000, 0.160000,
-//      0.840000, -0.000000,
-//
-//      0.640000, 0.160000,
-//      0.840000, -0.000000,
-//      0.440000, 0.000000,
-//
-//      0.640000, 0.160000,
-//      0.440000, 0.000000,
-//      0.440000, 0.140000,
-//
-//      0.640000, 0.160000,
-//      0.440000, 0.140000,
-//      0.440000, 0.260000,
-//
-//      0.640000, 0.160000,
-//      0.440000, 0.400000,
-//      0.440000, 0.260000,
-//
-//      0.640000, 0.360000,
-//      0.640000, 0.240000,
-//      0.600000, 0.400000,
-//
-//      0.600000, 0.400000,
-//      0.640000, 0.240000,
-//      0.480000, 0.400000,
-//
-//      0.640000, 0.240000,
-//      0.640000, 0.160000,
-//      0.480000, 0.400000,
-//
-//      0.640000, 0.160000,
-//      0.440000, 0.400000,
-//      0.480000, 0.400000,
-//
-//      0.640000, 0.600000,
-//      0.600000, 0.640000,
-//      0.640000, 0.640000,
-//
-//      0.480000, 0.440000,
-//      0.140000, 0.440000,
-//      0.140000, 0.640000,
-//
-//      0.640000, 0.480000,
-//      0.600000, 0.440000,
-//      0.640000, 0.600000,
-//
-//      0.600000, 0.440000,
-//      0.480000, 0.440000,
-//      0.640000, 0.600000,
-//
-//      0.640000, 0.600000,
-//      0.480000, 0.440000,
-//      0.600000, 0.640000,
-//
-//      0.600000, 0.640000,
-//      0.480000, 0.440000,
-//      0.480000, 0.640000,
-//
-//      0.480000, 0.640000,
-//      0.480000, 0.440000,
-//      0.300000, 0.640000,
-//
-//      0.480000, 0.440000,
-//      0.140000, 0.640000,
-//      0.180000, 0.640000,
-//
-//      0.300000, 0.640000,
-//      0.480000, 0.440000,
-//      0.180000, 0.640000,
-//
-//      0.380000, 0.680000,
-//      0.100000, 1.000000,
-//      0.380000, 1.000000,
-//
-//      0.660000, 0.680000,
-//      0.420000, 1.000000,
-//      0.660000, 1.000000,
-//
-//      0.180000, 0.680000,
-//      0.100000, 0.680000,
-//      0.100000, 1.000000,
-//
-//      0.300000, 0.680000,
-//      0.180000, 0.680000,
-//      0.100000, 1.000000,
-//
-//      0.380000, 0.680000,
-//      0.300000, 0.680000,
-//      0.100000, 1.000000,
-//
-//      0.480000, 0.680000,
-//      0.420000, 0.680000,
-//      0.420000, 1.000000,
-//
-//      0.600000, 0.680000,
-//      0.480000, 0.680000,
-//      0.420000, 1.000000,
-//
-//      0.660000, 0.680000,
-//      0.600000, 0.680000,
-//      0.420000, 1.000000
-//    };
-
     glGenBuffers(1, &world_vertex_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, world_vertex_buffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 3 * 2, world_data.get(), GL_STATIC_DRAW);
@@ -411,37 +203,24 @@ namespace textengine {
     glBindVertexArray(point_vertex_array);
     glDrawArrays(GL_POINTS, 0, 3 * 2);
     CHECK_STATE(!glGetError());
-
-//    glUniform4f(glGetUniformLocation(program, u8"shape_color"), 0.640000, 0.320000, 0.320000, 1);
-//    glDrawArrays(GL_TRIANGLES, 12*3, 6*3);
+    
+//    glUseProgram(program);
+//    glUniform2f(glGetUniformLocation(program, u8"shape_position"),
+//                current_state.player_position.x, current_state.player_position.y);
+//    glUniform2f(glGetUniformLocation(program, u8"shape_size"), 0.05, 0.05);
+//    glUniform4f(glGetUniformLocation(program, u8"shape_color"), 1, 0, 0, 1);
+//    glBindVertexArray(vertex_array);
+//    glDrawArrays(GL_TRIANGLES, 0, 100*3);
 //    CHECK_STATE(!glGetError());
-//    glUniform4f(glGetUniformLocation(program, u8"shape_color"), 0.320640, 0.320000, 0.640000, 1);
-//    glDrawArrays(GL_TRIANGLES, (12+6)*3, 5*3);
+//    glUseProgram(program);
+//    glUniform2f(glGetUniformLocation(program, u8"shape_position"),
+//                current_state.player_position.x + current_state.player_direction.x * 0.1,
+//                current_state.player_position.y + current_state.player_direction.y * 0.1);
+//    glUniform2f(glGetUniformLocation(program, u8"shape_size"), 0.01, 0.01);
+//    glUniform4f(glGetUniformLocation(program, u8"shape_color"), 1, 0, 0, 1);
+//    glBindVertexArray(vertex_array);
+//    glDrawArrays(GL_TRIANGLES, 0, 100*3);
 //    CHECK_STATE(!glGetError());
-//    glUniform4f(glGetUniformLocation(program, u8"shape_color"), 0.640000, 0.640000, 0.320000, 1);
-//    glDrawArrays(GL_TRIANGLES, (12+6+5)*3, 20*3);
-//    CHECK_STATE(!glGetError());
-//    glUniform4f(glGetUniformLocation(program, u8"shape_color"), 0.320000, 0.640000, 0.320000, 1);
-//    glDrawArrays(GL_TRIANGLES, (12+6+5+20)*3, 8*3);
-//    CHECK_STATE(!glGetError());
-    glUseProgram(program);
-    glUniform2f(glGetUniformLocation(program, u8"shape_position"),
-                current_state.player_position.x, current_state.player_position.y);
-    glUniform2f(glGetUniformLocation(program, u8"shape_size"), 0.05, 0.05);
-    glUniform4f(glGetUniformLocation(program, u8"shape_color"), 1, 0, 0, 1);
-    glBindVertexArray(vertex_array);
-    glDrawArrays(GL_TRIANGLES, 0, 100*3);
-    CHECK_STATE(!glGetError());
-    glUseProgram(program);
-    glUniform2f(glGetUniformLocation(program, u8"shape_position"),
-                current_state.player_position.x + current_state.player_direction.x * 0.1,
-                current_state.player_position.y + current_state.player_direction.y * 0.1);
-    glUniform2f(glGetUniformLocation(program, u8"shape_size"), 0.01, 0.01);
-    glUniform4f(glGetUniformLocation(program, u8"shape_color"), 1, 0, 0, 1);
-    glBindVertexArray(vertex_array);
-    glDrawArrays(GL_TRIANGLES, 0, 100*3);
-    CHECK_STATE(!glGetError());
-
   }
 
 }  // namespace textengine
