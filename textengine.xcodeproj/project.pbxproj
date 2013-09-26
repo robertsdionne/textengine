@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4600EB9117EBC8F9003BA3C3 /* commandtokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4600EB8F17EBC8F9003BA3C3 /* commandtokenizer.cpp */; };
 		4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4607741F17E8EC0100896A15 /* textenginerenderer.cpp */; };
+		460B492A17F47E24006B4828 /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460B492917F47E24006B4828 /* mesh.cpp */; };
 		460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B117EA1C3B00D765F5 /* keyboard.cpp */; };
 		460F81B617EA322400D765F5 /* prompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B417EA322400D765F5 /* prompt.cpp */; };
 		460F81B917EA37C700D765F5 /* commandqueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B717EA37C700D765F5 /* commandqueue.cpp */; };
@@ -17,7 +18,6 @@
 		462B4A6617EA43AA006FE9BB /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A6017EA43AA006FE9BB /* program.cpp */; };
 		462B4A6717EA43AA006FE9BB /* buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A6217EA43AA006FE9BB /* buffer.cpp */; };
 		462B4A6A17EA9760006FE9BB /* drawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A6817EA9760006FE9BB /* drawable.cpp */; };
-		462F4AB217F3CF44002BE5A7 /* halfedgemesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462F4AB017F3CF44002BE5A7 /* halfedgemesh.cpp */; };
 		466E70FA17EB92F900CD9E9D /* gamestate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70F817EB92F900CD9E9D /* gamestate.cpp */; };
 		466E70FD17EB944400CD9E9D /* commandparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70FB17EB944400CD9E9D /* commandparser.cpp */; };
 		466E710017EB96D600CD9E9D /* updater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70FE17EB96D500CD9E9D /* updater.cpp */; };
@@ -100,6 +100,8 @@
 		4600EB9017EBC8F9003BA3C3 /* commandtokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commandtokenizer.h; sourceTree = "<group>"; };
 		4607741F17E8EC0100896A15 /* textenginerenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textenginerenderer.cpp; sourceTree = "<group>"; };
 		4607742017E8EC0100896A15 /* textenginerenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textenginerenderer.h; sourceTree = "<group>"; };
+		460B492817F47E24006B4828 /* mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesh.h; sourceTree = "<group>"; };
+		460B492917F47E24006B4828 /* mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mesh.cpp; sourceTree = "<group>"; };
 		460F81B117EA1C3B00D765F5 /* keyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = keyboard.cpp; sourceTree = "<group>"; };
 		460F81B217EA1C3B00D765F5 /* keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyboard.h; sourceTree = "<group>"; };
 		460F81B417EA322400D765F5 /* prompt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = prompt.cpp; sourceTree = "<group>"; };
@@ -116,8 +118,6 @@
 		462B4A6317EA43AA006FE9BB /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
 		462B4A6817EA9760006FE9BB /* drawable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawable.cpp; sourceTree = "<group>"; };
 		462B4A6917EA9760006FE9BB /* drawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = drawable.h; sourceTree = "<group>"; };
-		462F4AB017F3CF44002BE5A7 /* halfedgemesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = halfedgemesh.cpp; sourceTree = "<group>"; };
-		462F4AB117F3CF44002BE5A7 /* halfedgemesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = halfedgemesh.h; sourceTree = "<group>"; };
 		466E70F817EB92F900CD9E9D /* gamestate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gamestate.cpp; sourceTree = "<group>"; };
 		466E70F917EB92F900CD9E9D /* gamestate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gamestate.h; sourceTree = "<group>"; };
 		466E70FB17EB944400CD9E9D /* commandparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commandparser.cpp; sourceTree = "<group>"; };
@@ -2601,11 +2601,11 @@
 				466E70F917EB92F900CD9E9D /* gamestate.h */,
 				46B9875517E6A62500B59145 /* glfwapplication.cpp */,
 				46B9875617E6A62500B59145 /* glfwapplication.h */,
-				462F4AB017F3CF44002BE5A7 /* halfedgemesh.cpp */,
-				462F4AB117F3CF44002BE5A7 /* halfedgemesh.h */,
 				460F81B117EA1C3B00D765F5 /* keyboard.cpp */,
 				460F81B217EA1C3B00D765F5 /* keyboard.h */,
 				46B9A6091771F0F800E43B24 /* main.cpp */,
+				460B492917F47E24006B4828 /* mesh.cpp */,
+				460B492817F47E24006B4828 /* mesh.h */,
 				468E014C1783E8FB00301C1C /* object.h */,
 				462B4A6017EA43AA006FE9BB /* program.cpp */,
 				462B4A6117EA43AA006FE9BB /* program.h */,
@@ -2772,7 +2772,7 @@
 				466E70FD17EB944400CD9E9D /* commandparser.cpp in Sources */,
 				466E710017EB96D600CD9E9D /* updater.cpp in Sources */,
 				4600EB9117EBC8F9003BA3C3 /* commandtokenizer.cpp in Sources */,
-				462F4AB217F3CF44002BE5A7 /* halfedgemesh.cpp in Sources */,
+				460B492A17F47E24006B4828 /* mesh.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
