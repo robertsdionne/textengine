@@ -10,6 +10,11 @@
 
 namespace textengine {
 
+  constexpr const char *TextEngineRenderer::kVertexShaderSource;
+  constexpr const char *TextEngineRenderer::kPointGeometryShaderSource;
+  constexpr const char *TextEngineRenderer::kEdgeGeometryShaderSource;
+  constexpr const char *TextEngineRenderer::kFragmentShaderSource;
+
   TextEngineRenderer::TextEngineRenderer(Updater &updater) : updater(updater) {}
 
   void TextEngineRenderer::Change(int width, int height) {
@@ -20,17 +25,7 @@ namespace textengine {
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
     vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-    constexpr const char *vertex_shader_source = u8R"glsl(#version 150 core
-    uniform vec2 shape_position;
-    uniform vec2 shape_size;
-
-    in vec2 vertex_position;
-
-    void main() {
-      gl_Position = vec4(shape_position + vertex_position * shape_size, 0, 1);
-    }
-    )glsl";
-    glShaderSource(vertex_shader, 1, &vertex_shader_source, nullptr);
+    glShaderSource(vertex_shader, 1, &kVertexShaderSource, nullptr);
     GLint compile_status;
     glCompileShader(vertex_shader);
     glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &compile_status);
@@ -41,17 +36,28 @@ namespace textengine {
     }
     CHECK_STATE(!glGetError());
 
-    fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-    constexpr const char *fragment_shader_source = u8R"glsl(#version 150 core
-    uniform vec4 shape_color;
-
-    out vec4 color;
-
-    void main() {
-      color = shape_color;
+    point_geometry_shader = glCreateShader(GL_GEOMETRY_SHADER);
+    glShaderSource(point_geometry_shader, 1, &kPointGeometryShaderSource, nullptr);
+    glCompileShader(point_geometry_shader);
+    glGetShaderiv(point_geometry_shader, GL_COMPILE_STATUS, &compile_status);
+    if (!compile_status) {
+      glGetShaderInfoLog(point_geometry_shader, sizeof(info_log), nullptr, info_log);
+      FAIL(info_log);
     }
-    )glsl";
-    glShaderSource(fragment_shader, 1, &fragment_shader_source, nullptr);
+    CHECK_STATE(!glGetError());
+
+    edge_geometry_shader = glCreateShader(GL_GEOMETRY_SHADER);
+    glShaderSource(edge_geometry_shader, 1, &kEdgeGeometryShaderSource, nullptr);
+    glCompileShader(edge_geometry_shader);
+    glGetShaderiv(edge_geometry_shader, GL_COMPILE_STATUS, &compile_status);
+    if (!compile_status) {
+      glGetShaderInfoLog(edge_geometry_shader, sizeof(info_log), nullptr, info_log);
+      FAIL(info_log);
+    }
+    CHECK_STATE(!glGetError());
+
+    fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragment_shader, 1, &kFragmentShaderSource, nullptr);
     glCompileShader(fragment_shader);
     glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &compile_status);
     if (!compile_status) {
@@ -68,6 +74,30 @@ namespace textengine {
     glGetProgramiv(program, GL_LINK_STATUS, &link_status);
     if (!link_status) {
       glGetProgramInfoLog(program, sizeof(info_log), nullptr, info_log);
+      FAIL(info_log);
+    }
+    CHECK_STATE(!glGetError());
+
+    edge_program = glCreateProgram();
+    glAttachShader(edge_program, vertex_shader);
+    glAttachShader(edge_program, edge_geometry_shader);
+    glAttachShader(edge_program, fragment_shader);
+    glLinkProgram(edge_program);
+    glGetProgramiv(edge_program, GL_LINK_STATUS, &link_status);
+    if (!link_status) {
+      glGetProgramInfoLog(edge_program, sizeof(info_log), nullptr, info_log);
+      FAIL(info_log);
+    }
+    CHECK_STATE(!glGetError());
+
+    point_program = glCreateProgram();
+    glAttachShader(point_program, vertex_shader);
+    glAttachShader(point_program, point_geometry_shader);
+    glAttachShader(point_program, fragment_shader);
+    glLinkProgram(point_program);
+    glGetProgramiv(point_program, GL_LINK_STATUS, &link_status);
+    if (!link_status) {
+      glGetProgramInfoLog(point_program, sizeof(info_log), nullptr, info_log);
       FAIL(info_log);
     }
     CHECK_STATE(!glGetError());
@@ -102,6 +132,8 @@ namespace textengine {
     mesh.AddDefaultFace(glm::vec2(0, 0));
     mesh.AddDefaultFace(glm::vec2(0.5, 0.5));
     std::unique_ptr<float[]> world_data = mesh.Triangulate();
+    std::unique_ptr<float[]> edge_data = mesh.Wireframe();
+    std::unique_ptr<float[]> point_data = mesh.Points();
 
 //    float world_data[] = {
 //      0.400000, 0.140000,
@@ -312,12 +344,38 @@ namespace textengine {
 
     glGenBuffers(1, &world_vertex_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, world_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 6, world_data.get(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 3 * 2, world_data.get(), GL_STATIC_DRAW);
     CHECK_STATE(!glGetError());
 
     glGenVertexArrays(1, &world_vertex_array);
-    glBindVertexArray(world_vertex_buffer);
+    glBindVertexArray(world_vertex_array);
     glBindBuffer(GL_ARRAY_BUFFER, world_vertex_buffer);
+    glVertexAttribPointer(glGetAttribLocation(program, u8"vertex_position"),
+                          2, GL_FLOAT, false, 0, nullptr);
+    glEnableVertexAttribArray(glGetAttribLocation(program, u8"vertex_position"));
+    CHECK_STATE(!glGetError());
+
+    glGenBuffers(1, &edge_vertex_buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, edge_vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 3 * 2 * 2, edge_data.get(), GL_STATIC_DRAW);
+    CHECK_STATE(!glGetError());
+
+    glGenVertexArrays(1, &edge_vertex_array);
+    glBindVertexArray(edge_vertex_array);
+    glBindBuffer(GL_ARRAY_BUFFER, edge_vertex_buffer);
+    glVertexAttribPointer(glGetAttribLocation(program, u8"vertex_position"),
+                          2, GL_FLOAT, false, 0, nullptr);
+    glEnableVertexAttribArray(glGetAttribLocation(program, u8"vertex_position"));
+    CHECK_STATE(!glGetError());
+
+    glGenBuffers(1, &point_vertex_buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, point_vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 2 * 3 * 2, point_data.get(), GL_STATIC_DRAW);
+    CHECK_STATE(!glGetError());
+
+    glGenVertexArrays(1, &point_vertex_array);
+    glBindVertexArray(point_vertex_array);
+    glBindBuffer(GL_ARRAY_BUFFER, point_vertex_buffer);
     glVertexAttribPointer(glGetAttribLocation(program, u8"vertex_position"),
                           2, GL_FLOAT, false, 0, nullptr);
     glEnableVertexAttribArray(glGetAttribLocation(program, u8"vertex_position"));
@@ -326,14 +384,34 @@ namespace textengine {
 
   void TextEngineRenderer::Render() {    
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     GameState current_state = updater.GetCurrentState();
     glUseProgram(program);
     glUniform2f(glGetUniformLocation(program, u8"shape_position"), -1, -1);
     glUniform2f(glGetUniformLocation(program, u8"shape_size"), 2, 2);
     glUniform4f(glGetUniformLocation(program, u8"shape_color"), 0.640000, 0.640000, 0.640000, 1);
     glBindVertexArray(world_vertex_array);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDrawArrays(GL_TRIANGLES, 0, 3 * 2);
     CHECK_STATE(!glGetError());
+
+    glUseProgram(edge_program);
+    glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
+    glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
+    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.640000, 0.320000, 0.320000, 1);
+    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
+    glBindVertexArray(edge_vertex_array);
+    glDrawArrays(GL_LINES, 0, 3 * 2 * 2);
+    CHECK_STATE(!glGetError());
+
+    glUseProgram(point_program);
+    glUniform2f(glGetUniformLocation(point_program, u8"shape_position"), -1, -1);
+    glUniform2f(glGetUniformLocation(point_program, u8"shape_size"), 2, 2);
+    glUniform4f(glGetUniformLocation(point_program, u8"shape_color"), 0.320640, 0.320000, 0.640000, 1);
+    glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.02);
+    glBindVertexArray(point_vertex_array);
+    glDrawArrays(GL_POINTS, 0, 3 * 2);
+    CHECK_STATE(!glGetError());
+
 //    glUniform4f(glGetUniformLocation(program, u8"shape_color"), 0.640000, 0.320000, 0.320000, 1);
 //    glDrawArrays(GL_TRIANGLES, 12*3, 6*3);
 //    CHECK_STATE(!glGetError());

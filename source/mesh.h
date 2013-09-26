@@ -15,7 +15,11 @@ namespace textengine {
 
     void AddDefaultFace(glm::vec2 position);
 
+    std::unique_ptr<float[]> Points() const;
+
     std::unique_ptr<float[]> Triangulate() const;
+
+    std::unique_ptr<float[]> Wireframe() const;
 
   private:
     struct HalfEdge;

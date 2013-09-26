@@ -52,12 +52,21 @@ namespace textengine {
     faces.emplace_back(face);
   }
 
+  std::unique_ptr<float[]> Mesh::Points() const {
+    constexpr size_t kCoordinatesPerVertex = 2;
+    std::unique_ptr<float[]> data{new float[kCoordinatesPerVertex * vertices.size()]};
+    for (auto i = 0; i < vertices.size(); ++i) {
+      data[kCoordinatesPerVertex * i + 0] = vertices[i]->position.x;
+      data[kCoordinatesPerVertex * i + 1] = vertices[i]->position.y;
+    }
+    return data;
+  }
+
   std::unique_ptr<float[]> Mesh::Triangulate() const {
     constexpr size_t kVerticesPerFace = 3;
     constexpr size_t kCoordinatesPerVertex = 2;
     constexpr size_t kFaceSize = kVerticesPerFace * kCoordinatesPerVertex;
-    const size_t count = faces.size() * kFaceSize;
-    std::unique_ptr<float[]> data{new float[count]};
+    std::unique_ptr<float[]> data{new float[kFaceSize * faces.size()]};
     for (auto i = 0; i < faces.size(); ++i) {
       const auto h01 = faces[i]->face_edge;
       const auto h12 = h01->next;
@@ -70,7 +79,20 @@ namespace textengine {
       data[kFaceSize * i + 3] = v1->position.y;
       data[kFaceSize * i + 4] = v2->position.x;
       data[kFaceSize * i + 5] = v2->position.y;
-      std::cout << "out" << std::endl;
+    }
+    return data;
+  }
+
+  std::unique_ptr<float[]> Mesh::Wireframe() const {
+    constexpr size_t kVerticesPerEdge = 2;
+    constexpr size_t kCoordinatesPerVertex = 2;
+    constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
+    std::unique_ptr<float[]> data{new float[kEdgeSize * half_edges.size()]};
+    for (auto i = 0; i < half_edges.size(); ++i) {
+      data[kEdgeSize * i + 0] = half_edges[i]->start->position.x;
+      data[kEdgeSize * i + 1] = half_edges[i]->start->position.y;
+      data[kEdgeSize * i + 2] = half_edges[i]->next->start->position.x;
+      data[kEdgeSize * i + 3] = half_edges[i]->next->start->position.y;
     }
     return data;
   }
