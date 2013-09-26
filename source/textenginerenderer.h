@@ -2,6 +2,7 @@
 #define TEXTENGINE_TEXTENGINERENDERER_H_
 
 #include <iostream>
+
 #include "buffer.h"
 #include "program.h"
 #include "renderer.h"

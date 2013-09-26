@@ -1,4 +1,5 @@
 #include <glm/glm.hpp>
+
 #include "gamestate.h"
 
 namespace textengine {
