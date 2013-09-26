@@ -7,24 +7,6 @@
 
 namespace textengine {
 
-  struct Face;
-  struct Vertex;
-
-  struct HalfEdge {
-    Face *face;
-    HalfEdge *next, *opposite, *previous;
-    Vertex *start;
-  };
-
-  struct Face {
-    HalfEdge *face_edge;
-  };
-
-  struct Vertex {
-    HalfEdge *vertex_edge;
-    glm::vec2 position;
-  };
-
   class Mesh {
   public:
     Mesh() = default;
@@ -36,6 +18,23 @@ namespace textengine {
     std::unique_ptr<float[]> Triangulate() const;
 
   private:
+    struct HalfEdge;
+
+    struct Face {
+      HalfEdge *face_edge;
+    };
+
+    struct Vertex {
+      HalfEdge *vertex_edge;
+      glm::vec2 position;
+    };
+
+    struct HalfEdge {
+      Face *face;
+      HalfEdge *next, *opposite, *previous;
+      Vertex *start;
+    };
+
     std::vector<std::unique_ptr<HalfEdge>> half_edges;
     std::vector<std::unique_ptr<Face>> faces;
     std::vector<std::unique_ptr<Vertex>> vertices;
