@@ -6,6 +6,14 @@ namespace textengine {
     return keys[key];
   }
 
+  bool Keyboard::IsKeyJustPressed(const int key) {
+    return keys[key] && !previous_keys[key];
+  }
+
+  bool Keyboard::IsKeyJustReleased(const int key) {
+    return !keys[key] && previous_keys[key];
+  }
+
   void Keyboard::OnKeyDown(const int key) {
     keys[key] = true;
   }

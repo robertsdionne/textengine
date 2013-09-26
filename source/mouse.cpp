@@ -13,6 +13,14 @@ namespace textengine {
     return buttons[button];
   }
 
+  bool Mouse::IsButtonJustPressed(const int button) {
+    return buttons[button] && !previous_buttons[button];
+  }
+
+  bool Mouse::IsButtonJustReleased(const int button) {
+    return !buttons[button] && previous_buttons[button];
+  }
+
   void Mouse::OnButtonDown(const int button) {
     buttons[button] = true;
   }

@@ -16,6 +16,10 @@ namespace textengine {
 
     bool IsButtonDown(int button);
 
+    bool IsButtonJustPressed(int button);
+
+    bool IsButtonJustReleased(int button);
+
     void OnButtonDown(int button);
 
     void OnButtonUp(int button);

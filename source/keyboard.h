@@ -13,6 +13,10 @@ namespace textengine {
 
     bool IsKeyDown(int key);
 
+    bool IsKeyJustPressed(int key);
+
+    bool IsKeyJustReleased(int key);
+
     void OnKeyDown(int key);
 
     void OnKeyUp(int key);
