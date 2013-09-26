@@ -115,7 +115,8 @@ namespace textengine {
     GLuint vertex_array, vertex_buffer;
     GLuint world_vertex_buffer, world_vertex_array;
     GLuint edge_vertex_buffer, edge_vertex_array;
-    GLuint point_vertex_buffer, point_vertex_array;
+    GLuint selected_point_vertex_buffer, selected_point_vertex_array;
+    GLuint selected_edge_vertex_buffer, selected_edge_vertex_array;
   };
 
 }  // namespace textengine

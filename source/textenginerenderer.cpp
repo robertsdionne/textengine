@@ -145,19 +145,29 @@ namespace textengine {
     glGenVertexArrays(1, &edge_vertex_array);
     glBindVertexArray(edge_vertex_array);
     glBindBuffer(GL_ARRAY_BUFFER, edge_vertex_buffer);
-    glVertexAttribPointer(glGetAttribLocation(program, u8"vertex_position"),
+    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
                           2, GL_FLOAT, false, 0, nullptr);
-    glEnableVertexAttribArray(glGetAttribLocation(program, u8"vertex_position"));
+    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
     CHECK_STATE(!glGetError());
 
-    glGenBuffers(1, &point_vertex_buffer);
+    glGenBuffers(1, &selected_point_vertex_buffer);
 
-    glGenVertexArrays(1, &point_vertex_array);
-    glBindVertexArray(point_vertex_array);
-    glBindBuffer(GL_ARRAY_BUFFER, point_vertex_buffer);
-    glVertexAttribPointer(glGetAttribLocation(program, u8"vertex_position"),
+    glGenVertexArrays(1, &selected_point_vertex_array);
+    glBindVertexArray(selected_point_vertex_array);
+    glBindBuffer(GL_ARRAY_BUFFER, selected_point_vertex_buffer);
+    glVertexAttribPointer(glGetAttribLocation(point_program, u8"vertex_position"),
                           2, GL_FLOAT, false, 0, nullptr);
-    glEnableVertexAttribArray(glGetAttribLocation(program, u8"vertex_position"));
+    glEnableVertexAttribArray(glGetAttribLocation(point_program, u8"vertex_position"));
+    CHECK_STATE(!glGetError());
+
+    glGenBuffers(1, &selected_edge_vertex_buffer);
+
+    glGenVertexArrays(1, &selected_edge_vertex_array);
+    glBindVertexArray(selected_edge_vertex_array);
+    glBindBuffer(GL_ARRAY_BUFFER, selected_edge_vertex_buffer);
+    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
+                          2, GL_FLOAT, false, 0, nullptr);
+    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
     CHECK_STATE(!glGetError());
   }
 
@@ -169,18 +179,25 @@ namespace textengine {
                  sizeof(float) * world_data.data_size, world_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
-    Drawable edge_data = editor.HighlightedWireframe();
+    Drawable edge_data = mesh.Wireframe();
 
     glBindBuffer(GL_ARRAY_BUFFER, edge_vertex_buffer);
     glBufferData(GL_ARRAY_BUFFER,
                  sizeof(float) * edge_data.data_size, edge_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
     
-    Drawable point_data = editor.HighlightedPoints();
+    Drawable selected_point_data = editor.HighlightedPoints();
 
-    glBindBuffer(GL_ARRAY_BUFFER, point_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER,
-                 sizeof(float) * point_data.data_size, point_data.data.get(), GL_STREAM_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, selected_point_vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * selected_point_data.data_size,
+                 selected_point_data.data.get(), GL_STREAM_DRAW);
+    CHECK_STATE(!glGetError());
+
+    Drawable selected_edge_data = editor.HighlightedWireframe();
+
+    glBindBuffer(GL_ARRAY_BUFFER, selected_edge_vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * selected_edge_data.data_size,
+                 selected_edge_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -197,8 +214,9 @@ namespace textengine {
     glUseProgram(edge_program);
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
-    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.640000, 0.320000, 0.320000, 1);
-    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
+    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"),
+                0.640000/2.0, 0.640000/2.0, 0.640000/2.0, 1);
+    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.0025);
     glBindVertexArray(edge_vertex_array);
     glDrawArrays(edge_data.element_type, 0, edge_data.element_count);
     CHECK_STATE(!glGetError());
@@ -208,8 +226,17 @@ namespace textengine {
     glUniform2f(glGetUniformLocation(point_program, u8"shape_size"), 2, 2);
     glUniform4f(glGetUniformLocation(point_program, u8"shape_color"), 0.320640, 0.320000, 0.640000, 1);
     glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.02);
-    glBindVertexArray(point_vertex_array);
-    glDrawArrays(point_data.element_type, 0, point_data.element_count);
+    glBindVertexArray(selected_point_vertex_array);
+    glDrawArrays(selected_point_data.element_type, 0, selected_point_data.element_count);
+    CHECK_STATE(!glGetError());
+
+    glUseProgram(edge_program);
+    glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
+    glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
+    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.640000, 0.320000, 0.320000, 1);
+    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
+    glBindVertexArray(selected_edge_vertex_array);
+    glDrawArrays(selected_edge_data.element_type, 0, selected_edge_data.element_count);
     CHECK_STATE(!glGetError());
 
     editor.Update();
