@@ -30,9 +30,6 @@ namespace textengine {
         case GLFW_PRESS:
         case GLFW_REPEAT: {
           glfw_application->keyboard.OnKeyDown(key);
-          if (key == GLFW_KEY_ESCAPE) {
-            glfwSetWindowShouldClose(glfw_application->window, true);
-          }
           break;
         }
         case GLFW_RELEASE: {
