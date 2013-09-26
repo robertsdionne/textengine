@@ -9,6 +9,7 @@
 namespace textengine {
 
   class Keyboard;
+  class Mouse;
   class Renderer;
   class Updater;
 
@@ -16,7 +17,7 @@ namespace textengine {
   public:
     GlfwApplication(int argument_count, char *arguments[], int width, int height,
                     const std::string &title, Updater &updater, Renderer &renderer,
-                    Keyboard &keyboard);
+                    Keyboard &keyboard, Mouse &mouse);
 
     virtual ~GlfwApplication();
 
@@ -24,6 +25,10 @@ namespace textengine {
 
   protected:
     static void HandleKeyboard(GLFWwindow *window, int key, int scancode, int action, int mods);
+
+    static void HandleMouseButton(GLFWwindow *window, int button, int action, int mods);
+
+    static void HandleMouseCursorMove(GLFWwindow *window, double x, double y);
 
     static void HandleReshape(GLFWwindow *window, int width, int height);
 
@@ -38,6 +43,7 @@ namespace textengine {
     Updater &updater;
     Renderer &renderer;
     Keyboard &keyboard;
+    Mouse &mouse;
   };
 
 }  // namespace textengine

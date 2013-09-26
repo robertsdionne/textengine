@@ -6,8 +6,8 @@
 
 namespace textengine {
 
-  MeshEditor::MeshEditor(Keyboard &keyboard, Mesh &mesh)
-  : keyboard(keyboard), mesh(mesh),
+  MeshEditor::MeshEditor(Keyboard &keyboard, Mouse &mouse, Mesh &mesh)
+  : keyboard(keyboard), mouse(mouse), mesh(mesh),
     selected_vertex0(mesh.get_vertices()[0].get()),
     selected_vertex1(mesh.get_vertices()[0]->vertex_edge->next->start),
     selected_edge(mesh.get_vertices()[0]->vertex_edge) {}

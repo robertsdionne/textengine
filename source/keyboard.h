@@ -1,7 +1,6 @@
 #ifndef TEXTENGINE_KEYBOARD_H_
 #define TEXTENGINE_KEYBOARD_H_
 
-#include <iostream>
 #include <map>
 
 namespace textengine {
@@ -21,7 +20,7 @@ namespace textengine {
     void Update();
 
   private:
-    std::map<int, bool>keys, previous_keys;
+    std::map<int, bool> keys, previous_keys;
   };
 
 }  // namespace textengine

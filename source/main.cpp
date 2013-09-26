@@ -8,6 +8,7 @@
 #include "keyboard.h"
 #include "mesh.h"
 #include "mesheditor.h"
+#include "mouse.h"
 #include "prompt.h"
 #include "textenginerenderer.h"
 #include "updater.h"
@@ -19,6 +20,7 @@ constexpr const char *kWindowTitle = u8"textengine";
 
 int main(int argument_count, char *arguments[]) {
   textengine::Keyboard keyboard;
+  textengine::Mouse mouse;
   textengine::CommandQueue queue;
   textengine::Prompt prompt{queue, kPrompt};
   prompt.Run();
@@ -29,10 +31,10 @@ int main(int argument_count, char *arguments[]) {
   textengine::Mesh mesh;
   mesh.AddDefaultFace(glm::vec2(0.1, 0.1));
   mesh.AddDefaultFace(glm::vec2(0.5, 0.5));
-  textengine::MeshEditor editor{keyboard, mesh};
+  textengine::MeshEditor editor{keyboard, mouse, mesh};
   textengine::TextEngineRenderer renderer{updater, mesh, editor};
   textengine::GlfwApplication application{argument_count, arguments, kWindowWidth, kWindowHeight,
-                                          kWindowTitle, updater, renderer, keyboard};
+                                          kWindowTitle, updater, renderer, keyboard, mouse};
   application.Run();
   return 0;
 }

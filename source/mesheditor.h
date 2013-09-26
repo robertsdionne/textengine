@@ -7,10 +7,11 @@ namespace textengine {
   class Mesh;
   class Mesh::HalfEdge;
   class Mesh::Vertex;
+  class Mouse;
 
   class MeshEditor {
   public:
-    MeshEditor(Keyboard &keyboard, Mesh &mesh);
+    MeshEditor(Keyboard &keyboard, Mouse &mouse, Mesh &mesh);
 
     virtual ~MeshEditor() = default;
 
@@ -22,6 +23,7 @@ namespace textengine {
 
   private:
     Keyboard &keyboard;
+    Mouse &mouse;
     Mesh &mesh;
     Mesh::Vertex *selected_vertex0, *selected_vertex1;
     Mesh::HalfEdge *selected_edge;
