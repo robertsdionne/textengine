@@ -29,7 +29,6 @@ int main(int argument_count, char *arguments[]) {
   textengine::GameState initial_state;
   textengine::Updater updater{queue, parser, initial_state};
   textengine::Mesh mesh;
-  mesh.AddDefaultFace(glm::vec2(0.1, 0.1));
   mesh.AddDefaultFace(glm::vec2(0.5, 0.5));
   textengine::MeshEditor editor{keyboard, mouse, mesh};
   textengine::TextEngineRenderer renderer{updater, mesh, editor};
