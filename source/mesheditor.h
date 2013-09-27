@@ -35,6 +35,8 @@ namespace textengine {
 
     Drawable MoveIndicator() const;
 
+    Drawable PathfindingNodes() const;
+
     Drawable SelectionBox() const;
 
     void Update();

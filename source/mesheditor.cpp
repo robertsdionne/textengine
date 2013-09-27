@@ -168,6 +168,30 @@ namespace textengine {
     return drawable;
   }
 
+  Drawable MeshEditor::PathfindingNodes() const {
+    Drawable drawable;
+    constexpr size_t kCoordinatesPerVertex = 2;
+    drawable.data_size = kCoordinatesPerVertex * mesh.get_faces().size();
+    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+    int index = 0;
+    for (auto &face : mesh.get_faces()) {
+      glm::vec2 total = glm::vec2();
+      float count = 0;
+      Mesh::HalfEdge *edge = face->face_edge;
+      do {
+        total += edge->start->position;
+        count += 1;
+        edge = edge->next;
+      } while (edge != face->face_edge);
+      drawable.data[index + 0] = total.x / count;
+      drawable.data[index + 1] = total.y / count;
+      index += kCoordinatesPerVertex;
+    }
+    drawable.element_count = static_cast<GLsizei>(mesh.get_faces().size());
+    drawable.element_type = GL_POINTS;
+    return drawable;
+  }
+
   Drawable MeshEditor::SelectionBox() const {
     Drawable drawable;
     if (selecting) {

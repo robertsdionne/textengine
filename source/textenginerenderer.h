@@ -59,7 +59,7 @@ namespace textengine {
     void main() {
       for (int i = -1; i < 2; i += 2) {
         for (int j = -1; j < 2; j += 2) {
-          gl_Position = gl_in[0].gl_Position + vec2(i, j) * point_size / 2.0;
+          gl_Position = gl_in[0].gl_Position + vec2(j, i) * point_size / 2.0;
           EmitVertex();
         }
       }
@@ -115,6 +115,7 @@ namespace textengine {
     GLuint vertex_array, vertex_buffer;
     GLuint face_vertex_buffer, face_vertex_array;
     GLuint edge_vertex_buffer, edge_vertex_array;
+    GLuint pathfinding_nodes_vertex_buffer, pathfinding_nodes_vertex_array;
     GLuint selected_face_vertex_buffer, selected_face_vertex_array;
     GLuint selected_interior_edge_vertex_buffer, selected_interior_edge_vertex_array;
     GLuint selected_exterior_edge_vertex_buffer, selected_exterior_edge_vertex_array;
