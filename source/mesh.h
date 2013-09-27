@@ -40,6 +40,8 @@ namespace textengine {
 
     void AddDefaultFace(glm::vec2 position);
 
+    void AddFace(Vertex *vertex0, Vertex *vertex1, Vertex *vertex2);
+
     Vertex *ExtrudeEdge(HalfEdge *edge);
 
     Drawable Points() const;

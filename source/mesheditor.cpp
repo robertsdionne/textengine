@@ -186,7 +186,7 @@ namespace textengine {
         for (auto &edge : mesh.get_half_edges()) {
           if ((vertex0 == edge->start && vertex1 == edge->next->start && !edge->opposite) ||
               (vertex0 == edge->next->start && vertex1 == edge->start && !edge->opposite)) {
-            Mesh::Vertex *vertex2 = mesh.ExtrudeEdge(edge.get());
+            auto *vertex2 = mesh.ExtrudeEdge(edge.get());
             selected_vertices.clear();
             selected_vertices.insert(vertex2);
             for (auto vertex : selected_vertices) {
@@ -197,6 +197,14 @@ namespace textengine {
             break;
           }
         }
+      }
+    }
+    if (ready && keyboard.IsKeyJustPressed('F')) {
+      if (selected_vertices.size() == 3) {
+        auto *vertex0 = *selected_vertices.begin();
+        auto *vertex1 = *(std::next(selected_vertices.begin()));
+        auto *vertex2 = *(std::next(selected_vertices.begin(), 2));
+        mesh.AddFace(vertex0, vertex1, vertex2);
       }
     }
     if (ready && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {

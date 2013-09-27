@@ -103,7 +103,7 @@ namespace textengine {
     out vec4 color;
 
     void main() {
-      color = shape_color;
+      color = gl_FrontFacing ? shape_color : vec4(1, 0, 0, 1);
     }
     )glsl";
 
