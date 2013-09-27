@@ -115,6 +115,7 @@ namespace textengine {
     GLuint vertex_array, vertex_buffer;
     GLuint face_vertex_buffer, face_vertex_array;
     GLuint edge_vertex_buffer, edge_vertex_array;
+    GLuint pathfinding_edges_vertex_buffer, pathfinding_edges_vertex_array;
     GLuint pathfinding_nodes_vertex_buffer, pathfinding_nodes_vertex_array;
     GLuint selected_face_vertex_buffer, selected_face_vertex_array;
     GLuint selected_interior_edge_vertex_buffer, selected_interior_edge_vertex_array;

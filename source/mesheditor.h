@@ -35,6 +35,8 @@ namespace textengine {
 
     Drawable MoveIndicator() const;
 
+    Drawable PathfindingEdges() const;
+
     Drawable PathfindingNodes() const;
 
     Drawable SelectionBox() const;
@@ -42,6 +44,8 @@ namespace textengine {
     void Update();
 
   private:
+    glm::vec2 FaceCentroid(const Mesh::Face *face) const;
+
     Keyboard &keyboard;
     Mouse &mouse;
     Mesh &mesh;

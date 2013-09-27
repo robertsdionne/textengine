@@ -150,6 +150,16 @@ namespace textengine {
     glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
     CHECK_STATE(!glGetError());
 
+    glGenBuffers(1, &pathfinding_edges_vertex_buffer);
+
+    glGenVertexArrays(1, &pathfinding_edges_vertex_array);
+    glBindVertexArray(pathfinding_edges_vertex_array);
+    glBindBuffer(GL_ARRAY_BUFFER, pathfinding_edges_vertex_buffer);
+    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
+                          2, GL_FLOAT, false, 0, nullptr);
+    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
+    CHECK_STATE(!glGetError());
+
     glGenBuffers(1, &pathfinding_nodes_vertex_buffer);
 
     glGenVertexArrays(1, &pathfinding_nodes_vertex_array);
@@ -236,6 +246,13 @@ namespace textengine {
                  sizeof(float) * edge_data.data_size, edge_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
+    Drawable pathfinding_edges_data = editor.PathfindingEdges();
+
+    glBindBuffer(GL_ARRAY_BUFFER, pathfinding_edges_vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * pathfinding_edges_data.data_size,
+                 pathfinding_edges_data.data.get(), GL_STREAM_DRAW);
+    CHECK_STATE(!glGetError());
+
     Drawable pathfinding_nodes_data = editor.PathfindingNodes();
 
     glBindBuffer(GL_ARRAY_BUFFER, pathfinding_nodes_vertex_buffer);
@@ -305,6 +322,15 @@ namespace textengine {
     glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.0025);
     glBindVertexArray(edge_vertex_array);
     glDrawArrays(edge_data.element_type, 0, edge_data.element_count);
+    CHECK_STATE(!glGetError());
+
+    glUseProgram(edge_program);
+    glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
+    glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
+    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.0, 0.0, 0.64, 1);
+    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
+    glBindVertexArray(pathfinding_edges_vertex_array);
+    glDrawArrays(pathfinding_edges_data.element_type, 0, pathfinding_edges_data.element_count);
     CHECK_STATE(!glGetError());
 
     glUseProgram(point_program);

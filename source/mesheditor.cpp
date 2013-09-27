@@ -49,6 +49,18 @@ namespace textengine {
     return faces;
   }
 
+  glm::vec2 MeshEditor::FaceCentroid(const Mesh::Face *face) const {
+    glm::vec2 total = glm::vec2();
+    float count = 0;
+    Mesh::HalfEdge *edge = face->face_edge;
+    do {
+      total += edge->start->position;
+      count += 1;
+      edge = edge->next;
+    } while (edge != face->face_edge);
+    return total / count;
+  }
+
   Drawable MeshEditor::HighlightedPoints() const {
     Drawable drawable;
     constexpr size_t kCoordinatesPerVertex = 2;
@@ -168,6 +180,35 @@ namespace textengine {
     return drawable;
   }
 
+  Drawable MeshEditor::PathfindingEdges() const {
+    Drawable drawable;
+    constexpr size_t kVerticesPerEdge = 2;
+    constexpr size_t kCoordinatesPerVertex = 2;
+    constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
+    const size_t interior_edges = std::count_if(mesh.get_half_edges().begin(),
+                                                mesh.get_half_edges().end(),
+                                                [] (const std::unique_ptr<Mesh::HalfEdge> &half_edge) {
+                                                  return half_edge->opposite;
+                                                });
+    drawable.data_size = kEdgeSize * interior_edges;
+    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+    int index = 0;
+    for (auto &half_edge : mesh.get_half_edges()) {
+      if (half_edge->opposite) {
+        const glm::vec2 centroid = FaceCentroid(half_edge->face);
+        const glm::vec2 opposite_centroid = FaceCentroid(half_edge->opposite->face);
+        drawable.data[index + 0] = centroid.x;
+        drawable.data[index + 1] = centroid.y;
+        drawable.data[index + 2] = opposite_centroid.x;
+        drawable.data[index + 3] = opposite_centroid.y;
+        index += kEdgeSize;
+      }
+    }
+    drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * interior_edges);
+    drawable.element_type = GL_LINES;
+    return drawable;
+  }
+
   Drawable MeshEditor::PathfindingNodes() const {
     Drawable drawable;
     constexpr size_t kCoordinatesPerVertex = 2;
@@ -175,16 +216,9 @@ namespace textengine {
     drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
     int index = 0;
     for (auto &face : mesh.get_faces()) {
-      glm::vec2 total = glm::vec2();
-      float count = 0;
-      Mesh::HalfEdge *edge = face->face_edge;
-      do {
-        total += edge->start->position;
-        count += 1;
-        edge = edge->next;
-      } while (edge != face->face_edge);
-      drawable.data[index + 0] = total.x / count;
-      drawable.data[index + 1] = total.y / count;
+      const glm::vec2 centroid = FaceCentroid(face.get());
+      drawable.data[index + 0] = centroid.x;
+      drawable.data[index + 1] = centroid.y;
       index += kCoordinatesPerVertex;
     }
     drawable.element_count = static_cast<GLsizei>(mesh.get_faces().size());
