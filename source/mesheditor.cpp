@@ -115,7 +115,8 @@ namespace textengine {
   }
 
   void MeshEditor::Update() {
-    if (keyboard.IsKeyJustPressed('A')) {
+    const bool ready = !(selecting || moving);
+    if (ready && keyboard.IsKeyJustPressed('A')) {
       if (selected_vertices.empty()) {
         for (auto &vertex : mesh.get_vertices()) {
           selected_vertices.insert(vertex.get());
@@ -124,9 +125,16 @@ namespace textengine {
         selected_vertices.clear();
       }
     }
-    if (!(selecting || moving) && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
+    if (ready && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
       selected_vertices.clear();
       selecting = true;
+      cursor_start_position = get_cursor_position();
+    }
+    if (ready && keyboard.IsKeyJustPressed('G')) {
+      moving = true;
+      for (auto vertex : selected_vertices) {
+        selected_vertex_positions[vertex] = vertex->position;
+      }
       cursor_start_position = get_cursor_position();
     }
     if (selecting && mouse.HasCursorMoved()) {
@@ -141,15 +149,12 @@ namespace textengine {
         }
       }
     }
+    if (selecting && keyboard.IsKeyJustPressed(GLFW_KEY_ESCAPE)) {
+      selecting = false;
+      selected_vertices.clear();
+    }
     if (selecting && mouse.IsButtonJustReleased(GLFW_MOUSE_BUTTON_1)) {
       selecting = false;
-    }
-    if (!moving && keyboard.IsKeyJustPressed('G')) {
-      moving = true;
-      for (auto vertex : selected_vertices) {
-        selected_vertex_positions[vertex] = vertex->position;
-      }
-      cursor_start_position = get_cursor_position();
     }
     if (moving && mouse.HasCursorMoved()) {
       const glm::vec2 d = get_cursor_position() - cursor_start_position;
@@ -157,39 +162,16 @@ namespace textengine {
         vertex->position = selected_vertex_positions[vertex] + d;
       }
     }
+    if (moving && keyboard.IsKeyJustPressed(GLFW_KEY_ESCAPE)) {
+      moving = false;
+      for (auto vertex : selected_vertices) {
+        vertex->position = selected_vertex_positions[vertex];
+      }
+    }
     if (moving && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
       moving = false;
       selected_vertex_positions.clear();
     }
-//    if (keyboard.IsKeyJustPressed('E')) {
-//      if (selected_vertex0 && selected_vertex1) {
-//        selected_vertex0 = mesh.ExtrudeEdge(selected_edge);
-//        selected_edge = selected_vertex0->vertex_edge;
-//        selected_vertex1 = selected_edge->next->start;
-//      }
-//    }
-//    if (mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
-//      if (selected_vertex0 && selected_vertex1) {
-//        start_position = selected_vertex0->position;
-//        start_cursor_position = mouse.get_cursor_position();
-//      }
-//    }
-//    if (mouse.IsButtonDown(GLFW_MOUSE_BUTTON_1) && mouse.HasMouseMoved()) {
-//      const glm::vec2 d = (mouse.get_cursor_position() - start_cursor_position) * glm::vec2(1, -1);
-//      selected_vertex0->position = start_position + d / 1000.0f;
-//    }
-//    if (keyboard.IsKeyJustPressed('G')) {
-//      if (selected_vertex0 && selected_vertex1) {
-//        move = true;
-//        start_position = selected_vertex0->position;
-//        start_cursor_position = mouse.get_cursor_position();
-//      }
-//    }
-//    if (mouse.HasMouseMoved() && move) {
-//      const glm::vec2 d = (mouse.get_cursor_position() - start_cursor_position) * glm::vec2(1, -1);
-//      selected_vertex0->position = start_position + d / 1000.0f;
-//      selected_vertex1->position = start_position + d / 1000.0f;
-//    }
   }
 
 }  // namespace textengine
