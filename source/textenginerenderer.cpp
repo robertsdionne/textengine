@@ -160,11 +160,21 @@ namespace textengine {
     glEnableVertexAttribArray(glGetAttribLocation(face_program, u8"vertex_position"));
     CHECK_STATE(!glGetError());
 
-    glGenBuffers(1, &selected_edge_vertex_buffer);
+    glGenBuffers(1, &selected_interior_edge_vertex_buffer);
 
-    glGenVertexArrays(1, &selected_edge_vertex_array);
-    glBindVertexArray(selected_edge_vertex_array);
-    glBindBuffer(GL_ARRAY_BUFFER, selected_edge_vertex_buffer);
+    glGenVertexArrays(1, &selected_interior_edge_vertex_array);
+    glBindVertexArray(selected_interior_edge_vertex_array);
+    glBindBuffer(GL_ARRAY_BUFFER, selected_interior_edge_vertex_buffer);
+    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
+                          2, GL_FLOAT, false, 0, nullptr);
+    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
+    CHECK_STATE(!glGetError());
+
+    glGenBuffers(1, &selected_exterior_edge_vertex_buffer);
+
+    glGenVertexArrays(1, &selected_exterior_edge_vertex_array);
+    glBindVertexArray(selected_exterior_edge_vertex_array);
+    glBindBuffer(GL_ARRAY_BUFFER, selected_exterior_edge_vertex_buffer);
     glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
                           2, GL_FLOAT, false, 0, nullptr);
     glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
@@ -223,11 +233,18 @@ namespace textengine {
                  selected_face_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
-    Drawable selected_edge_data = editor.HighlightedWireframe();
+    Drawable selected_interior_edge_data = editor.HighlightedWireframe();
 
-    glBindBuffer(GL_ARRAY_BUFFER, selected_edge_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * selected_edge_data.data_size,
-                 selected_edge_data.data.get(), GL_STREAM_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, selected_interior_edge_vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * selected_interior_edge_data.data_size,
+                 selected_interior_edge_data.data.get(), GL_STREAM_DRAW);
+    CHECK_STATE(!glGetError());
+
+    Drawable selected_exterior_edge_data = editor.HighlightedWireframeExterior();
+
+    glBindBuffer(GL_ARRAY_BUFFER, selected_exterior_edge_vertex_buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * selected_exterior_edge_data.data_size,
+                 selected_exterior_edge_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable selected_point_data = editor.HighlightedPoints();
@@ -294,9 +311,20 @@ namespace textengine {
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
     glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.0, 0.0, 1);
+    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.0025);
+    glBindVertexArray(selected_interior_edge_vertex_array);
+    glDrawArrays(selected_interior_edge_data.element_type,
+                 0, selected_interior_edge_data.element_count);
+    CHECK_STATE(!glGetError());
+
+    glUseProgram(edge_program);
+    glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
+    glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
+    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.0, 0.0, 1);
     glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
-    glBindVertexArray(selected_edge_vertex_array);
-    glDrawArrays(selected_edge_data.element_type, 0, selected_edge_data.element_count);
+    glBindVertexArray(selected_exterior_edge_vertex_array);
+    glDrawArrays(selected_exterior_edge_data.element_type,
+                 0, selected_exterior_edge_data.element_count);
     CHECK_STATE(!glGetError());
 
     glUseProgram(point_program);

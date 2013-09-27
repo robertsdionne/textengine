@@ -31,6 +31,8 @@ namespace textengine {
 
     Drawable HighlightedWireframe() const;
 
+    Drawable HighlightedWireframeExterior() const;
+
     Drawable MoveIndicator() const;
 
     Drawable SelectionBox() const;

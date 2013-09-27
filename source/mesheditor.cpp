@@ -1,4 +1,5 @@
 #include <GLFW/glfw3.h>
+#include <algorithm>
 #include <glm/glm.hpp>
 #include <iostream>
 #include <unordered_set>
@@ -96,16 +97,50 @@ namespace textengine {
     constexpr size_t kVerticesPerEdge = 2;
     constexpr size_t kCoordinatesPerVertex = 2;
     constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
-    drawable.data_size = kEdgeSize * half_edges.size();
+    const size_t interior_edges = std::count_if(half_edges.begin(), half_edges.end(),
+                                                [] (Mesh::HalfEdge *half_edge) {
+                                                  return half_edge->opposite;
+                                                });
+    drawable.data_size = kEdgeSize * interior_edges;
     drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
-    auto half_edge = half_edges.begin();
-    for (auto i = 0; i < half_edges.size(); ++i, ++half_edge) {
-      drawable.data[kEdgeSize * i + 0] = (*half_edge)->start->position.x;
-      drawable.data[kEdgeSize * i + 1] = (*half_edge)->start->position.y;
-      drawable.data[kEdgeSize * i + 2] = (*half_edge)->next->start->position.x;
-      drawable.data[kEdgeSize * i + 3] = (*half_edge)->next->start->position.y;
+    int index = 0;
+    for (auto &half_edge : half_edges) {
+      if (half_edge->opposite) {
+        drawable.data[index + 0] = half_edge->start->position.x;
+        drawable.data[index + 1] = half_edge->start->position.y;
+        drawable.data[index + 2] = half_edge->next->start->position.x;
+        drawable.data[index + 3] = half_edge->next->start->position.y;
+        index += kEdgeSize;
+      }
     }
-    drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * half_edges.size());
+    drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * interior_edges);
+    drawable.element_type = GL_LINES;
+    return drawable;
+  }
+
+  Drawable MeshEditor::HighlightedWireframeExterior() const {
+    std::unordered_set<Mesh::HalfEdge *> half_edges = selected_half_edges();
+    Drawable drawable;
+    constexpr size_t kVerticesPerEdge = 2;
+    constexpr size_t kCoordinatesPerVertex = 2;
+    constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
+    const size_t exterior_edges = std::count_if(half_edges.begin(), half_edges.end(),
+                                                [] (Mesh::HalfEdge *half_edge) {
+                                                  return !half_edge->opposite;
+                                                });
+    drawable.data_size = kEdgeSize * exterior_edges;
+    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+    int index = 0;
+    for (auto &half_edge : half_edges) {
+      if (!half_edge->opposite) {
+        drawable.data[index + 0] = half_edge->start->position.x;
+        drawable.data[index + 1] = half_edge->start->position.y;
+        drawable.data[index + 2] = half_edge->next->start->position.x;
+        drawable.data[index + 3] = half_edge->next->start->position.y;
+        index += kEdgeSize;
+      }
+    }
+    drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * exterior_edges);
     drawable.element_type = GL_LINES;
     return drawable;
   }

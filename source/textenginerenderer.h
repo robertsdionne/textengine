@@ -116,7 +116,8 @@ namespace textengine {
     GLuint face_vertex_buffer, face_vertex_array;
     GLuint edge_vertex_buffer, edge_vertex_array;
     GLuint selected_face_vertex_buffer, selected_face_vertex_array;
-    GLuint selected_edge_vertex_buffer, selected_edge_vertex_array;
+    GLuint selected_interior_edge_vertex_buffer, selected_interior_edge_vertex_array;
+    GLuint selected_exterior_edge_vertex_buffer, selected_exterior_edge_vertex_array;
     GLuint selected_point_vertex_buffer, selected_point_vertex_array;
     GLuint move_indicator_vertex_buffer, move_indicator_vertex_array;
     GLuint selection_box_vertex_buffer, selection_box_vertex_array;
