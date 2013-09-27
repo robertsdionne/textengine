@@ -110,6 +110,29 @@ namespace textengine {
     return drawable;
   }
 
+  Drawable MeshEditor::MoveIndicator() const {
+    Drawable drawable;
+    if (moving) {
+      constexpr size_t kVerticesPerEdge = 2;
+      constexpr size_t kCoordinatesPerVertex = 2;
+      constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
+      drawable.data_size = kEdgeSize;
+      drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+      const glm::vec2 cursor_end_position = get_cursor_position();
+      drawable.data[0] = cursor_start_position.x;
+      drawable.data[1] = cursor_start_position.y;
+      drawable.data[2] = cursor_end_position.x;
+      drawable.data[3] = cursor_end_position.y;
+      drawable.element_count = 2;
+    } else {
+      drawable.data_size = 0;
+      drawable.data = std::unique_ptr<float[]>();
+      drawable.element_count = 0;
+    }
+    drawable.element_type = GL_LINES;
+    return drawable;
+  }
+
   Drawable MeshEditor::SelectionBox() const {
     Drawable drawable;
     if (selecting) {
@@ -156,12 +179,32 @@ namespace textengine {
         selected_vertices.clear();
       }
     }
+    if (ready && keyboard.IsKeyJustPressed('E')) {
+      if (selected_vertices.size() == 2) {
+        const Mesh::Vertex *vertex0 = *selected_vertices.begin();
+        const Mesh::Vertex *vertex1 = *(std::next(selected_vertices.begin()));
+        for (auto &edge : mesh.get_half_edges()) {
+          if ((vertex0 == edge->start && vertex1 == edge->next->start && !edge->opposite) ||
+              (vertex0 == edge->next->start && vertex1 == edge->start && !edge->opposite)) {
+            Mesh::Vertex *vertex2 = mesh.ExtrudeEdge(edge.get());
+            selected_vertices.clear();
+            selected_vertices.insert(vertex2);
+            for (auto vertex : selected_vertices) {
+              selected_vertex_positions[vertex] = vertex->position;
+            }
+            moving = true;
+            cursor_start_position = get_cursor_position();
+            break;
+          }
+        }
+      }
+    }
     if (ready && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
       selected_vertices.clear();
       selecting = true;
       cursor_start_position = get_cursor_position();
     }
-    if (ready && keyboard.IsKeyJustPressed('G')) {
+    if (ready && !selected_vertices.empty() && keyboard.IsKeyJustPressed('G')) {
       moving = true;
       for (auto vertex : selected_vertices) {
         selected_vertex_positions[vertex] = vertex->position;

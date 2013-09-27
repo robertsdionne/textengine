@@ -180,6 +180,16 @@ namespace textengine {
     glEnableVertexAttribArray(glGetAttribLocation(point_program, u8"vertex_position"));
     CHECK_STATE(!glGetError());
 
+    glGenBuffers(1, &move_indicator_vertex_buffer);
+
+    glGenVertexArrays(1, &move_indicator_vertex_array);
+    glBindVertexArray(move_indicator_vertex_array);
+    glBindBuffer(GL_ARRAY_BUFFER, move_indicator_vertex_buffer);
+    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
+                          2, GL_FLOAT, false, 0, nullptr);
+    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
+    CHECK_STATE(!glGetError());
+
     glGenBuffers(1, &selection_box_vertex_buffer);
 
     glGenVertexArrays(1, &selection_box_vertex_array);
@@ -227,6 +237,13 @@ namespace textengine {
                  selected_point_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
+    Drawable move_indicator_data = editor.MoveIndicator();
+
+    glBindBuffer(GL_ARRAY_BUFFER, move_indicator_vertex_array);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * move_indicator_data.data_size,
+                 move_indicator_data.data.get(), GL_STREAM_DRAW);
+    CHECK_STATE(!glGetError());
+
     Drawable selection_box_data = editor.SelectionBox();
 
     glBindBuffer(GL_ARRAY_BUFFER, selection_box_vertex_array);
@@ -254,6 +271,15 @@ namespace textengine {
     glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.0025);
     glBindVertexArray(edge_vertex_array);
     glDrawArrays(edge_data.element_type, 0, edge_data.element_count);
+    CHECK_STATE(!glGetError());
+
+    glUseProgram(edge_program);
+    glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
+    glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
+    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.64, 0.0, 1);
+    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
+    glBindVertexArray(move_indicator_vertex_array);
+    glDrawArrays(move_indicator_data.element_type, 0, move_indicator_data.element_count);
     CHECK_STATE(!glGetError());
     
     glUseProgram(face_program);
