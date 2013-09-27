@@ -179,6 +179,16 @@ namespace textengine {
                           2, GL_FLOAT, false, 0, nullptr);
     glEnableVertexAttribArray(glGetAttribLocation(point_program, u8"vertex_position"));
     CHECK_STATE(!glGetError());
+
+    glGenBuffers(1, &selection_box_vertex_buffer);
+
+    glGenVertexArrays(1, &selection_box_vertex_array);
+    glBindVertexArray(selection_box_vertex_array);
+    glBindBuffer(GL_ARRAY_BUFFER, selection_box_vertex_buffer);
+    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
+                          2, GL_FLOAT, false, 0, nullptr);
+    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
+    CHECK_STATE(!glGetError());
   }
 
   void TextEngineRenderer::Render() {
@@ -215,6 +225,13 @@ namespace textengine {
     glBindBuffer(GL_ARRAY_BUFFER, selected_point_vertex_buffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * selected_point_data.data_size,
                  selected_point_data.data.get(), GL_STREAM_DRAW);
+    CHECK_STATE(!glGetError());
+
+    Drawable selection_box_data = editor.SelectionBox();
+
+    glBindBuffer(GL_ARRAY_BUFFER, selection_box_vertex_array);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * selection_box_data.data_size,
+                 selection_box_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -263,6 +280,15 @@ namespace textengine {
     glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.02);
     glBindVertexArray(selected_point_vertex_array);
     glDrawArrays(selected_point_data.element_type, 0, selected_point_data.element_count);
+    CHECK_STATE(!glGetError());
+
+    glUseProgram(edge_program);
+    glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
+    glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
+    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.64, 0.0, 1);
+    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
+    glBindVertexArray(selection_box_vertex_array);
+    glDrawArrays(selection_box_data.element_type, 0, selection_box_data.element_count);
     CHECK_STATE(!glGetError());
 
     editor.Update();

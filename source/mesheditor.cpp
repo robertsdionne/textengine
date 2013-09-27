@@ -110,6 +110,41 @@ namespace textengine {
     return drawable;
   }
 
+  Drawable MeshEditor::SelectionBox() const {
+    Drawable drawable;
+    if (selecting) {
+      constexpr size_t kVerticesPerEdge = 2;
+      constexpr size_t kCoordinatesPerVertex = 2;
+      constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
+      drawable.data_size = kEdgeSize * 4;
+      drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+      const glm::vec2 cursor_end_position = get_cursor_position();
+      drawable.data[0] = cursor_start_position.x;
+      drawable.data[1] = cursor_start_position.y;
+      drawable.data[2] = cursor_end_position.x;
+      drawable.data[3] = cursor_start_position.y;
+      drawable.data[4] = cursor_start_position.x;
+      drawable.data[5] = cursor_start_position.y;
+      drawable.data[6] = cursor_start_position.x;
+      drawable.data[7] = cursor_end_position.y;
+      drawable.data[8] = cursor_end_position.x;
+      drawable.data[9] = cursor_end_position.y;
+      drawable.data[10] = cursor_start_position.x;
+      drawable.data[11] = cursor_end_position.y;
+      drawable.data[12] = cursor_end_position.x;
+      drawable.data[13] = cursor_end_position.y;
+      drawable.data[14] = cursor_end_position.x;
+      drawable.data[15] = cursor_start_position.y;
+      drawable.element_count = 8;
+    } else {
+      drawable.data_size = 0;
+      drawable.data = std::unique_ptr<float[]>();
+      drawable.element_count = 0;
+    }
+    drawable.element_type = GL_LINES;
+    return drawable;
+  }
+
   void MeshEditor::Update() {
     const bool ready = !(selecting || moving);
     if (ready && keyboard.IsKeyJustPressed('A')) {
