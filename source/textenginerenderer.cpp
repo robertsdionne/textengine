@@ -242,8 +242,7 @@ namespace textengine {
     glUseProgram(face_program);
     glUniform2f(glGetUniformLocation(face_program, u8"shape_position"), -1, -1);
     glUniform2f(glGetUniformLocation(face_program, u8"shape_size"), 2, 2);
-    glUniform4f(glGetUniformLocation(face_program, u8"shape_color"),
-                0.640000/2.0, 0.640000/2.0, 0.640000/2.0, 1);
+    glUniform4f(glGetUniformLocation(face_program, u8"shape_color"), 0.32, 0.0, 0.0, 1);
     glBindVertexArray(selected_face_vertex_array);
     glDrawArrays(selected_face_data.element_type, 0, selected_face_data.element_count);
     CHECK_STATE(!glGetError());
@@ -251,7 +250,7 @@ namespace textengine {
     glUseProgram(edge_program);
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
-    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.640000, 0.320000, 0.320000, 1);
+    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.0, 0.0, 1);
     glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
     glBindVertexArray(selected_edge_vertex_array);
     glDrawArrays(selected_edge_data.element_type, 0, selected_edge_data.element_count);
@@ -260,7 +259,7 @@ namespace textengine {
     glUseProgram(point_program);
     glUniform2f(glGetUniformLocation(point_program, u8"shape_position"), -1, -1);
     glUniform2f(glGetUniformLocation(point_program, u8"shape_size"), 2, 2);
-    glUniform4f(glGetUniformLocation(point_program, u8"shape_color"), 0.320640, 0.320000, 0.640000, 1);
+    glUniform4f(glGetUniformLocation(point_program, u8"shape_color"), 1.0, 0.0, 0.0, 1);
     glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.02);
     glBindVertexArray(selected_point_vertex_array);
     glDrawArrays(selected_point_data.element_type, 0, selected_point_data.element_count);
