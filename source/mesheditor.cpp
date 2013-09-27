@@ -14,10 +14,14 @@ namespace textengine {
 
   MeshEditor::MeshEditor(Keyboard &keyboard, Mouse &mouse, Mesh &mesh)
   : keyboard(keyboard), mouse(mouse), mesh(mesh), selected_vertices(),
-    selected_vertex_positions(), start_cursor_position() {
+    selected_vertex_positions(), cursor_start_position() {
       selected_vertices.insert(mesh.get_vertices()[0].get());
       selected_vertices.insert(mesh.get_vertices()[1].get());
       selected_vertices.insert(mesh.get_vertices()[2].get());
+  }
+
+  glm::vec2 MeshEditor::get_cursor_position() const {
+    return mouse.get_cursor_position() / glm::vec2(640, -480) + glm::vec2(0.0f, 1.0f);
   }
 
   std::unordered_set<Mesh::HalfEdge *> MeshEditor::selected_half_edges() const {
@@ -111,6 +115,52 @@ namespace textengine {
   }
 
   void MeshEditor::Update() {
+    if (keyboard.IsKeyJustPressed('A')) {
+      if (selected_vertices.empty()) {
+        for (auto &vertex : mesh.get_vertices()) {
+          selected_vertices.insert(vertex.get());
+        }
+      } else {
+        selected_vertices.clear();
+      }
+    }
+    if (!(selecting || moving) && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
+      selected_vertices.clear();
+      selecting = true;
+      cursor_start_position = get_cursor_position();
+    }
+    if (selecting && mouse.HasCursorMoved()) {
+      selected_vertices.clear();
+      const glm::vec2 cursor_end_position = get_cursor_position();
+      const glm::vec2 top_left = glm::min(cursor_start_position, cursor_end_position);
+      const glm::vec2 bottom_right = glm::max(cursor_start_position, cursor_end_position);
+      for (auto &vertex : mesh.get_vertices()) {
+        if (glm::all(glm::lessThan(top_left, vertex->position)) &&
+            glm::all(glm::lessThan(vertex->position, bottom_right))) {
+          selected_vertices.insert(vertex.get());
+        }
+      }
+    }
+    if (selecting && mouse.IsButtonJustReleased(GLFW_MOUSE_BUTTON_1)) {
+      selecting = false;
+    }
+    if (!moving && keyboard.IsKeyJustPressed('G')) {
+      moving = true;
+      for (auto vertex : selected_vertices) {
+        selected_vertex_positions[vertex] = vertex->position;
+      }
+      cursor_start_position = get_cursor_position();
+    }
+    if (moving && mouse.HasCursorMoved()) {
+      const glm::vec2 d = get_cursor_position() - cursor_start_position;
+      for (auto vertex : selected_vertices) {
+        vertex->position = selected_vertex_positions[vertex] + d;
+      }
+    }
+    if (moving && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
+      moving = false;
+      selected_vertex_positions.clear();
+    }
 //    if (keyboard.IsKeyJustPressed('E')) {
 //      if (selected_vertex0 && selected_vertex1) {
 //        selected_vertex0 = mesh.ExtrudeEdge(selected_edge);

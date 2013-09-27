@@ -9,7 +9,7 @@ namespace textengine {
     return cursor_position;
   }
 
-  bool Mouse::HasMouseMoved() const {
+  bool Mouse::HasCursorMoved() const {
     return glm::vec2(0, 0) != cursor_position - previous_cursor_position;
   }
   

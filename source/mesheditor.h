@@ -19,6 +19,8 @@ namespace textengine {
 
     virtual ~MeshEditor() = default;
 
+    glm::vec2 get_cursor_position() const;
+
     std::unordered_set<Mesh::HalfEdge *> selected_half_edges() const;
 
     std::unordered_set<Mesh::Face *> selected_faces() const;
@@ -37,7 +39,8 @@ namespace textengine {
     Mesh &mesh;
     std::unordered_set<Mesh::Vertex *> selected_vertices;
     std::unordered_map<Mesh::Vertex *, glm::vec2> selected_vertex_positions;
-    glm::vec2 start_cursor_position;
+    glm::vec2 cursor_start_position;
+    bool moving, selecting;
   };
 
 }  // namespace textengine
