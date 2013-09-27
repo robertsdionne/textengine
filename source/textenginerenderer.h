@@ -111,12 +111,13 @@ namespace textengine {
     Mesh &mesh;
     MeshEditor &editor;
     GLuint edge_geometry_shader, fragment_shader, point_geometry_shader, vertex_shader;
-    GLuint edge_program, point_program, program;
+    GLuint edge_program, face_program, point_program;
     GLuint vertex_array, vertex_buffer;
-    GLuint world_vertex_buffer, world_vertex_array;
+    GLuint face_vertex_buffer, face_vertex_array;
     GLuint edge_vertex_buffer, edge_vertex_array;
-    GLuint selected_point_vertex_buffer, selected_point_vertex_array;
+    GLuint selected_face_vertex_buffer, selected_face_vertex_array;
     GLuint selected_edge_vertex_buffer, selected_edge_vertex_array;
+    GLuint selected_point_vertex_buffer, selected_point_vertex_array;
   };
 
 }  // namespace textengine

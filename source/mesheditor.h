@@ -2,6 +2,8 @@
 #define TEXTENGINE_MESHEDITOR_H_
 
 #include <glm/glm.hpp>
+#include <unordered_map>
+#include <unordered_set>
 
 namespace textengine {
 
@@ -17,7 +19,13 @@ namespace textengine {
 
     virtual ~MeshEditor() = default;
 
+    std::unordered_set<Mesh::HalfEdge *> selected_half_edges() const;
+
+    std::unordered_set<Mesh::Face *> selected_faces() const;
+
     Drawable HighlightedPoints() const;
+
+    Drawable HighlightedTriangles() const;
 
     Drawable HighlightedWireframe() const;
 
@@ -27,9 +35,9 @@ namespace textengine {
     Keyboard &keyboard;
     Mouse &mouse;
     Mesh &mesh;
-    Mesh::Vertex *selected_vertex0, *selected_vertex1;
-    Mesh::HalfEdge *selected_edge;
-    glm::vec2 start_position, start_cursor_position;
+    std::unordered_set<Mesh::Vertex *> selected_vertices;
+    std::unordered_map<Mesh::Vertex *, glm::vec2> selected_vertex_positions;
+    glm::vec2 start_cursor_position;
   };
 
 }  // namespace textengine
