@@ -14,11 +14,7 @@ namespace textengine {
 
   MeshEditor::MeshEditor(Keyboard &keyboard, Mouse &mouse, Mesh &mesh)
   : keyboard(keyboard), mouse(mouse), mesh(mesh), selected_vertices(),
-    selected_vertex_positions(), cursor_start_position() {
-      selected_vertices.insert(mesh.get_vertices()[0].get());
-      selected_vertices.insert(mesh.get_vertices()[1].get());
-      selected_vertices.insert(mesh.get_vertices()[2].get());
-  }
+    selected_vertex_positions(), cursor_start_position() {}
 
   glm::vec2 MeshEditor::get_cursor_position() const {
     return mouse.get_cursor_position() / glm::vec2(640, -480) + glm::vec2(0.0f, 1.0f);

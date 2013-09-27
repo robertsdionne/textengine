@@ -244,7 +244,7 @@ namespace textengine {
     glUniform2f(glGetUniformLocation(face_program, u8"shape_size"), 2, 2);
     glUniform4f(glGetUniformLocation(face_program, u8"shape_color"),
                 0.640000/2.0, 0.640000/2.0, 0.640000/2.0, 1);
-    glBindVertexArray(face_vertex_array);
+    glBindVertexArray(selected_face_vertex_array);
     glDrawArrays(selected_face_data.element_type, 0, selected_face_data.element_count);
     CHECK_STATE(!glGetError());
 
