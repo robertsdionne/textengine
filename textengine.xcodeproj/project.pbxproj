@@ -15,6 +15,7 @@
 		460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B117EA1C3B00D765F5 /* keyboard.cpp */; };
 		460F81B617EA322400D765F5 /* prompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B417EA322400D765F5 /* prompt.cpp */; };
 		460F81B917EA37C700D765F5 /* commandqueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B717EA37C700D765F5 /* commandqueue.cpp */; };
+		461879D717FB5F0D000B32F6 /* meshserializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461879D517FB5F0D000B32F6 /* meshserializer.cpp */; };
 		462B4A6417EA43AA006FE9BB /* vertexarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A5D17EA43AA006FE9BB /* vertexarray.cpp */; };
 		462B4A6517EA43AA006FE9BB /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A5E17EA43AA006FE9BB /* shader.cpp */; };
 		462B4A6617EA43AA006FE9BB /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A6017EA43AA006FE9BB /* program.cpp */; };
@@ -113,6 +114,9 @@
 		460F81B517EA322400D765F5 /* prompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prompt.h; sourceTree = "<group>"; };
 		460F81B717EA37C700D765F5 /* commandqueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commandqueue.cpp; sourceTree = "<group>"; };
 		460F81B817EA37C700D765F5 /* commandqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commandqueue.h; sourceTree = "<group>"; };
+		461879D117FB5E2E000B32F6 /* picojson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = picojson.h; sourceTree = "<group>"; };
+		461879D517FB5F0D000B32F6 /* meshserializer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = meshserializer.cpp; sourceTree = "<group>"; };
+		461879D617FB5F0D000B32F6 /* meshserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meshserializer.h; sourceTree = "<group>"; };
 		462B4A5C17EA43AA006FE9BB /* vertexarray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vertexarray.h; sourceTree = "<group>"; };
 		462B4A5D17EA43AA006FE9BB /* vertexarray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vertexarray.cpp; sourceTree = "<group>"; };
 		462B4A5E17EA43AA006FE9BB /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
@@ -1234,6 +1238,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		461879D017FB5E2E000B32F6 /* picojson */ = {
+			isa = PBXGroup;
+			children = (
+				461879D117FB5E2E000B32F6 /* picojson.h */,
+			);
+			path = picojson;
+			sourceTree = "<group>";
+		};
 		463E3D5A1767FB9000A4466B = {
 			isa = PBXGroup;
 			children = (
@@ -1251,6 +1263,7 @@
 				468E01441783DF9200301C1C /* OpenGL.framework */,
 				46B9825017E69EAB00B59145 /* glfw-3.0.2 */,
 				46B9842F17E6A11A00B59145 /* glm-0.9.4.5 */,
+				461879D017FB5E2E000B32F6 /* picojson */,
 				468EFC671783DC1E00301C1C /* simplexnoise1234 */,
 			);
 			path = libraries;
@@ -2611,6 +2624,8 @@
 				460B492817F47E24006B4828 /* mesh.h */,
 				460B492B17F4AC87006B4828 /* mesheditor.cpp */,
 				460B492C17F4AC88006B4828 /* mesheditor.h */,
+				461879D517FB5F0D000B32F6 /* meshserializer.cpp */,
+				461879D617FB5F0D000B32F6 /* meshserializer.h */,
 				460B492E17F4B48E006B4828 /* mouse.cpp */,
 				460B492F17F4B48F006B4828 /* mouse.h */,
 				468E014C1783E8FB00301C1C /* object.h */,
@@ -2777,6 +2792,7 @@
 				466E70FA17EB92F900CD9E9D /* gamestate.cpp in Sources */,
 				466E70FD17EB944400CD9E9D /* commandparser.cpp in Sources */,
 				466E710017EB96D600CD9E9D /* updater.cpp in Sources */,
+				461879D717FB5F0D000B32F6 /* meshserializer.cpp in Sources */,
 				4600EB9117EBC8F9003BA3C3 /* commandtokenizer.cpp in Sources */,
 				460B492A17F47E24006B4828 /* mesh.cpp in Sources */,
 				460B492D17F4AC88006B4828 /* mesheditor.cpp in Sources */,
@@ -2863,6 +2879,7 @@
 				HEADER_SEARCH_PATHS = (
 					"libraries/glfw-3.0.2/include",
 					"libraries/glm-0.9.4.5",
+					libraries/picojson,
 					libraries/simplexnoise1234,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
@@ -2895,6 +2912,7 @@
 				HEADER_SEARCH_PATHS = (
 					"libraries/glfw-3.0.2/include",
 					"libraries/glm-0.9.4.5",
+					libraries/picojson,
 					libraries/simplexnoise1234,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;

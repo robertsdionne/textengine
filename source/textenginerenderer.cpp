@@ -324,23 +324,23 @@ namespace textengine {
     glDrawArrays(edge_data.element_type, 0, edge_data.element_count);
     CHECK_STATE(!glGetError());
 
-    glUseProgram(edge_program);
-    glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
-    glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
-    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.0, 0.0, 0.64, 1);
-    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
-    glBindVertexArray(pathfinding_edges_vertex_array);
-    glDrawArrays(pathfinding_edges_data.element_type, 0, pathfinding_edges_data.element_count);
-    CHECK_STATE(!glGetError());
-
-    glUseProgram(point_program);
-    glUniform2f(glGetUniformLocation(point_program, u8"shape_position"), -1, -1);
-    glUniform2f(glGetUniformLocation(point_program, u8"shape_size"), 2, 2);
-    glUniform4f(glGetUniformLocation(point_program, u8"shape_color"), 0.0, 0.0, 0.64/2.0, 1);
-    glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.04);
-    glBindVertexArray(pathfinding_nodes_vertex_array);
-    glDrawArrays(pathfinding_nodes_data.element_type, 0, pathfinding_nodes_data.element_count);
-    CHECK_STATE(!glGetError());
+//    glUseProgram(edge_program);
+//    glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
+//    glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
+//    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.0, 0.0, 0.64, 1);
+//    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
+//    glBindVertexArray(pathfinding_edges_vertex_array);
+//    glDrawArrays(pathfinding_edges_data.element_type, 0, pathfinding_edges_data.element_count);
+//    CHECK_STATE(!glGetError());
+//
+//    glUseProgram(point_program);
+//    glUniform2f(glGetUniformLocation(point_program, u8"shape_position"), -1, -1);
+//    glUniform2f(glGetUniformLocation(point_program, u8"shape_size"), 2, 2);
+//    glUniform4f(glGetUniformLocation(point_program, u8"shape_color"), 0.0, 0.0, 0.64/2.0, 1);
+//    glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.04);
+//    glBindVertexArray(pathfinding_nodes_vertex_array);
+//    glDrawArrays(pathfinding_nodes_data.element_type, 0, pathfinding_nodes_data.element_count);
+//    CHECK_STATE(!glGetError());
 
     glUseProgram(edge_program);
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>2AF0E751-B78F-456E-BD22-4E455212D8CC</string>
+	<key>IDESourceControlProjectName</key>
+	<string>textengine</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>8324759D-5A4C-42B9-B67E-E599DC8CFF4C</key>
+		<string>ssh://github.com/robertsdionne/textengine.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>textengine.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>8324759D-5A4C-42B9-B67E-E599DC8CFF4C</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/robertsdionne/textengine.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>8324759D-5A4C-42B9-B67E-E599DC8CFF4C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8324759D-5A4C-42B9-B67E-E599DC8CFF4C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>textengine</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -9,6 +9,7 @@
 #include "keyboard.h"
 #include "mesh.h"
 #include "mesheditor.h"
+#include "meshserializer.h"
 #include "mouse.h"
 
 namespace textengine {
@@ -262,6 +263,10 @@ namespace textengine {
   }
 
   void MeshEditor::Update() {
+    if (keyboard.IsKeyJustPressed('S')) {
+      MeshSerializer serializer;
+      serializer.WriteMesh("output.json", mesh);
+    }
     const bool ready = !(selecting || moving);
     if (ready && keyboard.IsKeyJustPressed('A')) {
       if (selected_vertices.empty()) {
