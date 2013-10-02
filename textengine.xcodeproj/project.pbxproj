@@ -15,6 +15,7 @@
 		460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B117EA1C3B00D765F5 /* keyboard.cpp */; };
 		460F81B617EA322400D765F5 /* prompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B417EA322400D765F5 /* prompt.cpp */; };
 		460F81B917EA37C700D765F5 /* commandqueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B717EA37C700D765F5 /* commandqueue.cpp */; };
+		461229DC17FBA08C00F04521 /* meshloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461229DA17FBA08C00F04521 /* meshloader.cpp */; };
 		461879D717FB5F0D000B32F6 /* meshserializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461879D517FB5F0D000B32F6 /* meshserializer.cpp */; };
 		462B4A6417EA43AA006FE9BB /* vertexarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A5D17EA43AA006FE9BB /* vertexarray.cpp */; };
 		462B4A6517EA43AA006FE9BB /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A5E17EA43AA006FE9BB /* shader.cpp */; };
@@ -114,6 +115,8 @@
 		460F81B517EA322400D765F5 /* prompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prompt.h; sourceTree = "<group>"; };
 		460F81B717EA37C700D765F5 /* commandqueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commandqueue.cpp; sourceTree = "<group>"; };
 		460F81B817EA37C700D765F5 /* commandqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commandqueue.h; sourceTree = "<group>"; };
+		461229DA17FBA08C00F04521 /* meshloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = meshloader.cpp; sourceTree = "<group>"; };
+		461229DB17FBA08C00F04521 /* meshloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meshloader.h; sourceTree = "<group>"; };
 		461879D117FB5E2E000B32F6 /* picojson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = picojson.h; sourceTree = "<group>"; };
 		461879D517FB5F0D000B32F6 /* meshserializer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = meshserializer.cpp; sourceTree = "<group>"; };
 		461879D617FB5F0D000B32F6 /* meshserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meshserializer.h; sourceTree = "<group>"; };
@@ -2624,6 +2627,8 @@
 				460B492817F47E24006B4828 /* mesh.h */,
 				460B492B17F4AC87006B4828 /* mesheditor.cpp */,
 				460B492C17F4AC88006B4828 /* mesheditor.h */,
+				461229DA17FBA08C00F04521 /* meshloader.cpp */,
+				461229DB17FBA08C00F04521 /* meshloader.h */,
 				461879D517FB5F0D000B32F6 /* meshserializer.cpp */,
 				461879D617FB5F0D000B32F6 /* meshserializer.h */,
 				460B492E17F4B48E006B4828 /* mouse.cpp */,
@@ -2793,6 +2798,7 @@
 				466E70FD17EB944400CD9E9D /* commandparser.cpp in Sources */,
 				466E710017EB96D600CD9E9D /* updater.cpp in Sources */,
 				461879D717FB5F0D000B32F6 /* meshserializer.cpp in Sources */,
+				461229DC17FBA08C00F04521 /* meshloader.cpp in Sources */,
 				4600EB9117EBC8F9003BA3C3 /* commandtokenizer.cpp in Sources */,
 				460B492A17F47E24006B4828 /* mesh.cpp in Sources */,
 				460B492D17F4AC88006B4828 /* mesheditor.cpp in Sources */,

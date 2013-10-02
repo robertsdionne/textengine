@@ -2,6 +2,8 @@
 #include <glm/glm.hpp>
 #include <memory>
 #include <unordered_set>
+#include <utility>
+#include <vector>
 
 #include "checks.h"
 #include "drawable.h"
@@ -9,12 +11,17 @@
 
 namespace textengine {
 
-  const std::vector<std::unique_ptr<Mesh::HalfEdge>> &Mesh::get_half_edges() const {
-    return half_edges;
-  }
+  Mesh::Mesh(std::vector<std::unique_ptr<Face>> &&faces,
+             std::vector<std::unique_ptr<HalfEdge>> &&half_edges,
+             std::vector<std::unique_ptr<Vertex>> &&vertices)
+  : faces(std::move(faces)), half_edges(std::move(half_edges)), vertices(std::move(vertices)) {}
 
   const std::vector<std::unique_ptr<Mesh::Face>> &Mesh::get_faces() const {
     return faces;
+  }
+
+  const std::vector<std::unique_ptr<Mesh::HalfEdge>> &Mesh::get_half_edges() const {
+    return half_edges;
   }
 
   const std::vector<std::unique_ptr<Mesh::Vertex>> &Mesh::get_vertices() const {

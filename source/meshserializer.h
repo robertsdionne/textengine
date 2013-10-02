@@ -5,9 +5,9 @@
 #include <string>
 #include <unordered_map>
 
-namespace textengine {
+#include "mesh.h"
 
-  class Mesh;
+namespace textengine {
 
   class MeshSerializer {
   public:

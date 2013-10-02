@@ -11,10 +11,6 @@ namespace textengine {
 
   class Mesh {
   public:
-    Mesh() = default;
-
-    virtual ~Mesh() = default;
-
     struct HalfEdge;
 
     struct Face {
@@ -32,9 +28,21 @@ namespace textengine {
       Vertex *start;
     };
 
-    const std::vector<std::unique_ptr<HalfEdge>> &get_half_edges() const;
+    Mesh() = default;
+
+    Mesh(Mesh &&mesh) = default;
+
+    Mesh(std::vector<std::unique_ptr<Face>> &&faces,
+         std::vector<std::unique_ptr<HalfEdge>> &&half_edges,
+         std::vector<std::unique_ptr<Vertex>> &&vertices);
+
+    virtual ~Mesh() = default;
+
+    Mesh &operator =(Mesh &&mesh) = default;
 
     const std::vector<std::unique_ptr<Face>> &get_faces() const;
+
+    const std::vector<std::unique_ptr<HalfEdge>> &get_half_edges() const;
 
     const std::vector<std::unique_ptr<Vertex>> &get_vertices() const;
 
@@ -51,8 +59,8 @@ namespace textengine {
     Drawable Wireframe() const;
 
   private:
-    std::vector<std::unique_ptr<HalfEdge>> half_edges;
     std::vector<std::unique_ptr<Face>> faces;
+    std::vector<std::unique_ptr<HalfEdge>> half_edges;
     std::vector<std::unique_ptr<Vertex>> vertices;
   };
 
