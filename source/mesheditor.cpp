@@ -284,23 +284,20 @@ namespace textengine {
       }
     }
     if (ready && keyboard.IsKeyJustPressed('E')) {
-      if (selected_vertices.size() == 2) {
-        const Mesh::Vertex *vertex0 = *selected_vertices.begin();
-        const Mesh::Vertex *vertex1 = *(std::next(selected_vertices.begin()));
-        for (auto &edge : mesh.get_half_edges()) {
-          if ((vertex0 == edge->start && vertex1 == edge->next->start && !edge->opposite) ||
-              (vertex0 == edge->next->start && vertex1 == edge->start && !edge->opposite)) {
-            auto *vertex2 = mesh.ExtrudeEdge(edge.get());
-            selected_vertices.clear();
+      std::unordered_set<Mesh::HalfEdge *> half_edges = selected_half_edges();
+      if (half_edges.size() > 0) {
+        selected_vertices.clear();
+        for (auto &edge : half_edges) {
+          if (!edge->opposite) {
+            auto *vertex2 = mesh.ExtrudeEdge(edge);
             selected_vertices.insert(vertex2);
-            for (auto vertex : selected_vertices) {
-              selected_vertex_positions[vertex] = vertex->position;
-            }
-            moving = true;
-            cursor_start_position = get_cursor_position();
-            break;
           }
         }
+        for (auto vertex : selected_vertices) {
+          selected_vertex_positions[vertex] = vertex->position;
+        }
+        moving = true;
+        cursor_start_position = get_cursor_position();
       }
     }
     if (ready && keyboard.IsKeyJustPressed('F')) {
