@@ -159,7 +159,7 @@ namespace textengine {
     return drawable;
   }
 
-  Drawable MeshEditor::MoveIndicator() const {
+  Drawable MeshEditor::MoveScaleIndicator() const {
     Drawable drawable;
     if (moving) {
       constexpr size_t kVerticesPerEdge = 2;
@@ -170,6 +170,18 @@ namespace textengine {
       const glm::vec2 cursor_end_position = get_cursor_position();
       drawable.data[0] = cursor_start_position.x;
       drawable.data[1] = cursor_start_position.y;
+      drawable.data[2] = cursor_end_position.x;
+      drawable.data[3] = cursor_end_position.y;
+      drawable.element_count = 2;
+    } else if (ScaleMode::kFalse != scaling) {
+      constexpr size_t kVerticesPerEdge = 2;
+      constexpr size_t kCoordinatesPerVertex = 2;
+      constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
+      drawable.data_size = kEdgeSize;
+      drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+      const glm::vec2 cursor_end_position = get_cursor_position();
+      drawable.data[0] = scaling_center_of_mass.x;
+      drawable.data[1] = scaling_center_of_mass.y;
       drawable.data[2] = cursor_end_position.x;
       drawable.data[3] = cursor_end_position.y;
       drawable.element_count = 2;
@@ -264,12 +276,12 @@ namespace textengine {
   }
 
   void MeshEditor::Update() {
-    const bool ready = !(selecting || moving);
-    if (ready && keyboard.IsKeyJustPressed('S')) {
+    const bool ready = !(moving || (ScaleMode::kFalse != scaling) || selecting);
+    if (ready && keyboard.IsKeyJustPressed('1')) {
       MeshSerializer serializer;
       serializer.WriteMesh("output.json", mesh);
     }
-    if (ready && keyboard.IsKeyJustPressed('L')) {
+    if (ready && keyboard.IsKeyJustPressed('2')) {
       selected_vertices.clear();
       MeshLoader loader;
       mesh = loader.ReadMesh("output.json");
@@ -320,6 +332,18 @@ namespace textengine {
       }
       cursor_start_position = get_cursor_position();
     }
+    if (ready && !selected_vertices.empty() && keyboard.IsKeyJustPressed('S')) {
+      scaling = ScaleMode::kAll;
+      for (auto vertex : selected_vertices) {
+        selected_vertex_positions[vertex] = vertex->position;
+      }
+      cursor_start_position = get_cursor_position();
+      scaling_center_of_mass = glm::vec2();
+      float i = 1;
+      for (auto vertex : selected_vertices) {
+        scaling_center_of_mass += (vertex->position - scaling_center_of_mass) / i++;
+      }
+    }
     if (selecting && mouse.HasCursorMoved()) {
       selected_vertices.clear();
       const glm::vec2 cursor_end_position = get_cursor_position();
@@ -345,14 +369,60 @@ namespace textengine {
         vertex->position = selected_vertex_positions[vertex] + d;
       }
     }
+    if (ScaleMode::kFalse != scaling && keyboard.IsKeyJustPressed('X')) {
+      scaling = ScaleMode::kX;
+    }
+    if (ScaleMode::kFalse != scaling && keyboard.IsKeyJustPressed('Y')) {
+      scaling = ScaleMode::kY;
+    }
+    if (ScaleMode::kFalse != scaling && keyboard.IsKeyJustPressed('B')) {
+      scaling = ScaleMode::kBoth;
+    }
+    if (ScaleMode::kFalse != scaling && keyboard.IsKeyJustPressed('A')) {
+      scaling = ScaleMode::kAll;
+    }
+    if (ScaleMode::kFalse != scaling && mouse.HasCursorMoved()) {
+      const glm::vec2 cursor_end_position = get_cursor_position();
+      glm::vec2 scale = glm::vec2(1);
+      if (ScaleMode::kAll == scaling) {
+        const float s = glm::length(cursor_end_position - scaling_center_of_mass) / glm::length(
+            cursor_start_position - scaling_center_of_mass);
+        scale = glm::vec2(s);
+      } else if (ScaleMode::kBoth == scaling) {
+        scale = glm::abs(cursor_end_position - scaling_center_of_mass) / glm::abs(
+            cursor_start_position - scaling_center_of_mass);
+      } else if (ScaleMode::kX == scaling) {
+        const float s = glm::abs(cursor_end_position.x - scaling_center_of_mass.x) / glm::abs(
+            cursor_start_position.x - scaling_center_of_mass.x);
+        scale = glm::vec2(s, 1);
+      } else if (ScaleMode::kY == scaling) {
+        const float s = glm::abs(cursor_end_position.y - scaling_center_of_mass.y) / glm::abs(
+            cursor_start_position.y - scaling_center_of_mass.y);
+        scale = glm::vec2(1, s);
+      }
+      for (auto vertex : selected_vertices) {
+        vertex->position = scaling_center_of_mass + (
+            scale * (selected_vertex_positions[vertex] - scaling_center_of_mass));
+      }
+    }
     if (moving && keyboard.IsKeyJustPressed(GLFW_KEY_ESCAPE)) {
       moving = false;
       for (auto vertex : selected_vertices) {
         vertex->position = selected_vertex_positions[vertex];
       }
     }
+    if (ScaleMode::kFalse != scaling && keyboard.IsKeyJustPressed(GLFW_KEY_ESCAPE)) {
+      scaling = ScaleMode::kFalse;
+      for (auto vertex : selected_vertices) {
+        vertex->position = selected_vertex_positions[vertex];
+      }
+    }
     if (moving && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
       moving = false;
+      selected_vertex_positions.clear();
+    }
+    if (ScaleMode::kFalse != scaling && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
+      scaling = ScaleMode::kFalse;
       selected_vertex_positions.clear();
     }
   }

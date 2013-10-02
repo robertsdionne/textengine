@@ -288,7 +288,7 @@ namespace textengine {
                  selected_point_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
-    Drawable move_indicator_data = editor.MoveIndicator();
+    Drawable move_indicator_data = editor.MoveScaleIndicator();
 
     glBindBuffer(GL_ARRAY_BUFFER, move_indicator_vertex_array);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float) * move_indicator_data.data_size,

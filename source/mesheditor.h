@@ -33,7 +33,7 @@ namespace textengine {
 
     Drawable HighlightedWireframeExterior() const;
 
-    Drawable MoveIndicator() const;
+    Drawable MoveScaleIndicator() const;
 
     Drawable PathfindingEdges() const;
 
@@ -46,13 +46,22 @@ namespace textengine {
   private:
     glm::vec2 FaceCentroid(const Mesh::Face *face) const;
 
+    enum class ScaleMode {
+      kFalse = 0,
+      kAll,
+      kBoth,
+      kX,
+      kY
+    };
+
     Keyboard &keyboard;
     Mouse &mouse;
     Mesh &mesh;
     std::unordered_set<Mesh::Vertex *> selected_vertices;
     std::unordered_map<Mesh::Vertex *, glm::vec2> selected_vertex_positions;
-    glm::vec2 cursor_start_position;
+    glm::vec2 cursor_start_position, scaling_center_of_mass;
     bool moving, selecting;
+    ScaleMode scaling;
   };
 
 }  // namespace textengine
