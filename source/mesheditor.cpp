@@ -294,7 +294,7 @@ namespace textengine {
   }
 
   void MeshEditor::Update() {
-    const bool ready = !(moving || (ScaleMode::kFalse != scaling) || selecting);
+    const bool ready = !(moving || rotating || (ScaleMode::kFalse != scaling) || selecting);
     if (ready && keyboard.IsKeyJustPressed('1')) {
       MeshSerializer serializer;
       serializer.WriteMesh("output.json", mesh);
