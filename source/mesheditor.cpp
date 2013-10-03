@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include <iterator>
+#include <limits>
 #include <unordered_set>
 #include <vector>
 
@@ -55,6 +56,43 @@ namespace textengine {
     return faces;
   }
 
+  std::unordered_set<Mesh::Vertex *> MeshEditor::potentially_selected_vertices() const {
+    std::unordered_set<Mesh::Vertex *> vertex_union;
+    std::set_union(selected_vertices.begin(), selected_vertices.end(),
+                   additionally_selected_vertices.begin(), additionally_selected_vertices.end(),
+                   std::inserter(vertex_union, vertex_union.end()));
+    return vertex_union;
+  }
+
+  std::unordered_set<Mesh::HalfEdge *> MeshEditor::potentially_selected_half_edges() const {
+    std::unordered_set<Mesh::Vertex *> vertices = potentially_selected_vertices();
+    std::unordered_set<Mesh::HalfEdge *> half_edges;
+    for (const auto &half_edge : mesh.get_half_edges()) {
+      if (vertices.end() != vertices.find(half_edge->start) &&
+          vertices.end() != vertices.find(half_edge->next->start)) {
+        half_edges.insert(half_edge.get());
+      }
+    }
+    return half_edges;
+  }
+
+  std::unordered_set<Mesh::Face *> MeshEditor::potentially_selected_faces() const {
+    std::unordered_set<Mesh::HalfEdge *> half_edges = potentially_selected_half_edges();
+    std::unordered_set<Mesh::Face *> faces;
+    for (const auto &face : mesh.get_faces()) {
+      const auto h01 = face->face_edge;
+      const auto h12 = h01->next;
+      const auto h20 = h12->next;
+      CHECK_STATE(h01 == h20->next);
+      if (half_edges.end() != half_edges.find(h01) &&
+          half_edges.end() != half_edges.find(h12) &&
+          half_edges.end() != half_edges.find(h20)) {
+        faces.insert(face.get());
+      }
+    }
+    return faces;
+  }
+
   glm::vec2 MeshEditor::FaceCentroid(const Mesh::Face *face) const {
     glm::vec2 total = glm::vec2();
     float count = 0;
@@ -68,22 +106,23 @@ namespace textengine {
   }
 
   Drawable MeshEditor::HighlightedPoints() const {
+    std::unordered_set<Mesh::Vertex *> vertices = potentially_selected_vertices();
     Drawable drawable;
     constexpr size_t kCoordinatesPerVertex = 2;
-    drawable.data_size = kCoordinatesPerVertex * selected_vertices.size();
+    drawable.data_size = kCoordinatesPerVertex * vertices.size();
     drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
-    auto vertex = selected_vertices.begin();
-    for (auto i = 0; i < selected_vertices.size(); ++i, ++vertex) {
+    auto vertex = vertices.begin();
+    for (auto i = 0; i < vertices.size(); ++i, ++vertex) {
       drawable.data[kCoordinatesPerVertex * i + 0] = (*vertex)->position.x;
       drawable.data[kCoordinatesPerVertex * i + 1] = (*vertex)->position.y;
     }
-    drawable.element_count = static_cast<GLsizei>(selected_vertices.size());
+    drawable.element_count = static_cast<GLsizei>(vertices.size());
     drawable.element_type = GL_POINTS;
     return drawable;
   }
 
   Drawable MeshEditor::HighlightedTriangles() const {
-    std::unordered_set<Mesh::Face *> faces = selected_faces();
+    std::unordered_set<Mesh::Face *> faces = potentially_selected_faces();
     Drawable drawable;
     constexpr size_t kVerticesPerFace = 3;
     constexpr size_t kCoordinatesPerVertex = 2;
@@ -110,7 +149,7 @@ namespace textengine {
   }
 
   Drawable MeshEditor::HighlightedWireframe() const {
-    std::unordered_set<Mesh::HalfEdge *> half_edges = selected_half_edges();
+    std::unordered_set<Mesh::HalfEdge *> half_edges = potentially_selected_half_edges();
     Drawable drawable;
     constexpr size_t kVerticesPerEdge = 2;
     constexpr size_t kCoordinatesPerVertex = 2;
@@ -137,7 +176,7 @@ namespace textengine {
   }
 
   Drawable MeshEditor::HighlightedWireframeExterior() const {
-    std::unordered_set<Mesh::HalfEdge *> half_edges = selected_half_edges();
+    std::unordered_set<Mesh::HalfEdge *> half_edges = potentially_selected_half_edges();
     Drawable drawable;
     constexpr size_t kVerticesPerEdge = 2;
     constexpr size_t kCoordinatesPerVertex = 2;
@@ -278,7 +317,7 @@ namespace textengine {
 
   Drawable MeshEditor::SelectionBox() const {
     Drawable drawable;
-    if (selecting) {
+    if (add_selecting || selecting) {
       constexpr size_t kVerticesPerEdge = 2;
       constexpr size_t kCoordinatesPerVertex = 2;
       constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
@@ -312,7 +351,7 @@ namespace textengine {
   }
 
   void MeshEditor::Update() {
-    const bool ready = !((MoveMode::kFalse != moving) || rotating ||
+    const bool ready = !(add_selecting || (MoveMode::kFalse != moving) || rotating ||
                          (ScaleMode::kFalse != scaling) || selecting);
     if (ready && keyboard.IsKeyJustPressed('1')) {
       MeshSerializer serializer;
@@ -446,10 +485,41 @@ namespace textengine {
         mesh.AddFace(vertex0, vertex1, vertex2);
       }
     }
-    if (ready && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
+    if (ready && !(keyboard.IsKeyDown(GLFW_KEY_LEFT_SHIFT) ||
+                   keyboard.IsKeyDown(GLFW_KEY_RIGHT_SHIFT)) &&
+        mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
       selected_vertices.clear();
       selecting = true;
       cursor_start_position = get_cursor_position();
+    }
+    if (ready && (keyboard.IsKeyDown(GLFW_KEY_LEFT_SHIFT) ||
+                  keyboard.IsKeyDown(GLFW_KEY_RIGHT_SHIFT)) &&
+        mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
+      add_selecting = true;
+      cursor_start_position = get_cursor_position();
+    }
+    if (ready && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_2)) {
+      Mesh::Vertex *closest_vertex = nullptr;
+      double minimum_distance = std::numeric_limits<double>::max();
+      const glm::vec2 cursor_position = get_cursor_position();
+      for (auto &vertex : mesh.get_vertices()) {
+        double distance = glm::length(vertex->position - cursor_position);
+        if (distance < minimum_distance) {
+          closest_vertex = vertex.get();
+          minimum_distance = distance;
+        }
+      }
+      if (closest_vertex) {
+        if (!(keyboard.IsKeyDown(GLFW_KEY_LEFT_SHIFT) ||
+              keyboard.IsKeyDown(GLFW_KEY_RIGHT_SHIFT))) {
+          selected_vertices.clear();
+        }
+        if (selected_vertices.end() == selected_vertices.find(closest_vertex)) {
+          selected_vertices.insert(closest_vertex);
+        } else {
+          selected_vertices.erase(closest_vertex);
+        }
+      }
     }
     if (ready && !selected_vertices.empty() && keyboard.IsKeyJustPressed('G')) {
       moving = MoveMode::kBoth;
@@ -494,12 +564,35 @@ namespace textengine {
         }
       }
     }
+    if (add_selecting && mouse.HasCursorMoved()) {
+      additionally_selected_vertices.clear();
+      const glm::vec2 cursor_end_position = get_cursor_position();
+      const glm::vec2 top_left = glm::min(cursor_start_position, cursor_end_position);
+      const glm::vec2 bottom_right = glm::max(cursor_start_position, cursor_end_position);
+      for (auto &vertex : mesh.get_vertices()) {
+        if (selected_vertices.end() == selected_vertices.find(vertex.get()) &&
+            glm::all(glm::lessThan(top_left, vertex->position)) &&
+            glm::all(glm::lessThan(vertex->position, bottom_right))) {
+          additionally_selected_vertices.insert(vertex.get());
+        }
+      }
+    }
     if (selecting && keyboard.IsKeyJustPressed(GLFW_KEY_ESCAPE)) {
       selecting = false;
       selected_vertices.clear();
     }
     if (selecting && mouse.IsButtonJustReleased(GLFW_MOUSE_BUTTON_1)) {
       selecting = false;
+    }
+    if (add_selecting && keyboard.IsKeyJustPressed(GLFW_KEY_ESCAPE)) {
+      add_selecting = false;
+      additionally_selected_vertices.clear();
+    }
+    if (add_selecting && mouse.IsButtonJustReleased(GLFW_MOUSE_BUTTON_1)) {
+      add_selecting = false;
+      std::copy(additionally_selected_vertices.begin(), additionally_selected_vertices.end(),
+                std::inserter(selected_vertices, selected_vertices.end()));
+      additionally_selected_vertices.clear();
     }
     if (MoveMode::kFalse != moving && mouse.HasCursorMoved()) {
       glm::vec2 d = get_cursor_position() - cursor_start_position;

@@ -25,6 +25,12 @@ namespace textengine {
 
     std::unordered_set<Mesh::Face *> selected_faces() const;
 
+    std::unordered_set<Mesh::Vertex *> potentially_selected_vertices() const;
+
+    std::unordered_set<Mesh::HalfEdge *> potentially_selected_half_edges() const;
+
+    std::unordered_set<Mesh::Face *> potentially_selected_faces() const;
+
     Drawable HighlightedPoints() const;
 
     Drawable HighlightedTriangles() const;
@@ -65,10 +71,10 @@ namespace textengine {
     Keyboard &keyboard;
     Mouse &mouse;
     Mesh &mesh;
-    std::unordered_set<Mesh::Vertex *> selected_vertices;
+    std::unordered_set<Mesh::Vertex *> selected_vertices, additionally_selected_vertices;
     std::unordered_map<Mesh::Vertex *, glm::vec2> selected_vertex_positions;
     glm::vec2 cursor_start_position, center_of_mass;
-    bool rotating, selecting;
+    bool add_selecting, rotating, selecting;
     MoveMode moving;
     ScaleMode scaling;
   };
