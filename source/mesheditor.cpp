@@ -1,5 +1,6 @@
 #include <GLFW/glfw3.h>
 #include <algorithm>
+#include <functional>
 #define GLM_SWIZZLE
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -484,6 +485,70 @@ namespace textengine {
         auto *vertex2 = *(std::next(selected_vertices.begin(), 2));
         mesh.AddFace(vertex0, vertex1, vertex2);
       }
+    }
+    if (ready && keyboard.IsKeyJustPressed('X')) {
+      auto selected_faces = MeshEditor::selected_faces();
+      std::unordered_set<Mesh::Face *> deleted_faces;
+      std::unordered_set<Mesh::HalfEdge *> deleted_half_edges;
+      std::unordered_set<Mesh::Vertex *> preserved_vertices;
+      std::unordered_set<Mesh::Vertex *> deleted_vertices;
+      std::copy(selected_faces.begin(), selected_faces.end(),
+                std::inserter(deleted_faces, deleted_faces.end()));
+      for (auto &face : deleted_faces) {
+        auto h01 = face->face_edge;
+        auto h12 = h01->next;
+        auto h20 = h12->next;
+        CHECK_STATE(h01 == h20->next);
+        for (auto half_edge : {h01, h12, h20}) {
+          deleted_half_edges.insert(half_edge);
+        }
+      }
+      for (auto &half_edge : mesh.get_half_edges()) {
+        if (deleted_half_edges.end() == deleted_half_edges.find(half_edge.get())) {
+          preserved_vertices.insert(half_edge->start);
+          if (deleted_half_edges.end() != deleted_half_edges.find(half_edge->opposite)) {
+            half_edge->opposite = nullptr;
+          }
+        }
+      }
+      for (auto &vertex : mesh.get_vertices()) {
+        if (preserved_vertices.end() == preserved_vertices.find(vertex.get())) {
+          deleted_vertices.insert(vertex.get());
+        }
+      }
+      for (auto vertex : preserved_vertices) {
+        if (deleted_half_edges.end() != deleted_half_edges.find(vertex->vertex_edge)) {
+          for (auto &half_edge : mesh.get_half_edges()) {
+            if (deleted_half_edges.end() == deleted_half_edges.find(half_edge.get()) &&
+                vertex == half_edge->start) {
+              vertex->vertex_edge = half_edge.get();
+              break;
+            }
+          }
+        }
+      }
+      for (auto vertex : deleted_vertices) {
+        selected_vertices.erase(vertex);
+      }
+      auto delete_vertex = [deleted_vertices] (std::unique_ptr<Mesh::Vertex> &vertex) {
+        return deleted_vertices.end() != deleted_vertices.find(vertex.get());
+      };
+      auto delete_half_edge = [deleted_half_edges] (std::unique_ptr<Mesh::HalfEdge> &half_edge) {
+        return deleted_half_edges.end() != deleted_half_edges.find(half_edge.get());
+      };
+      auto delete_face = [deleted_faces] (std::unique_ptr<Mesh::Face> &face) {
+        return deleted_faces.end() != deleted_faces.find(face.get());
+      };
+      mesh.get_vertices().erase(std::remove_if(mesh.get_vertices().begin(),
+                                               mesh.get_vertices().end(), delete_vertex),
+                                mesh.get_vertices().end());
+      mesh.get_half_edges().erase(std::remove_if(mesh.get_half_edges().begin(),
+                                                 mesh.get_half_edges().end(), delete_half_edge),
+                                mesh.get_half_edges().end());
+      mesh.get_faces().erase(std::remove_if(mesh.get_faces().begin(),
+                                            mesh.get_faces().end(), delete_face),
+                                mesh.get_faces().end());
+
     }
     if (ready && !(keyboard.IsKeyDown(GLFW_KEY_LEFT_SHIFT) ||
                    keyboard.IsKeyDown(GLFW_KEY_RIGHT_SHIFT)) &&
