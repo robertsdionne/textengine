@@ -163,7 +163,7 @@ namespace textengine {
 
   Drawable MeshEditor::MoveScaleIndicator() const {
     Drawable drawable;
-    if (moving) {
+    if (MoveMode::kFalse != moving) {
       constexpr size_t kVerticesPerEdge = 2;
       constexpr size_t kCoordinatesPerVertex = 2;
       constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
@@ -172,8 +172,16 @@ namespace textengine {
       const glm::vec2 cursor_end_position = get_cursor_position();
       drawable.data[0] = cursor_start_position.x;
       drawable.data[1] = cursor_start_position.y;
-      drawable.data[2] = cursor_end_position.x;
-      drawable.data[3] = cursor_end_position.y;
+      if (MoveMode::kBoth == moving) {
+        drawable.data[2] = cursor_end_position.x;
+        drawable.data[3] = cursor_end_position.y;
+      } else if (MoveMode::kX == moving) {
+        drawable.data[2] = cursor_end_position.x;
+        drawable.data[3] = cursor_start_position.y;
+      } else if (MoveMode::kY == moving) {
+        drawable.data[2] = cursor_start_position.x;
+        drawable.data[3] = cursor_end_position.y;
+      }
       drawable.element_count = 2;
     } else if (rotating) {
       constexpr size_t kVerticesPerEdge = 2;
@@ -200,8 +208,16 @@ namespace textengine {
       const glm::vec2 cursor_end_position = get_cursor_position();
       drawable.data[0] = center_of_mass.x;
       drawable.data[1] = center_of_mass.y;
-      drawable.data[2] = cursor_end_position.x;
-      drawable.data[3] = cursor_end_position.y;
+      if (ScaleMode::kAll == scaling || ScaleMode::kBoth == scaling) {
+        drawable.data[2] = cursor_end_position.x;
+        drawable.data[3] = cursor_end_position.y;
+      } else if (ScaleMode::kX == scaling) {
+        drawable.data[2] = cursor_end_position.x;
+        drawable.data[3] = center_of_mass.y;
+      } else if (ScaleMode::kY == scaling) {
+        drawable.data[2] = center_of_mass.x;
+        drawable.data[3] = cursor_end_position.y;
+      }
       drawable.element_count = 2;
     } else {
       drawable.data_size = 0;
@@ -294,7 +310,8 @@ namespace textengine {
   }
 
   void MeshEditor::Update() {
-    const bool ready = !(moving || rotating || (ScaleMode::kFalse != scaling) || selecting);
+    const bool ready = !((MoveMode::kFalse != moving) || rotating ||
+                         (ScaleMode::kFalse != scaling) || selecting);
     if (ready && keyboard.IsKeyJustPressed('1')) {
       MeshSerializer serializer;
       serializer.WriteMesh("output.json", mesh);
@@ -326,7 +343,7 @@ namespace textengine {
         for (auto vertex : selected_vertices) {
           selected_vertex_positions[vertex] = vertex->position;
         }
-        moving = true;
+        moving = MoveMode::kBoth;
         cursor_start_position = get_cursor_position();
       }
     }
@@ -344,7 +361,7 @@ namespace textengine {
       cursor_start_position = get_cursor_position();
     }
     if (ready && !selected_vertices.empty() && keyboard.IsKeyJustPressed('G')) {
-      moving = true;
+      moving = MoveMode::kBoth;
       for (auto vertex : selected_vertices) {
         selected_vertex_positions[vertex] = vertex->position;
       }
@@ -393,8 +410,13 @@ namespace textengine {
     if (selecting && mouse.IsButtonJustReleased(GLFW_MOUSE_BUTTON_1)) {
       selecting = false;
     }
-    if (moving && mouse.HasCursorMoved()) {
-      const glm::vec2 d = get_cursor_position() - cursor_start_position;
+    if (MoveMode::kFalse != moving && mouse.HasCursorMoved()) {
+      glm::vec2 d = get_cursor_position() - cursor_start_position;
+      if (MoveMode::kX == moving) {
+        d.y = 0;
+      } else if (MoveMode::kY == moving) {
+        d.x = 0;
+      }
       for (auto vertex : selected_vertices) {
         vertex->position = selected_vertex_positions[vertex] + d;
       }
@@ -412,6 +434,15 @@ namespace textengine {
                                                0.0, 1.0);
         vertex->position = center_of_mass + r.xy() / r.w;
       }
+    }
+    if (MoveMode::kFalse != moving && keyboard.IsKeyJustPressed('X')) {
+      moving = MoveMode::kX;
+    }
+    if (MoveMode::kFalse != moving && keyboard.IsKeyJustPressed('Y')) {
+      moving = MoveMode::kY;
+    }
+    if (MoveMode::kFalse != moving && keyboard.IsKeyJustPressed('B')) {
+      moving = MoveMode::kBoth;
     }
     if (ScaleMode::kFalse != scaling && keyboard.IsKeyJustPressed('X')) {
       scaling = ScaleMode::kX;
@@ -449,8 +480,8 @@ namespace textengine {
             scale * (selected_vertex_positions[vertex] - center_of_mass));
       }
     }
-    if (moving && keyboard.IsKeyJustPressed(GLFW_KEY_ESCAPE)) {
-      moving = false;
+    if (MoveMode::kFalse != moving && keyboard.IsKeyJustPressed(GLFW_KEY_ESCAPE)) {
+      moving = MoveMode::kFalse;
       for (auto vertex : selected_vertices) {
         vertex->position = selected_vertex_positions[vertex];
       }
@@ -467,8 +498,8 @@ namespace textengine {
         vertex->position = selected_vertex_positions[vertex];
       }
     }
-    if (moving && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
-      moving = false;
+    if (MoveMode::kFalse != moving && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
+      moving = MoveMode::kFalse;
       selected_vertex_positions.clear();
     }
     if (rotating && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {

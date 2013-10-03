@@ -54,6 +54,13 @@ namespace textengine {
       kY
     };
 
+    enum class MoveMode {
+      kFalse = 0,
+      kBoth,
+      kX,
+      kY
+    };
+
     int width, height;
     Keyboard &keyboard;
     Mouse &mouse;
@@ -61,7 +68,8 @@ namespace textengine {
     std::unordered_set<Mesh::Vertex *> selected_vertices;
     std::unordered_map<Mesh::Vertex *, glm::vec2> selected_vertex_positions;
     glm::vec2 cursor_start_position, center_of_mass;
-    bool moving, rotating, selecting;
+    bool rotating, selecting;
+    MoveMode moving;
     ScaleMode scaling;
   };
 
