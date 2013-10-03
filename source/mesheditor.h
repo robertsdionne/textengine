@@ -15,7 +15,7 @@ namespace textengine {
 
   class MeshEditor {
   public:
-    MeshEditor(Keyboard &keyboard, Mouse &mouse, Mesh &mesh);
+    MeshEditor(int width, int height, Keyboard &keyboard, Mouse &mouse, Mesh &mesh);
 
     virtual ~MeshEditor() = default;
 
@@ -54,13 +54,14 @@ namespace textengine {
       kY
     };
 
+    int width, height;
     Keyboard &keyboard;
     Mouse &mouse;
     Mesh &mesh;
     std::unordered_set<Mesh::Vertex *> selected_vertices;
     std::unordered_map<Mesh::Vertex *, glm::vec2> selected_vertex_positions;
-    glm::vec2 cursor_start_position, scaling_center_of_mass;
-    bool moving, selecting;
+    glm::vec2 cursor_start_position, center_of_mass;
+    bool moving, rotating, selecting;
     ScaleMode scaling;
   };
 

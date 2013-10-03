@@ -319,7 +319,7 @@ namespace textengine {
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
     glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"),
                 0.640000/2.0, 0.640000/2.0, 0.640000/2.0, 1);
-    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.0025);
+    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.00125);
     glBindVertexArray(edge_vertex_array);
     glDrawArrays(edge_data.element_type, 0, edge_data.element_count);
     CHECK_STATE(!glGetError());
@@ -346,7 +346,7 @@ namespace textengine {
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
     glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.64, 0.0, 1);
-    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
+    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.005);
     glBindVertexArray(move_indicator_vertex_array);
     glDrawArrays(move_indicator_data.element_type, 0, move_indicator_data.element_count);
     CHECK_STATE(!glGetError());
@@ -363,7 +363,7 @@ namespace textengine {
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
     glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.0, 0.0, 1);
-    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.0025);
+    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.00125);
     glBindVertexArray(selected_interior_edge_vertex_array);
     glDrawArrays(selected_interior_edge_data.element_type,
                  0, selected_interior_edge_data.element_count);
@@ -373,7 +373,7 @@ namespace textengine {
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
     glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.0, 0.0, 1);
-    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
+    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.005);
     glBindVertexArray(selected_exterior_edge_vertex_array);
     glDrawArrays(selected_exterior_edge_data.element_type,
                  0, selected_exterior_edge_data.element_count);
@@ -383,7 +383,7 @@ namespace textengine {
     glUniform2f(glGetUniformLocation(point_program, u8"shape_position"), -1, -1);
     glUniform2f(glGetUniformLocation(point_program, u8"shape_size"), 2, 2);
     glUniform4f(glGetUniformLocation(point_program, u8"shape_color"), 1.0, 0.0, 0.0, 1);
-    glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.02);
+    glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.01);
     glBindVertexArray(selected_point_vertex_array);
     glDrawArrays(selected_point_data.element_type, 0, selected_point_data.element_count);
     CHECK_STATE(!glGetError());
@@ -392,7 +392,7 @@ namespace textengine {
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
     glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
     glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.64, 0.0, 1);
-    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
+    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.005);
     glBindVertexArray(selection_box_vertex_array);
     glDrawArrays(selection_box_data.element_type, 0, selection_box_data.element_count);
     CHECK_STATE(!glGetError());

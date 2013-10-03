@@ -14,8 +14,8 @@
 #include "updater.h"
 
 constexpr const char *kPrompt = u8"> ";
-constexpr int kWindowHeight = 480;
-constexpr int kWindowWidth = 640;
+constexpr int kWindowHeight = 800;
+constexpr int kWindowWidth = 1280;
 constexpr const char *kWindowTitle = u8"textengine";
 
 int main(int argument_count, char *arguments[]) {
@@ -30,7 +30,7 @@ int main(int argument_count, char *arguments[]) {
   textengine::Updater updater{queue, parser, initial_state};
   textengine::Mesh mesh;
   mesh.AddDefaultFace(glm::vec2(0.5, 0.5));
-  textengine::MeshEditor editor{keyboard, mouse, mesh};
+  textengine::MeshEditor editor{kWindowWidth, kWindowHeight, keyboard, mouse, mesh};
   textengine::TextEngineRenderer renderer{updater, mesh, editor};
   textengine::GlfwApplication application{argument_count, arguments, kWindowWidth, kWindowHeight,
                                           kWindowTitle, updater, renderer, keyboard, mouse};

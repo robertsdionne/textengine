@@ -1,6 +1,8 @@
 #include <GLFW/glfw3.h>
 #include <algorithm>
+#define GLM_SWIZZLE
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include <unordered_set>
 
@@ -15,12 +17,12 @@
 
 namespace textengine {
 
-  MeshEditor::MeshEditor(Keyboard &keyboard, Mouse &mouse, Mesh &mesh)
-  : keyboard(keyboard), mouse(mouse), mesh(mesh), selected_vertices(),
+  MeshEditor::MeshEditor(int width, int height, Keyboard &keyboard, Mouse &mouse, Mesh &mesh)
+  : width(width), height(height), keyboard(keyboard), mouse(mouse), mesh(mesh), selected_vertices(),
     selected_vertex_positions(), cursor_start_position() {}
 
   glm::vec2 MeshEditor::get_cursor_position() const {
-    return mouse.get_cursor_position() / glm::vec2(640, -480) + glm::vec2(0.0f, 1.0f);
+    return mouse.get_cursor_position() / glm::vec2(width, -height) + glm::vec2(0.0f, 1.0f);
   }
 
   std::unordered_set<Mesh::HalfEdge *> MeshEditor::selected_half_edges() const {
@@ -173,6 +175,22 @@ namespace textengine {
       drawable.data[2] = cursor_end_position.x;
       drawable.data[3] = cursor_end_position.y;
       drawable.element_count = 2;
+    } else if (rotating) {
+      constexpr size_t kVerticesPerEdge = 2;
+      constexpr size_t kCoordinatesPerVertex = 2;
+      constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
+      drawable.data_size = kEdgeSize * 2;
+      drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+      const glm::vec2 cursor_end_position = get_cursor_position();
+      drawable.data[0] = center_of_mass.x;
+      drawable.data[1] = center_of_mass.y;
+      drawable.data[2] = cursor_start_position.x;
+      drawable.data[3] = cursor_start_position.y;
+      drawable.data[4] = center_of_mass.x;
+      drawable.data[5] = center_of_mass.y;
+      drawable.data[6] = cursor_end_position.x;
+      drawable.data[7] = cursor_end_position.y;
+      drawable.element_count = 4;
     } else if (ScaleMode::kFalse != scaling) {
       constexpr size_t kVerticesPerEdge = 2;
       constexpr size_t kCoordinatesPerVertex = 2;
@@ -180,8 +198,8 @@ namespace textengine {
       drawable.data_size = kEdgeSize;
       drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
       const glm::vec2 cursor_end_position = get_cursor_position();
-      drawable.data[0] = scaling_center_of_mass.x;
-      drawable.data[1] = scaling_center_of_mass.y;
+      drawable.data[0] = center_of_mass.x;
+      drawable.data[1] = center_of_mass.y;
       drawable.data[2] = cursor_end_position.x;
       drawable.data[3] = cursor_end_position.y;
       drawable.element_count = 2;
@@ -332,16 +350,28 @@ namespace textengine {
       }
       cursor_start_position = get_cursor_position();
     }
+    if (ready && !selected_vertices.empty() && keyboard.IsKeyJustPressed('R')) {
+      rotating = true;
+      for (auto vertex : selected_vertices) {
+        selected_vertex_positions[vertex] = vertex->position;
+      }
+      cursor_start_position = get_cursor_position();
+      center_of_mass = glm::vec2();
+      float i = 1;
+      for (auto vertex : selected_vertices) {
+        center_of_mass += (vertex->position - center_of_mass) / i++;
+      }
+    }
     if (ready && !selected_vertices.empty() && keyboard.IsKeyJustPressed('S')) {
       scaling = ScaleMode::kAll;
       for (auto vertex : selected_vertices) {
         selected_vertex_positions[vertex] = vertex->position;
       }
       cursor_start_position = get_cursor_position();
-      scaling_center_of_mass = glm::vec2();
+      center_of_mass = glm::vec2();
       float i = 1;
       for (auto vertex : selected_vertices) {
-        scaling_center_of_mass += (vertex->position - scaling_center_of_mass) / i++;
+        center_of_mass += (vertex->position - center_of_mass) / i++;
       }
     }
     if (selecting && mouse.HasCursorMoved()) {
@@ -369,6 +399,20 @@ namespace textengine {
         vertex->position = selected_vertex_positions[vertex] + d;
       }
     }
+    if (rotating && mouse.HasCursorMoved()) {
+      const glm::vec2 cursor_end_position = get_cursor_position();
+      const glm::vec2 start = cursor_start_position - center_of_mass;
+      const glm::vec2 end = cursor_end_position - center_of_mass;
+      const float start_angle = glm::atan(start.y, start.x);
+      const float end_angle = glm::atan(end.y, end.x);
+      const float angle = end_angle - start_angle;
+      const glm::mat4 rotate = glm::rotate(glm::mat4(1.0), glm::degrees(angle), glm::vec3(0, 0, 1));
+      for (auto vertex : selected_vertices) {
+        const glm::vec4 r = rotate * glm::vec4(selected_vertex_positions[vertex] - center_of_mass,
+                                               0.0, 1.0);
+        vertex->position = center_of_mass + r.xy() / r.w;
+      }
+    }
     if (ScaleMode::kFalse != scaling && keyboard.IsKeyJustPressed('X')) {
       scaling = ScaleMode::kX;
     }
@@ -385,28 +429,34 @@ namespace textengine {
       const glm::vec2 cursor_end_position = get_cursor_position();
       glm::vec2 scale = glm::vec2(1);
       if (ScaleMode::kAll == scaling) {
-        const float s = glm::length(cursor_end_position - scaling_center_of_mass) / glm::length(
-            cursor_start_position - scaling_center_of_mass);
+        const float s = glm::length(cursor_end_position - center_of_mass) / glm::length(
+            cursor_start_position - center_of_mass);
         scale = glm::vec2(s);
       } else if (ScaleMode::kBoth == scaling) {
-        scale = glm::abs(cursor_end_position - scaling_center_of_mass) / glm::abs(
-            cursor_start_position - scaling_center_of_mass);
+        scale = glm::abs(cursor_end_position - center_of_mass) / glm::abs(
+            cursor_start_position - center_of_mass);
       } else if (ScaleMode::kX == scaling) {
-        const float s = glm::abs(cursor_end_position.x - scaling_center_of_mass.x) / glm::abs(
-            cursor_start_position.x - scaling_center_of_mass.x);
+        const float s = glm::abs(cursor_end_position.x - center_of_mass.x) / glm::abs(
+            cursor_start_position.x - center_of_mass.x);
         scale = glm::vec2(s, 1);
       } else if (ScaleMode::kY == scaling) {
-        const float s = glm::abs(cursor_end_position.y - scaling_center_of_mass.y) / glm::abs(
-            cursor_start_position.y - scaling_center_of_mass.y);
+        const float s = glm::abs(cursor_end_position.y - center_of_mass.y) / glm::abs(
+            cursor_start_position.y - center_of_mass.y);
         scale = glm::vec2(1, s);
       }
       for (auto vertex : selected_vertices) {
-        vertex->position = scaling_center_of_mass + (
-            scale * (selected_vertex_positions[vertex] - scaling_center_of_mass));
+        vertex->position = center_of_mass + (
+            scale * (selected_vertex_positions[vertex] - center_of_mass));
       }
     }
     if (moving && keyboard.IsKeyJustPressed(GLFW_KEY_ESCAPE)) {
       moving = false;
+      for (auto vertex : selected_vertices) {
+        vertex->position = selected_vertex_positions[vertex];
+      }
+    }
+    if (rotating && keyboard.IsKeyJustPressed(GLFW_KEY_ESCAPE)) {
+      rotating = false;
       for (auto vertex : selected_vertices) {
         vertex->position = selected_vertex_positions[vertex];
       }
@@ -419,6 +469,10 @@ namespace textengine {
     }
     if (moving && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
       moving = false;
+      selected_vertex_positions.clear();
+    }
+    if (rotating && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
+      rotating = false;
       selected_vertex_positions.clear();
     }
     if (ScaleMode::kFalse != scaling && mouse.IsButtonJustPressed(GLFW_MOUSE_BUTTON_1)) {
