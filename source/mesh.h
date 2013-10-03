@@ -40,11 +40,11 @@ namespace textengine {
 
     Mesh &operator =(Mesh &&mesh) = default;
 
-    const std::vector<std::unique_ptr<Face>> &get_faces() const;
+    std::vector<std::unique_ptr<Face>> &get_faces();
 
-    const std::vector<std::unique_ptr<HalfEdge>> &get_half_edges() const;
+    std::vector<std::unique_ptr<HalfEdge>> &get_half_edges();
 
-    const std::vector<std::unique_ptr<Vertex>> &get_vertices() const;
+    std::vector<std::unique_ptr<Vertex>> &get_vertices();
 
     void AddDefaultFace(glm::vec2 position);
 

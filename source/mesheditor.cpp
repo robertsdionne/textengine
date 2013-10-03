@@ -4,7 +4,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+#include <iterator>
 #include <unordered_set>
+#include <vector>
 
 #include "checks.h"
 #include "drawable.h"
@@ -328,6 +330,95 @@ namespace textengine {
         }
       } else {
         selected_vertices.clear();
+      }
+    }
+    if (ready && keyboard.IsKeyJustPressed('D')) {
+
+      std::vector<Mesh::Vertex *> duplicate_vertices;
+      std::vector<Mesh::HalfEdge *> duplicate_half_edges;
+      std::vector<Mesh::Face *> duplicate_faces;
+
+      std::unordered_map<Mesh::Vertex *, Mesh::Vertex *> vertex_map, duplicate_vertex_map;
+      std::unordered_map<Mesh::HalfEdge *, Mesh::HalfEdge *> half_edge_map, duplicate_half_edge_map;
+      std::unordered_map<Mesh::Face *, Mesh::Face *> face_map, duplicate_face_map;
+
+      auto selected_faces = MeshEditor::selected_faces();
+      for (auto face : selected_faces) {
+        auto duplicate_face = new Mesh::Face;
+        duplicate_faces.push_back(duplicate_face);
+        mesh.get_faces().emplace_back(duplicate_face);
+        face_map.insert({face, duplicate_face});
+        duplicate_face_map.insert({duplicate_face, face});
+        const auto h01 = face->face_edge;
+        const auto h12 = h01->next;
+        const auto h20 = h12->next;
+        CHECK_STATE(h01 == h20->next);
+        for (auto half_edge : {h01, h12, h20}) {
+          auto duplicate_half_edge = new Mesh::HalfEdge;
+          duplicate_half_edges.push_back(duplicate_half_edge);
+          mesh.get_half_edges().emplace_back(duplicate_half_edge);
+          half_edge_map.insert({half_edge, duplicate_half_edge});
+          duplicate_half_edge_map.insert({duplicate_half_edge, half_edge});
+        }
+        const auto v0 = h01->start, v1 = h12->start, v2 = h20->start;
+        for (auto vertex : {v0, v1, v2}) {
+          if (vertex_map.end() == vertex_map.find(vertex)) {
+            auto duplicate_vertex = new Mesh::Vertex;
+            duplicate_vertices.push_back(duplicate_vertex);
+            mesh.get_vertices().emplace_back(duplicate_vertex);
+            vertex_map.insert({vertex, duplicate_vertex});
+            duplicate_vertex_map.insert({duplicate_vertex, vertex});
+          }
+        }
+      }
+
+      for (auto duplicate_vertex : duplicate_vertices) {
+        auto vertex = duplicate_vertex_map.at(duplicate_vertex);
+        if (half_edge_map.end() != half_edge_map.find(vertex->vertex_edge)) {
+          duplicate_vertex->vertex_edge = half_edge_map.at(vertex->vertex_edge);
+        } else {
+          duplicate_vertex->vertex_edge = nullptr;
+        }
+        duplicate_vertex->position = vertex->position;
+      }
+      for (auto duplicate_half_edge : duplicate_half_edges) {
+        auto half_edge = duplicate_half_edge_map.at(duplicate_half_edge);
+        if (face_map.end() != face_map.find(half_edge->face)) {
+          duplicate_half_edge->face = face_map.at(half_edge->face);
+        } else {
+          duplicate_half_edge->face = nullptr;
+        }
+        if (half_edge_map.end() != half_edge_map.find(half_edge->next)) {
+          duplicate_half_edge->next = half_edge_map.at(half_edge->next);
+        } else {
+          duplicate_half_edge->next = nullptr;
+        }
+        if (half_edge_map.end() != half_edge_map.find(half_edge->opposite)) {
+          duplicate_half_edge->opposite = half_edge_map.at(half_edge->opposite);
+        } else {
+          duplicate_half_edge->opposite = nullptr;
+        }
+        if (half_edge_map.end() != half_edge_map.find(half_edge->previous)) {
+          duplicate_half_edge->previous = half_edge_map.at(half_edge->previous);
+        } else {
+          duplicate_half_edge->previous = nullptr;
+        }
+        duplicate_half_edge->start = vertex_map.at(half_edge->start);
+      }
+      for (auto duplicate_face : duplicate_faces) {
+        auto face = duplicate_face_map.at(duplicate_face);
+        duplicate_face->face_edge = half_edge_map.at(face->face_edge);
+      }
+
+      selected_vertices.clear();
+      std::copy(duplicate_vertices.begin(), duplicate_vertices.end(),
+                std::inserter(selected_vertices, selected_vertices.end()));
+      if (!selected_vertices.empty()) {
+        for (auto vertex : selected_vertices) {
+          selected_vertex_positions[vertex] = vertex->position;
+        }
+        moving = MoveMode::kBoth;
+        cursor_start_position = get_cursor_position();
       }
     }
     if (ready && keyboard.IsKeyJustPressed('E')) {

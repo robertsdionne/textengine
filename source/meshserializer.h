@@ -15,7 +15,7 @@ namespace textengine {
 
     virtual ~MeshSerializer() = default;
 
-    void WriteMesh(const std::string &filename, const Mesh &mesh) const;
+    void WriteMesh(const std::string &filename, Mesh &mesh) const;
 
   private:
     typedef std::unordered_map<Mesh::Face *, double> FaceIndexMap;

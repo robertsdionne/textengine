@@ -16,15 +16,15 @@ namespace textengine {
              std::vector<std::unique_ptr<Vertex>> &&vertices)
   : faces(std::move(faces)), half_edges(std::move(half_edges)), vertices(std::move(vertices)) {}
 
-  const std::vector<std::unique_ptr<Mesh::Face>> &Mesh::get_faces() const {
+  std::vector<std::unique_ptr<Mesh::Face>> &Mesh::get_faces() {
     return faces;
   }
 
-  const std::vector<std::unique_ptr<Mesh::HalfEdge>> &Mesh::get_half_edges() const {
+  std::vector<std::unique_ptr<Mesh::HalfEdge>> &Mesh::get_half_edges() {
     return half_edges;
   }
 
-  const std::vector<std::unique_ptr<Mesh::Vertex>> &Mesh::get_vertices() const {
+  std::vector<std::unique_ptr<Mesh::Vertex>> &Mesh::get_vertices() {
     return vertices;
   }
   

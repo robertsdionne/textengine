@@ -7,20 +7,20 @@
 
 namespace textengine {
 
-  void MeshSerializer::WriteMesh(const std::string &filename, const Mesh &mesh) const {
+  void MeshSerializer::WriteMesh(const std::string &filename, Mesh &mesh) const {
     std::ofstream out(filename);
     CHECK_STATE(!out.fail());
     VertexIndexMap vertex_indices = {{nullptr, -1}};
     for (auto i = 0; i < mesh.get_vertices().size(); ++i) {
-      vertex_indices[mesh.get_vertices()[i].get()] = i;
+      vertex_indices.insert({mesh.get_vertices()[i].get(), i});
     }
     HalfEdgeIndexMap half_edge_indices = {{nullptr, -1}};
     for (auto i = 0; i < mesh.get_half_edges().size(); ++i) {
-      half_edge_indices[mesh.get_half_edges()[i].get()] = i;
+      half_edge_indices.insert({mesh.get_half_edges()[i].get(), i});
     }
     FaceIndexMap face_indices = {{nullptr, -1}};
     for (auto i = 0; i < mesh.get_faces().size(); ++i) {
-      face_indices[mesh.get_faces()[i].get()] = i;
+      face_indices.insert({mesh.get_faces()[i].get(), i});
     }
     picojson::array vertices;
     for (auto &vertex : mesh.get_vertices()) {
