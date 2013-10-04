@@ -11,6 +11,8 @@
 
 namespace textengine {
 
+  constexpr float CommandParser::kSpeed;
+
   CommandParser::CommandParser(CommandTokenizer &tokenizer)
   : tokenizer(tokenizer) {}
 
@@ -22,35 +24,35 @@ namespace textengine {
   GameState CommandParser::Move(GameState current_state,
                                 const std::vector<std::string> &tokens, TokenIterator token) {
     if (tokens.end() == token) {
-      current_state.player_target += current_state.player_direction * 0.2f;
+      current_state.player_target += current_state.player_direction * kSpeed;
     } else if ("forward" == *token) {
-      current_state.player_target += current_state.player_direction * 0.2f;
+      current_state.player_target += current_state.player_direction * kSpeed;
     } else if ("backward" == *token || "back" == *token) {
-      current_state.player_target += current_state.player_direction * -0.2f;
+      current_state.player_target += current_state.player_direction * -kSpeed;
     } else if ("left" == *token) {
       glm::vec2 orthogonal = glm::vec2(-current_state.player_direction.y,
                                        current_state.player_direction.x);
-      current_state.player_target += orthogonal * 0.2f;
+      current_state.player_target += orthogonal * kSpeed;
     } else if ("right" == *token) {
       glm::vec2 orthogonal = glm::vec2(-current_state.player_direction.y,
                                        current_state.player_direction.x);
-      current_state.player_target += orthogonal * -0.2f;
+      current_state.player_target += orthogonal * -kSpeed;
     } else if ("north" == *token || "n" == *token) {
-      current_state.player_target += glm::vec2(0, 0.2);
+      current_state.player_target += glm::vec2(0, kSpeed);
     } else if ("south" == *token || "s" == *token) {
-      current_state.player_target += glm::vec2(0, -0.2);
+      current_state.player_target += glm::vec2(0, -kSpeed);
     } else if ("east" == *token || "e" == *token) {
-      current_state.player_target += glm::vec2(0.2, 0);
+      current_state.player_target += glm::vec2(kSpeed, 0);
     } else if ("west" == *token || "w" == *token) {
-      current_state.player_target += glm::vec2(-0.2, 0);
+      current_state.player_target += glm::vec2(-kSpeed, 0);
     } else if ("northeast" == *token || "ne" == *token) {
-      current_state.player_target += glm::normalize(glm::vec2(1, 1)) * 0.2f;
+      current_state.player_target += glm::normalize(glm::vec2(1, 1)) * kSpeed;
     } else if ("northwest" == *token || "nw" == *token) {
-      current_state.player_target += glm::normalize(glm::vec2(-1, 1)) * 0.2f;
+      current_state.player_target += glm::normalize(glm::vec2(-1, 1)) * kSpeed;
     } else if ("southeast" == *token || "se" == *token) {
-      current_state.player_target += glm::normalize(glm::vec2(1, -1)) * 0.2f;
+      current_state.player_target += glm::normalize(glm::vec2(1, -1)) * kSpeed;
     } else if ("southwest" == *token || "sw" == *token) {
-      current_state.player_target += glm::normalize(glm::vec2(-1, -1)) * 0.2f;
+      current_state.player_target += glm::normalize(glm::vec2(-1, -1)) * kSpeed;
     } else {
       std::cout << "I do not know where you want to go." << std::endl;
     }
@@ -66,33 +68,33 @@ namespace textengine {
     } else if ("face" == *token || "rotate" == *token || "turn" == *token) {
       return Turn(current_state, tokens, std::next(token));
     } else if ("forward" == *token) {
-      current_state.player_target += current_state.player_direction_target * 0.2f;
+      current_state.player_target += current_state.player_direction_target * kSpeed;
     } else if ("backward" == *token || "back" == *token) {
-      current_state.player_target += current_state.player_direction_target * -0.2f;
+      current_state.player_target += current_state.player_direction_target * -kSpeed;
     } else if ("left" == *token) {
       glm::vec2 orthogonal = glm::vec2(-current_state.player_direction_target.y,
                                        current_state.player_direction_target.x);
-      current_state.player_target += orthogonal * 0.2f;
+      current_state.player_target += orthogonal * kSpeed;
     } else if ("right" == *token) {
       glm::vec2 orthogonal = glm::vec2(-current_state.player_direction_target.y,
                                        current_state.player_direction_target.x);
-      current_state.player_target += orthogonal * -0.2f;
+      current_state.player_target += orthogonal * -kSpeed;
     } else if ("north" == *token || "n" == *token) {
-      current_state.player_target += glm::vec2(0, 0.2);
+      current_state.player_target += glm::vec2(0, kSpeed);
     } else if ("south" == *token || "s" == *token) {
-      current_state.player_target += glm::vec2(0, -0.2);
+      current_state.player_target += glm::vec2(0, -kSpeed);
     } else if ("east" == *token || "e" == *token) {
-      current_state.player_target += glm::vec2(0.2, 0);
+      current_state.player_target += glm::vec2(kSpeed, 0);
     } else if ("west" == *token || "w" == *token) {
-      current_state.player_target += glm::vec2(-0.2, 0);
+      current_state.player_target += glm::vec2(-kSpeed, 0);
     } else if ("northeast" == *token || "ne" == *token) {
-      current_state.player_target += glm::normalize(glm::vec2(1, 1)) * 0.2f;
+      current_state.player_target += glm::normalize(glm::vec2(1, 1)) * kSpeed;
     } else if ("northwest" == *token || "nw" == *token) {
-      current_state.player_target += glm::normalize(glm::vec2(-1, 1)) * 0.2f;
+      current_state.player_target += glm::normalize(glm::vec2(-1, 1)) * kSpeed;
     } else if ("southeast" == *token || "se" == *token) {
-      current_state.player_target += glm::normalize(glm::vec2(1, -1)) * 0.2f;
+      current_state.player_target += glm::normalize(glm::vec2(1, -1)) * kSpeed;
     } else if ("southwest" == *token || "sw" == *token) {
-      current_state.player_target += glm::normalize(glm::vec2(-1, -1)) * 0.2f;
+      current_state.player_target += glm::normalize(glm::vec2(-1, -1)) * kSpeed;
     } else if ("exit" == *token || "quit" == *token) {
       return Quit(current_state);
     } else {

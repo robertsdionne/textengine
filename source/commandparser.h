@@ -20,6 +20,8 @@ namespace textengine {
     GameState Parse(GameState current_state, std::string command);
 
   private:
+    static constexpr float kSpeed = 0.04f;
+
     typedef std::vector<std::string>::const_iterator TokenIterator;
 
     GameState Move(GameState current_state,
