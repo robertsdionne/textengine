@@ -340,7 +340,7 @@ namespace textengine {
 //    glBindVertexArray(pathfinding_edges_vertex_array);
 //    glDrawArrays(pathfinding_edges_data.element_type, 0, pathfinding_edges_data.element_count);
 //    CHECK_STATE(!glGetError());
-//
+
 //    glUseProgram(point_program);
 //    glUniformMatrix4fv(glGetUniformLocation(point_program, u8"projection"), 1, false, &projection[0][0]);
 //    glUniformMatrix4fv(glGetUniformLocation(point_program, u8"model_view"), 1, false, &model_view[0][0]);
@@ -413,21 +413,17 @@ namespace textengine {
     CHECK_STATE(!glGetError());
 
     editor.Update();
-    
-//    glUseProgram(face_program);
-//    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"projection"), 1, false, &projection[0][0]);
-//    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"model_view"), 1, false, &model_view[0][0]);
-//    glUniform4f(glGetUniformLocation(face_program, u8"shape_color"), 1, 0, 0, 1);
-//    glBindVertexArray(vertex_array);
-//    glDrawArrays(GL_TRIANGLES, 0, 100*3);
-//    CHECK_STATE(!glGetError());
-//    glUseProgram(face_program);
-//    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"projection"), 1, false, &projection[0][0]);
-//    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"model_view"), 1, false, &model_view[0][0]);
-//    glUniform4f(glGetUniformLocation(face_program, u8"shape_color"), 1, 0, 0, 1);
-//    glBindVertexArray(vertex_array);
-//    glDrawArrays(GL_TRIANGLES, 0, 100*3);
-//    CHECK_STATE(!glGetError());
+
+    const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(current_state.player_position, 0.0)) *
+                                                      glm::scale(glm::mat4(), glm::vec3(0.01)));
+
+    glUseProgram(face_program);
+    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"projection"), 1, false, &projection[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"model_view"), 1, false, &player_model_view[0][0]);
+    glUniform4f(glGetUniformLocation(face_program, u8"shape_color"), 1, 0, 0, 1);
+    glBindVertexArray(vertex_array);
+    glDrawArrays(GL_TRIANGLES, 0, 100*3);
+    CHECK_STATE(!glGetError());
   }
 
 }  // namespace textengine
