@@ -3,6 +3,7 @@
 #include <functional>
 #define GLM_SWIZZLE
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_inverse.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 #include <iterator>
@@ -26,35 +27,16 @@ namespace textengine {
     selected_vertex_positions(), cursor_start_position() {}
 
   glm::vec2 MeshEditor::get_cursor_position() const {
-    return mouse.get_cursor_position() / glm::vec2(width, -height) + glm::vec2(0.0f, 1.0f);
-  }
-
-  std::unordered_set<Mesh::HalfEdge *> MeshEditor::selected_half_edges() const {
-    std::unordered_set<Mesh::HalfEdge *> half_edges;
-    for (const auto &half_edge : mesh.get_half_edges()) {
-      if (selected_vertices.end() != selected_vertices.find(half_edge->start) &&
-          selected_vertices.end() != selected_vertices.find(half_edge->next->start)) {
-        half_edges.insert(half_edge.get());
-      }
-    }
-    return half_edges;
-  }
-
-  std::unordered_set<Mesh::Face *> MeshEditor::selected_faces() const {
-    std::unordered_set<Mesh::HalfEdge *> half_edges = selected_half_edges();
-    std::unordered_set<Mesh::Face *> faces;
-    for (const auto &face : mesh.get_faces()) {
-      const auto h01 = face->face_edge;
-      const auto h12 = h01->next;
-      const auto h20 = h12->next;
-      CHECK_STATE(h01 == h20->next);
-      if (half_edges.end() != half_edges.find(h01) &&
-          half_edges.end() != half_edges.find(h12) &&
-          half_edges.end() != half_edges.find(h20)) {
-        faces.insert(face.get());
-      }
-    }
-    return faces;
+    const glm::mat4 normalized_to_reversed = glm::scale(glm::mat4(), glm::vec3(1.0f, -1.0f, 1.0f));
+    const glm::mat4 reversed_to_offset = glm::translate(glm::mat4(), glm::vec3(glm::vec2(1.0f), 0.0f));
+    const glm::mat4 offset_to_screen = glm::scale(glm::mat4(), glm::vec3(glm::vec2(0.5f), 1.0f));
+    const glm::mat4 screen_to_window = glm::scale(glm::mat4(), glm::vec3(width, height, 1.0f));
+    const glm::vec4 homogeneous = (glm::inverse(screen_to_window * offset_to_screen *
+                                                reversed_to_offset * normalized_to_reversed *
+                                                model_view_projection) *
+                                   glm::vec4(mouse.get_cursor_position(), 0.0f, 1.0f));
+    const glm::vec2 transformed = homogeneous.xy() / homogeneous.w;
+    return transformed;
   }
 
   std::unordered_set<Mesh::Vertex *> MeshEditor::potentially_selected_vertices() const {
@@ -94,6 +76,34 @@ namespace textengine {
     return faces;
   }
 
+  std::unordered_set<Mesh::HalfEdge *> MeshEditor::selected_half_edges() const {
+    std::unordered_set<Mesh::HalfEdge *> half_edges;
+    for (const auto &half_edge : mesh.get_half_edges()) {
+      if (selected_vertices.end() != selected_vertices.find(half_edge->start) &&
+          selected_vertices.end() != selected_vertices.find(half_edge->next->start)) {
+        half_edges.insert(half_edge.get());
+      }
+    }
+    return half_edges;
+  }
+
+  std::unordered_set<Mesh::Face *> MeshEditor::selected_faces() const {
+    std::unordered_set<Mesh::HalfEdge *> half_edges = selected_half_edges();
+    std::unordered_set<Mesh::Face *> faces;
+    for (const auto &face : mesh.get_faces()) {
+      const auto h01 = face->face_edge;
+      const auto h12 = h01->next;
+      const auto h20 = h12->next;
+      CHECK_STATE(h01 == h20->next);
+      if (half_edges.end() != half_edges.find(h01) &&
+          half_edges.end() != half_edges.find(h12) &&
+          half_edges.end() != half_edges.find(h20)) {
+        faces.insert(face.get());
+      }
+    }
+    return faces;
+  }
+
   glm::vec2 MeshEditor::FaceCentroid(const Mesh::Face *face) const {
     glm::vec2 total = glm::vec2();
     float count = 0;
@@ -104,6 +114,10 @@ namespace textengine {
       edge = edge->next;
     } while (edge != face->face_edge);
     return total / count;
+  }
+
+  void MeshEditor::set_model_view_projection(glm::mat4 model_view_projection) {
+    MeshEditor::model_view_projection = model_view_projection;
   }
 
   Drawable MeshEditor::HighlightedPoints() const {

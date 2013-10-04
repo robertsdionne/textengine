@@ -21,15 +21,17 @@ namespace textengine {
 
     glm::vec2 get_cursor_position() const;
 
-    std::unordered_set<Mesh::HalfEdge *> selected_half_edges() const;
-
-    std::unordered_set<Mesh::Face *> selected_faces() const;
-
     std::unordered_set<Mesh::Vertex *> potentially_selected_vertices() const;
 
     std::unordered_set<Mesh::HalfEdge *> potentially_selected_half_edges() const;
 
     std::unordered_set<Mesh::Face *> potentially_selected_faces() const;
+
+    std::unordered_set<Mesh::HalfEdge *> selected_half_edges() const;
+
+    std::unordered_set<Mesh::Face *> selected_faces() const;
+
+    void set_model_view_projection(glm::mat4 model_view_projection);
 
     Drawable HighlightedPoints() const;
 
@@ -74,6 +76,7 @@ namespace textengine {
     std::unordered_set<Mesh::Vertex *> selected_vertices, additionally_selected_vertices;
     std::unordered_map<Mesh::Vertex *, glm::vec2> selected_vertex_positions;
     glm::vec2 cursor_start_position, center_of_mass;
+    glm::mat4 model_view_projection;
     bool add_selecting, rotating, selecting;
     MoveMode moving;
     ScaleMode scaling;

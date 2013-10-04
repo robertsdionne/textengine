@@ -1,6 +1,7 @@
 #ifndef TEXTENGINE_TEXTENGINERENDERER_H_
 #define TEXTENGINE_TEXTENGINERENDERER_H_
 
+#include <glm/glm.hpp>
 #include <iostream>
 
 #include "buffer.h"
@@ -30,13 +31,13 @@ namespace textengine {
   private:
     static constexpr const char *kVertexShaderSource = u8R"glsl(
     #version 150 core
-    uniform vec2 shape_position;
-    uniform vec2 shape_size;
+    uniform mat4 projection;
+    uniform mat4 model_view;
 
-    in vec2 vertex_position;
+    in vec4 vertex_position;
 
     void main() {
-      gl_Position = vec4(shape_position + vertex_position * shape_size, 0, 1);
+      gl_Position = projection * model_view * vertex_position;
     }
     )glsl";
 
@@ -47,6 +48,7 @@ namespace textengine {
     layout(triangle_strip, max_vertices = 4) out;
 
     uniform float point_size;
+    uniform float inverse_aspect_ratio;
 
     in gl_PerVertex {
       vec2 gl_Position;
@@ -59,7 +61,7 @@ namespace textengine {
     void main() {
       for (int i = -1; i < 2; i += 2) {
         for (int j = -1; j < 2; j += 2) {
-          gl_Position = gl_in[0].gl_Position + vec2(j, i) * point_size / 2.0;
+          gl_Position = gl_in[0].gl_Position + vec2(j, i) / vec2(1, inverse_aspect_ratio) * point_size / 2.0;
           EmitVertex();
         }
       }
@@ -74,6 +76,7 @@ namespace textengine {
     layout(triangle_strip, max_vertices = 4) out;
 
     uniform float line_width;
+    uniform float inverse_aspect_ratio;
 
     in gl_PerVertex {
       vec2 gl_Position;
@@ -88,7 +91,7 @@ namespace textengine {
       vec2 perpendicular = direction.yx * vec2(-1, 1);
       for (int i = -1; i < 2; i += 2) {
         for (int j = 0; j < 2; ++j) {
-          gl_Position = gl_in[j].gl_Position + i * perpendicular * line_width / 2.0;
+          gl_Position = gl_in[j].gl_Position + i * perpendicular / vec2(1, inverse_aspect_ratio) * line_width / 2.0;
           EmitVertex();
         }
       }
@@ -110,6 +113,7 @@ namespace textengine {
     Updater &updater;
     Mesh &mesh;
     MeshEditor &editor;
+    float inverse_aspect_ratio;
     GLuint edge_geometry_shader, fragment_shader, point_geometry_shader, vertex_shader;
     GLuint edge_program, face_program, point_program;
     GLuint vertex_array, vertex_buffer;
@@ -123,6 +127,7 @@ namespace textengine {
     GLuint selected_point_vertex_buffer, selected_point_vertex_array;
     GLuint move_indicator_vertex_buffer, move_indicator_vertex_array;
     GLuint selection_box_vertex_buffer, selection_box_vertex_array;
+    glm::mat4 model_view, projection;
   };
 
 }  // namespace textengine

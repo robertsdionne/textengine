@@ -1,4 +1,6 @@
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <memory>
 
 #include "checks.h"
@@ -17,10 +19,14 @@ namespace textengine {
   constexpr const char *TextEngineRenderer::kFragmentShaderSource;
 
   TextEngineRenderer::TextEngineRenderer(Updater &updater, Mesh &mesh, MeshEditor &editor)
-  : updater(updater), mesh(mesh), editor(editor) {}
+  : updater(updater), mesh(mesh), editor(editor), model_view(glm::mat4()),
+  projection(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)) {}
 
   void TextEngineRenderer::Change(int width, int height) {
     glViewport(0, 0, width, height);
+    inverse_aspect_ratio = static_cast<float>(height) / static_cast<float>(width);
+    projection = glm::ortho(-1.0f, 1.0f, -inverse_aspect_ratio, inverse_aspect_ratio, -1.0f, 1.0f);
+    editor.set_model_view_projection(projection * model_view);
   }
 
   void TextEngineRenderer::Create() {
@@ -307,52 +313,57 @@ namespace textengine {
     GameState current_state = updater.GetCurrentState();
     
     glUseProgram(face_program);
-    glUniform2f(glGetUniformLocation(face_program, u8"shape_position"), -1, -1);
-    glUniform2f(glGetUniformLocation(face_program, u8"shape_size"), 2, 2);
+    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"projection"), 1, false, &projection[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"model_view"), 1, false, &model_view[0][0]);
     glUniform4f(glGetUniformLocation(face_program, u8"shape_color"), 0.640000, 0.640000, 0.640000, 1);
     glBindVertexArray(face_vertex_array);
     glDrawArrays(face_data.element_type, 0, face_data.element_count);
     CHECK_STATE(!glGetError());
 
     glUseProgram(edge_program);
-    glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
-    glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
+    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
     glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"),
                 0.640000/2.0, 0.640000/2.0, 0.640000/2.0, 1);
     glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.00125);
+    glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
     glBindVertexArray(edge_vertex_array);
     glDrawArrays(edge_data.element_type, 0, edge_data.element_count);
     CHECK_STATE(!glGetError());
 
 //    glUseProgram(edge_program);
-//    glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
-//    glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
+//    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
+//    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
 //    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.0, 0.0, 0.64, 1);
 //    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
+//    glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
 //    glBindVertexArray(pathfinding_edges_vertex_array);
 //    glDrawArrays(pathfinding_edges_data.element_type, 0, pathfinding_edges_data.element_count);
 //    CHECK_STATE(!glGetError());
 //
 //    glUseProgram(point_program);
-//    glUniform2f(glGetUniformLocation(point_program, u8"shape_position"), -1, -1);
-//    glUniform2f(glGetUniformLocation(point_program, u8"shape_size"), 2, 2);
+//    glUniformMatrix4fv(glGetUniformLocation(point_program, u8"projection"), 1, false, &projection[0][0]);
+//    glUniformMatrix4fv(glGetUniformLocation(point_program, u8"model_view"), 1, false, &model_view[0][0]);
 //    glUniform4f(glGetUniformLocation(point_program, u8"shape_color"), 0.0, 0.0, 0.64/2.0, 1);
 //    glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.04);
+//    glUniform1f(glGetUniformLocation(point_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
 //    glBindVertexArray(pathfinding_nodes_vertex_array);
 //    glDrawArrays(pathfinding_nodes_data.element_type, 0, pathfinding_nodes_data.element_count);
 //    CHECK_STATE(!glGetError());
 
     glUseProgram(edge_program);
-    glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
-    glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
+    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
     glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.64, 0.0, 1);
     glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.005);
+    glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
     glBindVertexArray(move_indicator_vertex_array);
     glDrawArrays(move_indicator_data.element_type, 0, move_indicator_data.element_count);
     CHECK_STATE(!glGetError());
     
     glUseProgram(face_program);
-    glUniform2f(glGetUniformLocation(face_program, u8"shape_position"), -1, -1);
+    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"projection"), 1, false, &projection[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"model_view"), 1, false, &model_view[0][0]);
     glUniform2f(glGetUniformLocation(face_program, u8"shape_size"), 2, 2);
     glUniform4f(glGetUniformLocation(face_program, u8"shape_color"), 0.32, 0.0, 0.0, 1);
     glBindVertexArray(selected_face_vertex_array);
@@ -360,39 +371,43 @@ namespace textengine {
     CHECK_STATE(!glGetError());
 
     glUseProgram(edge_program);
-    glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
-    glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
+    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
     glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.0, 0.0, 1);
     glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.00125);
+    glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
     glBindVertexArray(selected_interior_edge_vertex_array);
     glDrawArrays(selected_interior_edge_data.element_type,
                  0, selected_interior_edge_data.element_count);
     CHECK_STATE(!glGetError());
 
     glUseProgram(edge_program);
-    glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
-    glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
+    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
     glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.0, 0.0, 1);
     glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.005);
+    glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
     glBindVertexArray(selected_exterior_edge_vertex_array);
     glDrawArrays(selected_exterior_edge_data.element_type,
                  0, selected_exterior_edge_data.element_count);
     CHECK_STATE(!glGetError());
 
     glUseProgram(point_program);
-    glUniform2f(glGetUniformLocation(point_program, u8"shape_position"), -1, -1);
-    glUniform2f(glGetUniformLocation(point_program, u8"shape_size"), 2, 2);
+    glUniformMatrix4fv(glGetUniformLocation(point_program, u8"projection"), 1, false, &projection[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(point_program, u8"model_view"), 1, false, &model_view[0][0]);
     glUniform4f(glGetUniformLocation(point_program, u8"shape_color"), 1.0, 0.0, 0.0, 1);
     glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.01);
+    glUniform1f(glGetUniformLocation(point_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
     glBindVertexArray(selected_point_vertex_array);
     glDrawArrays(selected_point_data.element_type, 0, selected_point_data.element_count);
     CHECK_STATE(!glGetError());
 
     glUseProgram(edge_program);
-    glUniform2f(glGetUniformLocation(edge_program, u8"shape_position"), -1, -1);
-    glUniform2f(glGetUniformLocation(edge_program, u8"shape_size"), 2, 2);
+    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
     glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.64, 0.0, 1);
     glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.005);
+    glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
     glBindVertexArray(selection_box_vertex_array);
     glDrawArrays(selection_box_data.element_type, 0, selection_box_data.element_count);
     CHECK_STATE(!glGetError());
@@ -400,18 +415,15 @@ namespace textengine {
     editor.Update();
     
 //    glUseProgram(face_program);
-//    glUniform2f(glGetUniformLocation(face_program, u8"shape_position"),
-//                current_state.player_position.x, current_state.player_position.y);
-//    glUniform2f(glGetUniformLocation(face_program, u8"shape_size"), 0.05, 0.05);
+//    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"projection"), 1, false, &projection[0][0]);
+//    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"model_view"), 1, false, &model_view[0][0]);
 //    glUniform4f(glGetUniformLocation(face_program, u8"shape_color"), 1, 0, 0, 1);
 //    glBindVertexArray(vertex_array);
 //    glDrawArrays(GL_TRIANGLES, 0, 100*3);
 //    CHECK_STATE(!glGetError());
 //    glUseProgram(face_program);
-//    glUniform2f(glGetUniformLocation(face_program, u8"shape_position"),
-//                current_state.player_position.x + current_state.player_direction.x * 0.1,
-//                current_state.player_position.y + current_state.player_direction.y * 0.1);
-//    glUniform2f(glGetUniformLocation(face_program, u8"shape_size"), 0.01, 0.01);
+//    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"projection"), 1, false, &projection[0][0]);
+//    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"model_view"), 1, false, &model_view[0][0]);
 //    glUniform4f(glGetUniformLocation(face_program, u8"shape_color"), 1, 0, 0, 1);
 //    glBindVertexArray(vertex_array);
 //    glDrawArrays(GL_TRIANGLES, 0, 100*3);
