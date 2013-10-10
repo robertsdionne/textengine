@@ -2,6 +2,7 @@
 #define TEXTENGINE_MESHEDITOR_H_
 
 #include <glm/glm.hpp>
+#include <random>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -15,7 +16,8 @@ namespace textengine {
 
   class MeshEditor {
   public:
-    MeshEditor(int width, int height, Keyboard &keyboard, Mouse &mouse, Mesh &mesh);
+    MeshEditor(int width, int height, Keyboard &keyboard, Mouse &mouse, Mesh &mesh,
+               std::default_random_engine &engine);
 
     virtual ~MeshEditor() = default;
 
@@ -52,6 +54,8 @@ namespace textengine {
     void Update();
 
   private:
+    Mesh::RoomInfo *CreateRandomizedRoomInfo();
+
     glm::vec2 FaceCentroid(const Mesh::Face *face) const;
 
     enum class ScaleMode {
@@ -80,6 +84,9 @@ namespace textengine {
     bool add_selecting, rotating, selecting;
     MoveMode moving;
     ScaleMode scaling;
+    std::default_random_engine &engine;
+    std::uniform_real_distribution<> uniform_real;
+    std::uniform_int_distribution<char> uniform_int;
   };
 
 }  // namespace textengine

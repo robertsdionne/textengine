@@ -49,7 +49,8 @@ namespace textengine {
     for (auto i = 0; i < vertices_in.size(); ++i) {
       ReadVertex(vertices_in[i], half_edges_out, vertices_out[i].get());
     }
-    return Mesh(std::move(faces_out), std::move(half_edges_out), std::move(vertices_out));
+    return Mesh(std::move(faces_out), std::move(half_edges_out), std::move(vertices_out),
+                std::vector<std::unique_ptr<Mesh::RoomInfo>>());
   }
 
   void MeshLoader::ReadVertex(const picojson::value &vertex_in,
@@ -96,6 +97,7 @@ namespace textengine {
     CHECK_STATE(object["face_edge"].is<double>());
     const long face_edge_index = static_cast<long>(object["face_edge"].get<double>());
     face_out->face_edge = face_edge_index < 0 ? nullptr : half_edges[face_edge_index].get();
+    face_out->room_info = nullptr;
   }
 
   glm::vec2 MeshLoader::ReadVec2(const picojson::value &vector) const {

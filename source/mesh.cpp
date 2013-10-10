@@ -13,8 +13,10 @@ namespace textengine {
 
   Mesh::Mesh(std::vector<std::unique_ptr<Face>> &&faces,
              std::vector<std::unique_ptr<HalfEdge>> &&half_edges,
-             std::vector<std::unique_ptr<Vertex>> &&vertices)
-  : faces(std::move(faces)), half_edges(std::move(half_edges)), vertices(std::move(vertices)) {}
+             std::vector<std::unique_ptr<Vertex>> &&vertices,
+             std::vector<std::unique_ptr<RoomInfo>> &&room_infos)
+  : faces(std::move(faces)), half_edges(std::move(half_edges)), vertices(std::move(vertices)),
+  room_infos(std::move(room_infos)) {}
 
   std::vector<std::unique_ptr<Mesh::Face>> &Mesh::get_faces() {
     return faces;
@@ -26,6 +28,10 @@ namespace textengine {
 
   std::vector<std::unique_ptr<Mesh::Vertex>> &Mesh::get_vertices() {
     return vertices;
+  }
+
+  std::vector<std::unique_ptr<Mesh::RoomInfo>> &Mesh::get_room_infos() {
+    return room_infos;
   }
   
   void Mesh::AddDefaultFace(glm::vec2 position) {
@@ -62,6 +68,7 @@ namespace textengine {
     half_edge20->start = vertex2;
 
     face->face_edge = half_edge01;
+    face->room_info = nullptr;
 
     vertices.emplace_back(vertex0);
     vertices.emplace_back(vertex1);
@@ -162,6 +169,7 @@ namespace textengine {
     }
 
     face->face_edge = half_edge01;
+    face->room_info = nullptr;
 
     half_edges.emplace_back(half_edge01);
     half_edges.emplace_back(half_edge12);
@@ -206,6 +214,7 @@ namespace textengine {
       half_edge20->start = vertex2;
 
       face->face_edge = half_edge01;
+      face->room_info = nullptr;
 
       vertices.emplace_back(vertex2);
 
@@ -239,10 +248,12 @@ namespace textengine {
     Drawable drawable;
     constexpr size_t kVerticesPerFace = 3;
     constexpr size_t kCoordinatesPerVertex = 2;
-    constexpr size_t kFaceSize = kVerticesPerFace * kCoordinatesPerVertex;
+    constexpr size_t kColorComponentsPerVertex = 4;
+    constexpr size_t kFaceSize = kVerticesPerFace * (kCoordinatesPerVertex + kColorComponentsPerVertex);
     drawable.data_size = kFaceSize * faces.size();
     drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
     for (auto i = 0; i < faces.size(); ++i) {
+      const glm::vec4 color = faces[i]->room_info ? faces[i]->room_info->color : glm::vec4(glm::vec3(0.64f), 1.0f);
       const auto h01 = faces[i]->face_edge;
       const auto h12 = h01->next;
       const auto h20 = h12->next;
@@ -250,10 +261,22 @@ namespace textengine {
       const auto v0 = h01->start, v1 = h12->start, v2 = h20->start;
       drawable.data[kFaceSize * i + 0] = v0->position.x;
       drawable.data[kFaceSize * i + 1] = v0->position.y;
-      drawable.data[kFaceSize * i + 2] = v1->position.x;
-      drawable.data[kFaceSize * i + 3] = v1->position.y;
-      drawable.data[kFaceSize * i + 4] = v2->position.x;
-      drawable.data[kFaceSize * i + 5] = v2->position.y;
+      drawable.data[kFaceSize * i + 2] = color.r;
+      drawable.data[kFaceSize * i + 3] = color.g;
+      drawable.data[kFaceSize * i + 4] = color.b;
+      drawable.data[kFaceSize * i + 5] = color.a;
+      drawable.data[kFaceSize * i + 6] = v1->position.x;
+      drawable.data[kFaceSize * i + 7] = v1->position.y;
+      drawable.data[kFaceSize * i + 8] = color.r;
+      drawable.data[kFaceSize * i + 9] = color.g;
+      drawable.data[kFaceSize * i + 10] = color.b;
+      drawable.data[kFaceSize * i + 11] = color.a;
+      drawable.data[kFaceSize * i + 12] = v2->position.x;
+      drawable.data[kFaceSize * i + 13] = v2->position.y;
+      drawable.data[kFaceSize * i + 14] = color.r;
+      drawable.data[kFaceSize * i + 15] = color.g;
+      drawable.data[kFaceSize * i + 16] = color.b;
+      drawable.data[kFaceSize * i + 17] = color.a;
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerFace * faces.size());
     drawable.element_type = GL_TRIANGLES;
@@ -264,14 +287,24 @@ namespace textengine {
     Drawable drawable;
     constexpr size_t kVerticesPerEdge = 2;
     constexpr size_t kCoordinatesPerVertex = 2;
-    constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
+    constexpr size_t kColorComponentsPerVertex = 4;
+    constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
     drawable.data_size = kEdgeSize * half_edges.size();
     drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
     for (auto i = 0; i < half_edges.size(); ++i) {
+      const glm::vec4 color = half_edges[i]->face->room_info ? half_edges[i]->face->room_info->color / 2.0f : glm::vec4(glm::vec3(0.32f), 1.0f);
       drawable.data[kEdgeSize * i + 0] = half_edges[i]->start->position.x;
       drawable.data[kEdgeSize * i + 1] = half_edges[i]->start->position.y;
-      drawable.data[kEdgeSize * i + 2] = half_edges[i]->next->start->position.x;
-      drawable.data[kEdgeSize * i + 3] = half_edges[i]->next->start->position.y;
+      drawable.data[kEdgeSize * i + 2] = color.r;
+      drawable.data[kEdgeSize * i + 3] = color.g;
+      drawable.data[kEdgeSize * i + 4] = color.b;
+      drawable.data[kEdgeSize * i + 5] = color.a;
+      drawable.data[kEdgeSize * i + 6] = half_edges[i]->next->start->position.x;
+      drawable.data[kEdgeSize * i + 7] = half_edges[i]->next->start->position.y;
+      drawable.data[kEdgeSize * i + 8] = color.r;
+      drawable.data[kEdgeSize * i + 9] = color.g;
+      drawable.data[kEdgeSize * i + 10] = color.b;
+      drawable.data[kEdgeSize * i + 11] = color.a;
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * half_edges.size());
     drawable.element_type = GL_LINES;

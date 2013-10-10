@@ -1,5 +1,6 @@
 #include <GLFW/glfw3.h>
 #include <algorithm>
+#include <cctype>
 #include <functional>
 #define GLM_SWIZZLE
 #include <glm/glm.hpp>
@@ -22,9 +23,11 @@
 
 namespace textengine {
 
-  MeshEditor::MeshEditor(int width, int height, Keyboard &keyboard, Mouse &mouse, Mesh &mesh)
+  MeshEditor::MeshEditor(int width, int height, Keyboard &keyboard, Mouse &mouse, Mesh &mesh,
+                         std::default_random_engine &engine)
   : width(width), height(height), keyboard(keyboard), mouse(mouse), mesh(mesh), selected_vertices(),
-    selected_vertex_positions(), cursor_start_position() {}
+    selected_vertex_positions(), cursor_start_position(), engine(engine), uniform_real(),
+    uniform_int(0, 26) {}
 
   glm::vec2 MeshEditor::get_cursor_position() const {
     const glm::mat4 normalized_to_reversed = glm::scale(glm::mat4(), glm::vec3(1.0f, -1.0f, 1.0f));
@@ -104,6 +107,35 @@ namespace textengine {
     return faces;
   }
 
+  void MeshEditor::set_model_view_projection(glm::mat4 model_view_projection) {
+    MeshEditor::model_view_projection = model_view_projection;
+  }
+
+  Mesh::RoomInfo *MeshEditor::CreateRandomizedRoomInfo() {
+    auto room_info = new Mesh::RoomInfo;
+    char previous = ' ';
+    char next = 0;
+    while (true) {
+      next = uniform_int(engine);
+      if (!next) {
+        break;
+      }
+      char current;
+      if (1 == next) {
+        current = ' ';
+      } else {
+        current = 'a' + next - 2;
+      }
+      if (' ' == previous) {
+        current = toupper(current);
+      }
+      room_info->name.push_back(current);
+      previous = current;
+    }
+    room_info->color = glm::vec4(uniform_real(engine), uniform_real(engine), uniform_real(engine), 1.0f);
+    return room_info;
+  }
+
   glm::vec2 MeshEditor::FaceCentroid(const Mesh::Face *face) const {
     glm::vec2 total = glm::vec2();
     float count = 0;
@@ -116,20 +148,22 @@ namespace textengine {
     return total / count;
   }
 
-  void MeshEditor::set_model_view_projection(glm::mat4 model_view_projection) {
-    MeshEditor::model_view_projection = model_view_projection;
-  }
-
   Drawable MeshEditor::HighlightedPoints() const {
     std::unordered_set<Mesh::Vertex *> vertices = potentially_selected_vertices();
     Drawable drawable;
     constexpr size_t kCoordinatesPerVertex = 2;
-    drawable.data_size = kCoordinatesPerVertex * vertices.size();
+    constexpr size_t kColorComponentsPerVertex = 4;
+    const auto color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+    drawable.data_size = (kCoordinatesPerVertex + kColorComponentsPerVertex) * vertices.size();
     drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
     auto vertex = vertices.begin();
     for (auto i = 0; i < vertices.size(); ++i, ++vertex) {
-      drawable.data[kCoordinatesPerVertex * i + 0] = (*vertex)->position.x;
-      drawable.data[kCoordinatesPerVertex * i + 1] = (*vertex)->position.y;
+      drawable.data[(kCoordinatesPerVertex + kColorComponentsPerVertex) * i + 0] = (*vertex)->position.x;
+      drawable.data[(kCoordinatesPerVertex + kColorComponentsPerVertex) * i + 1] = (*vertex)->position.y;
+      drawable.data[(kCoordinatesPerVertex + kColorComponentsPerVertex) * i + 2] = color.r;
+      drawable.data[(kCoordinatesPerVertex + kColorComponentsPerVertex) * i + 3] = color.g;
+      drawable.data[(kCoordinatesPerVertex + kColorComponentsPerVertex) * i + 4] = color.b;
+      drawable.data[(kCoordinatesPerVertex + kColorComponentsPerVertex) * i + 5] = color.a;
     }
     drawable.element_count = static_cast<GLsizei>(vertices.size());
     drawable.element_type = GL_POINTS;
@@ -141,10 +175,12 @@ namespace textengine {
     Drawable drawable;
     constexpr size_t kVerticesPerFace = 3;
     constexpr size_t kCoordinatesPerVertex = 2;
-    constexpr size_t kFaceSize = kVerticesPerFace * kCoordinatesPerVertex;
+    constexpr size_t kColorComponentsPerVertex = 4;
+    constexpr size_t kFaceSize = kVerticesPerFace * (kCoordinatesPerVertex + kColorComponentsPerVertex);
     drawable.data_size = kFaceSize * faces.size();
     drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
     auto face = faces.begin();
+    const auto color = glm::vec4(0.32f, 0.0f, 0.0f, 1.0f);
     for (auto i = 0; i < faces.size(); ++i, ++face) {
       const auto h01 = (*face)->face_edge;
       const auto h12 = h01->next;
@@ -153,10 +189,22 @@ namespace textengine {
       const auto v0 = h01->start, v1 = h12->start, v2 = h20->start;
       drawable.data[kFaceSize * i + 0] = v0->position.x;
       drawable.data[kFaceSize * i + 1] = v0->position.y;
-      drawable.data[kFaceSize * i + 2] = v1->position.x;
-      drawable.data[kFaceSize * i + 3] = v1->position.y;
-      drawable.data[kFaceSize * i + 4] = v2->position.x;
-      drawable.data[kFaceSize * i + 5] = v2->position.y;
+      drawable.data[kFaceSize * i + 2] = color.r;
+      drawable.data[kFaceSize * i + 3] = color.g;
+      drawable.data[kFaceSize * i + 4] = color.b;
+      drawable.data[kFaceSize * i + 5] = color.a;
+      drawable.data[kFaceSize * i + 6] = v1->position.x;
+      drawable.data[kFaceSize * i + 7] = v1->position.y;
+      drawable.data[kFaceSize * i + 8] = color.r;
+      drawable.data[kFaceSize * i + 9] = color.g;
+      drawable.data[kFaceSize * i + 10] = color.b;
+      drawable.data[kFaceSize * i + 11] = color.a;
+      drawable.data[kFaceSize * i + 12] = v2->position.x;
+      drawable.data[kFaceSize * i + 13] = v2->position.y;
+      drawable.data[kFaceSize * i + 14] = color.r;
+      drawable.data[kFaceSize * i + 15] = color.g;
+      drawable.data[kFaceSize * i + 16] = color.b;
+      drawable.data[kFaceSize * i + 17] = color.a;
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerFace * faces.size());
     drawable.element_type = GL_TRIANGLES;
@@ -168,11 +216,13 @@ namespace textengine {
     Drawable drawable;
     constexpr size_t kVerticesPerEdge = 2;
     constexpr size_t kCoordinatesPerVertex = 2;
-    constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
+    constexpr size_t kColorComponentsPerVertex = 4;
+    constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
     const size_t interior_edges = std::count_if(half_edges.begin(), half_edges.end(),
                                                 [] (Mesh::HalfEdge *half_edge) {
                                                   return half_edge->opposite;
                                                 });
+    const auto color = glm::vec4(0.64f, 0.0f, 0.0f, 1.0f);
     drawable.data_size = kEdgeSize * interior_edges;
     drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
     int index = 0;
@@ -180,8 +230,16 @@ namespace textengine {
       if (half_edge->opposite) {
         drawable.data[index + 0] = half_edge->start->position.x;
         drawable.data[index + 1] = half_edge->start->position.y;
-        drawable.data[index + 2] = half_edge->next->start->position.x;
-        drawable.data[index + 3] = half_edge->next->start->position.y;
+        drawable.data[index + 2] = color.r;
+        drawable.data[index + 3] = color.g;
+        drawable.data[index + 4] = color.b;
+        drawable.data[index + 5] = color.a;
+        drawable.data[index + 6] = half_edge->next->start->position.x;
+        drawable.data[index + 7] = half_edge->next->start->position.y;
+        drawable.data[index + 8] = color.r;
+        drawable.data[index + 9] = color.g;
+        drawable.data[index + 10] = color.b;
+        drawable.data[index + 11] = color.a;
         index += kEdgeSize;
       }
     }
@@ -195,11 +253,13 @@ namespace textengine {
     Drawable drawable;
     constexpr size_t kVerticesPerEdge = 2;
     constexpr size_t kCoordinatesPerVertex = 2;
-    constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
+    constexpr size_t kColorComponentsPerVertex = 4;
+    constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
     const size_t exterior_edges = std::count_if(half_edges.begin(), half_edges.end(),
                                                 [] (Mesh::HalfEdge *half_edge) {
                                                   return !half_edge->opposite;
                                                 });
+    const auto color = glm::vec4(0.64f, 0.0f, 0.0f, 1.0f);
     drawable.data_size = kEdgeSize * exterior_edges;
     drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
     int index = 0;
@@ -207,8 +267,16 @@ namespace textengine {
       if (!half_edge->opposite) {
         drawable.data[index + 0] = half_edge->start->position.x;
         drawable.data[index + 1] = half_edge->start->position.y;
-        drawable.data[index + 2] = half_edge->next->start->position.x;
-        drawable.data[index + 3] = half_edge->next->start->position.y;
+        drawable.data[index + 2] = color.r;
+        drawable.data[index + 3] = color.g;
+        drawable.data[index + 4] = color.b;
+        drawable.data[index + 5] = color.a;
+        drawable.data[index + 6] = half_edge->next->start->position.x;
+        drawable.data[index + 7] = half_edge->next->start->position.y;
+        drawable.data[index + 8] = color.r;
+        drawable.data[index + 9] = color.g;
+        drawable.data[index + 10] = color.b;
+        drawable.data[index + 11] = color.a;
         index += kEdgeSize;
       }
     }
@@ -219,61 +287,89 @@ namespace textengine {
 
   Drawable MeshEditor::MoveScaleIndicator() const {
     Drawable drawable;
+    constexpr size_t kVerticesPerEdge = 2;
+    constexpr size_t kCoordinatesPerVertex = 2;
+    constexpr size_t kColorComponentsPerVertex = 4;
+    constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
+    const glm::vec4 color = glm::vec4(0.64, 0.64, 0.0, 1);
     if (MoveMode::kFalse != moving) {
-      constexpr size_t kVerticesPerEdge = 2;
-      constexpr size_t kCoordinatesPerVertex = 2;
-      constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
       drawable.data_size = kEdgeSize;
       drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
       const glm::vec2 cursor_end_position = get_cursor_position();
       drawable.data[0] = cursor_start_position.x;
       drawable.data[1] = cursor_start_position.y;
+      drawable.data[2] = color.r;
+      drawable.data[3] = color.g;
+      drawable.data[4] = color.b;
+      drawable.data[5] = color.a;
       if (MoveMode::kBoth == moving) {
-        drawable.data[2] = cursor_end_position.x;
-        drawable.data[3] = cursor_end_position.y;
+        drawable.data[6] = cursor_end_position.x;
+        drawable.data[7] = cursor_end_position.y;
       } else if (MoveMode::kX == moving) {
-        drawable.data[2] = cursor_end_position.x;
-        drawable.data[3] = cursor_start_position.y;
+        drawable.data[6] = cursor_end_position.x;
+        drawable.data[7] = cursor_start_position.y;
       } else if (MoveMode::kY == moving) {
-        drawable.data[2] = cursor_start_position.x;
-        drawable.data[3] = cursor_end_position.y;
+        drawable.data[6] = cursor_start_position.x;
+        drawable.data[7] = cursor_end_position.y;
       }
+      drawable.data[8] = color.r;
+      drawable.data[9] = color.g;
+      drawable.data[10] = color.b;
+      drawable.data[11] = color.a;
       drawable.element_count = 2;
     } else if (rotating) {
-      constexpr size_t kVerticesPerEdge = 2;
-      constexpr size_t kCoordinatesPerVertex = 2;
-      constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
       drawable.data_size = kEdgeSize * 2;
       drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
       const glm::vec2 cursor_end_position = get_cursor_position();
       drawable.data[0] = center_of_mass.x;
       drawable.data[1] = center_of_mass.y;
-      drawable.data[2] = cursor_start_position.x;
-      drawable.data[3] = cursor_start_position.y;
-      drawable.data[4] = center_of_mass.x;
-      drawable.data[5] = center_of_mass.y;
-      drawable.data[6] = cursor_end_position.x;
-      drawable.data[7] = cursor_end_position.y;
+      drawable.data[2] = color.r;
+      drawable.data[3] = color.g;
+      drawable.data[4] = color.b;
+      drawable.data[5] = color.a;
+      drawable.data[6] = cursor_start_position.x;
+      drawable.data[7] = cursor_start_position.y;
+      drawable.data[8] = color.r;
+      drawable.data[9] = color.g;
+      drawable.data[10] = color.b;
+      drawable.data[11] = color.a;
+      drawable.data[12] = center_of_mass.x;
+      drawable.data[13] = center_of_mass.y;
+      drawable.data[14] = color.r;
+      drawable.data[15] = color.g;
+      drawable.data[16] = color.b;
+      drawable.data[17] = color.a;
+      drawable.data[18] = cursor_end_position.x;
+      drawable.data[19] = cursor_end_position.y;
+      drawable.data[20] = color.r;
+      drawable.data[21] = color.g;
+      drawable.data[22] = color.b;
+      drawable.data[23] = color.a;
       drawable.element_count = 4;
     } else if (ScaleMode::kFalse != scaling) {
-      constexpr size_t kVerticesPerEdge = 2;
-      constexpr size_t kCoordinatesPerVertex = 2;
-      constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
       drawable.data_size = kEdgeSize;
       drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
       const glm::vec2 cursor_end_position = get_cursor_position();
       drawable.data[0] = center_of_mass.x;
       drawable.data[1] = center_of_mass.y;
+      drawable.data[2] = color.r;
+      drawable.data[3] = color.g;
+      drawable.data[4] = color.b;
+      drawable.data[5] = color.a;
       if (ScaleMode::kAll == scaling || ScaleMode::kBoth == scaling) {
-        drawable.data[2] = cursor_end_position.x;
-        drawable.data[3] = cursor_end_position.y;
+        drawable.data[6] = cursor_end_position.x;
+        drawable.data[7] = cursor_end_position.y;
       } else if (ScaleMode::kX == scaling) {
-        drawable.data[2] = cursor_end_position.x;
-        drawable.data[3] = center_of_mass.y;
+        drawable.data[6] = cursor_end_position.x;
+        drawable.data[7] = center_of_mass.y;
       } else if (ScaleMode::kY == scaling) {
-        drawable.data[2] = center_of_mass.x;
-        drawable.data[3] = cursor_end_position.y;
+        drawable.data[6] = center_of_mass.x;
+        drawable.data[7] = cursor_end_position.y;
       }
+      drawable.data[8] = color.r;
+      drawable.data[9] = color.g;
+      drawable.data[10] = color.b;
+      drawable.data[11] = color.a;
       drawable.element_count = 2;
     } else {
       drawable.data_size = 0;
@@ -288,7 +384,8 @@ namespace textengine {
     Drawable drawable;
     constexpr size_t kVerticesPerEdge = 2;
     constexpr size_t kCoordinatesPerVertex = 2;
-    constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
+    constexpr size_t kColorComponentsPerVertex = 4;
+    constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
     const size_t interior_edges = std::count_if(mesh.get_half_edges().begin(),
                                                 mesh.get_half_edges().end(),
                                                 [] (const std::unique_ptr<Mesh::HalfEdge> &half_edge) {
@@ -301,10 +398,20 @@ namespace textengine {
       if (half_edge->opposite) {
         const glm::vec2 centroid = FaceCentroid(half_edge->face);
         const glm::vec2 opposite_centroid = FaceCentroid(half_edge->opposite->face);
+        const glm::vec4 color = half_edge->face->room_info ? half_edge->face->room_info->color / 2.0f : glm::vec4(0.0f, 0.0f, 0.64f, 1.0f);
+        const glm::vec4 opposite_color = half_edge->opposite->face->room_info ? half_edge->opposite->face->room_info->color / 2.0f : glm::vec4(0.0f, 0.0f, 0.64f, 1.0f);
         drawable.data[index + 0] = centroid.x;
         drawable.data[index + 1] = centroid.y;
-        drawable.data[index + 2] = opposite_centroid.x;
-        drawable.data[index + 3] = opposite_centroid.y;
+        drawable.data[index + 2] = color.r;
+        drawable.data[index + 3] = color.g;
+        drawable.data[index + 4] = color.b;
+        drawable.data[index + 5] = color.a;
+        drawable.data[index + 6] = opposite_centroid.x;
+        drawable.data[index + 7] = opposite_centroid.y;
+        drawable.data[index + 8] = opposite_color.r;
+        drawable.data[index + 9] = opposite_color.g;
+        drawable.data[index + 10] = opposite_color.b;
+        drawable.data[index + 11] = opposite_color.a;
         index += kEdgeSize;
       }
     }
@@ -316,14 +423,20 @@ namespace textengine {
   Drawable MeshEditor::PathfindingNodes() const {
     Drawable drawable;
     constexpr size_t kCoordinatesPerVertex = 2;
-    drawable.data_size = kCoordinatesPerVertex * mesh.get_faces().size();
+    constexpr size_t kColorComponentsPerVertex = 4;
+    drawable.data_size = (kCoordinatesPerVertex + kColorComponentsPerVertex) * mesh.get_faces().size();
     drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
     int index = 0;
     for (auto &face : mesh.get_faces()) {
       const glm::vec2 centroid = FaceCentroid(face.get());
+      const glm::vec4 color = face->room_info ? face->room_info->color / 4.0f : glm::vec4(0.0f, 0.0f, 0.32f, 1.0f);
       drawable.data[index + 0] = centroid.x;
       drawable.data[index + 1] = centroid.y;
-      index += kCoordinatesPerVertex;
+      drawable.data[index + 2] = color.r;
+      drawable.data[index + 3] = color.g;
+      drawable.data[index + 4] = color.b;
+      drawable.data[index + 5] = color.a;
+      index += kCoordinatesPerVertex + kColorComponentsPerVertex;
     }
     drawable.element_count = static_cast<GLsizei>(mesh.get_faces().size());
     drawable.element_type = GL_POINTS;
@@ -335,26 +448,60 @@ namespace textengine {
     if (add_selecting || selecting) {
       constexpr size_t kVerticesPerEdge = 2;
       constexpr size_t kCoordinatesPerVertex = 2;
-      constexpr size_t kEdgeSize = kVerticesPerEdge * kCoordinatesPerVertex;
+      constexpr size_t kColorComponentsPerVertex = 4;
+      constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
+      const auto color = glm::vec4(0.64f, 0.64f, 0.0f, 1.0f);
       drawable.data_size = kEdgeSize * 4;
       drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
       const glm::vec2 cursor_end_position = get_cursor_position();
       drawable.data[0] = cursor_start_position.x;
       drawable.data[1] = cursor_start_position.y;
-      drawable.data[2] = cursor_end_position.x;
-      drawable.data[3] = cursor_start_position.y;
-      drawable.data[4] = cursor_start_position.x;
-      drawable.data[5] = cursor_start_position.y;
-      drawable.data[6] = cursor_start_position.x;
-      drawable.data[7] = cursor_end_position.y;
-      drawable.data[8] = cursor_end_position.x;
-      drawable.data[9] = cursor_end_position.y;
-      drawable.data[10] = cursor_start_position.x;
-      drawable.data[11] = cursor_end_position.y;
-      drawable.data[12] = cursor_end_position.x;
-      drawable.data[13] = cursor_end_position.y;
-      drawable.data[14] = cursor_end_position.x;
-      drawable.data[15] = cursor_start_position.y;
+      drawable.data[2] = color.r;
+      drawable.data[3] = color.g;
+      drawable.data[4] = color.b;
+      drawable.data[5] = color.a;
+      drawable.data[6] = cursor_end_position.x;
+      drawable.data[7] = cursor_start_position.y;
+      drawable.data[8] = color.r;
+      drawable.data[9] = color.g;
+      drawable.data[10] = color.b;
+      drawable.data[11] = color.a;
+      drawable.data[12] = cursor_start_position.x;
+      drawable.data[13] = cursor_start_position.y;
+      drawable.data[14] = color.r;
+      drawable.data[15] = color.g;
+      drawable.data[16] = color.b;
+      drawable.data[17] = color.a;
+      drawable.data[18] = cursor_start_position.x;
+      drawable.data[19] = cursor_end_position.y;
+      drawable.data[20] = color.r;
+      drawable.data[21] = color.g;
+      drawable.data[22] = color.b;
+      drawable.data[23] = color.a;
+      drawable.data[24] = cursor_end_position.x;
+      drawable.data[25] = cursor_end_position.y;
+      drawable.data[26] = color.r;
+      drawable.data[27] = color.g;
+      drawable.data[28] = color.b;
+      drawable.data[29] = color.a;
+      drawable.data[30] = cursor_start_position.x;
+      drawable.data[31] = cursor_end_position.y;
+      drawable.data[32] = color.r;
+      drawable.data[33] = color.g;
+      drawable.data[34] = color.b;
+      drawable.data[35] = color.a;
+      drawable.data[36] = cursor_end_position.x;
+      drawable.data[37] = cursor_end_position.y;
+      drawable.data[38] = color.r;
+      drawable.data[39] = color.g;
+      drawable.data[40] = color.b;
+      drawable.data[41] = color.a;
+      drawable.data[42] = cursor_end_position.x;
+      drawable.data[43] = cursor_start_position.y;
+      drawable.data[44] = color.r;
+      drawable.data[45] = color.g;
+      drawable.data[46] = color.b;
+      drawable.data[47] = color.a;
       drawable.element_count = 8;
     } else {
       drawable.data_size = 0;
@@ -562,7 +709,25 @@ namespace textengine {
       mesh.get_faces().erase(std::remove_if(mesh.get_faces().begin(),
                                             mesh.get_faces().end(), delete_face),
                                 mesh.get_faces().end());
-
+    }
+    if (ready && keyboard.IsKeyJustPressed(GLFW_KEY_SPACE)) {
+      if (!selected_faces().empty()) {
+        auto room_info = CreateRandomizedRoomInfo();
+        std::cout << "Created room: " << room_info->name << std::endl;
+        std::cout << "  with color: " << room_info->color.r << ", " << room_info->color.g << ", "
+        << room_info->color.b << std::endl;
+        mesh.get_room_infos().emplace_back(room_info);
+        for (auto face : selected_faces()) {
+          face->room_info = room_info;
+        }
+        selected_vertices.clear();
+      }
+    }
+    if (ready && keyboard.IsKeyJustPressed(GLFW_KEY_BACKSPACE)) {
+      for (auto face : selected_faces()) {
+        face->room_info = nullptr;
+      }
+      selected_vertices.clear();
     }
     if (ready && !(keyboard.IsKeyDown(GLFW_KEY_LEFT_SHIFT) ||
                    keyboard.IsKeyDown(GLFW_KEY_RIGHT_SHIFT)) &&

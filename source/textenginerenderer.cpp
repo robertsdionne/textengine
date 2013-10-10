@@ -142,8 +142,11 @@ namespace textengine {
     glBindVertexArray(face_vertex_array);
     glBindBuffer(GL_ARRAY_BUFFER, face_vertex_buffer);
     glVertexAttribPointer(glGetAttribLocation(face_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 0, nullptr);
+                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(glGetAttribLocation(face_program, u8"vertex_position"));
+    glVertexAttribPointer(glGetAttribLocation(face_program, u8"vertex_color"),
+                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+    glEnableVertexAttribArray(glGetAttribLocation(face_program, u8"vertex_color"));
     CHECK_STATE(!glGetError());
 
     glGenBuffers(1, &edge_vertex_buffer);
@@ -152,8 +155,11 @@ namespace textengine {
     glBindVertexArray(edge_vertex_array);
     glBindBuffer(GL_ARRAY_BUFFER, edge_vertex_buffer);
     glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 0, nullptr);
+                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
+    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_color"),
+                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_color"));
     CHECK_STATE(!glGetError());
 
     glGenBuffers(1, &pathfinding_edges_vertex_buffer);
@@ -162,8 +168,11 @@ namespace textengine {
     glBindVertexArray(pathfinding_edges_vertex_array);
     glBindBuffer(GL_ARRAY_BUFFER, pathfinding_edges_vertex_buffer);
     glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 0, nullptr);
+                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
+    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_color"),
+                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_color"));
     CHECK_STATE(!glGetError());
 
     glGenBuffers(1, &pathfinding_nodes_vertex_buffer);
@@ -172,8 +181,11 @@ namespace textengine {
     glBindVertexArray(pathfinding_nodes_vertex_array);
     glBindBuffer(GL_ARRAY_BUFFER, pathfinding_nodes_vertex_buffer);
     glVertexAttribPointer(glGetAttribLocation(point_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 0, nullptr);
+                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(glGetAttribLocation(point_program, u8"vertex_position"));
+    glVertexAttribPointer(glGetAttribLocation(point_program, u8"vertex_color"),
+                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+    glEnableVertexAttribArray(glGetAttribLocation(point_program, u8"vertex_color"));
     CHECK_STATE(!glGetError());
 
     glGenBuffers(1, &selected_face_vertex_buffer);
@@ -182,8 +194,11 @@ namespace textengine {
     glBindVertexArray(selected_face_vertex_array);
     glBindBuffer(GL_ARRAY_BUFFER, selected_face_vertex_buffer);
     glVertexAttribPointer(glGetAttribLocation(face_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 0, nullptr);
+                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(glGetAttribLocation(face_program, u8"vertex_position"));
+    glVertexAttribPointer(glGetAttribLocation(face_program, u8"vertex_color"),
+                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+    glEnableVertexAttribArray(glGetAttribLocation(face_program, u8"vertex_color"));
     CHECK_STATE(!glGetError());
 
     glGenBuffers(1, &selected_interior_edge_vertex_buffer);
@@ -192,8 +207,11 @@ namespace textengine {
     glBindVertexArray(selected_interior_edge_vertex_array);
     glBindBuffer(GL_ARRAY_BUFFER, selected_interior_edge_vertex_buffer);
     glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 0, nullptr);
+                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
+    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_color"),
+                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_color"));
     CHECK_STATE(!glGetError());
 
     glGenBuffers(1, &selected_exterior_edge_vertex_buffer);
@@ -202,8 +220,11 @@ namespace textengine {
     glBindVertexArray(selected_exterior_edge_vertex_array);
     glBindBuffer(GL_ARRAY_BUFFER, selected_exterior_edge_vertex_buffer);
     glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 0, nullptr);
+                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
+    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_color"),
+                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_color"));
     CHECK_STATE(!glGetError());
 
     glGenBuffers(1, &selected_point_vertex_buffer);
@@ -212,8 +233,11 @@ namespace textengine {
     glBindVertexArray(selected_point_vertex_array);
     glBindBuffer(GL_ARRAY_BUFFER, selected_point_vertex_buffer);
     glVertexAttribPointer(glGetAttribLocation(point_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 0, nullptr);
+                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(glGetAttribLocation(point_program, u8"vertex_position"));
+    glVertexAttribPointer(glGetAttribLocation(point_program, u8"vertex_color"),
+                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+    glEnableVertexAttribArray(glGetAttribLocation(point_program, u8"vertex_color"));
     CHECK_STATE(!glGetError());
 
     glGenBuffers(1, &move_indicator_vertex_buffer);
@@ -222,8 +246,11 @@ namespace textengine {
     glBindVertexArray(move_indicator_vertex_array);
     glBindBuffer(GL_ARRAY_BUFFER, move_indicator_vertex_buffer);
     glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 0, nullptr);
+                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
+    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_color"),
+                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_color"));
     CHECK_STATE(!glGetError());
 
     glGenBuffers(1, &selection_box_vertex_buffer);
@@ -232,8 +259,11 @@ namespace textengine {
     glBindVertexArray(selection_box_vertex_array);
     glBindBuffer(GL_ARRAY_BUFFER, selection_box_vertex_buffer);
     glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 0, nullptr);
+                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
     glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
+    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_color"),
+                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_color"));
     CHECK_STATE(!glGetError());
   }
 
@@ -315,7 +345,6 @@ namespace textengine {
     glUseProgram(face_program);
     glUniformMatrix4fv(glGetUniformLocation(face_program, u8"projection"), 1, false, &projection[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(face_program, u8"model_view"), 1, false, &model_view[0][0]);
-    glUniform4f(glGetUniformLocation(face_program, u8"shape_color"), 0.640000, 0.640000, 0.640000, 1);
     glBindVertexArray(face_vertex_array);
     glDrawArrays(face_data.element_type, 0, face_data.element_count);
     CHECK_STATE(!glGetError());
@@ -323,8 +352,6 @@ namespace textengine {
     glUseProgram(edge_program);
     glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
-    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"),
-                0.640000/2.0, 0.640000/2.0, 0.640000/2.0, 1);
     glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.00125);
     glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
     glBindVertexArray(edge_vertex_array);
@@ -334,7 +361,6 @@ namespace textengine {
 //    glUseProgram(edge_program);
 //    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
 //    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
-//    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.0, 0.0, 0.64, 1);
 //    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
 //    glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
 //    glBindVertexArray(pathfinding_edges_vertex_array);
@@ -344,7 +370,6 @@ namespace textengine {
 //    glUseProgram(point_program);
 //    glUniformMatrix4fv(glGetUniformLocation(point_program, u8"projection"), 1, false, &projection[0][0]);
 //    glUniformMatrix4fv(glGetUniformLocation(point_program, u8"model_view"), 1, false, &model_view[0][0]);
-//    glUniform4f(glGetUniformLocation(point_program, u8"shape_color"), 0.0, 0.0, 0.64/2.0, 1);
 //    glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.02);
 //    glUniform1f(glGetUniformLocation(point_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
 //    glBindVertexArray(pathfinding_nodes_vertex_array);
@@ -354,18 +379,16 @@ namespace textengine {
     glUseProgram(edge_program);
     glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
-    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.64, 0.0, 1);
     glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.005);
     glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
     glBindVertexArray(move_indicator_vertex_array);
     glDrawArrays(move_indicator_data.element_type, 0, move_indicator_data.element_count);
     CHECK_STATE(!glGetError());
-    
+
     glUseProgram(face_program);
     glUniformMatrix4fv(glGetUniformLocation(face_program, u8"projection"), 1, false, &projection[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(face_program, u8"model_view"), 1, false, &model_view[0][0]);
     glUniform2f(glGetUniformLocation(face_program, u8"shape_size"), 2, 2);
-    glUniform4f(glGetUniformLocation(face_program, u8"shape_color"), 0.32, 0.0, 0.0, 1);
     glBindVertexArray(selected_face_vertex_array);
     glDrawArrays(selected_face_data.element_type, 0, selected_face_data.element_count);
     CHECK_STATE(!glGetError());
@@ -373,7 +396,6 @@ namespace textengine {
     glUseProgram(edge_program);
     glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
-    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.0, 0.0, 1);
     glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.00125);
     glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
     glBindVertexArray(selected_interior_edge_vertex_array);
@@ -384,7 +406,6 @@ namespace textengine {
     glUseProgram(edge_program);
     glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
-    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.0, 0.0, 1);
     glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.005);
     glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
     glBindVertexArray(selected_exterior_edge_vertex_array);
@@ -395,7 +416,6 @@ namespace textengine {
     glUseProgram(point_program);
     glUniformMatrix4fv(glGetUniformLocation(point_program, u8"projection"), 1, false, &projection[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(point_program, u8"model_view"), 1, false, &model_view[0][0]);
-    glUniform4f(glGetUniformLocation(point_program, u8"shape_color"), 1.0, 0.0, 0.0, 1);
     glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.01);
     glUniform1f(glGetUniformLocation(point_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
     glBindVertexArray(selected_point_vertex_array);
@@ -405,7 +425,6 @@ namespace textengine {
     glUseProgram(edge_program);
     glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
-    glUniform4f(glGetUniformLocation(edge_program, u8"shape_color"), 0.64, 0.64, 0.0, 1);
     glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.005);
     glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
     glBindVertexArray(selection_box_vertex_array);
@@ -417,13 +436,13 @@ namespace textengine {
     const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(current_state.player_position, 0.0)) *
                                                       glm::scale(glm::mat4(), glm::vec3(0.01)));
 
-    glUseProgram(face_program);
-    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"projection"), 1, false, &projection[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"model_view"), 1, false, &player_model_view[0][0]);
-    glUniform4f(glGetUniformLocation(face_program, u8"shape_color"), 1, 0, 0, 1);
-    glBindVertexArray(vertex_array);
-    glDrawArrays(GL_TRIANGLES, 0, 100*3);
-    CHECK_STATE(!glGetError());
+//    glUseProgram(face_program);
+//    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"projection"), 1, false, &projection[0][0]);
+//    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"model_view"), 1, false, &player_model_view[0][0]);
+//    glUniform4f(glGetUniformLocation(face_program, u8"shape_color"), 1, 0, 0, 1);
+//    glBindVertexArray(vertex_array);
+//    glDrawArrays(GL_TRIANGLES, 0, 100*3);
+//    CHECK_STATE(!glGetError());
   }
 
 }  // namespace textengine

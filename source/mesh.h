@@ -12,9 +12,11 @@ namespace textengine {
   class Mesh {
   public:
     struct HalfEdge;
+    struct RoomInfo;
 
     struct Face {
       HalfEdge *face_edge;
+      RoomInfo *room_info;
     };
 
     struct Vertex {
@@ -28,13 +30,19 @@ namespace textengine {
       Vertex *start;
     };
 
+    struct RoomInfo {
+      std::string name;
+      glm::vec4 color;
+    };
+
     Mesh() = default;
 
     Mesh(Mesh &&mesh) = default;
 
     Mesh(std::vector<std::unique_ptr<Face>> &&faces,
          std::vector<std::unique_ptr<HalfEdge>> &&half_edges,
-         std::vector<std::unique_ptr<Vertex>> &&vertices);
+         std::vector<std::unique_ptr<Vertex>> &&vertices,
+         std::vector<std::unique_ptr<RoomInfo>> &&room_infos);
 
     virtual ~Mesh() = default;
 
@@ -45,6 +53,8 @@ namespace textengine {
     std::vector<std::unique_ptr<HalfEdge>> &get_half_edges();
 
     std::vector<std::unique_ptr<Vertex>> &get_vertices();
+
+    std::vector<std::unique_ptr<RoomInfo>> &get_room_infos();
 
     void AddDefaultFace(glm::vec2 position);
 
@@ -62,6 +72,7 @@ namespace textengine {
     std::vector<std::unique_ptr<Face>> faces;
     std::vector<std::unique_ptr<HalfEdge>> half_edges;
     std::vector<std::unique_ptr<Vertex>> vertices;
+    std::vector<std::unique_ptr<RoomInfo>> room_infos;
   };
 
 }  // namespace textengine
