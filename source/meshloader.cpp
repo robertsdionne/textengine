@@ -24,12 +24,15 @@ namespace textengine {
     CHECK_STATE(object["faces"].is<picojson::array>());
     CHECK_STATE(object["half_edges"].is<picojson::array>());
     CHECK_STATE(object["vertices"].is<picojson::array>());
+    CHECK_STATE(object["room_infos"].is<picojson::array>());
     picojson::array faces_in = object["faces"].get<picojson::array>();
     picojson::array half_edges_in = object["half_edges"].get<picojson::array>();
     picojson::array vertices_in = object["vertices"].get<picojson::array>();
+    picojson::array room_infos_in = object["room_infos"].get<picojson::array>();
     std::vector<std::unique_ptr<Mesh::Face>> faces_out;
     std::vector<std::unique_ptr<Mesh::HalfEdge>> half_edges_out;
     std::vector<std::unique_ptr<Mesh::Vertex>> vertices_out;
+    std::vector<std::unique_ptr<Mesh::RoomInfo>> room_infos_out;
     for (auto i = 0; i < faces_in.size(); ++i) {
       faces_out.emplace_back(new Mesh::Face);
     }
@@ -39,8 +42,11 @@ namespace textengine {
     for (auto i = 0; i < vertices_in.size(); ++i) {
       vertices_out.emplace_back(new Mesh::Vertex);
     }
+    for (auto i = 0; i < room_infos_in.size(); ++i) {
+      room_infos_out.emplace_back(new Mesh::RoomInfo);
+    }
     for (auto i = 0; i < faces_in.size(); ++i) {
-      ReadFace(faces_in[i], half_edges_out, faces_out[i].get());
+      ReadFace(faces_in[i], half_edges_out, room_infos_out, faces_out[i].get());
     }
     for (auto i = 0; i < half_edges_in.size(); ++i) {
       ReadHalfEdge(half_edges_in[i], faces_out, half_edges_out,
@@ -49,8 +55,11 @@ namespace textengine {
     for (auto i = 0; i < vertices_in.size(); ++i) {
       ReadVertex(vertices_in[i], half_edges_out, vertices_out[i].get());
     }
+    for (auto i = 0; i < room_infos_in.size(); ++i) {
+      ReadRoomInfo(room_infos_in[i], room_infos_out, room_infos_out[i].get());
+    }
     return Mesh(std::move(faces_out), std::move(half_edges_out), std::move(vertices_out),
-                std::vector<std::unique_ptr<Mesh::RoomInfo>>());
+                std::move(room_infos_out));
   }
 
   void MeshLoader::ReadVertex(const picojson::value &vertex_in,
@@ -91,13 +100,27 @@ namespace textengine {
 
   void MeshLoader::ReadFace(const picojson::value &face_in,
                             const std::vector<std::unique_ptr<Mesh::HalfEdge>> &half_edges,
+                            const std::vector<std::unique_ptr<Mesh::RoomInfo>> &room_infos,
                             Mesh::Face *face_out) const {
     CHECK_STATE(face_in.is<picojson::object>());
     picojson::object object = face_in.get<picojson::object>();
     CHECK_STATE(object["face_edge"].is<double>());
+    CHECK_STATE(object["room_info"].is<double>());
     const long face_edge_index = static_cast<long>(object["face_edge"].get<double>());
+    const long room_info_index = static_cast<long>(object["room_info"].get<double>());
     face_out->face_edge = face_edge_index < 0 ? nullptr : half_edges[face_edge_index].get();
-    face_out->room_info = nullptr;
+    face_out->room_info = room_info_index < 0 ? nullptr : room_infos[room_info_index].get();
+  }
+
+  void MeshLoader::ReadRoomInfo(const picojson::value &room_info_in,
+                    const std::vector<std::unique_ptr<Mesh::RoomInfo>> &room_infos,
+                    Mesh::RoomInfo *room_info_out) const {
+    CHECK_STATE(room_info_in.is<picojson::object>());
+    picojson::object object = room_info_in.get<picojson::object>();
+    CHECK_STATE(object["name"].is<std::string>());
+    CHECK_STATE(object["color"].is<picojson::object>());
+    room_info_out->name = object["name"].get<std::string>();
+    room_info_out->color = ReadColor(object["color"]);
   }
 
   glm::vec2 MeshLoader::ReadVec2(const picojson::value &vector) const {
@@ -106,6 +129,17 @@ namespace textengine {
     CHECK_STATE(object["x"].is<double>());
     CHECK_STATE(object["y"].is<double>());
     return glm::vec2(object["x"].get<double>(), object["y"].get<double>());
+  }
+
+  glm::vec4 MeshLoader::ReadColor(const picojson::value &color) const {
+    CHECK_STATE(color.is<picojson::object>());
+    picojson::object object = color.get<picojson::object>();
+    CHECK_STATE(object["r"].is<double>());
+    CHECK_STATE(object["g"].is<double>());
+    CHECK_STATE(object["b"].is<double>());
+    CHECK_STATE(object["a"].is<double>());
+    return glm::vec4(object["r"].get<double>(), object["g"].get<double>(),
+                     object["b"].get<double>(), object["a"].get<double>());
   }
 
 }  // namespace textengine

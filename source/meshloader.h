@@ -30,9 +30,16 @@ namespace textengine {
 
     void ReadFace(const picojson::value &face_in,
                   const std::vector<std::unique_ptr<Mesh::HalfEdge>> &half_edges,
+                  const std::vector<std::unique_ptr<Mesh::RoomInfo>> &room_infos,
                   Mesh::Face *face_out) const;
 
+    void ReadRoomInfo(const picojson::value &room_info_in,
+                      const std::vector<std::unique_ptr<Mesh::RoomInfo>> &room_infos,
+                      Mesh::RoomInfo *room_info_out) const;
+
     glm::vec2 ReadVec2(const picojson::value &vector) const;
+
+    glm::vec4 ReadColor(const picojson::value &color) const;
   };
 
 }  // namespace textengine

@@ -21,6 +21,7 @@ namespace textengine {
     typedef std::unordered_map<Mesh::Face *, double> FaceIndexMap;
     typedef std::unordered_map<Mesh::HalfEdge *, double> HalfEdgeIndexMap;
     typedef std::unordered_map<Mesh::Vertex *, double> VertexIndexMap;
+    typedef std::unordered_map<Mesh::RoomInfo *, double> RoomInfoIndexMap;
 
     picojson::value WriteVertex(const HalfEdgeIndexMap &half_edge_indices,
                                 const Mesh::Vertex *vertex) const;
@@ -31,9 +32,14 @@ namespace textengine {
                                   const Mesh::HalfEdge *half_edge) const;
 
     picojson::value WriteFace(const HalfEdgeIndexMap &half_edge_indices,
+                              const RoomInfoIndexMap &room_info_indices,
                               const Mesh::Face *face) const;
 
+    picojson::value WriteRoomInfo(const Mesh::RoomInfo *room_info) const;
+
     picojson::value WriteVec2(glm::vec2 vector) const;
+
+    picojson::value WriteColor(glm::vec4 color) const;
   };
 
 }  // namespace textengine
