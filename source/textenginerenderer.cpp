@@ -340,12 +340,12 @@ namespace textengine {
 //    glBindVertexArray(pathfinding_edges_vertex_array);
 //    glDrawArrays(pathfinding_edges_data.element_type, 0, pathfinding_edges_data.element_count);
 //    CHECK_STATE(!glGetError());
-
+//
 //    glUseProgram(point_program);
 //    glUniformMatrix4fv(glGetUniformLocation(point_program, u8"projection"), 1, false, &projection[0][0]);
 //    glUniformMatrix4fv(glGetUniformLocation(point_program, u8"model_view"), 1, false, &model_view[0][0]);
 //    glUniform4f(glGetUniformLocation(point_program, u8"shape_color"), 0.0, 0.0, 0.64/2.0, 1);
-//    glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.04);
+//    glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.02);
 //    glUniform1f(glGetUniformLocation(point_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
 //    glBindVertexArray(pathfinding_nodes_vertex_array);
 //    glDrawArrays(pathfinding_nodes_data.element_type, 0, pathfinding_nodes_data.element_count);
