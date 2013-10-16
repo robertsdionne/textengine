@@ -8,6 +8,7 @@
 #include "keyboard.h"
 #include "mesh.h"
 #include "mesheditor.h"
+#include "meshloader.h"
 #include "mouse.h"
 #include "prompt.h"
 #include "textenginerenderer.h"
@@ -26,7 +27,8 @@ int main(int argument_count, char *arguments[]) {
   prompt.Run();
   textengine::GameState initial_state;
   textengine::Mesh mesh;
-  mesh.AddDefaultFace(glm::vec2(0.0, 0.0));
+  textengine::MeshLoader loader;
+  mesh = loader.ReadMesh("output.json");
   textengine::CommandTokenizer tokenizer;
   textengine::CommandParser parser{tokenizer, mesh};
   textengine::Updater updater{queue, parser, mesh, initial_state};

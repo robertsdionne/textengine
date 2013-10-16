@@ -2,10 +2,19 @@
 #define TEXTENGINE_GAMESTATE_H_
 
 #include <glm/glm.hpp>
+#include <vector>
 
 #include "mesh.h"
 
 namespace textengine {
+
+  struct CharacterInfo {
+    glm::vec2 position;
+    glm::vec2 position_target;
+    glm::vec2 direction;
+    glm::vec2 direction_target;
+    Mesh::RoomInfo *room_target;
+  };
 
   class GameState {
   public:
@@ -15,11 +24,8 @@ namespace textengine {
 
     virtual ~GameState() = default;
 
-    glm::vec2 player_position;
-    glm::vec2 player_target;
-    glm::vec2 player_direction;
-    glm::vec2 player_direction_target;
-    Mesh::RoomInfo *room_target;
+    CharacterInfo player;
+    std::vector<CharacterInfo> non_player_characters;
   };
 
 }  // namespace textengine

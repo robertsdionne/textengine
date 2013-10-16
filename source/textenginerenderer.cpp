@@ -477,8 +477,8 @@ namespace textengine {
 
     editor.Update();
 
-    const float angle = glm::atan(current_state.player_direction.y, current_state.player_direction.x);
-    const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(current_state.player_position, 0.0)) *
+    const float angle = glm::atan(current_state.player.direction.y, current_state.player.direction.x);
+    const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(current_state.player.position, 0.0)) *
                                                       glm::rotate(glm::mat4(), glm::degrees(angle), glm::vec3(0, 0, 1)) *
                                                       glm::scale(glm::mat4(), glm::vec3(0.01)));
 

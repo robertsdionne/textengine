@@ -31,17 +31,17 @@ namespace textengine {
       next_state = parser.Parse(next_state, queue.PopCommand());
     }
 
-    if (next_state.room_target) {
+    if (next_state.player.room_target) {
 //      std::cout << "has room target" << std::endl;
-      auto current_face = FindFaceThatContainsPoint(next_state.player_position);
-      if (current_face && next_state.room_target == current_face->room_info) {
+      auto current_face = FindFaceThatContainsPoint(next_state.player.position);
+      if (current_face && next_state.player.room_target == current_face->room_info) {
 //        std::cout << "reached target" << std::endl;
-        next_state.room_target = nullptr;
-      } else if (current_face && next_state.room_target) {
+        next_state.player.room_target = nullptr;
+      } else if (current_face && next_state.player.room_target) {
 //        std::cout << "pursuing target" << std::endl;
         std::unordered_map<Mesh::Face *, float> distances;
         for (auto &face : mesh.get_faces()) {
-          if (next_state.room_target == face->room_info) {
+          if (next_state.player.room_target == face->room_info) {
             distances.insert({face.get(), 0.0f});
           } else {
             distances.insert({face.get(), std::numeric_limits<float>::infinity()});
@@ -115,14 +115,14 @@ namespace textengine {
         } while (edge != current_face->face_edge);
         if (argmin) {
 //          std::cout << "found minimum target" << std::endl;
-          next_state.player_direction_target = glm::normalize(target - next_state.player_position);
-          next_state.player_target = target;
+          next_state.player.direction_target = glm::normalize(target - next_state.player.position);
+          next_state.player.position_target = target;
         }
       }
     }
-    const float angle = glm::atan(next_state.player_direction.y, next_state.player_direction.x);
-    float angle_target = glm::atan(next_state.player_direction_target.y,
-                                   next_state.player_direction_target.x);
+    const float angle = glm::atan(next_state.player.direction.y, next_state.player.direction.x);
+    float angle_target = glm::atan(next_state.player.direction_target.y,
+                                   next_state.player.direction_target.x);
     while (angle_target - angle > M_PI) {
       angle_target -= 2.0 * M_PI;
     }
@@ -130,9 +130,9 @@ namespace textengine {
       angle_target += 2.0 * M_PI;
     }
     const float final_angle = glm::mix(angle, angle_target, 0.1f);
-    next_state.player_direction = glm::vec2(glm::cos(final_angle), glm::sin(final_angle));
-    next_state.player_position = glm::mix(next_state.player_position,
-                                          next_state.player_target, 0.1f);
+    next_state.player.direction = glm::vec2(glm::cos(final_angle), glm::sin(final_angle));
+    next_state.player.position = glm::mix(next_state.player.position,
+                                          next_state.player.position_target, 0.1f);
     return next_state;
   }
 
