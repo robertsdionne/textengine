@@ -2,6 +2,7 @@
 #define TEXTENGINE_UPDATER_H_
 
 #include "gamestate.h"
+#include "mesh.h"
 
 namespace textengine {
 
@@ -11,7 +12,7 @@ namespace textengine {
 
   class Updater {
   public:
-    Updater(CommandQueue &queue, CommandParser &parser, const GameState &initial_state);
+    Updater(CommandQueue &queue, CommandParser &parser, Mesh &mesh, const GameState &initial_state);
 
     virtual ~Updater() = default;
 
@@ -22,9 +23,14 @@ namespace textengine {
   private:
     GameState Update(GameState current_state);
 
+    bool FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const;
+
+    Mesh::Face *FindFaceThatContainsPoint(glm::vec2 point) const;
+
   private:
     CommandQueue &queue;
     CommandParser &parser;
+    Mesh &mesh;
     GameState current_state;
   };
 

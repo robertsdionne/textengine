@@ -24,12 +24,12 @@ int main(int argument_count, char *arguments[]) {
   textengine::CommandQueue queue;
   textengine::Prompt prompt{queue, kPrompt};
   prompt.Run();
-  textengine::CommandTokenizer tokenizer;
-  textengine::CommandParser parser{tokenizer};
   textengine::GameState initial_state;
-  textengine::Updater updater{queue, parser, initial_state};
   textengine::Mesh mesh;
   mesh.AddDefaultFace(glm::vec2(0.0, 0.0));
+  textengine::CommandTokenizer tokenizer;
+  textengine::CommandParser parser{tokenizer, mesh};
+  textengine::Updater updater{queue, parser, mesh, initial_state};
   std::default_random_engine engine;
   textengine::MeshEditor editor{kWindowWidth, kWindowHeight, keyboard, mouse, mesh, engine};
   textengine::TextEngineRenderer renderer{updater, mesh, editor};

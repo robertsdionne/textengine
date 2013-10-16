@@ -10,10 +10,11 @@ namespace textengine {
 
   class CommandQueue;
   class CommandTokenizer;
+  class Mesh;
 
   class CommandParser {
   public:
-    CommandParser(CommandTokenizer &tokenizer);
+    CommandParser(CommandTokenizer &tokenizer, Mesh &mesh);
 
     virtual ~CommandParser() = default;
 
@@ -27,6 +28,9 @@ namespace textengine {
     GameState Move(GameState current_state,
                    const std::vector<std::string> &tokens, TokenIterator token);
 
+    GameState MoveTo(GameState current_state,
+                     const std::vector<std::string> &tokens, TokenIterator token);
+
     GameState Parse(GameState current_state,
                     const std::vector<std::string> &tokens, TokenIterator token);
     
@@ -36,6 +40,7 @@ namespace textengine {
                    const std::vector<std::string> &tokens, TokenIterator token);
 
     CommandTokenizer &tokenizer;
+    Mesh &mesh;
   };
 
 }  // namespace textengine

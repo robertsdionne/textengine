@@ -5,16 +5,18 @@
 #include <string>
 #include <vector>
 
+#include "checks.h"
 #include "commandparser.h"
 #include "commandtokenizer.h"
 #include "gamestate.h"
+#include "mesh.h"
 
 namespace textengine {
 
   constexpr float CommandParser::kSpeed;
 
-  CommandParser::CommandParser(CommandTokenizer &tokenizer)
-  : tokenizer(tokenizer) {}
+  CommandParser::CommandParser(CommandTokenizer &tokenizer, Mesh &mesh)
+  : tokenizer(tokenizer), mesh(mesh) {}
 
   GameState CommandParser::Parse(GameState current_state, std::string command) {
     const std::vector<std::string> tokens = tokenizer.Tokenize(command);
@@ -25,6 +27,8 @@ namespace textengine {
                                 const std::vector<std::string> &tokens, TokenIterator token) {
     if (tokens.end() == token) {
       current_state.player_target += current_state.player_direction * kSpeed;
+    } else if ("to" == *token) {
+      return MoveTo(current_state, tokens, std::next(token));
     } else if ("forward" == *token) {
       current_state.player_target += current_state.player_direction * kSpeed;
     } else if ("backward" == *token || "back" == *token) {
@@ -54,6 +58,21 @@ namespace textengine {
     } else if ("southwest" == *token || "sw" == *token) {
       current_state.player_target += glm::normalize(glm::vec2(-1, -1)) * kSpeed;
     } else {
+      std::cout << "I do not know where you want to go." << std::endl;
+    }
+    return current_state;
+  }
+
+  GameState CommandParser::MoveTo(textengine::GameState current_state,
+                                  const std::vector<std::string> &tokens, TokenIterator token)  {
+//    std::cout << "MoveTo called." << std::endl;
+    current_state.room_target = nullptr;
+    for (auto &room_info : mesh.get_room_infos()) {
+      if (room_info->name == *token) {
+        current_state.room_target = room_info.get();
+      }
+    }
+    if (!current_state.room_target) {
       std::cout << "I do not know where you want to go." << std::endl;
     }
     return current_state;

@@ -3,6 +3,8 @@
 
 #include <glm/glm.hpp>
 
+#include "mesh.h"
+
 namespace textengine {
 
   class GameState {
@@ -17,6 +19,7 @@ namespace textengine {
     glm::vec2 player_target;
     glm::vec2 player_direction;
     glm::vec2 player_direction_target;
+    Mesh::RoomInfo *room_target;
   };
 
 }  // namespace textengine
