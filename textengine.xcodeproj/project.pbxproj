@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4600EB9117EBC8F9003BA3C3 /* commandtokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4600EB8F17EBC8F9003BA3C3 /* commandtokenizer.cpp */; };
+		46074B03180F316700823E55 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46074B02180F316700823E55 /* libz.dylib */; };
 		4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4607741F17E8EC0100896A15 /* textenginerenderer.cpp */; };
 		460B492A17F47E24006B4828 /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460B492917F47E24006B4828 /* mesh.cpp */; };
 		460B492D17F4AC88006B4828 /* mesheditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460B492B17F4AC87006B4828 /* mesheditor.cpp */; };
@@ -21,6 +22,7 @@
 		462B4A6517EA43AA006FE9BB /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A5E17EA43AA006FE9BB /* shader.cpp */; };
 		462B4A6617EA43AA006FE9BB /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A6017EA43AA006FE9BB /* program.cpp */; };
 		462B4A6717EA43AA006FE9BB /* buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A6217EA43AA006FE9BB /* buffer.cpp */; };
+		4660234B180F30660073A7AA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FCB7180F1D5200B00F93 /* SystemConfiguration.framework */; };
 		466E70FA17EB92F900CD9E9D /* gamestate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70F817EB92F900CD9E9D /* gamestate.cpp */; };
 		466E70FD17EB944400CD9E9D /* commandparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70FB17EB944400CD9E9D /* commandparser.cpp */; };
 		466E710017EB96D600CD9E9D /* updater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70FE17EB96D500CD9E9D /* updater.cpp */; };
@@ -30,9 +32,13 @@
 		468E015A1783F03D00301C1C /* simplexnoise1234.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 468EFC681783DC1E00301C1C /* simplexnoise1234.cpp */; };
 		468E015D1783F10600301C1C /* libsimplexnoise1234.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01561783F02800301C1C /* libsimplexnoise1234.a */; };
 		468E03A017EB2B4500F4CF1C /* drawtools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 468E039E17EB2B4500F4CF1C /* drawtools.cpp */; };
-		46AB32C8180F1EA0003DDECF /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46AB32C7180F1EA0003DDECF /* libssl.dylib */; };
 		46AB32E7180F2B3A003DDECF /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FBFB180F1A7C00B00F93 /* libwebsockets.a */; };
 		46AB32E8180F2B82003DDECF /* server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46AB32C9180F283A003DDECF /* server.cpp */; };
+		46AB32E9180F2F03003DDECF /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46AB32C7180F1EA0003DDECF /* libssl.dylib */; };
+		46AB32EA180F2F0A003DDECF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FCB5180F1D4B00B00F93 /* CFNetwork.framework */; };
+		46AB32EC180F2F1F003DDECF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FCB7180F1D5200B00F93 /* SystemConfiguration.framework */; };
+		46AB32ED180F2F28003DDECF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FCB5180F1D4B00B00F93 /* CFNetwork.framework */; };
+		46AB32EE180F2F2C003DDECF /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46AB32C7180F1EA0003DDECF /* libssl.dylib */; };
 		46B983AD17E69EAC00B59145 /* eglext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B9826117E69EAB00B59145 /* eglext.h */; };
 		46B983AE17E69EAC00B59145 /* getopt.c in Sources */ = {isa = PBXBuildFile; fileRef = 46B9826217E69EAB00B59145 /* getopt.c */; };
 		46B983AF17E69EAC00B59145 /* getopt.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B9826317E69EAB00B59145 /* getopt.h */; };
@@ -70,6 +76,7 @@
 		46B9842E17E69ED300B59145 /* libglfw.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B9824C17E69E9C00B59145 /* libglfw.a */; };
 		46B9875917E6A62500B59145 /* glfwapplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9875517E6A62500B59145 /* glfwapplication.cpp */; };
 		46B9A60A1771F0F800E43B24 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9A6091771F0F800E43B24 /* main.cpp */; };
+		46C47CCE180F3139002DD37E /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46C47CCD180F3139002DD37E /* libcrypto.dylib */; };
 		46D0FC71180F1A9500B00F93 /* base64-decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC0C180F1A9500B00F93 /* base64-decode.c */; };
 		46D0FC72180F1A9600B00F93 /* client-handshake.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC0D180F1A9500B00F93 /* client-handshake.c */; };
 		46D0FC73180F1A9600B00F93 /* client-parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC0E180F1A9500B00F93 /* client-parser.c */; };
@@ -93,8 +100,8 @@
 		46D0FC85180F1A9600B00F93 /* server.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC21180F1A9500B00F93 /* server.c */; };
 		46D0FC86180F1A9600B00F93 /* sha-1.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC22180F1A9500B00F93 /* sha-1.c */; };
 		46D0FCB4180F1B5F00B00F93 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FBFB180F1A7C00B00F93 /* libwebsockets.a */; };
-		46D0FCB6180F1D4B00B00F93 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FCB5180F1D4B00B00F93 /* CFNetwork.framework */; };
-		46D0FCB8180F1D5200B00F93 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FCB7180F1D5200B00F93 /* SystemConfiguration.framework */; };
+		46D624ED180F325B0081746B /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46C47CCD180F3139002DD37E /* libcrypto.dylib */; };
+		46D624EE180F32600081746B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46074B02180F316700823E55 /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +159,7 @@
 /* Begin PBXFileReference section */
 		4600EB8F17EBC8F9003BA3C3 /* commandtokenizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commandtokenizer.cpp; sourceTree = "<group>"; };
 		4600EB9017EBC8F9003BA3C3 /* commandtokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commandtokenizer.h; sourceTree = "<group>"; };
+		46074B02180F316700823E55 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		4607741F17E8EC0100896A15 /* textenginerenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = textenginerenderer.cpp; sourceTree = "<group>"; };
 		4607742017E8EC0100896A15 /* textenginerenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textenginerenderer.h; sourceTree = "<group>"; };
 		460B492817F47E24006B4828 /* mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesh.h; sourceTree = "<group>"; };
@@ -1262,6 +1270,7 @@
 		46B9875717E6A62500B59145 /* application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = application.h; sourceTree = "<group>"; };
 		46B9875817E6A62500B59145 /* renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = renderer.h; sourceTree = "<group>"; };
 		46B9A6091771F0F800E43B24 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		46C47CCD180F3139002DD37E /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		46D0FBFB180F1A7C00B00F93 /* libwebsockets.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebsockets.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		46D0FC00180F1A9500B00F93 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		46D0FC01180F1A9500B00F93 /* autogen.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = autogen.sh; sourceTree = "<group>"; };
@@ -1328,12 +1337,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46D0FCB4180F1B5F00B00F93 /* libwebsockets.a in Frameworks */,
+				46AB32ED180F2F28003DDECF /* CFNetwork.framework in Frameworks */,
 				468E01431783DF4C00301C1C /* Cocoa.framework in Frameworks */,
 				468E01471783DFA100301C1C /* IOKit.framework in Frameworks */,
 				468E01451783DF9200301C1C /* OpenGL.framework in Frameworks */,
+				46AB32EC180F2F1F003DDECF /* SystemConfiguration.framework in Frameworks */,
+				46D624ED180F325B0081746B /* libcrypto.dylib in Frameworks */,
 				46B9842E17E69ED300B59145 /* libglfw.a in Frameworks */,
 				468E015D1783F10600301C1C /* libsimplexnoise1234.a in Frameworks */,
+				46AB32EE180F2F2C003DDECF /* libssl.dylib in Frameworks */,
+				46D0FCB4180F1B5F00B00F93 /* libwebsockets.a in Frameworks */,
+				46D624EE180F32600081746B /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1348,6 +1362,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4660234B180F30660073A7AA /* SystemConfiguration.framework in Frameworks */,
+				46AB32EA180F2F0A003DDECF /* CFNetwork.framework in Frameworks */,
+				46C47CCE180F3139002DD37E /* libcrypto.dylib in Frameworks */,
+				46AB32E9180F2F03003DDECF /* libssl.dylib in Frameworks */,
+				46074B03180F316700823E55 /* libz.dylib in Frameworks */,
 				46AB32E7180F2B3A003DDECF /* libwebsockets.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1363,9 +1382,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46AB32C8180F1EA0003DDECF /* libssl.dylib in Frameworks */,
-				46D0FCB8180F1D5200B00F93 /* SystemConfiguration.framework in Frameworks */,
-				46D0FCB6180F1D4B00B00F93 /* CFNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1399,8 +1415,10 @@
 				46D0FCB7180F1D5200B00F93 /* SystemConfiguration.framework */,
 				46B9825017E69EAB00B59145 /* glfw-3.0.2 */,
 				46B9842F17E6A11A00B59145 /* glm-0.9.4.5 */,
-				46D0FBFF180F1A9500B00F93 /* libwebsockets */,
+				46C47CCD180F3139002DD37E /* libcrypto.dylib */,
 				46AB32C7180F1EA0003DDECF /* libssl.dylib */,
+				46D0FBFF180F1A9500B00F93 /* libwebsockets */,
+				46074B02180F316700823E55 /* libz.dylib */,
 				461879D017FB5E2E000B32F6 /* picojson */,
 				468EFC671783DC1E00301C1C /* simplexnoise1234 */,
 			);
@@ -3044,7 +3062,7 @@
 		463E3D5B1767FB9000A4466B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Robert Scott Dionne";
 			};
 			buildConfigurationList = 463E3D5E1767FB9000A4466B /* Build configuration list for PBXProject "textengine" */;
@@ -3191,7 +3209,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -3231,7 +3248,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -3462,6 +3478,7 @@
 				46AB32E4180F2A89003DDECF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		46B9824D17E69E9C00B59145 /* Build configuration list for PBXNativeTarget "glfw" */ = {
 			isa = XCConfigurationList;
