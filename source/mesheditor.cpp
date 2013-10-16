@@ -515,16 +515,16 @@ namespace textengine {
   void MeshEditor::Update() {
     const bool ready = !(add_selecting || (MoveMode::kFalse != moving) || rotating ||
                          (ScaleMode::kFalse != scaling) || selecting);
-    if (ready && keyboard.IsKeyJustPressed('1')) {
+    if (ready && keyboard.IsKeyJustPressed(GLFW_KEY_1)) {
       MeshSerializer serializer;
       serializer.WriteMesh("output.json", mesh);
     }
-    if (ready && keyboard.IsKeyJustPressed('2')) {
+    if (ready && keyboard.IsKeyJustPressed(GLFW_KEY_2)) {
       selected_vertices.clear();
       MeshLoader loader;
       mesh = loader.ReadMesh("output.json");
     }
-    if (ready && keyboard.IsKeyJustPressed('A')) {
+    if (ready && keyboard.IsKeyJustPressed(GLFW_KEY_A)) {
       if (selected_vertices.empty()) {
         for (auto &vertex : mesh.get_vertices()) {
           selected_vertices.insert(vertex.get());
@@ -533,7 +533,7 @@ namespace textengine {
         selected_vertices.clear();
       }
     }
-    if (ready && keyboard.IsKeyJustPressed('D')) {
+    if (ready && keyboard.IsKeyJustPressed(GLFW_KEY_D)) {
 
       std::vector<Mesh::Vertex *> duplicate_vertices;
       std::vector<Mesh::HalfEdge *> duplicate_half_edges;
@@ -622,7 +622,7 @@ namespace textengine {
         cursor_start_position = get_cursor_position();
       }
     }
-    if (ready && keyboard.IsKeyJustPressed('E')) {
+    if (ready && keyboard.IsKeyJustPressed(GLFW_KEY_E)) {
       std::unordered_set<Mesh::HalfEdge *> half_edges = selected_half_edges();
       if (half_edges.size() > 0) {
         selected_vertices.clear();
@@ -639,7 +639,7 @@ namespace textengine {
         cursor_start_position = get_cursor_position();
       }
     }
-    if (ready && keyboard.IsKeyJustPressed('F')) {
+    if (ready && keyboard.IsKeyJustPressed(GLFW_KEY_F)) {
       if (selected_vertices.size() == 3) {
         auto *vertex0 = *selected_vertices.begin();
         auto *vertex1 = *(std::next(selected_vertices.begin()));
@@ -647,7 +647,7 @@ namespace textengine {
         mesh.AddFace(vertex0, vertex1, vertex2);
       }
     }
-    if (ready && keyboard.IsKeyJustPressed('X')) {
+    if (ready && keyboard.IsKeyJustPressed(GLFW_KEY_X)) {
       auto selected_faces = MeshEditor::selected_faces();
       std::unordered_set<Mesh::Face *> deleted_faces;
       std::unordered_set<Mesh::HalfEdge *> deleted_half_edges;
@@ -765,14 +765,14 @@ namespace textengine {
         }
       }
     }
-    if (ready && !selected_vertices.empty() && keyboard.IsKeyJustPressed('G')) {
+    if (ready && !selected_vertices.empty() && keyboard.IsKeyJustPressed(GLFW_KEY_G)) {
       moving = MoveMode::kBoth;
       for (auto vertex : selected_vertices) {
         selected_vertex_positions[vertex] = vertex->position;
       }
       cursor_start_position = get_cursor_position();
     }
-    if (ready && !selected_vertices.empty() && keyboard.IsKeyJustPressed('R')) {
+    if (ready && !selected_vertices.empty() && keyboard.IsKeyJustPressed(GLFW_KEY_R)) {
       rotating = true;
       for (auto vertex : selected_vertices) {
         selected_vertex_positions[vertex] = vertex->position;
@@ -784,7 +784,7 @@ namespace textengine {
         center_of_mass += (vertex->position - center_of_mass) / i++;
       }
     }
-    if (ready && !selected_vertices.empty() && keyboard.IsKeyJustPressed('S')) {
+    if (ready && !selected_vertices.empty() && keyboard.IsKeyJustPressed(GLFW_KEY_S)) {
       scaling = ScaleMode::kAll;
       for (auto vertex : selected_vertices) {
         selected_vertex_positions[vertex] = vertex->position;
@@ -863,25 +863,25 @@ namespace textengine {
         vertex->position = center_of_mass + r.xy() / r.w;
       }
     }
-    if (MoveMode::kFalse != moving && keyboard.IsKeyJustPressed('X')) {
+    if (MoveMode::kFalse != moving && keyboard.IsKeyJustPressed(GLFW_KEY_X)) {
       moving = MoveMode::kX;
     }
-    if (MoveMode::kFalse != moving && keyboard.IsKeyJustPressed('Y')) {
+    if (MoveMode::kFalse != moving && keyboard.IsKeyJustPressed(GLFW_KEY_Y)) {
       moving = MoveMode::kY;
     }
-    if (MoveMode::kFalse != moving && keyboard.IsKeyJustPressed('B')) {
+    if (MoveMode::kFalse != moving && keyboard.IsKeyJustPressed(GLFW_KEY_B)) {
       moving = MoveMode::kBoth;
     }
-    if (ScaleMode::kFalse != scaling && keyboard.IsKeyJustPressed('X')) {
+    if (ScaleMode::kFalse != scaling && keyboard.IsKeyJustPressed(GLFW_KEY_X)) {
       scaling = ScaleMode::kX;
     }
-    if (ScaleMode::kFalse != scaling && keyboard.IsKeyJustPressed('Y')) {
+    if (ScaleMode::kFalse != scaling && keyboard.IsKeyJustPressed(GLFW_KEY_Y)) {
       scaling = ScaleMode::kY;
     }
-    if (ScaleMode::kFalse != scaling && keyboard.IsKeyJustPressed('B')) {
+    if (ScaleMode::kFalse != scaling && keyboard.IsKeyJustPressed(GLFW_KEY_B)) {
       scaling = ScaleMode::kBoth;
     }
-    if (ScaleMode::kFalse != scaling && keyboard.IsKeyJustPressed('A')) {
+    if (ScaleMode::kFalse != scaling && keyboard.IsKeyJustPressed(GLFW_KEY_A)) {
       scaling = ScaleMode::kAll;
     }
     if (ScaleMode::kFalse != scaling && mouse.HasCursorMoved()) {
