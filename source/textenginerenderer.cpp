@@ -110,30 +110,43 @@ namespace textengine {
     }
     CHECK_STATE(!glGetError());
 
-    constexpr int kCircleResolution = 100;
-    float circle_data[kCircleResolution * 18];
-    for (int i = 0; i < kCircleResolution; ++i) {
-      const float theta_0 = 2.0 * M_PI * i / kCircleResolution;
-      const float theta_1 = 2.0 * M_PI * (i + 1) / kCircleResolution;
-      circle_data[18 * i + 0] = cosf(theta_0);
-      circle_data[18 * i + 1] = sinf(theta_0);
-      circle_data[18 * i + 2] = 1.0f;
-      circle_data[18 * i + 3] = 0.0f;
-      circle_data[18 * i + 4] = 0.0f;
-      circle_data[18 * i + 5] = 1.0f;
-      circle_data[18 * i + 6] = cosf(theta_1);
-      circle_data[18 * i + 7] = sinf(theta_1);
-      circle_data[18 * i + 8] = 1.0f;
-      circle_data[18 * i + 9] = 0.0f;
-      circle_data[18 * i + 10] = 0.0f;
-      circle_data[18 * i + 11] = 1.0f;
-      circle_data[18 * i + 12] = 0.0f;
-      circle_data[18 * i + 13] = 0.0f;
-      circle_data[18 * i + 14] = 1.0f;
-      circle_data[18 * i + 15] = 0.0f;
-      circle_data[18 * i + 16] = 0.0f;
-      circle_data[18 * i + 17] = 1.0f;
-    }
+//    constexpr int kCircleResolution = 100;
+//    float circle_data[kCircleResolution * 18];
+//    for (int i = 0; i < kCircleResolution; ++i) {
+//      const float theta_0 = 2.0 * M_PI * i / kCircleResolution;
+//      const float theta_1 = 2.0 * M_PI * (i + 1) / kCircleResolution;
+//      circle_data[18 * i + 0] = cosf(theta_0);
+//      circle_data[18 * i + 1] = sinf(theta_0);
+//      circle_data[18 * i + 2] = 1.0f;
+//      circle_data[18 * i + 3] = 0.0f;
+//      circle_data[18 * i + 4] = 0.0f;
+//      circle_data[18 * i + 5] = 1.0f;
+//      circle_data[18 * i + 6] = cosf(theta_1);
+//      circle_data[18 * i + 7] = sinf(theta_1);
+//      circle_data[18 * i + 8] = 1.0f;
+//      circle_data[18 * i + 9] = 0.0f;
+//      circle_data[18 * i + 10] = 0.0f;
+//      circle_data[18 * i + 11] = 1.0f;
+//      circle_data[18 * i + 12] = 0.0f;
+//      circle_data[18 * i + 13] = 0.0f;
+//      circle_data[18 * i + 14] = 1.0f;
+//      circle_data[18 * i + 15] = 0.0f;
+//      circle_data[18 * i + 16] = 0.0f;
+//      circle_data[18 * i + 17] = 1.0f;
+//    }
+    float circle_data[] = {
+      3.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+      0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+      0.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+    };
+    float circle_outline_data[] = {
+      3.0f, 0.0f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.0f, 1.0f, 0.25f, 0.25f, 0.25f, 1.0f,
+      3.0f, 0.0f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.0f, -1.0f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.0f, 1.0f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.0f, -1.0f, 0.25f, 0.25f, 0.25f, 1.0f,
+    };
 
     glGenBuffers(1, &vertex_buffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
@@ -149,6 +162,22 @@ namespace textengine {
     glVertexAttribPointer(glGetAttribLocation(face_program, u8"vertex_color"),
                           4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
     glEnableVertexAttribArray(glGetAttribLocation(face_program, u8"vertex_color"));
+    CHECK_STATE(!glGetError());
+
+    glGenBuffers(1, &vertex_edge_buffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertex_edge_buffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(circle_outline_data), circle_outline_data, GL_STATIC_DRAW);
+    CHECK_STATE(!glGetError());
+
+    glGenVertexArrays(1, &vertex_edge_array);
+    glBindVertexArray(vertex_edge_array);
+    glBindBuffer(GL_ARRAY_BUFFER, vertex_edge_buffer);
+    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
+                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
+    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
+    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_color"),
+                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_color"));
     CHECK_STATE(!glGetError());
     
     glGenBuffers(1, &face_vertex_buffer);
@@ -448,14 +477,25 @@ namespace textengine {
 
     editor.Update();
 
+    const float angle = glm::atan(current_state.player_direction.y, current_state.player_direction.x);
     const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(current_state.player_position, 0.0)) *
+                                                      glm::rotate(glm::mat4(), glm::degrees(angle), glm::vec3(0, 0, 1)) *
                                                       glm::scale(glm::mat4(), glm::vec3(0.01)));
 
     glUseProgram(face_program);
     glUniformMatrix4fv(glGetUniformLocation(face_program, u8"projection"), 1, false, &projection[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(face_program, u8"model_view"), 1, false, &player_model_view[0][0]);
     glBindVertexArray(vertex_array);
-    glDrawArrays(GL_TRIANGLES, 0, 100*3);
+    glDrawArrays(GL_TRIANGLES, 0, 1*3);
+    CHECK_STATE(!glGetError());
+
+    glUseProgram(edge_program);
+    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &player_model_view[0][0]);
+    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.00125);
+    glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
+    glBindVertexArray(vertex_edge_array);
+    glDrawArrays(GL_LINES, 0, 6);
     CHECK_STATE(!glGetError());
   }
 

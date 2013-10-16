@@ -145,6 +145,7 @@ namespace textengine {
     GLuint edge_geometry_shader, fragment_shader, point_geometry_shader, vertex_shader;
     GLuint edge_program, face_program, point_program;
     GLuint vertex_array, vertex_buffer;
+    GLuint vertex_edge_array, vertex_edge_buffer;
     GLuint face_vertex_buffer, face_vertex_array;
     GLuint edge_vertex_buffer, edge_vertex_array;
     GLuint pathfinding_edges_vertex_buffer, pathfinding_edges_vertex_array;
