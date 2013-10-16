@@ -1330,6 +1330,8 @@
 		46D0FCB5180F1D4B00B00F93 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		46D0FCB7180F1D5200B00F93 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		46D21C101771F2B900C896A4 /* textengine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = textengine; sourceTree = BUILT_PRODUCTS_DIR; };
+		46FBD339180F338300F7C5F8 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		46FBD33A180F339400F7C5F8 /* client.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = client.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1401,6 +1403,7 @@
 			children = (
 				46D21C0E1771F2A600C896A4 /* binary */,
 				468EF71B1783DC1B00301C1C /* libraries */,
+				46FBD338180F335C00F7C5F8 /* resource */,
 				46B9A6081771F0F800E43B24 /* source */,
 			);
 			sourceTree = "<group>";
@@ -2917,6 +2920,15 @@
 				46D21C101771F2B900C896A4 /* textengine */,
 			);
 			path = binary;
+			sourceTree = "<group>";
+		};
+		46FBD338180F335C00F7C5F8 /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				46FBD33A180F339400F7C5F8 /* client.js */,
+				46FBD339180F338300F7C5F8 /* index.html */,
+			);
+			path = resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
