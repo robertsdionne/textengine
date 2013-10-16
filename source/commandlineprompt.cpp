@@ -3,17 +3,14 @@
 #include <thread>
 
 #include "commandqueue.h"
-#include "prompt.h"
+#include "commandlineprompt.h"
 
 namespace textengine {
 
-  Prompt::Prompt(CommandQueue &queue, const std::string &prompt) : queue(queue), prompt(prompt) {}
+  CommandLinePrompt::CommandLinePrompt(CommandQueue &queue, const std::string &prompt)
+  : queue(queue), prompt(prompt) {}
 
-  void Prompt::Join() {
-    thread.join();
-  }
-
-  void Prompt::Loop() {
+  void CommandLinePrompt::Loop() {
     std::string command;
     while (true) {
       if (!command.empty()) {
@@ -24,8 +21,8 @@ namespace textengine {
     }
   }
 
-  void Prompt::Run() {
-    thread = std::thread(&Prompt::Loop, this);
+  void CommandLinePrompt::Run() {
+    thread = std::thread(&CommandLinePrompt::Loop, this);
     thread.detach();
   }
 

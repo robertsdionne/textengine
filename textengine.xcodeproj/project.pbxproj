@@ -14,7 +14,6 @@
 		460B492D17F4AC88006B4828 /* mesheditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460B492B17F4AC87006B4828 /* mesheditor.cpp */; };
 		460B493017F4B48F006B4828 /* mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460B492E17F4B48E006B4828 /* mouse.cpp */; };
 		460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B117EA1C3B00D765F5 /* keyboard.cpp */; };
-		460F81B617EA322400D765F5 /* prompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B417EA322400D765F5 /* prompt.cpp */; };
 		460F81B917EA37C700D765F5 /* commandqueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B717EA37C700D765F5 /* commandqueue.cpp */; };
 		461229DC17FBA08C00F04521 /* meshloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461229DA17FBA08C00F04521 /* meshloader.cpp */; };
 		461879D717FB5F0D000B32F6 /* meshserializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461879D517FB5F0D000B32F6 /* meshserializer.cpp */; };
@@ -102,6 +101,7 @@
 		46D0FCB4180F1B5F00B00F93 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FBFB180F1A7C00B00F93 /* libwebsockets.a */; };
 		46D624ED180F325B0081746B /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46C47CCD180F3139002DD37E /* libcrypto.dylib */; };
 		46D624EE180F32600081746B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46074B02180F316700823E55 /* libz.dylib */; };
+		46FBD33D180F4C7F00F7C5F8 /* commandlineprompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FBD33B180F4C7F00F7C5F8 /* commandlineprompt.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,7 +170,6 @@
 		460B492F17F4B48F006B4828 /* mouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mouse.h; sourceTree = "<group>"; };
 		460F81B117EA1C3B00D765F5 /* keyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = keyboard.cpp; sourceTree = "<group>"; };
 		460F81B217EA1C3B00D765F5 /* keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyboard.h; sourceTree = "<group>"; };
-		460F81B417EA322400D765F5 /* prompt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = prompt.cpp; sourceTree = "<group>"; };
 		460F81B517EA322400D765F5 /* prompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prompt.h; sourceTree = "<group>"; };
 		460F81B717EA37C700D765F5 /* commandqueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commandqueue.cpp; sourceTree = "<group>"; };
 		460F81B817EA37C700D765F5 /* commandqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commandqueue.h; sourceTree = "<group>"; };
@@ -1332,6 +1331,8 @@
 		46D21C101771F2B900C896A4 /* textengine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = textengine; sourceTree = BUILT_PRODUCTS_DIR; };
 		46FBD339180F338300F7C5F8 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		46FBD33A180F339400F7C5F8 /* client.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = client.js; sourceTree = "<group>"; };
+		46FBD33B180F4C7F00F7C5F8 /* commandlineprompt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commandlineprompt.cpp; sourceTree = "<group>"; };
+		46FBD33C180F4C7F00F7C5F8 /* commandlineprompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commandlineprompt.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2763,6 +2764,8 @@
 				462B4A6217EA43AA006FE9BB /* buffer.cpp */,
 				462B4A6317EA43AA006FE9BB /* buffer.h */,
 				46B9875117E6A37700B59145 /* checks.h */,
+				46FBD33B180F4C7F00F7C5F8 /* commandlineprompt.cpp */,
+				46FBD33C180F4C7F00F7C5F8 /* commandlineprompt.h */,
 				466E70FB17EB944400CD9E9D /* commandparser.cpp */,
 				466E70FC17EB944400CD9E9D /* commandparser.h */,
 				460F81B717EA37C700D765F5 /* commandqueue.cpp */,
@@ -2792,7 +2795,6 @@
 				468E014C1783E8FB00301C1C /* object.h */,
 				462B4A6017EA43AA006FE9BB /* program.cpp */,
 				462B4A6117EA43AA006FE9BB /* program.h */,
-				460F81B417EA322400D765F5 /* prompt.cpp */,
 				460F81B517EA322400D765F5 /* prompt.h */,
 				46B9875817E6A62500B59145 /* renderer.h */,
 				46AB32C9180F283A003DDECF /* server.cpp */,
@@ -3107,11 +3109,11 @@
 				46B9875917E6A62500B59145 /* glfwapplication.cpp in Sources */,
 				4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */,
 				460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */,
-				460F81B617EA322400D765F5 /* prompt.cpp in Sources */,
 				460F81B917EA37C700D765F5 /* commandqueue.cpp in Sources */,
 				462B4A6417EA43AA006FE9BB /* vertexarray.cpp in Sources */,
 				462B4A6517EA43AA006FE9BB /* shader.cpp in Sources */,
 				462B4A6617EA43AA006FE9BB /* program.cpp in Sources */,
+				46FBD33D180F4C7F00F7C5F8 /* commandlineprompt.cpp in Sources */,
 				462B4A6717EA43AA006FE9BB /* buffer.cpp in Sources */,
 				468E03A017EB2B4500F4CF1C /* drawtools.cpp in Sources */,
 				466E70FA17EB92F900CD9E9D /* gamestate.cpp in Sources */,

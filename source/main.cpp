@@ -1,5 +1,6 @@
 #include <glm/glm.hpp>
 
+#include "commandlineprompt.h"
 #include "commandparser.h"
 #include "commandqueue.h"
 #include "commandtokenizer.h"
@@ -10,7 +11,6 @@
 #include "mesheditor.h"
 #include "meshloader.h"
 #include "mouse.h"
-#include "prompt.h"
 #include "textenginerenderer.h"
 #include "updater.h"
 
@@ -23,7 +23,7 @@ int main(int argument_count, char *arguments[]) {
   textengine::Keyboard keyboard;
   textengine::Mouse mouse;
   textengine::CommandQueue queue;
-  textengine::Prompt prompt{queue, kPrompt};
+  textengine::CommandLinePrompt prompt{queue, kPrompt};
   prompt.Run();
   textengine::GameState initial_state;
   textengine::Mesh mesh;

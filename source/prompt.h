@@ -1,30 +1,15 @@
 #ifndef TEXTENGINE_PROMPT_H_
 #define TEXTENGINE_PROMPT_H_
 
-#include <string>
-#include <thread>
+#include "base.h"
 
 namespace textengine {
 
-  class CommandQueue;
-  
   class Prompt {
+    DECLARE_INTERFACE(Prompt);
+    
   public:
-    Prompt(CommandQueue &queue, const std::string &prompt);
-
-    virtual ~Prompt() = default;
-
-    void Join();
-
     void Run();
-
-  private:
-    void Loop();
-
-  private:
-    CommandQueue &queue;
-    const std::string &prompt;
-    std::thread thread;
   };
 
 }  // namespace textengine
