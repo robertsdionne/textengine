@@ -57,14 +57,14 @@ namespace textengine {
 
     void MaybeAllocateSquareDrawable() {
       if (!square) {
-        float square_data[] = {
-          0.5, 0.5,
-          -0.5, 0.5,
-          -0.5, -0.5,
-          0.5, 0.5,
-          -0.5, -0.5,
-          0.5, -0.5
-        };
+//        float square_data[] = {
+//          0.5, 0.5,
+//          -0.5, 0.5,
+//          -0.5, -0.5,
+//          0.5, 0.5,
+//          -0.5, -0.5,
+//          0.5, -0.5
+//        };
         square = std::unique_ptr<Drawable>(new Drawable());
 //        square->Create(vertex_shader_source, fragment_shader_source,
 //                       square_data, sizeof(float) * 6, 2);
@@ -73,11 +73,11 @@ namespace textengine {
 
     void MaybeAllocateTriangleDrawable() {
       if (!triangle) {
-        float triangle_data[] = {
-          0.0, 0.5,
-          -0.5, -0.5,
-          0.5, -0.5
-        };
+//        float triangle_data[] = {
+//          0.0, 0.5,
+//          -0.5, -0.5,
+//          0.5, -0.5
+//        };
         triangle = std::unique_ptr<Drawable>(new Drawable());
 //        triangle->Create(vertex_shader_source, fragment_shader_source,
 //                         triangle_data, sizeof(float) * 3, 1);

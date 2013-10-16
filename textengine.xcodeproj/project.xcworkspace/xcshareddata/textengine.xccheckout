@@ -10,6 +10,8 @@
 	<string>textengine</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>09DA123C-2009-4A65-A8F5-9CC8F8FF4D3E</key>
+		<string>https://github.com/warmcat/libwebsockets.git</string>
 		<key>8324759D-5A4C-42B9-B67E-E599DC8CFF4C</key>
 		<string>ssh://github.com/robertsdionne/textengine.git</string>
 	</dict>
@@ -17,6 +19,8 @@
 	<string>textengine.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>09DA123C-2009-4A65-A8F5-9CC8F8FF4D3E</key>
+		<string>../../libraries/libwebsockets</string>
 		<key>8324759D-5A4C-42B9-B67E-E599DC8CFF4C</key>
 		<string>../..</string>
 	</dict>
@@ -28,6 +32,14 @@
 	<string>8324759D-5A4C-42B9-B67E-E599DC8CFF4C</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>09DA123C-2009-4A65-A8F5-9CC8F8FF4D3E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>libwebsockets</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

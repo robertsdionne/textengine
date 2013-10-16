@@ -30,6 +30,7 @@
 		468E015A1783F03D00301C1C /* simplexnoise1234.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 468EFC681783DC1E00301C1C /* simplexnoise1234.cpp */; };
 		468E015D1783F10600301C1C /* libsimplexnoise1234.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01561783F02800301C1C /* libsimplexnoise1234.a */; };
 		468E03A017EB2B4500F4CF1C /* drawtools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 468E039E17EB2B4500F4CF1C /* drawtools.cpp */; };
+		46AB32C8180F1EA0003DDECF /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46AB32C7180F1EA0003DDECF /* libssl.dylib */; };
 		46B983AD17E69EAC00B59145 /* eglext.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B9826117E69EAB00B59145 /* eglext.h */; };
 		46B983AE17E69EAC00B59145 /* getopt.c in Sources */ = {isa = PBXBuildFile; fileRef = 46B9826217E69EAB00B59145 /* getopt.c */; };
 		46B983AF17E69EAC00B59145 /* getopt.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B9826317E69EAB00B59145 /* getopt.h */; };
@@ -67,6 +68,31 @@
 		46B9842E17E69ED300B59145 /* libglfw.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B9824C17E69E9C00B59145 /* libglfw.a */; };
 		46B9875917E6A62500B59145 /* glfwapplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9875517E6A62500B59145 /* glfwapplication.cpp */; };
 		46B9A60A1771F0F800E43B24 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9A6091771F0F800E43B24 /* main.cpp */; };
+		46D0FC71180F1A9500B00F93 /* base64-decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC0C180F1A9500B00F93 /* base64-decode.c */; };
+		46D0FC72180F1A9600B00F93 /* client-handshake.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC0D180F1A9500B00F93 /* client-handshake.c */; };
+		46D0FC73180F1A9600B00F93 /* client-parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC0E180F1A9500B00F93 /* client-parser.c */; };
+		46D0FC74180F1A9600B00F93 /* client.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC0F180F1A9500B00F93 /* client.c */; };
+		46D0FC75180F1A9600B00F93 /* daemonize.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC10180F1A9500B00F93 /* daemonize.c */; };
+		46D0FC76180F1A9600B00F93 /* extension-deflate-frame.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC11180F1A9500B00F93 /* extension-deflate-frame.c */; };
+		46D0FC77180F1A9600B00F93 /* extension-deflate-frame.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D0FC12180F1A9500B00F93 /* extension-deflate-frame.h */; };
+		46D0FC78180F1A9600B00F93 /* extension-deflate-stream.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC13180F1A9500B00F93 /* extension-deflate-stream.c */; };
+		46D0FC79180F1A9600B00F93 /* extension-deflate-stream.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D0FC14180F1A9500B00F93 /* extension-deflate-stream.h */; };
+		46D0FC7A180F1A9600B00F93 /* extension.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC15180F1A9500B00F93 /* extension.c */; };
+		46D0FC7B180F1A9600B00F93 /* getifaddrs.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC16180F1A9500B00F93 /* getifaddrs.c */; };
+		46D0FC7C180F1A9600B00F93 /* getifaddrs.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D0FC17180F1A9500B00F93 /* getifaddrs.h */; };
+		46D0FC7D180F1A9600B00F93 /* handshake.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC18180F1A9500B00F93 /* handshake.c */; };
+		46D0FC7E180F1A9600B00F93 /* libwebsockets.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC19180F1A9500B00F93 /* libwebsockets.c */; };
+		46D0FC7F180F1A9600B00F93 /* libwebsockets.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D0FC1A180F1A9500B00F93 /* libwebsockets.h */; };
+		46D0FC80180F1A9600B00F93 /* minilex.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC1C180F1A9500B00F93 /* minilex.c */; };
+		46D0FC81180F1A9600B00F93 /* output.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC1D180F1A9500B00F93 /* output.c */; };
+		46D0FC82180F1A9600B00F93 /* parsers.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC1E180F1A9500B00F93 /* parsers.c */; };
+		46D0FC83180F1A9600B00F93 /* private-libwebsockets.h in Headers */ = {isa = PBXBuildFile; fileRef = 46D0FC1F180F1A9500B00F93 /* private-libwebsockets.h */; };
+		46D0FC84180F1A9600B00F93 /* server-handshake.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC20180F1A9500B00F93 /* server-handshake.c */; };
+		46D0FC85180F1A9600B00F93 /* server.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC21180F1A9500B00F93 /* server.c */; };
+		46D0FC86180F1A9600B00F93 /* sha-1.c in Sources */ = {isa = PBXBuildFile; fileRef = 46D0FC22180F1A9500B00F93 /* sha-1.c */; };
+		46D0FCB4180F1B5F00B00F93 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FBFB180F1A7C00B00F93 /* libwebsockets.a */; };
+		46D0FCB6180F1D4B00B00F93 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FCB5180F1D4B00B00F93 /* CFNetwork.framework */; };
+		46D0FCB8180F1D5200B00F93 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FCB7180F1D5200B00F93 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +109,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 46B9824B17E69E9C00B59145;
 			remoteInfo = glfw;
+		};
+		46D0FCB2180F1B5C00B00F93 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 463E3D5B1767FB9000A4466B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 46D0FBFA180F1A7C00B00F93;
+			remoteInfo = websockets;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -145,6 +178,9 @@
 		468E039F17EB2B4500F4CF1C /* drawtools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = drawtools.h; sourceTree = "<group>"; };
 		468EFC681783DC1E00301C1C /* simplexnoise1234.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = simplexnoise1234.cpp; sourceTree = "<group>"; };
 		468EFC691783DC1E00301C1C /* simplexnoise1234.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = simplexnoise1234.h; sourceTree = "<group>"; };
+		46AB32C7180F1EA0003DDECF /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
+		46AB32C9180F283A003DDECF /* server.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = server.cpp; sourceTree = "<group>"; };
+		46AB32CA180F283B003DDECF /* server.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = server.h; sourceTree = "<group>"; };
 		46B9824C17E69E9C00B59145 /* libglfw.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libglfw.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		46B9825117E69EAB00B59145 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		46B9825317E69EAB00B59145 /* amd64-mingw32msvc.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "amd64-mingw32msvc.cmake"; sourceTree = "<group>"; };
@@ -1208,6 +1244,64 @@
 		46B9875717E6A62500B59145 /* application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = application.h; sourceTree = "<group>"; };
 		46B9875817E6A62500B59145 /* renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = renderer.h; sourceTree = "<group>"; };
 		46B9A6091771F0F800E43B24 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		46D0FBFB180F1A7C00B00F93 /* libwebsockets.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebsockets.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		46D0FC00180F1A9500B00F93 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		46D0FC01180F1A9500B00F93 /* autogen.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = autogen.sh; sourceTree = "<group>"; };
+		46D0FC02180F1A9500B00F93 /* changelog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = changelog; sourceTree = "<group>"; };
+		46D0FC04180F1A9500B00F93 /* FindOpenSSLbins.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FindOpenSSLbins.cmake; sourceTree = "<group>"; };
+		46D0FC05180F1A9500B00F93 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		46D0FC06180F1A9500B00F93 /* config.h.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.h.cmake; sourceTree = "<group>"; };
+		46D0FC07180F1A9500B00F93 /* configure.ac */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; };
+		46D0FC08180F1A9500B00F93 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		46D0FC09180F1A9500B00F93 /* INSTALL */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = INSTALL; sourceTree = "<group>"; };
+		46D0FC0B180F1A9500B00F93 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		46D0FC0C180F1A9500B00F93 /* base64-decode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "base64-decode.c"; sourceTree = "<group>"; };
+		46D0FC0D180F1A9500B00F93 /* client-handshake.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "client-handshake.c"; sourceTree = "<group>"; };
+		46D0FC0E180F1A9500B00F93 /* client-parser.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "client-parser.c"; sourceTree = "<group>"; };
+		46D0FC0F180F1A9500B00F93 /* client.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = client.c; sourceTree = "<group>"; };
+		46D0FC10180F1A9500B00F93 /* daemonize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = daemonize.c; sourceTree = "<group>"; };
+		46D0FC11180F1A9500B00F93 /* extension-deflate-frame.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "extension-deflate-frame.c"; sourceTree = "<group>"; };
+		46D0FC12180F1A9500B00F93 /* extension-deflate-frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "extension-deflate-frame.h"; sourceTree = "<group>"; };
+		46D0FC13180F1A9500B00F93 /* extension-deflate-stream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "extension-deflate-stream.c"; sourceTree = "<group>"; };
+		46D0FC14180F1A9500B00F93 /* extension-deflate-stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "extension-deflate-stream.h"; sourceTree = "<group>"; };
+		46D0FC15180F1A9500B00F93 /* extension.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = extension.c; sourceTree = "<group>"; };
+		46D0FC16180F1A9500B00F93 /* getifaddrs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = getifaddrs.c; sourceTree = "<group>"; };
+		46D0FC17180F1A9500B00F93 /* getifaddrs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = getifaddrs.h; sourceTree = "<group>"; };
+		46D0FC18180F1A9500B00F93 /* handshake.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = handshake.c; sourceTree = "<group>"; };
+		46D0FC19180F1A9500B00F93 /* libwebsockets.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = libwebsockets.c; sourceTree = "<group>"; };
+		46D0FC1A180F1A9500B00F93 /* libwebsockets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libwebsockets.h; sourceTree = "<group>"; };
+		46D0FC1B180F1A9500B00F93 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		46D0FC1C180F1A9500B00F93 /* minilex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = minilex.c; sourceTree = "<group>"; };
+		46D0FC1D180F1A9500B00F93 /* output.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = output.c; sourceTree = "<group>"; };
+		46D0FC1E180F1A9500B00F93 /* parsers.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = parsers.c; sourceTree = "<group>"; };
+		46D0FC1F180F1A9500B00F93 /* private-libwebsockets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "private-libwebsockets.h"; sourceTree = "<group>"; };
+		46D0FC20180F1A9500B00F93 /* server-handshake.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "server-handshake.c"; sourceTree = "<group>"; };
+		46D0FC21180F1A9500B00F93 /* server.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = server.c; sourceTree = "<group>"; };
+		46D0FC22180F1A9500B00F93 /* sha-1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "sha-1.c"; sourceTree = "<group>"; };
+		46D0FC23180F1A9500B00F93 /* libwebsockets-api-doc.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = "libwebsockets-api-doc.html"; sourceTree = "<group>"; };
+		46D0FC24180F1A9500B00F93 /* libwebsockets.pc.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libwebsockets.pc.in; sourceTree = "<group>"; };
+		46D0FC25180F1A9500B00F93 /* libwebsockets.spec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libwebsockets.spec; sourceTree = "<group>"; };
+		46D0FC26180F1A9500B00F93 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		46D0FC28180F1A9500B00F93 /* ignore-me */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ignore-me"; sourceTree = "<group>"; };
+		46D0FC29180F1A9500B00F93 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		46D0FC2A180F1A9500B00F93 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		46D0FC2B180F1A9500B00F93 /* README.build */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.build; sourceTree = "<group>"; };
+		46D0FC2C180F1A9500B00F93 /* README.coding */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.coding; sourceTree = "<group>"; };
+		46D0FC2D180F1A9500B00F93 /* README.test-apps */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "README.test-apps"; sourceTree = "<group>"; };
+		46D0FC2F180F1A9500B00F93 /* kernel-doc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = "kernel-doc"; sourceTree = "<group>"; };
+		46D0FC31180F1A9500B00F93 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		46D0FC32180F1A9500B00F93 /* attack.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = attack.sh; sourceTree = "<group>"; };
+		46D0FC33180F1A9500B00F93 /* favicon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = favicon.ico; sourceTree = "<group>"; };
+		46D0FC34180F1A9500B00F93 /* libwebsockets.org-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "libwebsockets.org-logo.png"; sourceTree = "<group>"; };
+		46D0FC35180F1A9500B00F93 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		46D0FC36180F1A9500B00F93 /* test-client.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "test-client.c"; sourceTree = "<group>"; };
+		46D0FC37180F1A9500B00F93 /* test-echo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "test-echo.c"; sourceTree = "<group>"; };
+		46D0FC38180F1A9500B00F93 /* test-fraggle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "test-fraggle.c"; sourceTree = "<group>"; };
+		46D0FC39180F1A9500B00F93 /* test-ping.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "test-ping.c"; sourceTree = "<group>"; };
+		46D0FC3A180F1A9500B00F93 /* test-server.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "test-server.c"; sourceTree = "<group>"; };
+		46D0FC3B180F1A9500B00F93 /* test.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
+		46D0FCB5180F1D4B00B00F93 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		46D0FCB7180F1D5200B00F93 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		46D21C101771F2B900C896A4 /* textengine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = textengine; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1216,6 +1310,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46D0FCB4180F1B5F00B00F93 /* libwebsockets.a in Frameworks */,
 				468E01431783DF4C00301C1C /* Cocoa.framework in Frameworks */,
 				468E01471783DFA100301C1C /* IOKit.framework in Frameworks */,
 				468E01451783DF9200301C1C /* OpenGL.framework in Frameworks */,
@@ -1235,6 +1330,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		46D0FBF8180F1A7C00B00F93 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46AB32C8180F1EA0003DDECF /* libssl.dylib in Frameworks */,
+				46D0FCB8180F1D5200B00F93 /* SystemConfiguration.framework in Frameworks */,
+				46D0FCB6180F1D4B00B00F93 /* CFNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1261,11 +1366,15 @@
 		468EF71B1783DC1B00301C1C /* libraries */ = {
 			isa = PBXGroup;
 			children = (
+				46D0FCB5180F1D4B00B00F93 /* CFNetwork.framework */,
 				468E01421783DF4C00301C1C /* Cocoa.framework */,
 				468E01461783DFA100301C1C /* IOKit.framework */,
 				468E01441783DF9200301C1C /* OpenGL.framework */,
+				46D0FCB7180F1D5200B00F93 /* SystemConfiguration.framework */,
 				46B9825017E69EAB00B59145 /* glfw-3.0.2 */,
 				46B9842F17E6A11A00B59145 /* glm-0.9.4.5 */,
+				46D0FBFF180F1A9500B00F93 /* libwebsockets */,
+				46AB32C7180F1EA0003DDECF /* libssl.dylib */,
 				461879D017FB5E2E000B32F6 /* picojson */,
 				468EFC671783DC1E00301C1C /* simplexnoise1234 */,
 			);
@@ -2639,6 +2748,8 @@
 				460F81B417EA322400D765F5 /* prompt.cpp */,
 				460F81B517EA322400D765F5 /* prompt.h */,
 				46B9875817E6A62500B59145 /* renderer.h */,
+				46AB32C9180F283A003DDECF /* server.cpp */,
+				46AB32CA180F283B003DDECF /* server.h */,
 				462B4A5E17EA43AA006FE9BB /* shader.cpp */,
 				462B4A5F17EA43AA006FE9BB /* shader.h */,
 				4607741F17E8EC0100896A15 /* textenginerenderer.cpp */,
@@ -2651,11 +2762,114 @@
 			path = source;
 			sourceTree = "<group>";
 		};
+		46D0FBFF180F1A9500B00F93 /* libwebsockets */ = {
+			isa = PBXGroup;
+			children = (
+				46D0FC00180F1A9500B00F93 /* .gitignore */,
+				46D0FC01180F1A9500B00F93 /* autogen.sh */,
+				46D0FC02180F1A9500B00F93 /* changelog */,
+				46D0FC03180F1A9500B00F93 /* cmake */,
+				46D0FC05180F1A9500B00F93 /* CMakeLists.txt */,
+				46D0FC06180F1A9500B00F93 /* config.h.cmake */,
+				46D0FC07180F1A9500B00F93 /* configure.ac */,
+				46D0FC08180F1A9500B00F93 /* COPYING */,
+				46D0FC09180F1A9500B00F93 /* INSTALL */,
+				46D0FC0A180F1A9500B00F93 /* lib */,
+				46D0FC23180F1A9500B00F93 /* libwebsockets-api-doc.html */,
+				46D0FC24180F1A9500B00F93 /* libwebsockets.pc.in */,
+				46D0FC25180F1A9500B00F93 /* libwebsockets.spec */,
+				46D0FC26180F1A9500B00F93 /* LICENSE */,
+				46D0FC27180F1A9500B00F93 /* m4 */,
+				46D0FC29180F1A9500B00F93 /* Makefile.am */,
+				46D0FC2A180F1A9500B00F93 /* README */,
+				46D0FC2B180F1A9500B00F93 /* README.build */,
+				46D0FC2C180F1A9500B00F93 /* README.coding */,
+				46D0FC2D180F1A9500B00F93 /* README.test-apps */,
+				46D0FC2E180F1A9500B00F93 /* scripts */,
+				46D0FC30180F1A9500B00F93 /* test-server */,
+			);
+			path = libwebsockets;
+			sourceTree = "<group>";
+		};
+		46D0FC03180F1A9500B00F93 /* cmake */ = {
+			isa = PBXGroup;
+			children = (
+				46D0FC04180F1A9500B00F93 /* FindOpenSSLbins.cmake */,
+			);
+			path = cmake;
+			sourceTree = "<group>";
+		};
+		46D0FC0A180F1A9500B00F93 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				46D0FC0B180F1A9500B00F93 /* .gitignore */,
+				46D0FC0C180F1A9500B00F93 /* base64-decode.c */,
+				46D0FC0D180F1A9500B00F93 /* client-handshake.c */,
+				46D0FC0E180F1A9500B00F93 /* client-parser.c */,
+				46D0FC0F180F1A9500B00F93 /* client.c */,
+				46D0FC10180F1A9500B00F93 /* daemonize.c */,
+				46D0FC11180F1A9500B00F93 /* extension-deflate-frame.c */,
+				46D0FC12180F1A9500B00F93 /* extension-deflate-frame.h */,
+				46D0FC13180F1A9500B00F93 /* extension-deflate-stream.c */,
+				46D0FC14180F1A9500B00F93 /* extension-deflate-stream.h */,
+				46D0FC15180F1A9500B00F93 /* extension.c */,
+				46D0FC16180F1A9500B00F93 /* getifaddrs.c */,
+				46D0FC17180F1A9500B00F93 /* getifaddrs.h */,
+				46D0FC18180F1A9500B00F93 /* handshake.c */,
+				46D0FC19180F1A9500B00F93 /* libwebsockets.c */,
+				46D0FC1A180F1A9500B00F93 /* libwebsockets.h */,
+				46D0FC1B180F1A9500B00F93 /* Makefile.am */,
+				46D0FC1C180F1A9500B00F93 /* minilex.c */,
+				46D0FC1D180F1A9500B00F93 /* output.c */,
+				46D0FC1E180F1A9500B00F93 /* parsers.c */,
+				46D0FC1F180F1A9500B00F93 /* private-libwebsockets.h */,
+				46D0FC20180F1A9500B00F93 /* server-handshake.c */,
+				46D0FC21180F1A9500B00F93 /* server.c */,
+				46D0FC22180F1A9500B00F93 /* sha-1.c */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		46D0FC27180F1A9500B00F93 /* m4 */ = {
+			isa = PBXGroup;
+			children = (
+				46D0FC28180F1A9500B00F93 /* ignore-me */,
+			);
+			path = m4;
+			sourceTree = "<group>";
+		};
+		46D0FC2E180F1A9500B00F93 /* scripts */ = {
+			isa = PBXGroup;
+			children = (
+				46D0FC2F180F1A9500B00F93 /* kernel-doc */,
+			);
+			path = scripts;
+			sourceTree = "<group>";
+		};
+		46D0FC30180F1A9500B00F93 /* test-server */ = {
+			isa = PBXGroup;
+			children = (
+				46D0FC31180F1A9500B00F93 /* .gitignore */,
+				46D0FC32180F1A9500B00F93 /* attack.sh */,
+				46D0FC33180F1A9500B00F93 /* favicon.ico */,
+				46D0FC34180F1A9500B00F93 /* libwebsockets.org-logo.png */,
+				46D0FC35180F1A9500B00F93 /* Makefile.am */,
+				46D0FC36180F1A9500B00F93 /* test-client.c */,
+				46D0FC37180F1A9500B00F93 /* test-echo.c */,
+				46D0FC38180F1A9500B00F93 /* test-fraggle.c */,
+				46D0FC39180F1A9500B00F93 /* test-ping.c */,
+				46D0FC3A180F1A9500B00F93 /* test-server.c */,
+				46D0FC3B180F1A9500B00F93 /* test.html */,
+			);
+			path = "test-server";
+			sourceTree = "<group>";
+		};
 		46D21C0E1771F2A600C896A4 /* binary */ = {
 			isa = PBXGroup;
 			children = (
 				46B9824C17E69E9C00B59145 /* libglfw.a */,
 				468E01561783F02800301C1C /* libsimplexnoise1234.a */,
+				46D0FBFB180F1A7C00B00F93 /* libwebsockets.a */,
 				46D21C101771F2B900C896A4 /* textengine */,
 			);
 			path = binary;
@@ -2694,6 +2908,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		46D0FBF9180F1A7C00B00F93 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46D0FC79180F1A9600B00F93 /* extension-deflate-stream.h in Headers */,
+				46D0FC77180F1A9600B00F93 /* extension-deflate-frame.h in Headers */,
+				46D0FC7F180F1A9600B00F93 /* libwebsockets.h in Headers */,
+				46D0FC7C180F1A9600B00F93 /* getifaddrs.h in Headers */,
+				46D0FC83180F1A9600B00F93 /* private-libwebsockets.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -2708,6 +2934,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				46D0FCB3180F1B5C00B00F93 /* PBXTargetDependency */,
 				46B9842D17E69EC300B59145 /* PBXTargetDependency */,
 				468E015C1783F10100301C1C /* PBXTargetDependency */,
 			);
@@ -2750,6 +2977,23 @@
 			productReference = 46B9824C17E69E9C00B59145 /* libglfw.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		46D0FBFA180F1A7C00B00F93 /* websockets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 46D0FBFE180F1A7C00B00F93 /* Build configuration list for PBXNativeTarget "websockets" */;
+			buildPhases = (
+				46D0FBF7180F1A7C00B00F93 /* Sources */,
+				46D0FBF8180F1A7C00B00F93 /* Frameworks */,
+				46D0FBF9180F1A7C00B00F93 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = websockets;
+			productName = websockets;
+			productReference = 46D0FBFB180F1A7C00B00F93 /* libwebsockets.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2774,6 +3018,7 @@
 				463E3D621767FB9000A4466B /* textengine */,
 				468E01551783F02800301C1C /* simplexnoise1234 */,
 				46B9824B17E69E9C00B59145 /* glfw */,
+				46D0FBFA180F1A7C00B00F93 /* websockets */,
 			);
 		};
 /* End PBXProject section */
@@ -2839,6 +3084,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		46D0FBF7180F1A7C00B00F93 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46D0FC85180F1A9600B00F93 /* server.c in Sources */,
+				46D0FC75180F1A9600B00F93 /* daemonize.c in Sources */,
+				46D0FC7E180F1A9600B00F93 /* libwebsockets.c in Sources */,
+				46D0FC7A180F1A9600B00F93 /* extension.c in Sources */,
+				46D0FC84180F1A9600B00F93 /* server-handshake.c in Sources */,
+				46D0FC78180F1A9600B00F93 /* extension-deflate-stream.c in Sources */,
+				46D0FC74180F1A9600B00F93 /* client.c in Sources */,
+				46D0FC72180F1A9600B00F93 /* client-handshake.c in Sources */,
+				46D0FC7D180F1A9600B00F93 /* handshake.c in Sources */,
+				46D0FC86180F1A9600B00F93 /* sha-1.c in Sources */,
+				46D0FC76180F1A9600B00F93 /* extension-deflate-frame.c in Sources */,
+				46D0FC80180F1A9600B00F93 /* minilex.c in Sources */,
+				46D0FC81180F1A9600B00F93 /* output.c in Sources */,
+				46D0FC71180F1A9500B00F93 /* base64-decode.c in Sources */,
+				46D0FC7B180F1A9600B00F93 /* getifaddrs.c in Sources */,
+				46D0FC82180F1A9600B00F93 /* parsers.c in Sources */,
+				46D0FC73180F1A9600B00F93 /* client-parser.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2851,6 +3120,11 @@
 			isa = PBXTargetDependency;
 			target = 46B9824B17E69E9C00B59145 /* glfw */;
 			targetProxy = 46B9842C17E69EC300B59145 /* PBXContainerItemProxy */;
+		};
+		46D0FCB3180F1B5C00B00F93 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 46D0FBFA180F1A7C00B00F93 /* websockets */;
+			targetProxy = 46D0FCB2180F1B5C00B00F93 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2887,6 +3161,7 @@
 					"libraries/glm-0.9.4.5",
 					libraries/picojson,
 					libraries/simplexnoise1234,
+					libraries/libwebsockets/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2920,6 +3195,7 @@
 					"libraries/glm-0.9.4.5",
 					libraries/picojson,
 					libraries/simplexnoise1234,
+					libraries/libwebsockets/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
@@ -2935,6 +3211,7 @@
 					"GLFW_INCLUDE_GLCOREARB=1",
 					"GL_GLEXT_PROTOTYPES=1",
 				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -2948,6 +3225,7 @@
 					"GLFW_INCLUDE_GLCOREARB=1",
 					"GL_GLEXT_PROTOTYPES=1",
 				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -2958,6 +3236,7 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -2967,6 +3246,7 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -2976,6 +3256,7 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -2985,7 +3266,67 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		46D0FBFC180F1A7C00B00F93 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"CMAKE_BUILD=1",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libraries/glfw-3.0.2/include",
+					"libraries/glm-0.9.4.5",
+					libraries/picojson,
+					libraries/simplexnoise1234,
+					libraries/libwebsockets/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = libraries/libwebsockets;
+			};
+			name = Debug;
+		};
+		46D0FBFD180F1A7C00B00F93 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				ENABLE_NS_ASSERTIONS = NO;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "CMAKE_BUILD=1";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				HEADER_SEARCH_PATHS = (
+					"libraries/glfw-3.0.2/include",
+					"libraries/glm-0.9.4.5",
+					libraries/picojson,
+					libraries/simplexnoise1234,
+					libraries/libwebsockets/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = libraries/libwebsockets;
 			};
 			name = Release;
 		};
@@ -3024,6 +3365,15 @@
 			buildConfigurations = (
 				46B9824E17E69E9C00B59145 /* Debug */,
 				46B9824F17E69E9C00B59145 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		46D0FBFE180F1A7C00B00F93 /* Build configuration list for PBXNativeTarget "websockets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				46D0FBFC180F1A7C00B00F93 /* Debug */,
+				46D0FBFD180F1A7C00B00F93 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
