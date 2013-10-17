@@ -84,10 +84,18 @@ namespace textengine {
       return current_state;
     }
     current_state.player.room_target = nullptr;
+    Mesh::RoomInfo *room_target = nullptr;
     for (auto &room_info : mesh.get_room_infos()) {
       if (room_info->name == *token) {
-        current_state.player.room_target = room_info.get();
+        room_target = room_info.get();
       }
+    }
+    auto room_info_in_use = [room_target] (const std::unique_ptr<Mesh::Face> &face) {
+      return room_target == face->room_info;
+    };
+    if (mesh.get_faces().end() != std::find_if(mesh.get_faces().begin(),
+                                               mesh.get_faces().end(), room_info_in_use)) {
+      current_state.player.room_target = room_target;
     }
     if (!current_state.player.room_target) {
       reply_queue.PushMessage("I do not know where \"" + *token + "\" is.");
