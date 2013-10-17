@@ -56,6 +56,16 @@ namespace textengine {
     }
   }
 
+  void Program::Uniform(std::string name, float value) {
+    Use();
+    glUniform1f(GetUniformLocation(name.c_str()), value);
+  }
+
+  void Program::Uniform(std::string name, const glm::mat4 &value) {
+    Use();
+    glUniformMatrix4fv(GetUniformLocation(name.c_str()), 1, false, &value[0][0]);
+  }
+
   void Program::Use() {
     glUseProgram(handle);
   }
