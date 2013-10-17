@@ -29,36 +29,49 @@ namespace textengine {
                                 const std::vector<std::string> &tokens, TokenIterator token) {
     if (tokens.end() == token) {
       current_state.player.position_target += current_state.player.direction * kSpeed;
+      reply_queue.PushMessage("You move forward.");
     } else if ("to" == *token) {
       return MoveTo(current_state, tokens, std::next(token));
     } else if ("forward" == *token) {
       current_state.player.position_target += current_state.player.direction * kSpeed;
+      reply_queue.PushMessage("You move forward.");
     } else if ("backward" == *token || "back" == *token) {
       current_state.player.position_target += current_state.player.direction * -kSpeed;
+      reply_queue.PushMessage("You move backward.");
     } else if ("left" == *token) {
       glm::vec2 orthogonal = glm::vec2(-current_state.player.direction.y,
                                        current_state.player.direction.x);
       current_state.player.position_target += orthogonal * kSpeed;
+      reply_queue.PushMessage("You move left.");
     } else if ("right" == *token) {
       glm::vec2 orthogonal = glm::vec2(-current_state.player.direction.y,
                                        current_state.player.direction.x);
       current_state.player.position_target += orthogonal * -kSpeed;
+      reply_queue.PushMessage("You move right.");
     } else if ("north" == *token || "n" == *token) {
       current_state.player.position_target += glm::vec2(0, kSpeed);
+      reply_queue.PushMessage("You move north.");
     } else if ("south" == *token || "s" == *token) {
       current_state.player.position_target += glm::vec2(0, -kSpeed);
+      reply_queue.PushMessage("You move south.");
     } else if ("east" == *token || "e" == *token) {
       current_state.player.position_target += glm::vec2(kSpeed, 0);
+      reply_queue.PushMessage("You move east.");
     } else if ("west" == *token || "w" == *token) {
       current_state.player.position_target += glm::vec2(-kSpeed, 0);
+      reply_queue.PushMessage("You move west.");
     } else if ("northeast" == *token || "ne" == *token) {
       current_state.player.position_target += glm::normalize(glm::vec2(1, 1)) * kSpeed;
+      reply_queue.PushMessage("You move northeast.");
     } else if ("northwest" == *token || "nw" == *token) {
       current_state.player.position_target += glm::normalize(glm::vec2(-1, 1)) * kSpeed;
+      reply_queue.PushMessage("You move northwest.");
     } else if ("southeast" == *token || "se" == *token) {
       current_state.player.position_target += glm::normalize(glm::vec2(1, -1)) * kSpeed;
+      reply_queue.PushMessage("You move southeast.");
     } else if ("southwest" == *token || "sw" == *token) {
       current_state.player.position_target += glm::normalize(glm::vec2(-1, -1)) * kSpeed;
+      reply_queue.PushMessage("You move southwest.");
     } else {
       reply_queue.PushMessage("I do not know where you want to go.");
     }
@@ -67,7 +80,9 @@ namespace textengine {
 
   GameState CommandParser::MoveTo(textengine::GameState current_state,
                                   const std::vector<std::string> &tokens, TokenIterator token)  {
-//    std::cout << "MoveTo called." << std::endl;
+    if (tokens.end() == token) {
+      return current_state;
+    }
     current_state.player.room_target = nullptr;
     for (auto &room_info : mesh.get_room_infos()) {
       if (room_info->name == *token) {
@@ -76,6 +91,8 @@ namespace textengine {
     }
     if (!current_state.player.room_target) {
       reply_queue.PushMessage("I do not know where \"" + *token + "\" is.");
+    } else {
+      reply_queue.PushMessage("You head towards \"" + *token + "\".");
     }
     return current_state;
   }
@@ -90,33 +107,46 @@ namespace textengine {
       return Turn(current_state, tokens, std::next(token));
     } else if ("forward" == *token) {
       current_state.player.position_target += current_state.player.direction_target * kSpeed;
+      reply_queue.PushMessage("You move forward.");
     } else if ("backward" == *token || "back" == *token) {
       current_state.player.position_target += current_state.player.direction_target * -kSpeed;
+      reply_queue.PushMessage("You move backward.");
     } else if ("left" == *token) {
       glm::vec2 orthogonal = glm::vec2(-current_state.player.direction_target.y,
                                        current_state.player.direction_target.x);
       current_state.player.position_target += orthogonal * kSpeed;
+      reply_queue.PushMessage("You move left.");
     } else if ("right" == *token) {
       glm::vec2 orthogonal = glm::vec2(-current_state.player.direction_target.y,
                                        current_state.player.direction_target.x);
       current_state.player.position_target += orthogonal * -kSpeed;
+      reply_queue.PushMessage("You move right.");
     } else if ("north" == *token || "n" == *token) {
       current_state.player.position_target += glm::vec2(0, kSpeed);
+      reply_queue.PushMessage("You move north.");
     } else if ("south" == *token || "s" == *token) {
       current_state.player.position_target += glm::vec2(0, -kSpeed);
+      reply_queue.PushMessage("You move south.");
     } else if ("east" == *token || "e" == *token) {
       current_state.player.position_target += glm::vec2(kSpeed, 0);
+      reply_queue.PushMessage("You move east.");
     } else if ("west" == *token || "w" == *token) {
       current_state.player.position_target += glm::vec2(-kSpeed, 0);
+      reply_queue.PushMessage("You move west.");
     } else if ("northeast" == *token || "ne" == *token) {
       current_state.player.position_target += glm::normalize(glm::vec2(1, 1)) * kSpeed;
+      reply_queue.PushMessage("You move northeast.");
     } else if ("northwest" == *token || "nw" == *token) {
       current_state.player.position_target += glm::normalize(glm::vec2(-1, 1)) * kSpeed;
+      reply_queue.PushMessage("You move northwest.");
     } else if ("southeast" == *token || "se" == *token) {
       current_state.player.position_target += glm::normalize(glm::vec2(1, -1)) * kSpeed;
+      reply_queue.PushMessage("You move southeast.");
     } else if ("southwest" == *token || "sw" == *token) {
       current_state.player.position_target += glm::normalize(glm::vec2(-1, -1)) * kSpeed;
+      reply_queue.PushMessage("You move southwest.");
     } else if ("exit" == *token || "quit" == *token) {
+      reply_queue.PushMessage("You quit.");
       return Quit(current_state);
     } else {
       reply_queue.PushMessage("I do not know what that means.");
@@ -136,27 +166,38 @@ namespace textengine {
     } else if ("left" == *token) {
       current_state.player.direction_target = glm::vec2(-current_state.player.direction_target.y,
                                                         current_state.player.direction_target.x);
+      reply_queue.PushMessage("You turn left.");
     } else if ("right" == *token) {
       current_state.player.direction_target = -glm::vec2(-current_state.player.direction_target.y,
                                                          current_state.player.direction_target.x);
+      reply_queue.PushMessage("You turn right.");
     } else if ("around" == *token) {
       current_state.player.direction_target = -current_state.player.direction_target;
+      reply_queue.PushMessage("You turn around.");
     } else if ("north" == *token || "n" == *token) {
       current_state.player.direction_target = glm::vec2(0, 1);
+      reply_queue.PushMessage("You face north.");
     } else if ("south" == *token || "s" == *token) {
       current_state.player.direction_target = glm::vec2(0, -1);
+      reply_queue.PushMessage("You face south.");
     } else if ("east" == *token || "e" == *token) {
       current_state.player.direction_target = glm::vec2(1, 0);
+      reply_queue.PushMessage("You face east.");
     } else if ("west" == *token || "w" == *token) {
       current_state.player.direction_target = glm::vec2(-1, 0);
+      reply_queue.PushMessage("You face west.");
     } else if ("northeast" == *token || "ne" == *token) {
       current_state.player.direction_target = glm::normalize(glm::vec2(1, 1));
+      reply_queue.PushMessage("You face northeast.");
     } else if ("northwest" == *token || "nw" == *token) {
       current_state.player.direction_target = glm::normalize(glm::vec2(-1, 1));
+      reply_queue.PushMessage("You face northwest.");
     } else if ("southeast" == *token || "se" == *token) {
       current_state.player.direction_target = glm::normalize(glm::vec2(1, -1));
+      reply_queue.PushMessage("You face southeast.");
     } else if ("southwest" == *token || "sw" == *token) {
       current_state.player.direction_target = glm::normalize(glm::vec2(-1, -1));
+      reply_queue.PushMessage("You face southwest.");
     } else {
       reply_queue.PushMessage("I do not know where you want to turn.");
     }

@@ -1,9 +1,30 @@
 <html>
   <head>
-    <title>Client</title>
+    <title>Text Engine</title>
     <script type="application/javascript" src="client.js"></script>
+    <style type="text/css">
+      body {
+        background: white;
+        color: black;
+        font-family: "Courier New";
+      }
+      p {
+        margin: 0px 0px 0px 0px;
+      }
+      b {
+        color: teal;
+      }
+      div#container {
+        margin-left: 30px;
+      }
+      b#commandline {
+        margin-left: 20px;
+      }
+    </style>
   </head>
   <body>
-    <h1>Hello World</h1>
+    <div id="container"></div>
+    <br />
+    &gt;<b id="commandline"></b><cursor id="cursor"></cursor>
   </body>
 </html>
