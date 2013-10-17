@@ -1,9 +1,7 @@
 #include <glm/glm.hpp>
 
-#include "commandlineprompt.h"
 #include "commandparser.h"
 #include "commandtokenizer.h"
-#include "console.h"
 #include "gamestate.h"
 #include "glfwapplication.h"
 #include "keyboard.h"
@@ -25,10 +23,8 @@ int main(int argument_count, char *arguments[]) {
   textengine::Keyboard keyboard;
   textengine::Mouse mouse;
   textengine::SynchronizedQueue command_queue, reply_queue;
-  textengine::CommandLinePrompt prompt{command_queue, kPrompt};
+  textengine::WebSocketPrompt prompt{command_queue, reply_queue, kPrompt};
   prompt.Run();
-  textengine::Console console{reply_queue};
-  console.Run();
   textengine::Mesh mesh;
   textengine::MeshLoader loader;
   mesh = loader.ReadMesh("output.json");

@@ -79,9 +79,12 @@ namespace textengine {
                                                   void *user,
                                                   void *in,
                                                   size_t length) {
+    if (!instance) {
+      return -1;
+    }
     switch (reason) {
       case LWS_CALLBACK_SERVER_WRITEABLE: {
-        const std::unique_ptr<picojson::value> response = instance ? instance->HandleResponse() : nullptr;
+        const std::unique_ptr<picojson::value> response = instance->HandleResponse();
         if (response) {
           std::ostringstream out;
           out << *response;
@@ -90,19 +93,15 @@ namespace textengine {
           unsigned char *p = &buffer[LWS_SEND_BUFFER_PRE_PADDING];
           std::copy(json.begin(), json.end(), p);
           CHECK_STATE(!libwebsocket_write(wsi, p, json.size(), LWS_WRITE_TEXT));
-        } else {
-          return -1;
         }
         break;
       }
       case LWS_CALLBACK_RECEIVE: {
-        if (instance) {
-          const std::string json = reinterpret_cast<const char *>(in);
-          std::istringstream input(json);
-          picojson::value message;
-          input >> message;
-          instance->HandleRequest(message);
-        }
+        const std::string json = reinterpret_cast<const char *>(in);
+        std::istringstream input(json);
+        picojson::value message;
+        input >> message;
+        instance->HandleRequest(message);
         break;
       }
       default:
@@ -112,14 +111,19 @@ namespace textengine {
   }
 
   void WebSocketPrompt::HandleRequest(picojson::value &message) {
-    std::cout << "received: " << message << std::endl;
+    const std::string value = message.get<picojson::object>()["message"].get<std::string>();
+    command_queue.PushMessage(value);
   }
 
   std::unique_ptr<picojson::value> WebSocketPrompt::HandleResponse() {
-    picojson::object response;
-    response["asdf"] = picojson::value("hi");
-    std::unique_ptr<picojson::value> result{new picojson::value(response)};
-    return result;
+    if (reply_queue.HasMessage()) {
+      picojson::object response;
+      response["message"] = picojson::value(reply_queue.PopMessage());
+      std::unique_ptr<picojson::value> result{new picojson::value(response)};
+      return result;
+    } else {
+      return nullptr;
+    }
   }
 
   void WebSocketPrompt::Loop() {
