@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_COMMANDQUEUE_H_
-#define TEXTENGINE_COMMANDQUEUE_H_
+#ifndef TEXTENGINE_SYNCHRONIZEDQUEUE_H_
+#define TEXTENGINE_SYNCHRONIZEDQUEUE_H_
 
 #include <mutex>
 #include <queue>
@@ -7,11 +7,11 @@
 
 namespace textengine {
 
-  class CommandQueue {
+  class SynchronizedQueue {
   public:
-    CommandQueue() = default;
+    SynchronizedQueue() = default;
 
-    virtual ~CommandQueue() = default;
+    virtual ~SynchronizedQueue() = default;
 
     bool HasCommand();
 
@@ -28,4 +28,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_COMMANDQUEUE_H_
+#endif  // TEXTENGINE_SYNCHRONIZEDQUEUE_H_

@@ -1,28 +1,28 @@
 #include <mutex>
 #include <string>
 
-#include "commandqueue.h"
+#include "synchronizedqueue.h"
 
 namespace textengine {
 
-  bool CommandQueue::HasCommand() {
+  bool SynchronizedQueue::HasCommand() {
     std::lock_guard<std::mutex> lock(mutex);
     return !queue.empty();
   }
 
-  std::string CommandQueue::PeekCommand() {
+  std::string SynchronizedQueue::PeekCommand() {
     std::lock_guard<std::mutex> lock(mutex);
     return queue.front();
   }
 
-  std::string CommandQueue::PopCommand() {
+  std::string SynchronizedQueue::PopCommand() {
     std::lock_guard<std::mutex> lock(mutex);
     std::string result = queue.front();
     queue.pop();
     return result;
   }
 
-  void CommandQueue::PushCommand(const std::string &command) {
+  void SynchronizedQueue::PushCommand(const std::string &command) {
     std::lock_guard<std::mutex> lock(mutex);
     queue.push(command);
   }

@@ -11,11 +11,11 @@
 
 namespace textengine {
 
-  class CommandQueue;
+  class SynchronizedQueue;
 
   class WebSocketPrompt : public Prompt {
   public:
-    WebSocketPrompt(CommandQueue &queue, const std::string &prompt);
+    WebSocketPrompt(SynchronizedQueue &queue, const std::string &prompt);
 
     virtual ~WebSocketPrompt();
 
@@ -46,7 +46,7 @@ namespace textengine {
     void Loop();
 
   private:
-    CommandQueue &queue;
+    SynchronizedQueue &queue;
     const std::string &prompt;
     std::thread thread;
     libwebsocket_context *context;

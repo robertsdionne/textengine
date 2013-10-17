@@ -5,7 +5,7 @@
 #include <thread>
 
 #include "checks.h"
-#include "commandqueue.h"
+#include "synchronizedqueue.h"
 #include "websocketprompt.h"
 
 namespace textengine {
@@ -27,7 +27,7 @@ namespace textengine {
 
   WebSocketPrompt *WebSocketPrompt::instance = nullptr;
 
-  WebSocketPrompt::WebSocketPrompt(CommandQueue &queue, const std::string &prompt)
+  WebSocketPrompt::WebSocketPrompt(SynchronizedQueue &queue, const std::string &prompt)
   : queue(queue), prompt(prompt) {
     instance = this;
   }

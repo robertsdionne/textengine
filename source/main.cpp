@@ -1,7 +1,6 @@
 #include <glm/glm.hpp>
 
 #include "commandparser.h"
-#include "commandqueue.h"
 #include "commandtokenizer.h"
 #include "gamestate.h"
 #include "glfwapplication.h"
@@ -10,6 +9,7 @@
 #include "mesheditor.h"
 #include "meshloader.h"
 #include "mouse.h"
+#include "synchronizedqueue.h"
 #include "textenginerenderer.h"
 #include "updater.h"
 #include "websocketprompt.h"
@@ -22,7 +22,7 @@ constexpr const char *kWindowTitle = u8"textengine";
 int main(int argument_count, char *arguments[]) {
   textengine::Keyboard keyboard;
   textengine::Mouse mouse;
-  textengine::CommandQueue queue;
+  textengine::SynchronizedQueue queue;
   textengine::WebSocketPrompt prompt{queue, kPrompt};
   prompt.Run();
   textengine::GameState initial_state;

@@ -14,7 +14,6 @@
 		460B492D17F4AC88006B4828 /* mesheditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460B492B17F4AC87006B4828 /* mesheditor.cpp */; };
 		460B493017F4B48F006B4828 /* mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460B492E17F4B48E006B4828 /* mouse.cpp */; };
 		460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B117EA1C3B00D765F5 /* keyboard.cpp */; };
-		460F81B917EA37C700D765F5 /* commandqueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B717EA37C700D765F5 /* commandqueue.cpp */; };
 		461229DC17FBA08C00F04521 /* meshloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461229DA17FBA08C00F04521 /* meshloader.cpp */; };
 		461879D717FB5F0D000B32F6 /* meshserializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461879D517FB5F0D000B32F6 /* meshserializer.cpp */; };
 		462B4A6417EA43AA006FE9BB /* vertexarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A5D17EA43AA006FE9BB /* vertexarray.cpp */; };
@@ -103,6 +102,7 @@
 		46D624EE180F32600081746B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46074B02180F316700823E55 /* libz.dylib */; };
 		46FBD33D180F4C7F00F7C5F8 /* commandlineprompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FBD33B180F4C7F00F7C5F8 /* commandlineprompt.cpp */; };
 		46FBD343180F572400F7C5F8 /* websocketprompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FBD341180F572400F7C5F8 /* websocketprompt.cpp */; };
+		46FBD346180F6F7600F7C5F8 /* synchronizedqueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FBD344180F6F7600F7C5F8 /* synchronizedqueue.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,8 +172,6 @@
 		460F81B117EA1C3B00D765F5 /* keyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = keyboard.cpp; sourceTree = "<group>"; };
 		460F81B217EA1C3B00D765F5 /* keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyboard.h; sourceTree = "<group>"; };
 		460F81B517EA322400D765F5 /* prompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prompt.h; sourceTree = "<group>"; };
-		460F81B717EA37C700D765F5 /* commandqueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commandqueue.cpp; sourceTree = "<group>"; };
-		460F81B817EA37C700D765F5 /* commandqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commandqueue.h; sourceTree = "<group>"; };
 		461229DA17FBA08C00F04521 /* meshloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = meshloader.cpp; sourceTree = "<group>"; };
 		461229DB17FBA08C00F04521 /* meshloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meshloader.h; sourceTree = "<group>"; };
 		461879D117FB5E2E000B32F6 /* picojson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = picojson.h; sourceTree = "<group>"; };
@@ -1336,6 +1334,8 @@
 		46FBD33C180F4C7F00F7C5F8 /* commandlineprompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commandlineprompt.h; sourceTree = "<group>"; };
 		46FBD341180F572400F7C5F8 /* websocketprompt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = websocketprompt.cpp; sourceTree = "<group>"; };
 		46FBD342180F572400F7C5F8 /* websocketprompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = websocketprompt.h; sourceTree = "<group>"; };
+		46FBD344180F6F7600F7C5F8 /* synchronizedqueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = synchronizedqueue.cpp; sourceTree = "<group>"; };
+		46FBD345180F6F7600F7C5F8 /* synchronizedqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = synchronizedqueue.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2771,8 +2771,6 @@
 				46FBD33C180F4C7F00F7C5F8 /* commandlineprompt.h */,
 				466E70FB17EB944400CD9E9D /* commandparser.cpp */,
 				466E70FC17EB944400CD9E9D /* commandparser.h */,
-				460F81B717EA37C700D765F5 /* commandqueue.cpp */,
-				460F81B817EA37C700D765F5 /* commandqueue.h */,
 				4600EB8F17EBC8F9003BA3C3 /* commandtokenizer.cpp */,
 				4600EB9017EBC8F9003BA3C3 /* commandtokenizer.h */,
 				462B4A6917EA9760006FE9BB /* drawable.h */,
@@ -2803,6 +2801,8 @@
 				46AB32C9180F283A003DDECF /* server.cpp */,
 				462B4A5E17EA43AA006FE9BB /* shader.cpp */,
 				462B4A5F17EA43AA006FE9BB /* shader.h */,
+				46FBD344180F6F7600F7C5F8 /* synchronizedqueue.cpp */,
+				46FBD345180F6F7600F7C5F8 /* synchronizedqueue.h */,
 				4607741F17E8EC0100896A15 /* textenginerenderer.cpp */,
 				4607742017E8EC0100896A15 /* textenginerenderer.h */,
 				466E70FE17EB96D500CD9E9D /* updater.cpp */,
@@ -3114,11 +3114,11 @@
 				46B9875917E6A62500B59145 /* glfwapplication.cpp in Sources */,
 				4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */,
 				460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */,
-				460F81B917EA37C700D765F5 /* commandqueue.cpp in Sources */,
 				462B4A6417EA43AA006FE9BB /* vertexarray.cpp in Sources */,
 				46FBD343180F572400F7C5F8 /* websocketprompt.cpp in Sources */,
 				462B4A6517EA43AA006FE9BB /* shader.cpp in Sources */,
 				462B4A6617EA43AA006FE9BB /* program.cpp in Sources */,
+				46FBD346180F6F7600F7C5F8 /* synchronizedqueue.cpp in Sources */,
 				46FBD33D180F4C7F00F7C5F8 /* commandlineprompt.cpp in Sources */,
 				462B4A6717EA43AA006FE9BB /* buffer.cpp in Sources */,
 				468E03A017EB2B4500F4CF1C /* drawtools.cpp in Sources */,

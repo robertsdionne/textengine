@@ -8,11 +8,11 @@
 
 namespace textengine {
 
-  class CommandQueue;
+  class SynchronizedQueue;
 
   class CommandLinePrompt : public Prompt {
   public:
-    CommandLinePrompt(CommandQueue &queue, const std::string &prompt);
+    CommandLinePrompt(SynchronizedQueue &queue, const std::string &prompt);
 
     virtual ~CommandLinePrompt() = default;
 
@@ -22,7 +22,7 @@ namespace textengine {
     void Loop();
 
   private:
-    CommandQueue &queue;
+    SynchronizedQueue &queue;
     const std::string &prompt;
     std::thread thread;
   };

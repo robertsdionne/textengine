@@ -7,12 +7,12 @@
 namespace textengine {
 
   class CommandParser;
-  class CommandQueue;
   class Keyboard;
+  class SynchronizedQueue;
 
   class Updater {
   public:
-    Updater(CommandQueue &queue, CommandParser &parser, Mesh &mesh, const GameState &initial_state);
+    Updater(SynchronizedQueue &queue, CommandParser &parser, Mesh &mesh, const GameState &initial_state);
 
     virtual ~Updater() = default;
 
@@ -28,7 +28,7 @@ namespace textengine {
     Mesh::Face *FindFaceThatContainsPoint(glm::vec2 point) const;
 
   private:
-    CommandQueue &queue;
+    SynchronizedQueue &queue;
     CommandParser &parser;
     Mesh &mesh;
     GameState current_state;

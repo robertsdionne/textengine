@@ -2,12 +2,12 @@
 #include <string>
 #include <thread>
 
-#include "commandqueue.h"
 #include "commandlineprompt.h"
+#include "synchronizedqueue.h"
 
 namespace textengine {
 
-  CommandLinePrompt::CommandLinePrompt(CommandQueue &queue, const std::string &prompt)
+  CommandLinePrompt::CommandLinePrompt(SynchronizedQueue &queue, const std::string &prompt)
   : queue(queue), prompt(prompt) {}
 
   void CommandLinePrompt::Loop() {

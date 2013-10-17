@@ -5,15 +5,15 @@
 
 #include "checks.h"
 #include "commandparser.h"
-#include "commandqueue.h"
 #include "gamestate.h"
 #include "keyboard.h"
 #include "mesh.h"
+#include "synchronizedqueue.h"
 #include "updater.h"
 
 namespace textengine {
 
-  Updater::Updater(CommandQueue &queue, CommandParser &parser, Mesh &mesh,
+  Updater::Updater(SynchronizedQueue &queue, CommandParser &parser, Mesh &mesh,
                    const GameState &initial_state)
   : queue(queue), parser(parser), mesh(mesh), current_state(initial_state) {}
 
