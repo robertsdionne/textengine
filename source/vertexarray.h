@@ -15,7 +15,7 @@ namespace textengine {
 
     void Create();
 
-    void EnableVertexAttribArray(GLuint array);
+    void EnableVertexAttribArray(GLuint index);
 
     void VertexAttribPointer(GLuint index, GLint size, GLenum type,
                              GLboolean normalized, GLsizei stride, const GLvoid *pointer);

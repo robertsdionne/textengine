@@ -21,9 +21,9 @@ namespace textengine {
     glGenVertexArrays(1, &handle);
   }
 
-  void VertexArray::EnableVertexAttribArray(GLuint array) {
+  void VertexArray::EnableVertexAttribArray(GLuint index) {
     Bind();
-    glEnableVertexAttribArray(array);
+    glEnableVertexAttribArray(index);
   }
 
   void VertexArray::VertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized,
