@@ -9,11 +9,11 @@ var load = function() {
   websocket.addEventListener('close', close);
 };
 var open = function() {
-  websocket.send('hello');
+  websocket.send(JSON.stringify({message: 'hello'}));
 };
 var message = function(event) {
-  console.log(event.data);
-  websocket.send('hello');
+  console.log(JSON.parse(event.data));
+  websocket.send(JSON.stringify({message: 'hello'}));
 };
 var error = function(event) {
   console.log('error');

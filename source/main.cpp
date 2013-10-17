@@ -1,6 +1,5 @@
 #include <glm/glm.hpp>
 
-#include "commandlineprompt.h"
 #include "commandparser.h"
 #include "commandqueue.h"
 #include "commandtokenizer.h"
@@ -13,6 +12,7 @@
 #include "mouse.h"
 #include "textenginerenderer.h"
 #include "updater.h"
+#include "websocketprompt.h"
 
 constexpr const char *kPrompt = u8"> ";
 constexpr int kWindowHeight = 800;
@@ -23,7 +23,7 @@ int main(int argument_count, char *arguments[]) {
   textengine::Keyboard keyboard;
   textengine::Mouse mouse;
   textengine::CommandQueue queue;
-  textengine::CommandLinePrompt prompt{queue, kPrompt};
+  textengine::WebSocketPrompt prompt{queue, kPrompt};
   prompt.Run();
   textengine::GameState initial_state;
   textengine::Mesh mesh;

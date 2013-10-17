@@ -102,6 +102,7 @@
 		46D624ED180F325B0081746B /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46C47CCD180F3139002DD37E /* libcrypto.dylib */; };
 		46D624EE180F32600081746B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46074B02180F316700823E55 /* libz.dylib */; };
 		46FBD33D180F4C7F00F7C5F8 /* commandlineprompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FBD33B180F4C7F00F7C5F8 /* commandlineprompt.cpp */; };
+		46FBD343180F572400F7C5F8 /* websocketprompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FBD341180F572400F7C5F8 /* websocketprompt.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1333,6 +1334,8 @@
 		46FBD33A180F339400F7C5F8 /* client.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = client.js; sourceTree = "<group>"; };
 		46FBD33B180F4C7F00F7C5F8 /* commandlineprompt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commandlineprompt.cpp; sourceTree = "<group>"; };
 		46FBD33C180F4C7F00F7C5F8 /* commandlineprompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commandlineprompt.h; sourceTree = "<group>"; };
+		46FBD341180F572400F7C5F8 /* websocketprompt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = websocketprompt.cpp; sourceTree = "<group>"; };
+		46FBD342180F572400F7C5F8 /* websocketprompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = websocketprompt.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2806,6 +2809,8 @@
 				466E70FF17EB96D500CD9E9D /* updater.h */,
 				462B4A5D17EA43AA006FE9BB /* vertexarray.cpp */,
 				462B4A5C17EA43AA006FE9BB /* vertexarray.h */,
+				46FBD341180F572400F7C5F8 /* websocketprompt.cpp */,
+				46FBD342180F572400F7C5F8 /* websocketprompt.h */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -3111,6 +3116,7 @@
 				460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */,
 				460F81B917EA37C700D765F5 /* commandqueue.cpp in Sources */,
 				462B4A6417EA43AA006FE9BB /* vertexarray.cpp in Sources */,
+				46FBD343180F572400F7C5F8 /* websocketprompt.cpp in Sources */,
 				462B4A6517EA43AA006FE9BB /* shader.cpp in Sources */,
 				462B4A6617EA43AA006FE9BB /* program.cpp in Sources */,
 				46FBD33D180F4C7F00F7C5F8 /* commandlineprompt.cpp in Sources */,
