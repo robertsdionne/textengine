@@ -11,31 +11,31 @@
 
 namespace textengine {
 
-  GlfwApplication *GlfwApplication::glfw_application = nullptr;
+  GlfwApplication *GlfwApplication::instance = nullptr;
 
   GlfwApplication::GlfwApplication(int argument_count, char *arguments[], int width, int height,
                                    const std::string &title, Updater &updater, Renderer &renderer,
                                    Keyboard &keyboard, Mouse &mouse)
   : argument_count(argument_count), arguments(arguments), width(width), height(height),
     title(title), updater(updater), renderer(renderer), keyboard(keyboard), mouse(mouse) {
-    glfw_application = this;
+    instance = this;
   }
 
   GlfwApplication::~GlfwApplication() {
-    glfw_application = nullptr;
+    instance = nullptr;
   }
 
   void GlfwApplication::HandleKeyboard(GLFWwindow *window, int key,
                                        int scancode, int action, int mods) {
-    if (glfw_application) {
+    if (instance) {
       switch (action) {
         case GLFW_PRESS:
         case GLFW_REPEAT: {
-          glfw_application->keyboard.OnKeyDown(key);
+          instance->keyboard.OnKeyDown(key);
           break;
         }
         case GLFW_RELEASE: {
-          glfw_application->keyboard.OnKeyUp(key);
+          instance->keyboard.OnKeyUp(key);
           break;
         }
       }
@@ -43,14 +43,14 @@ namespace textengine {
   }
 
   void GlfwApplication::HandleMouseButton(GLFWwindow *window, int button, int action, int mods) {
-    if (glfw_application) {
+    if (instance) {
       switch (action) {
         case GLFW_PRESS: {
-          glfw_application->mouse.OnButtonDown(button);
+          instance->mouse.OnButtonDown(button);
           break;
         }
         case GLFW_RELEASE: {
-          glfw_application->mouse.OnButtonUp(button);
+          instance->mouse.OnButtonUp(button);
           break;
         }
       }
@@ -58,14 +58,14 @@ namespace textengine {
   }
 
   void GlfwApplication::HandleMouseCursorMove(GLFWwindow *window, double x, double y) {
-    if (glfw_application) {
-      glfw_application->mouse.OnCursorMove(glm::vec2(x, y));
+    if (instance) {
+      instance->mouse.OnCursorMove(glm::vec2(x, y));
     }
   }
 
   void GlfwApplication::HandleReshape(GLFWwindow *window, int width, int height) {
-    if (glfw_application) {
-      glfw_application->renderer.Change(width, height);
+    if (instance) {
+      instance->renderer.Change(width, height);
     }
   }
 

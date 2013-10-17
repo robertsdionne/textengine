@@ -32,7 +32,7 @@ namespace textengine {
 
     static void HandleReshape(GLFWwindow *window, int width, int height);
 
-    static GlfwApplication *glfw_application;
+    static GlfwApplication *instance;
 
   private:
     GLFWwindow *window;
