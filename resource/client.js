@@ -143,6 +143,13 @@ var error = function(event) {
 
 var close = function(event) {
   console.log('closed');
+  clearCursor();
+  document.removeEventListener('keypress', command, false);
+  document.removeEventListener('keydown', backspace, false);
+  websocket.removeEventListener('open', open);
+  websocket.removeEventListener('message', message);
+  websocket.removeEventListener('error', error);
+  websocket.removeEventListener('close', close);
 };
 
 
@@ -209,7 +216,13 @@ var resetCursor = function() {
   cursor.textContent = '\u2588';
   window.clearInterval(blink);
   blink = window.setInterval(blinkCursor, 1000);
-}
+};
+
+
+var clearCursor = function() {
+  cursor.textContent = '';
+  window.clearInterval(blink);
+};
 
 
 var toggleScheme = function() {
