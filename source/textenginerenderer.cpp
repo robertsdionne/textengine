@@ -183,8 +183,8 @@ namespace textengine {
 
     face_program.Use();
     face_program.Uniforms({
-      {u8"projection", projection},
-      {u8"model_view", model_view}
+      {u8"projection", &projection},
+      {u8"model_view", &model_view}
     });
     mesh_array.Bind();
     glDrawArrays(face_data.element_type, 0, face_data.element_count);
@@ -192,8 +192,8 @@ namespace textengine {
 
     edge_program.Use();
     edge_program.Uniforms({
-      {u8"projection", projection},
-      {u8"model_view", model_view}
+      {u8"projection", &projection},
+      {u8"model_view", &model_view}
     });
     edge_program.Uniforms({
       {u8"line_width", 0.00125},
@@ -231,8 +231,8 @@ namespace textengine {
 
     edge_program.Use();
     edge_program.Uniforms({
-      {u8"projection", projection},
-      {u8"model_view", model_view}
+      {u8"projection", &projection},
+      {u8"model_view", &model_view}
     });
     edge_program.Uniforms({
       {u8"line_width", 0.005},
@@ -244,8 +244,8 @@ namespace textengine {
 
     face_program.Use();
     face_program.Uniforms({
-      {u8"projection", projection},
-      {u8"model_view", model_view}
+      {u8"projection", &projection},
+      {u8"model_view", &model_view}
     });
     selected_face_array.Bind();
     glDrawArrays(selected_face_data.element_type, 0, selected_face_data.element_count);
@@ -253,8 +253,8 @@ namespace textengine {
 
     edge_program.Use();
     edge_program.Uniforms({
-      {u8"projection", projection},
-      {u8"model_view", model_view}
+      {u8"projection", &projection},
+      {u8"model_view", &model_view}
     });
     edge_program.Uniforms({
       {u8"line_width", 0.00125},
@@ -267,8 +267,8 @@ namespace textengine {
 
     edge_program.Use();
     edge_program.Uniforms({
-      {u8"projection", projection},
-      {u8"model_view", model_view}
+      {u8"projection", &projection},
+      {u8"model_view", &model_view}
     });
     edge_program.Uniforms({
       {u8"line_width", 0.005},
@@ -281,8 +281,8 @@ namespace textengine {
 
     point_program.Use();
     point_program.Uniforms({
-      {u8"projection", projection},
-      {u8"model_view", model_view}
+      {u8"projection", &projection},
+      {u8"model_view", &model_view}
     });
     point_program.Uniforms({
       {u8"point_size", 0.01},
@@ -294,8 +294,8 @@ namespace textengine {
 
     edge_program.Use();
     edge_program.Uniforms({
-      {u8"projection", projection},
-      {u8"model_view", model_view}
+      {u8"projection", &projection},
+      {u8"model_view", &model_view}
     });
     edge_program.Uniforms({
       {u8"line_width", 0.005},
@@ -314,8 +314,8 @@ namespace textengine {
 
     face_program.Use();
     face_program.Uniforms({
-      {u8"projection", projection},
-      {u8"model_view", player_model_view}
+      {u8"projection", &projection},
+      {u8"model_view", &player_model_view}
     });
     player_array.Bind();
     glDrawArrays(GL_TRIANGLES, 0, 1*3);
@@ -323,8 +323,8 @@ namespace textengine {
 
     edge_program.Use();
     edge_program.Uniforms({
-      {u8"projection", projection},
-      {u8"model_view", player_model_view}
+      {u8"projection", &projection},
+      {u8"model_view", &player_model_view}
     });
     edge_program.Uniforms({
       {u8"line_width", 0.00125},

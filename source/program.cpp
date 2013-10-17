@@ -64,10 +64,11 @@ namespace textengine {
     }
   }
 
-  void Program::Uniforms(const std::unordered_map<std::string, glm::mat4> &&uniforms) {
+  void Program::Uniforms(const std::unordered_map<std::string, const glm::mat4 *> &&uniforms) {
     Use();
     for (auto &uniform : uniforms) {
-      glUniformMatrix4fv(GetUniformLocation(uniform.first), 1, false, &uniform.second[0][0]);
+      glUniformMatrix4fv(GetUniformLocation(uniform.first),
+                         1, false, &uniform.second->operator[](0)[0]);
     }
   }
 
