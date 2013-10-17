@@ -16,8 +16,9 @@ namespace textengine {
   GlfwApplication::GlfwApplication(int argument_count, char *arguments[], int width, int height,
                                    const std::string &title, Updater &updater, Renderer &renderer,
                                    Keyboard &keyboard, Mouse &mouse)
-  : argument_count(argument_count), arguments(arguments), width(width), height(height),
-    title(title), updater(updater), renderer(renderer), keyboard(keyboard), mouse(mouse) {
+  : window(nullptr), argument_count(argument_count), arguments(arguments), width(width),
+  height(height), title(title), updater(updater), renderer(renderer), keyboard(keyboard),
+  mouse(mouse) {
     instance = this;
   }
 

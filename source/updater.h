@@ -1,6 +1,9 @@
 #ifndef TEXTENGINE_UPDATER_H_
 #define TEXTENGINE_UPDATER_H_
 
+#include <chrono>
+#include <unordered_map>
+
 #include "gamestate.h"
 #include "mesh.h"
 
@@ -12,7 +15,7 @@ namespace textengine {
 
   class Updater {
   public:
-    Updater(SynchronizedQueue &command_queue,
+    Updater(SynchronizedQueue &command_queue, SynchronizedQueue &reply_queue,
             CommandParser &parser, Mesh &mesh, const GameState &initial_state);
 
     virtual ~Updater() = default;
@@ -33,10 +36,13 @@ namespace textengine {
     Mesh::Face *FindFaceThatContainsPoint(glm::vec2 point) const;
 
   private:
-    SynchronizedQueue &command_queue;
+    SynchronizedQueue &command_queue, &reply_queue;
     CommandParser &parser;
     Mesh &mesh;
     GameState current_state;
+    std::chrono::high_resolution_clock clock;
+    std::unordered_map<int, std::chrono::high_resolution_clock::time_point> last_approach_times;
+    int phrase_index;
   };
 
 }  // namespace textengine

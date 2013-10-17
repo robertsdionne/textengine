@@ -26,8 +26,9 @@ namespace textengine {
   MeshEditor::MeshEditor(int width, int height, Keyboard &keyboard, Mouse &mouse, Mesh &mesh,
                          std::default_random_engine &engine)
   : width(width), height(height), keyboard(keyboard), mouse(mouse), mesh(mesh), selected_vertices(),
-    selected_vertex_positions(), cursor_start_position(), engine(engine), uniform_real(),
-    uniform_int(0, 26) {}
+  additionally_selected_vertices(), selected_vertex_positions(), cursor_start_position(),
+  center_of_mass(), model_view_projection(), add_selecting(), rotating(), selecting(), moving(),
+  scaling(), engine(engine), uniform_real(), uniform_int(0, 26) {}
 
   glm::vec2 MeshEditor::get_cursor_position() const {
     const glm::mat4 normalized_to_reversed = glm::scale(glm::mat4(), glm::vec3(1.0f, -1.0f, 1.0f));

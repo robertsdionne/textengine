@@ -7,7 +7,7 @@
 
 namespace textengine {
 
-  Program::Program() : shaders() {}
+  Program::Program() : shaders(), handle() {}
 
   Program::~Program() {
     if (handle) {

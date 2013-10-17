@@ -13,9 +13,10 @@
 
 namespace textengine {
 
-  Updater::Updater(SynchronizedQueue &command_queue, CommandParser &parser, Mesh &mesh,
-                   const GameState &initial_state)
-  : command_queue(command_queue), parser(parser), mesh(mesh), current_state(initial_state) {}
+  Updater::Updater(SynchronizedQueue &command_queue, SynchronizedQueue &reply_queue,
+                   CommandParser &parser, Mesh &mesh, const GameState &initial_state)
+  : command_queue(command_queue), reply_queue(reply_queue), parser(parser), mesh(mesh),
+    current_state(initial_state), clock(), last_approach_times(), phrase_index() {}
 
   GameState Updater::GetCurrentState() {
     return current_state;
@@ -31,9 +32,29 @@ namespace textengine {
       next_state = parser.Parse(next_state, command_queue.PopMessage());
     }
     next_state.player = UpdateCharacter(next_state.player);
+    int index;
+    std::string phrases[] = {
+      "Someone brushes hurriedly past you.",
+      "You pass someone.",
+      "One of those thugs shoves past you.",
+      "Someone bumps into you.",
+      "Someone bumps your arm.",
+      "Someone passes by.",
+      "A passerby approaches and departs."
+    };
     for (auto &character : next_state.non_player_characters) {
       character = UpdateNonPlayerCharacter(character);
       character.character = UpdateCharacter(character.character);
+      if (glm::length(character.character.position - next_state.player.position) < 0.1) {
+        if (last_approach_times.end() == last_approach_times.find(index)) {
+          last_approach_times.insert({index, clock.now()});
+          reply_queue.PushMessage(phrases[phrase_index++ % 7]);
+        } else if (clock.now() - last_approach_times.at(index) > std::chrono::seconds(2)) {
+          reply_queue.PushMessage(phrases[phrase_index++ % 7]);
+          last_approach_times.at(index) = clock.now();
+        }
+      }
+      index += 1;
     }
     return next_state;
   }

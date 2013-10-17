@@ -8,7 +8,7 @@
 namespace textengine {
 
   CommandLinePrompt::CommandLinePrompt(SynchronizedQueue &command_queue, const std::string &prompt)
-  : command_queue(command_queue), prompt(prompt) {}
+  : command_queue(command_queue), prompt(prompt), thread() {}
 
   void CommandLinePrompt::Loop() {
     std::string command;

@@ -9,7 +9,7 @@
 namespace textengine {
 
   Console::Console(SynchronizedQueue &reply_queue)
-  : reply_queue(reply_queue) {}
+  : reply_queue(reply_queue), thread() {}
 
   void Console::Loop() {
     while (true) {

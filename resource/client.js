@@ -124,7 +124,22 @@ Line.prototype.toDomNode = function(prefix, cursor, scrollBehavior) {
 };
 
 
-var open = function() {};
+var connect = function() {
+  var location = window.location.toString().replace(/http/, 'ws');
+  console.log(location);
+  websocket = new WebSocket(location, 'interactive-fiction-protocol');
+  websocket.addEventListener('open', open);
+  websocket.addEventListener('message', message);
+  websocket.addEventListener('error', error);
+  websocket.addEventListener('close', close);
+};
+
+
+var open = function() {
+  window.clearTimeout(reconnect);
+  document.addEventListener('keypress', command, false);
+  document.addEventListener('keydown', backspace, false);
+};
 
 
 var message = function(event) {
@@ -150,6 +165,7 @@ var close = function(event) {
   websocket.removeEventListener('message', message);
   websocket.removeEventListener('error', error);
   websocket.removeEventListener('close', close);
+  reconnect = window.setTimeout(connect, 1000);
 };
 
 
@@ -189,19 +205,14 @@ var websocket;
 var blink;
 
 
+var reconnect;
+
+
 var load = function() {
-  document.addEventListener('keypress', command, false);
-  document.addEventListener('keydown', backspace, false);
   container = document.getElementById('container');
   commandline = document.getElementById('commandline');
   cursor = document.getElementById('cursor');
-  var location = window.location.toString().replace(/http/, 'ws');
-  console.log(location);
-  websocket = new WebSocket(location, 'interactive-fiction-protocol');
-  websocket.addEventListener('open', open);
-  websocket.addEventListener('message', message);
-  websocket.addEventListener('error', error);
-  websocket.addEventListener('close', close);
+  connect();
   display();
   resetCursor();
 };

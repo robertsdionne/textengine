@@ -29,7 +29,7 @@ namespace textengine {
 
   WebSocketPrompt::WebSocketPrompt(SynchronizedQueue &command_queue,
                                    SynchronizedQueue &reply_queue, const std::string &prompt)
-  : command_queue(command_queue), reply_queue(reply_queue), prompt(prompt) {
+  : command_queue(command_queue), reply_queue(reply_queue), prompt(prompt), thread(), context() {
     instance = this;
   }
 
