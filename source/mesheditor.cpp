@@ -517,12 +517,12 @@ namespace textengine {
                          (ScaleMode::kFalse != scaling) || selecting);
     if (ready && keyboard.IsKeyJustPressed(GLFW_KEY_1)) {
       MeshSerializer serializer;
-      serializer.WriteMesh("output.json", mesh);
+      serializer.WriteMesh("../resource/output.json", mesh);
     }
     if (ready && keyboard.IsKeyJustPressed(GLFW_KEY_2)) {
       selected_vertices.clear();
       MeshLoader loader;
-      mesh = loader.ReadMesh("output.json");
+      mesh = loader.ReadMesh("../resource/output.json");
     }
     if (ready && keyboard.IsKeyJustPressed(GLFW_KEY_A)) {
       if (selected_vertices.empty()) {

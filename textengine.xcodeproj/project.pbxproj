@@ -1339,6 +1339,8 @@
 		46FBD345180F6F7600F7C5F8 /* synchronizedqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = synchronizedqueue.h; sourceTree = "<group>"; };
 		46FBD347180F76BE00F7C5F8 /* console.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = console.cpp; sourceTree = "<group>"; };
 		46FBD348180F76BE00F7C5F8 /* console.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = console.h; sourceTree = "<group>"; };
+		46FBD34A180F897100F7C5F8 /* output.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = output.json; sourceTree = "<group>"; };
+		46FBD34B180F897100F7C5F8 /* output2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = output2.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2939,6 +2941,8 @@
 			children = (
 				46FBD33A180F339400F7C5F8 /* client.js */,
 				46FBD339180F338300F7C5F8 /* index.html */,
+				46FBD34A180F897100F7C5F8 /* output.json */,
+				46FBD34B180F897100F7C5F8 /* output2.json */,
 			);
 			path = resource;
 			sourceTree = "<group>";

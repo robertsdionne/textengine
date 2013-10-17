@@ -27,7 +27,7 @@ int main(int argument_count, char *arguments[]) {
   prompt.Run();
   textengine::Mesh mesh;
   textengine::MeshLoader loader;
-  mesh = loader.ReadMesh("output.json");
+  mesh = loader.ReadMesh("../resource/output.json");
   textengine::CommandTokenizer tokenizer;
   textengine::CommandParser parser{tokenizer, mesh, reply_queue};
   textengine::GameState initial_state;
