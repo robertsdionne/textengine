@@ -16,6 +16,15 @@ namespace textengine {
     Mesh::RoomInfo *room_target;
   };
 
+  struct AiState {
+    int room_target_index;
+  };
+
+  struct NonPlayerCharacterInfo {
+    CharacterInfo character;
+    AiState ai_state;
+  };
+
   class GameState {
   public:
     GameState();
@@ -25,7 +34,7 @@ namespace textengine {
     virtual ~GameState() = default;
 
     CharacterInfo player;
-    std::vector<CharacterInfo> non_player_characters;
+    std::vector<NonPlayerCharacterInfo> non_player_characters;
   };
 
 }  // namespace textengine

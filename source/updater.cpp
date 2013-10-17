@@ -30,18 +30,27 @@ namespace textengine {
     if (command_queue.HasMessage()) {
       next_state = parser.Parse(next_state, command_queue.PopMessage());
     }
+    next_state.player = UpdateCharacter(next_state.player);
+    for (auto &character : next_state.non_player_characters) {
+      character = UpdateNonPlayerCharacter(character);
+      character.character = UpdateCharacter(character.character);
+    }
+    return next_state;
+  }
 
-    if (next_state.player.room_target) {
-//      std::cout << "has room target" << std::endl;
-      auto current_face = FindFaceThatContainsPoint(next_state.player.position);
-      if (current_face && next_state.player.room_target == current_face->room_info) {
-//        std::cout << "reached target" << std::endl;
-        next_state.player.room_target = nullptr;
-      } else if (current_face && next_state.player.room_target) {
-//        std::cout << "pursuing target" << std::endl;
+  CharacterInfo Updater::UpdateCharacter(CharacterInfo current_character) const {
+    CharacterInfo next_character = current_character;
+    if (next_character.room_target) {
+      //      std::cout << "has room target" << std::endl;
+      auto current_face = FindFaceThatContainsPoint(next_character.position);
+      if (current_face && next_character.room_target == current_face->room_info) {
+        //        std::cout << "reached target" << std::endl;
+        next_character.room_target = nullptr;
+      } else if (current_face && next_character.room_target) {
+        //        std::cout << "pursuing target" << std::endl;
         std::unordered_map<Mesh::Face *, float> distances;
         for (auto &face : mesh.get_faces()) {
-          if (next_state.player.room_target == face->room_info) {
+          if (next_character.room_target == face->room_info) {
             distances.insert({face.get(), 0.0f});
           } else {
             distances.insert({face.get(), std::numeric_limits<float>::infinity()});
@@ -87,7 +96,7 @@ namespace textengine {
               const auto v0 = h01->start->position, v1 = h12->start->position, v2 = h20->start->position;
               const auto centroid = (v0 + v1 + v2) / 3.0f;
               distances.at(face.get()) = minimum + glm::length(target - centroid);
-//              std::cout << "updating face " << face.get() << " with value " << minimum + glm::length(target - centroid) << std::endl;
+              //              std::cout << "updating face " << face.get() << " with value " << minimum + glm::length(target - centroid) << std::endl;
             }
           }
         }
@@ -96,7 +105,7 @@ namespace textengine {
         Mesh::Face *argmin = nullptr;
         Mesh::HalfEdge *edge = current_face->face_edge;
         do {
-//          std::cout << "finding minimum" << std::endl;
+          //          std::cout << "finding minimum" << std::endl;
           if (edge->opposite) {
             const auto h01 = edge->opposite->face->face_edge;
             const auto h12 = h01->next;
@@ -114,15 +123,15 @@ namespace textengine {
           edge = edge->next;
         } while (edge != current_face->face_edge);
         if (argmin) {
-//          std::cout << "found minimum target" << std::endl;
-          next_state.player.direction_target = glm::normalize(target - next_state.player.position);
-          next_state.player.position_target = target;
+          //          std::cout << "found minimum target" << std::endl;
+          next_character.direction_target = glm::normalize(target - next_character.position);
+          next_character.position_target = target;
         }
       }
     }
-    const float angle = glm::atan(next_state.player.direction.y, next_state.player.direction.x);
-    float angle_target = glm::atan(next_state.player.direction_target.y,
-                                   next_state.player.direction_target.x);
+    const float angle = glm::atan(next_character.direction.y, next_character.direction.x);
+    float angle_target = glm::atan(next_character.direction_target.y,
+                                   next_character.direction_target.x);
     while (angle_target - angle > M_PI) {
       angle_target -= 2.0 * M_PI;
     }
@@ -130,10 +139,19 @@ namespace textengine {
       angle_target += 2.0 * M_PI;
     }
     const float final_angle = glm::mix(angle, angle_target, 0.1f);
-    next_state.player.direction = glm::vec2(glm::cos(final_angle), glm::sin(final_angle));
-    next_state.player.position = glm::mix(next_state.player.position,
-                                          next_state.player.position_target, 0.1f);
-    return next_state;
+    next_character.direction = glm::vec2(glm::cos(final_angle), glm::sin(final_angle));
+    next_character.position = glm::mix(next_character.position,
+                                       next_character.position_target, 0.1f);
+    return next_character;
+  }
+
+  NonPlayerCharacterInfo Updater::UpdateNonPlayerCharacter(NonPlayerCharacterInfo current_character) const {
+    if (!current_character.character.room_target && mesh.get_room_infos().size()) {
+      int index = current_character.ai_state.room_target_index % mesh.get_room_infos().size();
+      current_character.ai_state.room_target_index += 1;
+      current_character.character.room_target = mesh.get_room_infos()[index].get();
+    }
+    return current_character;
   }
 
   bool Updater::FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const {

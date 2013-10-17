@@ -24,6 +24,10 @@ namespace textengine {
   private:
     GameState Update(GameState current_state);
 
+    CharacterInfo UpdateCharacter(CharacterInfo current_character) const;
+
+    NonPlayerCharacterInfo UpdateNonPlayerCharacter(NonPlayerCharacterInfo current_character) const;
+
     bool FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const;
 
     Mesh::Face *FindFaceThatContainsPoint(glm::vec2 point) const;

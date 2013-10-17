@@ -333,6 +333,35 @@ namespace textengine {
     player_edge_array.Bind();
     glDrawArrays(GL_LINES, 0, 6);
     CHECK_STATE(!glGetError());
+
+    for (auto &character : current_state.non_player_characters) {
+      const float angle = glm::atan(character.character.direction.y, character.character.direction.x);
+      const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(character.character.position, 0.0)) *
+                                                        glm::rotate(glm::mat4(), glm::degrees(angle), glm::vec3(0, 0, 1)) *
+                                                        glm::scale(glm::mat4(), glm::vec3(0.01)));
+
+      face_program.Use();
+      face_program.Uniforms({
+        {u8"projection", &projection},
+        {u8"model_view", &player_model_view}
+      });
+      player_array.Bind();
+      glDrawArrays(GL_TRIANGLES, 0, 1*3);
+      CHECK_STATE(!glGetError());
+
+      edge_program.Use();
+      edge_program.Uniforms({
+        {u8"projection", &projection},
+        {u8"model_view", &player_model_view}
+      });
+      edge_program.Uniforms({
+        {u8"line_width", 0.00125},
+        {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+      });
+      player_edge_array.Bind();
+      glDrawArrays(GL_LINES, 0, 6);
+      CHECK_STATE(!glGetError());
+    }
   }
 
 }  // namespace textengine
