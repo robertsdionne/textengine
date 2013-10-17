@@ -10,13 +10,15 @@
 #include "commandtokenizer.h"
 #include "gamestate.h"
 #include "mesh.h"
+#include "synchronizedqueue.h"
 
 namespace textengine {
 
   constexpr float CommandParser::kSpeed;
 
-  CommandParser::CommandParser(CommandTokenizer &tokenizer, Mesh &mesh)
-  : tokenizer(tokenizer), mesh(mesh) {}
+  CommandParser::CommandParser(CommandTokenizer &tokenizer,
+                               Mesh &mesh, SynchronizedQueue &reply_queue)
+  : tokenizer(tokenizer), mesh(mesh), reply_queue(reply_queue) {}
 
   GameState CommandParser::Parse(GameState current_state, std::string command) {
     const std::vector<std::string> tokens = tokenizer.Tokenize(command);
@@ -58,7 +60,7 @@ namespace textengine {
     } else if ("southwest" == *token || "sw" == *token) {
       current_state.player.position_target += glm::normalize(glm::vec2(-1, -1)) * kSpeed;
     } else {
-      std::cout << "I do not know where you want to go." << std::endl;
+      reply_queue.PushMessage("I do not know where you want to go.");
     }
     return current_state;
   }
@@ -73,7 +75,7 @@ namespace textengine {
       }
     }
     if (!current_state.player.room_target) {
-      std::cout << "I do not know where \"" << *token << "\" is." << std::endl;
+      reply_queue.PushMessage("I do not know where \"" + *token + "\" is.");
     }
     return current_state;
   }
@@ -117,7 +119,7 @@ namespace textengine {
     } else if ("exit" == *token || "quit" == *token) {
       return Quit(current_state);
     } else {
-      std::cout << "I do not know what that means." << std::endl;
+      reply_queue.PushMessage("I do not know what that means.");
     }
     return current_state;
   }
@@ -156,7 +158,7 @@ namespace textengine {
     } else if ("southwest" == *token || "sw" == *token) {
       current_state.player.direction_target = glm::normalize(glm::vec2(-1, -1));
     } else {
-      std::cout << "I do not know where you want to turn." << std::endl;
+      reply_queue.PushMessage("I do not know where you want to turn.");
     }
     return current_state;
   }

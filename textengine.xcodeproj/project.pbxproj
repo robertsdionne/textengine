@@ -103,6 +103,7 @@
 		46FBD33D180F4C7F00F7C5F8 /* commandlineprompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FBD33B180F4C7F00F7C5F8 /* commandlineprompt.cpp */; };
 		46FBD343180F572400F7C5F8 /* websocketprompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FBD341180F572400F7C5F8 /* websocketprompt.cpp */; };
 		46FBD346180F6F7600F7C5F8 /* synchronizedqueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FBD344180F6F7600F7C5F8 /* synchronizedqueue.cpp */; };
+		46FBD349180F76BE00F7C5F8 /* console.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FBD347180F76BE00F7C5F8 /* console.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1336,6 +1337,8 @@
 		46FBD342180F572400F7C5F8 /* websocketprompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = websocketprompt.h; sourceTree = "<group>"; };
 		46FBD344180F6F7600F7C5F8 /* synchronizedqueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = synchronizedqueue.cpp; sourceTree = "<group>"; };
 		46FBD345180F6F7600F7C5F8 /* synchronizedqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = synchronizedqueue.h; sourceTree = "<group>"; };
+		46FBD347180F76BE00F7C5F8 /* console.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = console.cpp; sourceTree = "<group>"; };
+		46FBD348180F76BE00F7C5F8 /* console.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = console.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2773,6 +2776,8 @@
 				466E70FC17EB944400CD9E9D /* commandparser.h */,
 				4600EB8F17EBC8F9003BA3C3 /* commandtokenizer.cpp */,
 				4600EB9017EBC8F9003BA3C3 /* commandtokenizer.h */,
+				46FBD347180F76BE00F7C5F8 /* console.cpp */,
+				46FBD348180F76BE00F7C5F8 /* console.h */,
 				462B4A6917EA9760006FE9BB /* drawable.h */,
 				468E039E17EB2B4500F4CF1C /* drawtools.cpp */,
 				468E039F17EB2B4500F4CF1C /* drawtools.h */,
@@ -3119,6 +3124,7 @@
 				462B4A6517EA43AA006FE9BB /* shader.cpp in Sources */,
 				462B4A6617EA43AA006FE9BB /* program.cpp in Sources */,
 				46FBD346180F6F7600F7C5F8 /* synchronizedqueue.cpp in Sources */,
+				46FBD349180F76BE00F7C5F8 /* console.cpp in Sources */,
 				46FBD33D180F4C7F00F7C5F8 /* commandlineprompt.cpp in Sources */,
 				462B4A6717EA43AA006FE9BB /* buffer.cpp in Sources */,
 				468E03A017EB2B4500F4CF1C /* drawtools.cpp in Sources */,

@@ -13,13 +13,13 @@ namespace textengine {
 
     virtual ~SynchronizedQueue() = default;
 
-    bool HasCommand();
+    bool HasMessage();
 
-    std::string PeekCommand();
+    std::string PeekMessage();
 
-    std::string PopCommand();
+    std::string PopMessage();
 
-    void PushCommand(const std::string &command);
+    void PushMessage(const std::string &message);
 
   private:
     std::mutex mutex;

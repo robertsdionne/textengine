@@ -8,13 +8,13 @@
 
 namespace textengine {
 
-  class CommandQueue;
   class CommandTokenizer;
   class Mesh;
+  class SynchronizedQueue;
 
   class CommandParser {
   public:
-    CommandParser(CommandTokenizer &tokenizer, Mesh &mesh);
+    CommandParser(CommandTokenizer &tokenizer, Mesh &mesh, SynchronizedQueue &reply_queue);
 
     virtual ~CommandParser() = default;
 
@@ -41,6 +41,7 @@ namespace textengine {
 
     CommandTokenizer &tokenizer;
     Mesh &mesh;
+    SynchronizedQueue &reply_queue;
   };
 
 }  // namespace textengine

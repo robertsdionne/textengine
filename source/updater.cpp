@@ -13,9 +13,9 @@
 
 namespace textengine {
 
-  Updater::Updater(SynchronizedQueue &queue, CommandParser &parser, Mesh &mesh,
+  Updater::Updater(SynchronizedQueue &command_queue, CommandParser &parser, Mesh &mesh,
                    const GameState &initial_state)
-  : queue(queue), parser(parser), mesh(mesh), current_state(initial_state) {}
+  : command_queue(command_queue), parser(parser), mesh(mesh), current_state(initial_state) {}
 
   GameState Updater::GetCurrentState() {
     return current_state;
@@ -27,8 +27,8 @@ namespace textengine {
 
   GameState Updater::Update(const GameState current_state) {
     GameState next_state = current_state;
-    if (queue.HasCommand()) {
-      next_state = parser.Parse(next_state, queue.PopCommand());
+    if (command_queue.HasMessage()) {
+      next_state = parser.Parse(next_state, command_queue.PopMessage());
     }
 
     if (next_state.player.room_target) {

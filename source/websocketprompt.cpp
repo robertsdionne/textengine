@@ -27,8 +27,9 @@ namespace textengine {
 
   WebSocketPrompt *WebSocketPrompt::instance = nullptr;
 
-  WebSocketPrompt::WebSocketPrompt(SynchronizedQueue &queue, const std::string &prompt)
-  : queue(queue), prompt(prompt) {
+  WebSocketPrompt::WebSocketPrompt(SynchronizedQueue &command_queue,
+                                   SynchronizedQueue &reply_queue, const std::string &prompt)
+  : command_queue(command_queue), reply_queue(reply_queue), prompt(prompt) {
     instance = this;
   }
 

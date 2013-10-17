@@ -7,14 +7,14 @@
 
 namespace textengine {
 
-  CommandLinePrompt::CommandLinePrompt(SynchronizedQueue &queue, const std::string &prompt)
-  : queue(queue), prompt(prompt) {}
+  CommandLinePrompt::CommandLinePrompt(SynchronizedQueue &command_queue, const std::string &prompt)
+  : command_queue(command_queue), prompt(prompt) {}
 
   void CommandLinePrompt::Loop() {
     std::string command;
     while (true) {
       if (!command.empty()) {
-        queue.PushCommand(command);
+        command_queue.PushMessage(command);
       }
       std::cout << prompt;
       std::getline(std::cin, command);
