@@ -45,18 +45,32 @@ namespace textengine {
     point_program.Create({&vertex_shader, &point_geometry_shader, &fragment_shader});
     point_program.CompileAndLink();
 
-    float circle_data[] = {
+    float player_data[] = {
       3.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
       0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-      0.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+      0.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f
     };
-    float circle_outline_data[] = {
+    float player_edge_data[] = {
       3.0f, 0.0f, 0.25f, 0.25f, 0.25f, 1.0f,
       0.0f, 1.0f, 0.25f, 0.25f, 0.25f, 1.0f,
       3.0f, 0.0f, 0.25f, 0.25f, 0.25f, 1.0f,
       0.0f, -1.0f, 0.25f, 0.25f, 0.25f, 1.0f,
       0.0f, 1.0f, 0.25f, 0.25f, 0.25f, 1.0f,
-      0.0f, -1.0f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.0f, -1.0f, 0.25f, 0.25f, 0.25f, 1.0f
+    };
+
+    float npc_data[] = {
+      3.0f, 0.0f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.0f, 1.0f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.0f, -1.0f, 0.25f, 0.25f, 0.25f, 1.0f
+    };
+    float npc_edge_data[] = {
+      3.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+      0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+      3.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+      0.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+      0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+      0.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f
     };
 
     vertex_format.Create({
@@ -65,13 +79,13 @@ namespace textengine {
     });
 
     player_buffer.Create(GL_ARRAY_BUFFER);
-    player_buffer.Data(sizeof(circle_data), circle_data, GL_STATIC_DRAW);
+    player_buffer.Data(sizeof(player_data), player_data, GL_STATIC_DRAW);
     player_array.Create();
     vertex_format.Apply(player_array, face_program);
     CHECK_STATE(!glGetError());
 
     player_edge_buffer.Create(GL_ARRAY_BUFFER);
-    player_edge_buffer.Data(sizeof(circle_outline_data), circle_outline_data, GL_STATIC_DRAW);
+    player_edge_buffer.Data(sizeof(player_edge_data), player_edge_data, GL_STATIC_DRAW);
     player_edge_array.Create();
     vertex_format.Apply(player_edge_array, edge_program);
     CHECK_STATE(!glGetError());
@@ -124,6 +138,18 @@ namespace textengine {
     selection_box_buffer.Create(GL_ARRAY_BUFFER);
     selection_box_array.Create();
     vertex_format.Apply(selection_box_array, edge_program);
+    CHECK_STATE(!glGetError());
+
+    npc_buffer.Create(GL_ARRAY_BUFFER);
+    npc_buffer.Data(sizeof(npc_data), npc_data, GL_STATIC_DRAW);
+    npc_array.Create();
+    vertex_format.Apply(npc_array, face_program);
+    CHECK_STATE(!glGetError());
+
+    npc_edge_buffer.Create(GL_ARRAY_BUFFER);
+    npc_edge_buffer.Data(sizeof(npc_edge_data), npc_edge_data, GL_STATIC_DRAW);
+    npc_edge_array.Create();
+    vertex_format.Apply(npc_edge_array, edge_program);
     CHECK_STATE(!glGetError());
   }
 
@@ -345,7 +371,7 @@ namespace textengine {
         {u8"projection", &projection},
         {u8"model_view", &player_model_view}
       });
-      player_array.Bind();
+      npc_array.Bind();
       glDrawArrays(GL_TRIANGLES, 0, 1*3);
       CHECK_STATE(!glGetError());
 
@@ -358,7 +384,7 @@ namespace textengine {
         {u8"line_width", 0.00125},
         {u8"inverse_aspect_ratio", inverse_aspect_ratio}
       });
-      player_edge_array.Bind();
+      npc_edge_array.Bind();
       glDrawArrays(GL_LINES, 0, 6);
       CHECK_STATE(!glGetError());
     }
