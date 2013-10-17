@@ -129,7 +129,7 @@ var open = function() {};
 
 var message = function(event) {
   var payload = JSON.parse(event.data);
-  lines.push(new Line([new GameState(t + 1.0, payload.message)]));
+  lines.push(new Line([new GameState(t += 1.0, payload.message)]));
   lineCursor += 1;
   display();
 };
@@ -153,7 +153,7 @@ var close = function(event) {
 };
 
 
-var LINE_COUNT = 4;
+var LINE_COUNT = 10;
 
 
 var SCROLL_DELAY = 80;
@@ -250,6 +250,8 @@ var command = function(e) {
   if (e.keyCode == KeyCode.RETURN) {
     if (commandline.textContent) {
       websocket.send(JSON.stringify({message: commandline.textContent}));
+      lines.push(new Line([new GameState(t += 1.0, commandline.textContent, true)]));
+      lineCursor += 1;
       commandline.textContent = '';
       resetCursor();
       display();
