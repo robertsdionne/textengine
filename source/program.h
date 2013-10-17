@@ -3,6 +3,7 @@
 
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <unordered_map>
 #include <vector>
 
 namespace textengine {
@@ -25,9 +26,9 @@ namespace textengine {
 
     GLint GetUniformLocation(const std::string &name);
 
-    void Uniform(std::string name, float value);
+    void Uniforms(const std::unordered_map<std::string, float> &&uniforms);
 
-    void Uniform(std::string name, const glm::mat4 &value);
+    void Uniforms(const std::unordered_map<std::string, glm::mat4> &&uniforms);
 
     void Use();
 

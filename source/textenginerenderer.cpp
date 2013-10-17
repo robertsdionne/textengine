@@ -182,89 +182,125 @@ namespace textengine {
     GameState current_state = updater.GetCurrentState();
 
     face_program.Use();
-    face_program.Uniform(u8"projection", projection);
-    face_program.Uniform(u8"model_view", model_view);
+    face_program.Uniforms({
+      {u8"projection", projection},
+      {u8"model_view", model_view}
+    });
     mesh_array.Bind();
     glDrawArrays(face_data.element_type, 0, face_data.element_count);
     CHECK_STATE(!glGetError());
 
     edge_program.Use();
-    edge_program.Uniform(u8"projection", projection);
-    edge_program.Uniform(u8"model_view", model_view);
-    edge_program.Uniform(u8"line_width", 0.00125);
-    edge_program.Uniform(u8"inverse_aspect_ratio", inverse_aspect_ratio);
+    edge_program.Uniforms({
+      {u8"projection", projection},
+      {u8"model_view", model_view}
+    });
+    edge_program.Uniforms({
+      {u8"line_width", 0.00125},
+      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+    });
     mesh_edge_array.Bind();
     glDrawArrays(edge_data.element_type, 0, edge_data.element_count);
     CHECK_STATE(!glGetError());
 
 //    edge_program.Use();
-//    edge_program.Uniform(u8"projection", projection);
-//    edge_program.Uniform(u8"model_view", model_view);
-//    edge_program.Uniform(u8"line_width", 0.01);
-//    edge_program.Uniform(u8"inverse_aspect_ratio", inverse_aspect_ratio);
+//    edge_program.Uniforms({
+//      {u8"projection", projection},
+//      {u8"model_view", model_view}
+//    });
+//    edge_program.Uniforms({
+//      {u8"line_width", 0.01},
+//      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+//    });
 //    pathfinding_edges_array.Bind();
 //    glDrawArrays(pathfinding_edges_data.element_type, 0, pathfinding_edges_data.element_count);
 //    CHECK_STATE(!glGetError());
 //
 //    point_program.Use();
-//    point_program.Uniform(u8"projection", projection);
-//    point_program.Uniform(u8"model_view", model_view);
-//    point_program.Uniform(u8"point_size", 0.02);
-//    point_program.Uniform(u8"inverse_aspect_ratio", inverse_aspect_ratio);
+//    point_program.Uniforms({
+//      {u8"projection", projection},
+//      {u8"model_view", model_view}
+//    });
+//    point_program.Uniforms({
+//      {u8"point_size", 0.02},
+//      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+//    });
 //    pathfinding_nodes_array.Bind();
 //    glDrawArrays(pathfinding_nodes_data.element_type, 0, pathfinding_nodes_data.element_count);
 //    CHECK_STATE(!glGetError());
 
     edge_program.Use();
-    edge_program.Uniform(u8"projection", projection);
-    edge_program.Uniform(u8"model_view", model_view);
-    edge_program.Uniform(u8"line_width", 0.005);
-    edge_program.Uniform(u8"inverse_aspect_ratio", inverse_aspect_ratio);
+    edge_program.Uniforms({
+      {u8"projection", projection},
+      {u8"model_view", model_view}
+    });
+    edge_program.Uniforms({
+      {u8"line_width", 0.005},
+      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+    });
     move_indicator_array.Bind();
     glDrawArrays(move_indicator_data.element_type, 0, move_indicator_data.element_count);
     CHECK_STATE(!glGetError());
 
     face_program.Use();
-    face_program.Uniform(u8"projection", projection);
-    face_program.Uniform(u8"model_view", model_view);
+    face_program.Uniforms({
+      {u8"projection", projection},
+      {u8"model_view", model_view}
+    });
     selected_face_array.Bind();
     glDrawArrays(selected_face_data.element_type, 0, selected_face_data.element_count);
     CHECK_STATE(!glGetError());
 
     edge_program.Use();
-    edge_program.Uniform(u8"projection", projection);
-    edge_program.Uniform(u8"model_view", model_view);
-    edge_program.Uniform(u8"line_width", 0.00125);
-    edge_program.Uniform(u8"inverse_aspect_ratio", inverse_aspect_ratio);
+    edge_program.Uniforms({
+      {u8"projection", projection},
+      {u8"model_view", model_view}
+    });
+    edge_program.Uniforms({
+      {u8"line_width", 0.00125},
+      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+    });
     selected_interior_edge_array.Bind();
     glDrawArrays(selected_interior_edge_data.element_type,
                  0, selected_interior_edge_data.element_count);
     CHECK_STATE(!glGetError());
 
     edge_program.Use();
-    edge_program.Uniform(u8"projection", projection);
-    edge_program.Uniform(u8"model_view", model_view);
-    edge_program.Uniform(u8"line_width", 0.005);
-    edge_program.Uniform(u8"inverse_aspect_ratio", inverse_aspect_ratio);
+    edge_program.Uniforms({
+      {u8"projection", projection},
+      {u8"model_view", model_view}
+    });
+    edge_program.Uniforms({
+      {u8"line_width", 0.005},
+      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+    });
     selected_exterior_edge_array.Bind();
     glDrawArrays(selected_exterior_edge_data.element_type,
                  0, selected_exterior_edge_data.element_count);
     CHECK_STATE(!glGetError());
 
     point_program.Use();
-    point_program.Uniform(u8"projection", projection);
-    point_program.Uniform(u8"model_view", model_view);
-    point_program.Uniform(u8"point_size", 0.01);
-    point_program.Uniform(u8"inverse_aspect_ratio", inverse_aspect_ratio);
+    point_program.Uniforms({
+      {u8"projection", projection},
+      {u8"model_view", model_view}
+    });
+    point_program.Uniforms({
+      {u8"point_size", 0.01},
+      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+    });
     selected_point_array.Bind();
     glDrawArrays(selected_point_data.element_type, 0, selected_point_data.element_count);
     CHECK_STATE(!glGetError());
 
     edge_program.Use();
-    edge_program.Uniform(u8"projection", projection);
-    edge_program.Uniform(u8"model_view", model_view);
-    edge_program.Uniform(u8"line_width", 0.005);
-    edge_program.Uniform(u8"inverse_aspect_ratio", inverse_aspect_ratio);
+    edge_program.Uniforms({
+      {u8"projection", projection},
+      {u8"model_view", model_view}
+    });
+    edge_program.Uniforms({
+      {u8"line_width", 0.005},
+      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+    });
     selection_box_array.Bind();
     glDrawArrays(selection_box_data.element_type, 0, selection_box_data.element_count);
     CHECK_STATE(!glGetError());
@@ -277,17 +313,23 @@ namespace textengine {
                                                       glm::scale(glm::mat4(), glm::vec3(0.01)));
 
     face_program.Use();
-    face_program.Uniform(u8"projection", projection);
-    face_program.Uniform(u8"model_view", player_model_view);
+    face_program.Uniforms({
+      {u8"projection", projection},
+      {u8"model_view", player_model_view}
+    });
     player_array.Bind();
     glDrawArrays(GL_TRIANGLES, 0, 1*3);
     CHECK_STATE(!glGetError());
 
     edge_program.Use();
-    edge_program.Uniform(u8"projection", projection);
-    edge_program.Uniform(u8"model_view", player_model_view);
-    edge_program.Uniform(u8"line_width", 0.00125);
-    edge_program.Uniform(u8"inverse_aspect_ratio", inverse_aspect_ratio);
+    edge_program.Uniforms({
+      {u8"projection", projection},
+      {u8"model_view", player_model_view}
+    });
+    edge_program.Uniforms({
+      {u8"line_width", 0.00125},
+      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+    });
     player_edge_array.Bind();
     glDrawArrays(GL_LINES, 0, 6);
     CHECK_STATE(!glGetError());

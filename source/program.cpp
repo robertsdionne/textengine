@@ -1,3 +1,4 @@
+#include <unordered_map>
 #include <vector>
 
 #include "checks.h"
@@ -56,14 +57,18 @@ namespace textengine {
     }
   }
 
-  void Program::Uniform(std::string name, float value) {
+  void Program::Uniforms(const std::unordered_map<std::string, float> &&uniforms) {
     Use();
-    glUniform1f(GetUniformLocation(name.c_str()), value);
+    for (auto &uniform : uniforms) {
+      glUniform1f(GetUniformLocation(uniform.first), uniform.second);
+    }
   }
 
-  void Program::Uniform(std::string name, const glm::mat4 &value) {
+  void Program::Uniforms(const std::unordered_map<std::string, glm::mat4> &&uniforms) {
     Use();
-    glUniformMatrix4fv(GetUniformLocation(name.c_str()), 1, false, &value[0][0]);
+    for (auto &uniform : uniforms) {
+      glUniformMatrix4fv(GetUniformLocation(uniform.first), 1, false, &uniform.second[0][0]);
+    }
   }
 
   void Program::Use() {
