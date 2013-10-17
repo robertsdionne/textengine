@@ -4,7 +4,6 @@
 #include <memory>
 
 #include "checks.h"
-#include "drawtools.h"
 #include "gamestate.h"
 #include "mesh.h"
 #include "mesheditor.h"

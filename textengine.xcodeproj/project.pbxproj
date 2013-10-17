@@ -62,7 +62,6 @@
 		468E01471783DFA100301C1C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01461783DFA100301C1C /* IOKit.framework */; };
 		468E015A1783F03D00301C1C /* simplexnoise1234.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 468EFC681783DC1E00301C1C /* simplexnoise1234.cpp */; };
 		468E015D1783F10600301C1C /* libsimplexnoise1234.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01561783F02800301C1C /* libsimplexnoise1234.a */; };
-		468E03A017EB2B4500F4CF1C /* drawtools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 468E039E17EB2B4500F4CF1C /* drawtools.cpp */; };
 		46AB32EC180F2F1F003DDECF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FCB7180F1D5200B00F93 /* SystemConfiguration.framework */; };
 		46AB32ED180F2F28003DDECF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FCB5180F1D4B00B00F93 /* CFNetwork.framework */; };
 		46AB32EE180F2F2C003DDECF /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46AB32C7180F1EA0003DDECF /* libssl.dylib */; };
@@ -1231,11 +1230,8 @@
 		468E01421783DF4C00301C1C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		468E01441783DF9200301C1C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		468E01461783DFA100301C1C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		468E014C1783E8FB00301C1C /* object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = object.h; sourceTree = "<group>"; };
 		468E014E1783E9BD00301C1C /* base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base.h; sourceTree = "<group>"; };
 		468E01561783F02800301C1C /* libsimplexnoise1234.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsimplexnoise1234.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		468E039E17EB2B4500F4CF1C /* drawtools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawtools.cpp; sourceTree = "<group>"; };
-		468E039F17EB2B4500F4CF1C /* drawtools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = drawtools.h; sourceTree = "<group>"; };
 		468EFC681783DC1E00301C1C /* simplexnoise1234.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = simplexnoise1234.cpp; sourceTree = "<group>"; };
 		468EFC691783DC1E00301C1C /* simplexnoise1234.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = simplexnoise1234.h; sourceTree = "<group>"; };
 		46AB32C7180F1EA0003DDECF /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
@@ -2746,8 +2742,6 @@
 				46FBD347180F76BE00F7C5F8 /* console.cpp */,
 				46FBD348180F76BE00F7C5F8 /* console.h */,
 				462B4A6917EA9760006FE9BB /* drawable.h */,
-				468E039E17EB2B4500F4CF1C /* drawtools.cpp */,
-				468E039F17EB2B4500F4CF1C /* drawtools.h */,
 				466E70F817EB92F900CD9E9D /* gamestate.cpp */,
 				466E70F917EB92F900CD9E9D /* gamestate.h */,
 				46B9875517E6A62500B59145 /* glfwapplication.cpp */,
@@ -2765,7 +2759,6 @@
 				461879D617FB5F0D000B32F6 /* meshserializer.h */,
 				460B492E17F4B48E006B4828 /* mouse.cpp */,
 				460B492F17F4B48F006B4828 /* mouse.h */,
-				468E014C1783E8FB00301C1C /* object.h */,
 				462B4A6017EA43AA006FE9BB /* program.cpp */,
 				462B4A6117EA43AA006FE9BB /* program.h */,
 				460F81B517EA322400D765F5 /* prompt.h */,
@@ -3075,7 +3068,6 @@
 				46FBD349180F76BE00F7C5F8 /* console.cpp in Sources */,
 				46FBD33D180F4C7F00F7C5F8 /* commandlineprompt.cpp in Sources */,
 				462B4A6717EA43AA006FE9BB /* buffer.cpp in Sources */,
-				468E03A017EB2B4500F4CF1C /* drawtools.cpp in Sources */,
 				466E70FA17EB92F900CD9E9D /* gamestate.cpp in Sources */,
 				466E70FD17EB944400CD9E9D /* commandparser.cpp in Sources */,
 				466E710017EB96D600CD9E9D /* updater.cpp in Sources */,
