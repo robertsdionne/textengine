@@ -24,9 +24,10 @@ namespace textengine {
 
     GLint GetUniformLocation(const std::string &name);
 
-    void MaybeOutputLinkerError();
-
     void Use();
+
+  private:
+    void MaybeOutputLinkerError();
 
   private:
     std::vector<Shader *> shaders;
