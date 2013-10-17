@@ -15,10 +15,14 @@ namespace textengine {
     }
   }
 
+  GLuint Program::get_handle() const {
+    return handle;
+  }
+
   void Program::CompileAndLink() {
     for (auto shader : shaders) {
       shader->Compile();
-      glAttachShader(handle, shader->GetHandle());
+      glAttachShader(handle, shader->get_handle());
     }
     glLinkProgram(handle);
     MaybeOutputLinkerError();
@@ -31,10 +35,6 @@ namespace textengine {
 
   GLint Program::GetAttributeLocation(const std::string &name) {
     return glGetAttribLocation(handle, name.c_str());
-  }
-
-  GLuint Program::GetHandle() const {
-    return handle;
   }
 
   GLint Program::GetUniformLocation(const std::string &name) {

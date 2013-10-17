@@ -13,6 +13,10 @@ namespace textengine {
     }
   }
 
+  GLuint Buffer::get_handle() const {
+    return handle;
+  }
+
   void Buffer::Bind() {
     glBindBuffer(target, handle);
   }
@@ -20,6 +24,7 @@ namespace textengine {
   void Buffer::Create(GLenum target) {
     this->target = target;
     glGenBuffers(1, &handle);
+    Bind();
   }
 
   void Buffer::Data(GLsizeiptr size, const GLvoid *data, GLenum usage) {

@@ -14,13 +14,13 @@ namespace textengine {
 
     virtual ~Program();
 
+    GLuint get_handle() const;
+
     void CompileAndLink();
 
     void Create(const std::vector<Shader *> &&shaders);
 
     GLint GetAttributeLocation(const std::string &name);
-
-    GLuint GetHandle() const;
 
     GLint GetUniformLocation(const std::string &name);
 

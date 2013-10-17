@@ -142,20 +142,19 @@ namespace textengine {
     Mesh &mesh;
     MeshEditor &editor;
     float inverse_aspect_ratio;
-    GLuint edge_geometry_shader, fragment_shader, point_geometry_shader, vertex_shader;
-    GLuint edge_program, face_program, point_program;
-    GLuint vertex_array, vertex_buffer;
-    GLuint vertex_edge_array, vertex_edge_buffer;
-    GLuint face_vertex_buffer, face_vertex_array;
-    GLuint edge_vertex_buffer, edge_vertex_array;
-    GLuint pathfinding_edges_vertex_buffer, pathfinding_edges_vertex_array;
-    GLuint pathfinding_nodes_vertex_buffer, pathfinding_nodes_vertex_array;
-    GLuint selected_face_vertex_buffer, selected_face_vertex_array;
-    GLuint selected_interior_edge_vertex_buffer, selected_interior_edge_vertex_array;
-    GLuint selected_exterior_edge_vertex_buffer, selected_exterior_edge_vertex_array;
-    GLuint selected_point_vertex_buffer, selected_point_vertex_array;
-    GLuint move_indicator_vertex_buffer, move_indicator_vertex_array;
-    GLuint selection_box_vertex_buffer, selection_box_vertex_array;
+
+    Shader edge_geometry_shader, fragment_shader, point_geometry_shader, vertex_shader;
+    Program edge_program, face_program, point_program;
+
+    VertexArray player_array, player_edge_array, mesh_array, mesh_edge_array,
+        pathfinding_edges_array, pathfinding_nodes_array, selected_face_array,
+        selected_interior_edge_array, selected_exterior_edge_array, selected_point_array,
+        move_indicator_array, selection_box_array;
+    Buffer player_buffer, player_edge_buffer, mesh_buffer, mesh_edge_buffer,
+        pathfinding_edges_buffer, pathfinding_nodes_buffer, selected_face_buffer,
+        selected_interior_edge_buffer, selected_exterior_edge_buffer, selected_point_buffer,
+        move_indicator_buffer, selection_box_buffer;
+
     glm::mat4 model_view, projection;
   };
 

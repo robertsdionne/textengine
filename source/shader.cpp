@@ -14,6 +14,10 @@ namespace textengine {
     }
   }
 
+  GLuint Shader::get_handle() const {
+    return handle;
+  }
+
   void Shader::Compile() {
     GLchar *source_code[sources.size()];
     GLint lengths[sources.size()];
@@ -44,10 +48,6 @@ namespace textengine {
     this->type = type;
     this->sources = sources;
     handle = glCreateShader(type);
-  }
-
-  GLuint Shader::GetHandle() const {
-    return handle;
   }
 
   void Shader::MaybeOutputCompilerError() {

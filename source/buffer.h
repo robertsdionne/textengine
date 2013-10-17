@@ -11,6 +11,8 @@ namespace textengine {
 
     virtual ~Buffer();
 
+    GLuint get_handle() const;
+
     void Bind();
 
     void Create(GLenum target);

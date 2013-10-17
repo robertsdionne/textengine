@@ -13,15 +13,16 @@ namespace textengine {
 
     virtual ~Shader();
 
+    GLuint get_handle() const;
+
     void Create(GLenum type, const std::vector<std::string> &&sources);
 
     void Compile();
 
-    GLuint GetHandle() const;
-
-    void MaybeOutputCompilerError();
-
     static constexpr GLsizei kMaxInfoLogLength = 4 * 1024;
+
+  private:
+    void MaybeOutputCompilerError();
 
   private:
     GLenum type;

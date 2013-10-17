@@ -31,108 +31,20 @@ namespace textengine {
   void TextEngineRenderer::Create() {
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
-    vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex_shader, 1, &kVertexShaderSource, nullptr);
-    GLint compile_status;
-    glCompileShader(vertex_shader);
-    glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &compile_status);
-    char info_log[4 * 1024];
-    if (!compile_status) {
-      glGetShaderInfoLog(vertex_shader, sizeof(info_log), nullptr, info_log);
-      FAIL(info_log);
-    }
-    CHECK_STATE(!glGetError());
+    vertex_shader.Create(GL_VERTEX_SHADER, {kVertexShaderSource});
+    point_geometry_shader.Create(GL_GEOMETRY_SHADER, {kPointGeometryShaderSource});
+    edge_geometry_shader.Create(GL_GEOMETRY_SHADER, {kEdgeGeometryShaderSource});
+    fragment_shader.Create(GL_FRAGMENT_SHADER, {kFragmentShaderSource});
 
-    point_geometry_shader = glCreateShader(GL_GEOMETRY_SHADER);
-    glShaderSource(point_geometry_shader, 1, &kPointGeometryShaderSource, nullptr);
-    glCompileShader(point_geometry_shader);
-    glGetShaderiv(point_geometry_shader, GL_COMPILE_STATUS, &compile_status);
-    if (!compile_status) {
-      glGetShaderInfoLog(point_geometry_shader, sizeof(info_log), nullptr, info_log);
-      FAIL(info_log);
-    }
-    CHECK_STATE(!glGetError());
+    face_program.Create({&vertex_shader, &fragment_shader});
+    face_program.CompileAndLink();
 
-    edge_geometry_shader = glCreateShader(GL_GEOMETRY_SHADER);
-    glShaderSource(edge_geometry_shader, 1, &kEdgeGeometryShaderSource, nullptr);
-    glCompileShader(edge_geometry_shader);
-    glGetShaderiv(edge_geometry_shader, GL_COMPILE_STATUS, &compile_status);
-    if (!compile_status) {
-      glGetShaderInfoLog(edge_geometry_shader, sizeof(info_log), nullptr, info_log);
-      FAIL(info_log);
-    }
-    CHECK_STATE(!glGetError());
+    edge_program.Create({&vertex_shader, &edge_geometry_shader, &fragment_shader});
+    edge_program.CompileAndLink();
 
-    fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment_shader, 1, &kFragmentShaderSource, nullptr);
-    glCompileShader(fragment_shader);
-    glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &compile_status);
-    if (!compile_status) {
-      glGetShaderInfoLog(fragment_shader, sizeof(info_log), nullptr, info_log);
-      FAIL(info_log);
-    }
-    CHECK_STATE(!glGetError());
+    point_program.Create({&vertex_shader, &point_geometry_shader, &fragment_shader});
+    point_program.CompileAndLink();
 
-    face_program = glCreateProgram();
-    glAttachShader(face_program, vertex_shader);
-    glAttachShader(face_program, fragment_shader);
-    glLinkProgram(face_program);
-    GLint link_status;
-    glGetProgramiv(face_program, GL_LINK_STATUS, &link_status);
-    if (!link_status) {
-      glGetProgramInfoLog(face_program, sizeof(info_log), nullptr, info_log);
-      FAIL(info_log);
-    }
-    CHECK_STATE(!glGetError());
-
-    edge_program = glCreateProgram();
-    glAttachShader(edge_program, vertex_shader);
-    glAttachShader(edge_program, edge_geometry_shader);
-    glAttachShader(edge_program, fragment_shader);
-    glLinkProgram(edge_program);
-    glGetProgramiv(edge_program, GL_LINK_STATUS, &link_status);
-    if (!link_status) {
-      glGetProgramInfoLog(edge_program, sizeof(info_log), nullptr, info_log);
-      FAIL(info_log);
-    }
-    CHECK_STATE(!glGetError());
-
-    point_program = glCreateProgram();
-    glAttachShader(point_program, vertex_shader);
-    glAttachShader(point_program, point_geometry_shader);
-    glAttachShader(point_program, fragment_shader);
-    glLinkProgram(point_program);
-    glGetProgramiv(point_program, GL_LINK_STATUS, &link_status);
-    if (!link_status) {
-      glGetProgramInfoLog(point_program, sizeof(info_log), nullptr, info_log);
-      FAIL(info_log);
-    }
-    CHECK_STATE(!glGetError());
-
-//    constexpr int kCircleResolution = 100;
-//    float circle_data[kCircleResolution * 18];
-//    for (int i = 0; i < kCircleResolution; ++i) {
-//      const float theta_0 = 2.0 * M_PI * i / kCircleResolution;
-//      const float theta_1 = 2.0 * M_PI * (i + 1) / kCircleResolution;
-//      circle_data[18 * i + 0] = cosf(theta_0);
-//      circle_data[18 * i + 1] = sinf(theta_0);
-//      circle_data[18 * i + 2] = 1.0f;
-//      circle_data[18 * i + 3] = 0.0f;
-//      circle_data[18 * i + 4] = 0.0f;
-//      circle_data[18 * i + 5] = 1.0f;
-//      circle_data[18 * i + 6] = cosf(theta_1);
-//      circle_data[18 * i + 7] = sinf(theta_1);
-//      circle_data[18 * i + 8] = 1.0f;
-//      circle_data[18 * i + 9] = 0.0f;
-//      circle_data[18 * i + 10] = 0.0f;
-//      circle_data[18 * i + 11] = 1.0f;
-//      circle_data[18 * i + 12] = 0.0f;
-//      circle_data[18 * i + 13] = 0.0f;
-//      circle_data[18 * i + 14] = 1.0f;
-//      circle_data[18 * i + 15] = 0.0f;
-//      circle_data[18 * i + 16] = 0.0f;
-//      circle_data[18 * i + 17] = 1.0f;
-//    }
     float circle_data[] = {
       3.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
       0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
@@ -147,330 +59,325 @@ namespace textengine {
       0.0f, -1.0f, 0.25f, 0.25f, 0.25f, 1.0f,
     };
 
-    glGenBuffers(1, &vertex_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(circle_data), circle_data, GL_STATIC_DRAW);
+    player_buffer.Create(GL_ARRAY_BUFFER);
+    player_buffer.Data(sizeof(circle_data), circle_data, GL_STATIC_DRAW);
+    player_array.Create(); {
+      auto vertex_position = face_program.GetAttributeLocation(u8"vertex_position");
+      auto vertex_color = face_program.GetAttributeLocation(u8"vertex_color");
+      player_array.VertexAttribPointer(vertex_position,
+                                       2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
+      player_array.EnableVertexAttribArray(vertex_position);
+      player_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
+                                       reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+      player_array.EnableVertexAttribArray(vertex_color);
+    }
     CHECK_STATE(!glGetError());
 
-    glGenVertexArrays(1, &vertex_array);
-    glBindVertexArray(vertex_array);
-    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-    glVertexAttribPointer(glGetAttribLocation(face_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(glGetAttribLocation(face_program, u8"vertex_position"));
-    glVertexAttribPointer(glGetAttribLocation(face_program, u8"vertex_color"),
-                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-    glEnableVertexAttribArray(glGetAttribLocation(face_program, u8"vertex_color"));
+    player_edge_buffer.Create(GL_ARRAY_BUFFER);
+    player_edge_buffer.Data(sizeof(circle_outline_data), circle_outline_data, GL_STATIC_DRAW);
+    player_edge_array.Create(); {
+      auto vertex_position = edge_program.GetAttributeLocation(u8"vertex_position");
+      auto vertex_color = edge_program.GetAttributeLocation(u8"vertex_color");
+      player_edge_array.VertexAttribPointer(vertex_position,
+                                            2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
+      player_edge_array.EnableVertexAttribArray(vertex_position);
+      player_edge_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
+                                            reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+      player_edge_array.EnableVertexAttribArray(vertex_color);
+    }
     CHECK_STATE(!glGetError());
 
-    glGenBuffers(1, &vertex_edge_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertex_edge_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(circle_outline_data), circle_outline_data, GL_STATIC_DRAW);
+    mesh_buffer.Create(GL_ARRAY_BUFFER);
+    mesh_array.Create(); {
+      auto vertex_position = face_program.GetAttributeLocation(u8"vertex_position");
+      auto vertex_color = face_program.GetAttributeLocation(u8"vertex_color");
+      mesh_array.VertexAttribPointer(vertex_position,
+                                     2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
+      mesh_array.EnableVertexAttribArray(vertex_position);
+      mesh_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
+                                     reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+      mesh_array.EnableVertexAttribArray(vertex_color);
+    }
     CHECK_STATE(!glGetError());
 
-    glGenVertexArrays(1, &vertex_edge_array);
-    glBindVertexArray(vertex_edge_array);
-    glBindBuffer(GL_ARRAY_BUFFER, vertex_edge_buffer);
-    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
-    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_color"),
-                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_color"));
-    CHECK_STATE(!glGetError());
-    
-    glGenBuffers(1, &face_vertex_buffer);
-
-    glGenVertexArrays(1, &face_vertex_array);
-    glBindVertexArray(face_vertex_array);
-    glBindBuffer(GL_ARRAY_BUFFER, face_vertex_buffer);
-    glVertexAttribPointer(glGetAttribLocation(face_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(glGetAttribLocation(face_program, u8"vertex_position"));
-    glVertexAttribPointer(glGetAttribLocation(face_program, u8"vertex_color"),
-                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-    glEnableVertexAttribArray(glGetAttribLocation(face_program, u8"vertex_color"));
+    mesh_edge_buffer.Create(GL_ARRAY_BUFFER);
+    mesh_edge_array.Create(); {
+      auto vertex_position = edge_program.GetAttributeLocation(u8"vertex_position");
+      auto vertex_color = edge_program.GetAttributeLocation(u8"vertex_color");
+      mesh_edge_array.VertexAttribPointer(vertex_position,
+                                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
+      mesh_edge_array.EnableVertexAttribArray(vertex_position);
+      mesh_edge_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
+                                          reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+      mesh_edge_array.EnableVertexAttribArray(vertex_color);
+    }
     CHECK_STATE(!glGetError());
 
-    glGenBuffers(1, &edge_vertex_buffer);
-
-    glGenVertexArrays(1, &edge_vertex_array);
-    glBindVertexArray(edge_vertex_array);
-    glBindBuffer(GL_ARRAY_BUFFER, edge_vertex_buffer);
-    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
-    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_color"),
-                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_color"));
+    pathfinding_edges_buffer.Create(GL_ARRAY_BUFFER);
+    pathfinding_edges_array.Create(); {
+      auto vertex_position = edge_program.GetAttributeLocation(u8"vertex_position");
+      auto vertex_color = edge_program.GetAttributeLocation(u8"vertex_color");
+      pathfinding_edges_array.VertexAttribPointer(vertex_position,
+                                                  2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
+      pathfinding_edges_array.EnableVertexAttribArray(vertex_position);
+      pathfinding_edges_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
+                                                  reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+      pathfinding_edges_array.EnableVertexAttribArray(vertex_color);
+    }
     CHECK_STATE(!glGetError());
 
-    glGenBuffers(1, &pathfinding_edges_vertex_buffer);
-
-    glGenVertexArrays(1, &pathfinding_edges_vertex_array);
-    glBindVertexArray(pathfinding_edges_vertex_array);
-    glBindBuffer(GL_ARRAY_BUFFER, pathfinding_edges_vertex_buffer);
-    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
-    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_color"),
-                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_color"));
+    pathfinding_nodes_buffer.Create(GL_ARRAY_BUFFER);
+    pathfinding_nodes_array.Create(); {
+      auto vertex_position = point_program.GetAttributeLocation(u8"vertex_position");
+      auto vertex_color = point_program.GetAttributeLocation(u8"vertex_color");
+      pathfinding_nodes_array.VertexAttribPointer(vertex_position,
+                                                  2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
+      pathfinding_nodes_array.EnableVertexAttribArray(vertex_position);
+      pathfinding_nodes_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
+                                                  reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+      pathfinding_nodes_array.EnableVertexAttribArray(vertex_color);
+    }
     CHECK_STATE(!glGetError());
 
-    glGenBuffers(1, &pathfinding_nodes_vertex_buffer);
-
-    glGenVertexArrays(1, &pathfinding_nodes_vertex_array);
-    glBindVertexArray(pathfinding_nodes_vertex_array);
-    glBindBuffer(GL_ARRAY_BUFFER, pathfinding_nodes_vertex_buffer);
-    glVertexAttribPointer(glGetAttribLocation(point_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(glGetAttribLocation(point_program, u8"vertex_position"));
-    glVertexAttribPointer(glGetAttribLocation(point_program, u8"vertex_color"),
-                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-    glEnableVertexAttribArray(glGetAttribLocation(point_program, u8"vertex_color"));
+    selected_face_buffer.Create(GL_ARRAY_BUFFER);
+    selected_face_array.Create(); {
+      auto vertex_position = face_program.GetAttributeLocation(u8"vertex_position");
+      auto vertex_color = face_program.GetAttributeLocation(u8"vertex_color");
+      selected_face_array.VertexAttribPointer(vertex_position,
+                                              2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
+      selected_face_array.EnableVertexAttribArray(vertex_position);
+      selected_face_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
+                                              reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+      selected_face_array.EnableVertexAttribArray(vertex_color);
+    }
     CHECK_STATE(!glGetError());
 
-    glGenBuffers(1, &selected_face_vertex_buffer);
-
-    glGenVertexArrays(1, &selected_face_vertex_array);
-    glBindVertexArray(selected_face_vertex_array);
-    glBindBuffer(GL_ARRAY_BUFFER, selected_face_vertex_buffer);
-    glVertexAttribPointer(glGetAttribLocation(face_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(glGetAttribLocation(face_program, u8"vertex_position"));
-    glVertexAttribPointer(glGetAttribLocation(face_program, u8"vertex_color"),
-                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-    glEnableVertexAttribArray(glGetAttribLocation(face_program, u8"vertex_color"));
+    selected_interior_edge_buffer.Create(GL_ARRAY_BUFFER);
+    selected_interior_edge_array.Create(); {
+      auto vertex_position = edge_program.GetAttributeLocation(u8"vertex_position");
+      auto vertex_color = edge_program.GetAttributeLocation(u8"vertex_color");
+      selected_interior_edge_array.VertexAttribPointer(vertex_position,
+                                                       2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
+      selected_interior_edge_array.EnableVertexAttribArray(vertex_position);
+      selected_interior_edge_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
+                                                       reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+      selected_interior_edge_array.EnableVertexAttribArray(vertex_color);
+    }
     CHECK_STATE(!glGetError());
 
-    glGenBuffers(1, &selected_interior_edge_vertex_buffer);
-
-    glGenVertexArrays(1, &selected_interior_edge_vertex_array);
-    glBindVertexArray(selected_interior_edge_vertex_array);
-    glBindBuffer(GL_ARRAY_BUFFER, selected_interior_edge_vertex_buffer);
-    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
-    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_color"),
-                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_color"));
+    selected_exterior_edge_buffer.Create(GL_ARRAY_BUFFER);
+    selected_exterior_edge_array.Create(); {
+      auto vertex_position = edge_program.GetAttributeLocation(u8"vertex_position");
+      auto vertex_color = edge_program.GetAttributeLocation(u8"vertex_color");
+      selected_exterior_edge_array.VertexAttribPointer(vertex_position,
+                                                       2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
+      selected_exterior_edge_array.EnableVertexAttribArray(vertex_position);
+      selected_exterior_edge_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
+                                                       reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+      selected_exterior_edge_array.EnableVertexAttribArray(vertex_color);
+    }
     CHECK_STATE(!glGetError());
 
-    glGenBuffers(1, &selected_exterior_edge_vertex_buffer);
-
-    glGenVertexArrays(1, &selected_exterior_edge_vertex_array);
-    glBindVertexArray(selected_exterior_edge_vertex_array);
-    glBindBuffer(GL_ARRAY_BUFFER, selected_exterior_edge_vertex_buffer);
-    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
-    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_color"),
-                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_color"));
+    selected_point_buffer.Create(GL_ARRAY_BUFFER);
+    selected_point_array.Create(); {
+      auto vertex_position = point_program.GetAttributeLocation(u8"vertex_position");
+      auto vertex_color = point_program.GetAttributeLocation(u8"vertex_color");
+      selected_point_array.VertexAttribPointer(vertex_position,
+                                               2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
+      selected_point_array.EnableVertexAttribArray(vertex_position);
+      selected_point_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
+                                               reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+      selected_point_array.EnableVertexAttribArray(vertex_color);
+    }
     CHECK_STATE(!glGetError());
 
-    glGenBuffers(1, &selected_point_vertex_buffer);
-
-    glGenVertexArrays(1, &selected_point_vertex_array);
-    glBindVertexArray(selected_point_vertex_array);
-    glBindBuffer(GL_ARRAY_BUFFER, selected_point_vertex_buffer);
-    glVertexAttribPointer(glGetAttribLocation(point_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(glGetAttribLocation(point_program, u8"vertex_position"));
-    glVertexAttribPointer(glGetAttribLocation(point_program, u8"vertex_color"),
-                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-    glEnableVertexAttribArray(glGetAttribLocation(point_program, u8"vertex_color"));
+    move_indicator_buffer.Create(GL_ARRAY_BUFFER);
+    move_indicator_array.Create(); {
+      auto vertex_position = edge_program.GetAttributeLocation(u8"vertex_position");
+      auto vertex_color = edge_program.GetAttributeLocation(u8"vertex_color");
+      move_indicator_array.VertexAttribPointer(vertex_position,
+                                               2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
+      move_indicator_array.EnableVertexAttribArray(vertex_position);
+      move_indicator_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
+                                               reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+      move_indicator_array.EnableVertexAttribArray(vertex_color);
+    }
     CHECK_STATE(!glGetError());
 
-    glGenBuffers(1, &move_indicator_vertex_buffer);
-
-    glGenVertexArrays(1, &move_indicator_vertex_array);
-    glBindVertexArray(move_indicator_vertex_array);
-    glBindBuffer(GL_ARRAY_BUFFER, move_indicator_vertex_buffer);
-    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
-    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_color"),
-                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_color"));
-    CHECK_STATE(!glGetError());
-
-    glGenBuffers(1, &selection_box_vertex_buffer);
-
-    glGenVertexArrays(1, &selection_box_vertex_array);
-    glBindVertexArray(selection_box_vertex_array);
-    glBindBuffer(GL_ARRAY_BUFFER, selection_box_vertex_buffer);
-    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_position"),
-                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_position"));
-    glVertexAttribPointer(glGetAttribLocation(edge_program, u8"vertex_color"),
-                          4, GL_FLOAT, false, 6 * sizeof(float), reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-    glEnableVertexAttribArray(glGetAttribLocation(edge_program, u8"vertex_color"));
+    selection_box_buffer.Create(GL_ARRAY_BUFFER);
+    selection_box_array.Create(); {
+      auto vertex_position = edge_program.GetAttributeLocation(u8"vertex_position");
+      auto vertex_color = edge_program.GetAttributeLocation(u8"vertex_color");
+      selection_box_array.VertexAttribPointer(vertex_position,
+                                              2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
+      selection_box_array.EnableVertexAttribArray(vertex_position);
+      selection_box_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
+                                              reinterpret_cast<GLvoid *>(2 * sizeof(float)));
+      selection_box_array.EnableVertexAttribArray(vertex_color);
+    }
     CHECK_STATE(!glGetError());
   }
 
   void TextEngineRenderer::Render() {
     Drawable face_data = mesh.Triangulate();
-    
-    glBindBuffer(GL_ARRAY_BUFFER, face_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER,
-                 sizeof(float) * face_data.data_size, face_data.data.get(), GL_STREAM_DRAW);
+    mesh_buffer.Data(sizeof(float) * face_data.data_size, face_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable edge_data = mesh.Wireframe();
-
-    glBindBuffer(GL_ARRAY_BUFFER, edge_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER,
-                 sizeof(float) * edge_data.data_size, edge_data.data.get(), GL_STREAM_DRAW);
+    mesh_edge_buffer.Data(sizeof(float) * edge_data.data_size,
+                          edge_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable pathfinding_edges_data = editor.PathfindingEdges();
-
-    glBindBuffer(GL_ARRAY_BUFFER, pathfinding_edges_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * pathfinding_edges_data.data_size,
+    pathfinding_edges_buffer.Data(sizeof(float) * pathfinding_edges_data.data_size,
                  pathfinding_edges_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable pathfinding_nodes_data = editor.PathfindingNodes();
-
-    glBindBuffer(GL_ARRAY_BUFFER, pathfinding_nodes_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * pathfinding_nodes_data.data_size,
+    pathfinding_nodes_buffer.Data(sizeof(float) * pathfinding_nodes_data.data_size,
                  pathfinding_nodes_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable selected_face_data = editor.HighlightedTriangles();
-
-    glBindBuffer(GL_ARRAY_BUFFER, selected_face_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * selected_face_data.data_size,
+    selected_face_buffer.Data(sizeof(float) * selected_face_data.data_size,
                  selected_face_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable selected_interior_edge_data = editor.HighlightedWireframe();
-
-    glBindBuffer(GL_ARRAY_BUFFER, selected_interior_edge_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * selected_interior_edge_data.data_size,
+    selected_interior_edge_buffer.Data(sizeof(float) * selected_interior_edge_data.data_size,
                  selected_interior_edge_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable selected_exterior_edge_data = editor.HighlightedWireframeExterior();
-
-    glBindBuffer(GL_ARRAY_BUFFER, selected_exterior_edge_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * selected_exterior_edge_data.data_size,
+    selected_exterior_edge_buffer.Data(sizeof(float) * selected_exterior_edge_data.data_size,
                  selected_exterior_edge_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable selected_point_data = editor.HighlightedPoints();
-
-    glBindBuffer(GL_ARRAY_BUFFER, selected_point_vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * selected_point_data.data_size,
+    selected_point_buffer.Data(sizeof(float) * selected_point_data.data_size,
                  selected_point_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable move_indicator_data = editor.MoveScaleIndicator();
-
-    glBindBuffer(GL_ARRAY_BUFFER, move_indicator_vertex_array);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * move_indicator_data.data_size,
+    move_indicator_buffer.Data(sizeof(float) * move_indicator_data.data_size,
                  move_indicator_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable selection_box_data = editor.SelectionBox();
-
-    glBindBuffer(GL_ARRAY_BUFFER, selection_box_vertex_array);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * selection_box_data.data_size,
+    selection_box_buffer.Data(sizeof(float) * selection_box_data.data_size,
                  selection_box_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     GameState current_state = updater.GetCurrentState();
-    
-    glUseProgram(face_program);
-    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"projection"), 1, false, &projection[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"model_view"), 1, false, &model_view[0][0]);
-    glBindVertexArray(face_vertex_array);
+
+    face_program.Use();
+    glUniformMatrix4fv(face_program.GetUniformLocation(u8"projection"),
+                       1, false, &projection[0][0]);
+    glUniformMatrix4fv(face_program.GetUniformLocation(u8"model_view"),
+                       1, false, &model_view[0][0]);
+    mesh_array.Bind();
     glDrawArrays(face_data.element_type, 0, face_data.element_count);
     CHECK_STATE(!glGetError());
 
-    glUseProgram(edge_program);
-    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
-    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.00125);
-    glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
-    glBindVertexArray(edge_vertex_array);
+    edge_program.Use();
+    glUniformMatrix4fv(edge_program.GetUniformLocation(u8"projection"),
+                       1, false, &projection[0][0]);
+    glUniformMatrix4fv(edge_program.GetUniformLocation(u8"model_view"),
+                       1, false, &model_view[0][0]);
+    glUniform1f(edge_program.GetUniformLocation(u8"line_width"), 0.00125);
+    glUniform1f(edge_program.GetUniformLocation(u8"inverse_aspect_ratio"), inverse_aspect_ratio);
+    mesh_edge_array.Bind();
     glDrawArrays(edge_data.element_type, 0, edge_data.element_count);
     CHECK_STATE(!glGetError());
 
-//    glUseProgram(edge_program);
-//    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
-//    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
-//    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.01);
-//    glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
-//    glBindVertexArray(pathfinding_edges_vertex_array);
+//    edge_program.Use();
+//    glUniformMatrix4fv(edge_program.GetUniformLocation(u8"projection"),
+//                       1, false, &projection[0][0]);
+//    glUniformMatrix4fv(edge_program.GetUniformLocation(u8"model_view"),
+//                       1, false, &model_view[0][0]);
+//    glUniform1f(edge_program.GetUniformLocation(u8"line_width"), 0.01);
+//    glUniform1f(edge_program.GetUniformLocation(u8"inverse_aspect_ratio"), inverse_aspect_ratio);
+//    pathfinding_edges_array.Bind();
 //    glDrawArrays(pathfinding_edges_data.element_type, 0, pathfinding_edges_data.element_count);
 //    CHECK_STATE(!glGetError());
 //
-//    glUseProgram(point_program);
-//    glUniformMatrix4fv(glGetUniformLocation(point_program, u8"projection"), 1, false, &projection[0][0]);
-//    glUniformMatrix4fv(glGetUniformLocation(point_program, u8"model_view"), 1, false, &model_view[0][0]);
-//    glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.02);
-//    glUniform1f(glGetUniformLocation(point_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
-//    glBindVertexArray(pathfinding_nodes_vertex_array);
+//    point_program.Use();
+//    glUniformMatrix4fv(point_program.GetUniformLocation(u8"projection"),
+//                       1, false, &projection[0][0]);
+//    glUniformMatrix4fv(point_program.GetUniformLocation(u8"model_view"),
+//                       1, false, &model_view[0][0]);
+//    glUniform1f(point_program.GetUniformLocation(u8"point_size"), 0.02);
+//    glUniform1f(point_program.GetUniformLocation(u8"inverse_aspect_ratio"), inverse_aspect_ratio);
+//    pathfinding_nodes_array.Bind();
 //    glDrawArrays(pathfinding_nodes_data.element_type, 0, pathfinding_nodes_data.element_count);
 //    CHECK_STATE(!glGetError());
 
-    glUseProgram(edge_program);
-    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
-    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.005);
-    glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
-    glBindVertexArray(move_indicator_vertex_array);
+    edge_program.Use();
+    glUniformMatrix4fv(edge_program.GetUniformLocation(u8"projection"),
+                       1, false, &projection[0][0]);
+    glUniformMatrix4fv(edge_program.GetUniformLocation(u8"model_view"),
+                       1, false, &model_view[0][0]);
+    glUniform1f(edge_program.GetUniformLocation(u8"line_width"), 0.005);
+    glUniform1f(edge_program.GetUniformLocation(u8"inverse_aspect_ratio"), inverse_aspect_ratio);
+    move_indicator_array.Bind();
     glDrawArrays(move_indicator_data.element_type, 0, move_indicator_data.element_count);
     CHECK_STATE(!glGetError());
 
-    glUseProgram(face_program);
-    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"projection"), 1, false, &projection[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"model_view"), 1, false, &model_view[0][0]);
-    glUniform2f(glGetUniformLocation(face_program, u8"shape_size"), 2, 2);
-    glBindVertexArray(selected_face_vertex_array);
+    face_program.Use();
+    glUniformMatrix4fv(face_program.GetUniformLocation(u8"projection"),
+                       1, false, &projection[0][0]);
+    glUniformMatrix4fv(face_program.GetUniformLocation(u8"model_view"),
+                       1, false, &model_view[0][0]);
+    glUniform2f(face_program.GetUniformLocation(u8"shape_size"), 2, 2);
+    selected_face_array.Bind();
     glDrawArrays(selected_face_data.element_type, 0, selected_face_data.element_count);
     CHECK_STATE(!glGetError());
 
-    glUseProgram(edge_program);
-    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
-    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.00125);
-    glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
-    glBindVertexArray(selected_interior_edge_vertex_array);
+    edge_program.Use();
+    glUniformMatrix4fv(edge_program.GetUniformLocation(u8"projection"),
+                       1, false, &projection[0][0]);
+    glUniformMatrix4fv(edge_program.GetUniformLocation(u8"model_view"),
+                       1, false, &model_view[0][0]);
+    glUniform1f(edge_program.GetUniformLocation(u8"line_width"), 0.00125);
+    glUniform1f(edge_program.GetUniformLocation(u8"inverse_aspect_ratio"), inverse_aspect_ratio);
+    selected_interior_edge_array.Bind();
     glDrawArrays(selected_interior_edge_data.element_type,
                  0, selected_interior_edge_data.element_count);
     CHECK_STATE(!glGetError());
 
-    glUseProgram(edge_program);
-    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
-    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.005);
-    glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
-    glBindVertexArray(selected_exterior_edge_vertex_array);
+    edge_program.Use();
+    glUniformMatrix4fv(edge_program.GetUniformLocation(u8"projection"),
+                       1, false, &projection[0][0]);
+    glUniformMatrix4fv(edge_program.GetUniformLocation(u8"model_view"),
+                       1, false, &model_view[0][0]);
+    glUniform1f(edge_program.GetUniformLocation(u8"line_width"), 0.005);
+    glUniform1f(edge_program.GetUniformLocation(u8"inverse_aspect_ratio"), inverse_aspect_ratio);
+    selected_exterior_edge_array.Bind();
     glDrawArrays(selected_exterior_edge_data.element_type,
                  0, selected_exterior_edge_data.element_count);
     CHECK_STATE(!glGetError());
 
-    glUseProgram(point_program);
-    glUniformMatrix4fv(glGetUniformLocation(point_program, u8"projection"), 1, false, &projection[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(point_program, u8"model_view"), 1, false, &model_view[0][0]);
-    glUniform1f(glGetUniformLocation(point_program, u8"point_size"), 0.01);
-    glUniform1f(glGetUniformLocation(point_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
-    glBindVertexArray(selected_point_vertex_array);
+    point_program.Use();
+    glUniformMatrix4fv(point_program.GetUniformLocation(u8"projection"),
+                       1, false, &projection[0][0]);
+    glUniformMatrix4fv(point_program.GetUniformLocation(u8"model_view"),
+                       1, false, &model_view[0][0]);
+    glUniform1f(point_program.GetUniformLocation(u8"point_size"), 0.01);
+    glUniform1f(point_program.GetUniformLocation(u8"inverse_aspect_ratio"), inverse_aspect_ratio);
+    selected_point_array.Bind();
     glDrawArrays(selected_point_data.element_type, 0, selected_point_data.element_count);
     CHECK_STATE(!glGetError());
 
-    glUseProgram(edge_program);
-    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &model_view[0][0]);
-    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.005);
-    glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
-    glBindVertexArray(selection_box_vertex_array);
+    edge_program.Use();
+    glUniformMatrix4fv(edge_program.GetUniformLocation(u8"projection"),
+                       1, false, &projection[0][0]);
+    glUniformMatrix4fv(edge_program.GetUniformLocation(u8"model_view"),
+                       1, false, &model_view[0][0]);
+    glUniform1f(edge_program.GetUniformLocation(u8"line_width"), 0.005);
+    glUniform1f(edge_program.GetUniformLocation(u8"inverse_aspect_ratio"), inverse_aspect_ratio);
+    selection_box_array.Bind();
     glDrawArrays(selection_box_data.element_type, 0, selection_box_data.element_count);
     CHECK_STATE(!glGetError());
 
@@ -481,19 +388,23 @@ namespace textengine {
                                                       glm::rotate(glm::mat4(), glm::degrees(angle), glm::vec3(0, 0, 1)) *
                                                       glm::scale(glm::mat4(), glm::vec3(0.01)));
 
-    glUseProgram(face_program);
-    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"projection"), 1, false, &projection[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(face_program, u8"model_view"), 1, false, &player_model_view[0][0]);
-    glBindVertexArray(vertex_array);
+    face_program.Use();
+    glUniformMatrix4fv(face_program.GetUniformLocation(u8"projection"),
+                       1, false, &projection[0][0]);
+    glUniformMatrix4fv(face_program.GetUniformLocation(u8"model_view"),
+                       1, false, &player_model_view[0][0]);
+    player_array.Bind();
     glDrawArrays(GL_TRIANGLES, 0, 1*3);
     CHECK_STATE(!glGetError());
 
-    glUseProgram(edge_program);
-    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"projection"), 1, false, &projection[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(edge_program, u8"model_view"), 1, false, &player_model_view[0][0]);
-    glUniform1f(glGetUniformLocation(edge_program, u8"line_width"), 0.00125);
-    glUniform1f(glGetUniformLocation(edge_program, u8"inverse_aspect_ratio"), inverse_aspect_ratio);
-    glBindVertexArray(vertex_edge_array);
+    edge_program.Use();
+    glUniformMatrix4fv(edge_program.GetUniformLocation(u8"projection"),
+                       1, false, &projection[0][0]);
+    glUniformMatrix4fv(edge_program.GetUniformLocation(u8"model_view"),
+                       1, false, &player_model_view[0][0]);
+    glUniform1f(edge_program.GetUniformLocation(u8"line_width"), 0.00125);
+    glUniform1f(edge_program.GetUniformLocation(u8"inverse_aspect_ratio"), inverse_aspect_ratio);
+    player_edge_array.Bind();
     glDrawArrays(GL_LINES, 0, 6);
     CHECK_STATE(!glGetError());
   }
