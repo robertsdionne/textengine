@@ -9,6 +9,7 @@
 #include "renderer.h"
 #include "shader.h"
 #include "vertexarray.h"
+#include "vertexformat.h"
 
 namespace textengine {
 
@@ -145,7 +146,7 @@ namespace textengine {
 
     Shader edge_geometry_shader, fragment_shader, point_geometry_shader, vertex_shader;
     Program edge_program, face_program, point_program;
-
+    VertexFormat vertex_format;
     VertexArray player_array, player_edge_array, mesh_array, mesh_edge_array,
         pathfinding_edges_array, pathfinding_nodes_array, selected_face_array,
         selected_interior_edge_array, selected_exterior_edge_array, selected_point_array,

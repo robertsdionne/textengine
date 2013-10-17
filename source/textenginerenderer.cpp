@@ -59,162 +59,71 @@ namespace textengine {
       0.0f, -1.0f, 0.25f, 0.25f, 0.25f, 1.0f,
     };
 
+    vertex_format.Create({
+      {u8"vertex_position", GL_FLOAT, 2},
+      {u8"vertex_color", GL_FLOAT, 4}
+    });
+
     player_buffer.Create(GL_ARRAY_BUFFER);
     player_buffer.Data(sizeof(circle_data), circle_data, GL_STATIC_DRAW);
-    player_array.Create(); {
-      auto vertex_position = face_program.GetAttributeLocation(u8"vertex_position");
-      auto vertex_color = face_program.GetAttributeLocation(u8"vertex_color");
-      player_array.VertexAttribPointer(vertex_position,
-                                       2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-      player_array.EnableVertexAttribArray(vertex_position);
-      player_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
-                                       reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-      player_array.EnableVertexAttribArray(vertex_color);
-    }
+    player_array.Create();
+    vertex_format.Apply(player_array, face_program);
     CHECK_STATE(!glGetError());
 
     player_edge_buffer.Create(GL_ARRAY_BUFFER);
     player_edge_buffer.Data(sizeof(circle_outline_data), circle_outline_data, GL_STATIC_DRAW);
-    player_edge_array.Create(); {
-      auto vertex_position = edge_program.GetAttributeLocation(u8"vertex_position");
-      auto vertex_color = edge_program.GetAttributeLocation(u8"vertex_color");
-      player_edge_array.VertexAttribPointer(vertex_position,
-                                            2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-      player_edge_array.EnableVertexAttribArray(vertex_position);
-      player_edge_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
-                                            reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-      player_edge_array.EnableVertexAttribArray(vertex_color);
-    }
+    player_edge_array.Create();
+    vertex_format.Apply(player_edge_array, edge_program);
     CHECK_STATE(!glGetError());
 
     mesh_buffer.Create(GL_ARRAY_BUFFER);
-    mesh_array.Create(); {
-      auto vertex_position = face_program.GetAttributeLocation(u8"vertex_position");
-      auto vertex_color = face_program.GetAttributeLocation(u8"vertex_color");
-      mesh_array.VertexAttribPointer(vertex_position,
-                                     2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-      mesh_array.EnableVertexAttribArray(vertex_position);
-      mesh_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
-                                     reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-      mesh_array.EnableVertexAttribArray(vertex_color);
-    }
+    mesh_array.Create();
+    vertex_format.Apply(mesh_array, face_program);
     CHECK_STATE(!glGetError());
 
     mesh_edge_buffer.Create(GL_ARRAY_BUFFER);
-    mesh_edge_array.Create(); {
-      auto vertex_position = edge_program.GetAttributeLocation(u8"vertex_position");
-      auto vertex_color = edge_program.GetAttributeLocation(u8"vertex_color");
-      mesh_edge_array.VertexAttribPointer(vertex_position,
-                                          2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-      mesh_edge_array.EnableVertexAttribArray(vertex_position);
-      mesh_edge_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
-                                          reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-      mesh_edge_array.EnableVertexAttribArray(vertex_color);
-    }
+    mesh_edge_array.Create();
+    vertex_format.Apply(mesh_edge_array, edge_program);
     CHECK_STATE(!glGetError());
 
     pathfinding_edges_buffer.Create(GL_ARRAY_BUFFER);
-    pathfinding_edges_array.Create(); {
-      auto vertex_position = edge_program.GetAttributeLocation(u8"vertex_position");
-      auto vertex_color = edge_program.GetAttributeLocation(u8"vertex_color");
-      pathfinding_edges_array.VertexAttribPointer(vertex_position,
-                                                  2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-      pathfinding_edges_array.EnableVertexAttribArray(vertex_position);
-      pathfinding_edges_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
-                                                  reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-      pathfinding_edges_array.EnableVertexAttribArray(vertex_color);
-    }
+    pathfinding_edges_array.Create();
+    vertex_format.Apply(pathfinding_edges_array, edge_program);
     CHECK_STATE(!glGetError());
 
     pathfinding_nodes_buffer.Create(GL_ARRAY_BUFFER);
-    pathfinding_nodes_array.Create(); {
-      auto vertex_position = point_program.GetAttributeLocation(u8"vertex_position");
-      auto vertex_color = point_program.GetAttributeLocation(u8"vertex_color");
-      pathfinding_nodes_array.VertexAttribPointer(vertex_position,
-                                                  2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-      pathfinding_nodes_array.EnableVertexAttribArray(vertex_position);
-      pathfinding_nodes_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
-                                                  reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-      pathfinding_nodes_array.EnableVertexAttribArray(vertex_color);
-    }
+    pathfinding_nodes_array.Create();
+    vertex_format.Apply(pathfinding_nodes_array, point_program);
     CHECK_STATE(!glGetError());
 
     selected_face_buffer.Create(GL_ARRAY_BUFFER);
-    selected_face_array.Create(); {
-      auto vertex_position = face_program.GetAttributeLocation(u8"vertex_position");
-      auto vertex_color = face_program.GetAttributeLocation(u8"vertex_color");
-      selected_face_array.VertexAttribPointer(vertex_position,
-                                              2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-      selected_face_array.EnableVertexAttribArray(vertex_position);
-      selected_face_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
-                                              reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-      selected_face_array.EnableVertexAttribArray(vertex_color);
-    }
+    selected_face_array.Create();
+    vertex_format.Apply(selected_face_array, face_program);
     CHECK_STATE(!glGetError());
 
     selected_interior_edge_buffer.Create(GL_ARRAY_BUFFER);
-    selected_interior_edge_array.Create(); {
-      auto vertex_position = edge_program.GetAttributeLocation(u8"vertex_position");
-      auto vertex_color = edge_program.GetAttributeLocation(u8"vertex_color");
-      selected_interior_edge_array.VertexAttribPointer(vertex_position,
-                                                       2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-      selected_interior_edge_array.EnableVertexAttribArray(vertex_position);
-      selected_interior_edge_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
-                                                       reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-      selected_interior_edge_array.EnableVertexAttribArray(vertex_color);
-    }
+    selected_interior_edge_array.Create();
+    vertex_format.Apply(selected_interior_edge_array, edge_program);
     CHECK_STATE(!glGetError());
 
     selected_exterior_edge_buffer.Create(GL_ARRAY_BUFFER);
-    selected_exterior_edge_array.Create(); {
-      auto vertex_position = edge_program.GetAttributeLocation(u8"vertex_position");
-      auto vertex_color = edge_program.GetAttributeLocation(u8"vertex_color");
-      selected_exterior_edge_array.VertexAttribPointer(vertex_position,
-                                                       2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-      selected_exterior_edge_array.EnableVertexAttribArray(vertex_position);
-      selected_exterior_edge_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
-                                                       reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-      selected_exterior_edge_array.EnableVertexAttribArray(vertex_color);
-    }
+    selected_exterior_edge_array.Create();
+    vertex_format.Apply(selected_exterior_edge_array, edge_program);
     CHECK_STATE(!glGetError());
 
     selected_point_buffer.Create(GL_ARRAY_BUFFER);
-    selected_point_array.Create(); {
-      auto vertex_position = point_program.GetAttributeLocation(u8"vertex_position");
-      auto vertex_color = point_program.GetAttributeLocation(u8"vertex_color");
-      selected_point_array.VertexAttribPointer(vertex_position,
-                                               2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-      selected_point_array.EnableVertexAttribArray(vertex_position);
-      selected_point_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
-                                               reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-      selected_point_array.EnableVertexAttribArray(vertex_color);
-    }
+    selected_point_array.Create();
+    vertex_format.Apply(selected_point_array, point_program);
     CHECK_STATE(!glGetError());
 
     move_indicator_buffer.Create(GL_ARRAY_BUFFER);
-    move_indicator_array.Create(); {
-      auto vertex_position = edge_program.GetAttributeLocation(u8"vertex_position");
-      auto vertex_color = edge_program.GetAttributeLocation(u8"vertex_color");
-      move_indicator_array.VertexAttribPointer(vertex_position,
-                                               2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-      move_indicator_array.EnableVertexAttribArray(vertex_position);
-      move_indicator_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
-                                               reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-      move_indicator_array.EnableVertexAttribArray(vertex_color);
-    }
+    move_indicator_array.Create();
+    vertex_format.Apply(move_indicator_array, edge_program);
     CHECK_STATE(!glGetError());
 
     selection_box_buffer.Create(GL_ARRAY_BUFFER);
-    selection_box_array.Create(); {
-      auto vertex_position = edge_program.GetAttributeLocation(u8"vertex_position");
-      auto vertex_color = edge_program.GetAttributeLocation(u8"vertex_color");
-      selection_box_array.VertexAttribPointer(vertex_position,
-                                              2, GL_FLOAT, false, 6 * sizeof(float), nullptr);
-      selection_box_array.EnableVertexAttribArray(vertex_position);
-      selection_box_array.VertexAttribPointer(vertex_color, 4, GL_FLOAT, false, 6 * sizeof(float),
-                                              reinterpret_cast<GLvoid *>(2 * sizeof(float)));
-      selection_box_array.EnableVertexAttribArray(vertex_color);
-    }
+    selection_box_array.Create();
+    vertex_format.Apply(selection_box_array, edge_program);
     CHECK_STATE(!glGetError());
   }
 

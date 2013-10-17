@@ -48,6 +48,7 @@
 		460FFA1218103B310053F813 /* win32_platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 460FF99118103B310053F813 /* win32_platform.h */; };
 		460FFA1518103B310053F813 /* window.c in Sources */ = {isa = PBXBuildFile; fileRef = 460FF99418103B310053F813 /* window.c */; };
 		460FFA1B18103B310053F813 /* x11_platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 460FF99A18103B310053F813 /* x11_platform.h */; };
+		460FFA321810634C0053F813 /* vertexformat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460FFA301810634C0053F813 /* vertexformat.cpp */; };
 		461229DC17FBA08C00F04521 /* meshloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461229DA17FBA08C00F04521 /* meshloader.cpp */; };
 		461879D717FB5F0D000B32F6 /* meshserializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461879D517FB5F0D000B32F6 /* meshserializer.cpp */; };
 		462B4A6417EA43AA006FE9BB /* vertexarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A5D17EA43AA006FE9BB /* vertexarray.cpp */; };
@@ -1207,6 +1208,8 @@
 		460FF9AE18103B310053F813 /* threads.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = threads.c; sourceTree = "<group>"; };
 		460FF9AF18103B310053F813 /* title.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = title.c; sourceTree = "<group>"; };
 		460FF9B018103B310053F813 /* windows.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = windows.c; sourceTree = "<group>"; };
+		460FFA301810634C0053F813 /* vertexformat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vertexformat.cpp; sourceTree = "<group>"; };
+		460FFA311810634C0053F813 /* vertexformat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vertexformat.h; sourceTree = "<group>"; };
 		461229DA17FBA08C00F04521 /* meshloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = meshloader.cpp; sourceTree = "<group>"; };
 		461229DB17FBA08C00F04521 /* meshloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meshloader.h; sourceTree = "<group>"; };
 		461879D117FB5E2E000B32F6 /* picojson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = picojson.h; sourceTree = "<group>"; };
@@ -2773,6 +2776,8 @@
 				466E70FF17EB96D500CD9E9D /* updater.h */,
 				462B4A5D17EA43AA006FE9BB /* vertexarray.cpp */,
 				462B4A5C17EA43AA006FE9BB /* vertexarray.h */,
+				460FFA301810634C0053F813 /* vertexformat.cpp */,
+				460FFA311810634C0053F813 /* vertexformat.h */,
 				46FBD341180F572400F7C5F8 /* websocketprompt.cpp */,
 				46FBD342180F572400F7C5F8 /* websocketprompt.h */,
 			);
@@ -3066,6 +3071,7 @@
 				462B4A6617EA43AA006FE9BB /* program.cpp in Sources */,
 				46FBD346180F6F7600F7C5F8 /* synchronizedqueue.cpp in Sources */,
 				46FBD349180F76BE00F7C5F8 /* console.cpp in Sources */,
+				460FFA321810634C0053F813 /* vertexformat.cpp in Sources */,
 				46FBD33D180F4C7F00F7C5F8 /* commandlineprompt.cpp in Sources */,
 				462B4A6717EA43AA006FE9BB /* buffer.cpp in Sources */,
 				466E70FA17EB92F900CD9E9D /* gamestate.cpp in Sources */,
