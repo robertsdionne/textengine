@@ -256,15 +256,13 @@ var display = function () {
   }
   var startIndex = lineCursor - LINE_COUNT >= 0 ? lineCursor - LINE_COUNT : 0;
   lines.slice(startIndex, lineCursor).forEach(function(line, index) {
-                                              var prefix = (startIndex + index) % 4 == 1 ? '\u00A0\u00A0' : '';
-                                              var content = line.toDomNode(prefix, line.description.length, scrollBehavior);
+                                              var content = line.toDomNode('', line.description.length, scrollBehavior);
                                               var newline = document.createElement('br');
                                               container.appendChild(content);
                                               container.appendChild(newline);
                                               });
   if (lineCursor >= 0 && lines.length > lineCursor) {
-    var prefix = lineCursor % 4 == 1 ? '\u00A0\u00A0' : '';
-    var content = lines[lineCursor].toDomNode(prefix, 0, scrollBehavior);
+    var content = lines[lineCursor].toDomNode('', 0, scrollBehavior);
     var newline = document.createElement('br');
     container.appendChild(content);
     container.appendChild(newline);
