@@ -129,7 +129,7 @@ namespace textengine {
   void WebSocketPrompt::Loop() {
     lws_context_creation_info context_creation_info = {
       8888,
-      "",
+      nullptr,
       kProtocols,
       libwebsocket_get_internal_extensions(),
       nullptr,
