@@ -72,8 +72,8 @@ namespace textengine {
 
   void GlfwApplication::Run() {
     CHECK_STATE(glfwInit() != -1);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
@@ -83,6 +83,7 @@ namespace textengine {
     glfwSetCursorPosCallback(window, HandleMouseCursorMove);
     glfwSetFramebufferSizeCallback(window, HandleReshape);
     glfwMakeContextCurrent(window);
+    std::cout << glGetString(GL_VERSION) << std::endl;
     renderer.Create();
     int framebuffer_width, framebuffer_height;
     glfwGetFramebufferSize(window, &framebuffer_width, &framebuffer_height);

@@ -31,7 +31,7 @@ namespace textengine {
     
   private:
     static constexpr const char *kVertexShaderSource = u8R"glsl(
-    #version 150 core
+    #version 410 core
     uniform mat4 projection;
     uniform mat4 model_view;
 
@@ -49,7 +49,7 @@ namespace textengine {
     )glsl";
 
     static constexpr const char *kPointGeometryShaderSource = u8R"glsl(
-    #version 150 core
+    #version 410 core
 
     layout(points) in;
     layout(triangle_strip, max_vertices = 4) out;
@@ -86,7 +86,7 @@ namespace textengine {
     )glsl";
 
     static constexpr const char *kEdgeGeometryShaderSource = u8R"glsl(
-    #version 150 core
+    #version 410 core
 
     layout(lines) in;
     layout(triangle_strip, max_vertices = 4) out;
@@ -125,7 +125,7 @@ namespace textengine {
     )glsl";
     
     static constexpr const char *kFragmentShaderSource = u8R"glsl(
-    #version 150 core
+    #version 410 core
     uniform vec4 shape_color;
 
     in PerVertex {
