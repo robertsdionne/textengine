@@ -23,21 +23,20 @@ namespace textengine {
   private:
     static constexpr float kSpeed = 0.04f;
 
-    typedef std::vector<std::string>::const_iterator TokenIterator;
+    using Tokens = std::vector<std::string>;
+    using TokenIterator = std::vector<std::string>::const_iterator;
 
-    GameState Move(GameState current_state,
-                   const std::vector<std::string> &tokens, TokenIterator token);
+    GameState Help(GameState current_state);
 
-    GameState MoveTo(GameState current_state,
-                     const std::vector<std::string> &tokens, TokenIterator token);
+    GameState Move(GameState current_state, const Tokens &tokens, TokenIterator token);
 
-    GameState Parse(GameState current_state,
-                    const std::vector<std::string> &tokens, TokenIterator token);
+    GameState MoveTo(GameState current_state, const Tokens &tokens, TokenIterator token);
+
+    GameState Parse(GameState current_state, const Tokens &tokens, TokenIterator token);
     
     GameState Quit(GameState current_state);
 
-    GameState Turn(GameState current_state,
-                   const std::vector<std::string> &tokens, TokenIterator token);
+    GameState Turn(GameState current_state, const Tokens &tokens, TokenIterator token);
 
     CommandTokenizer &tokenizer;
     Mesh &mesh;

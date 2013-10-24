@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include <iostream>
 #include <iterator>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -25,8 +26,20 @@ namespace textengine {
     return Parse(current_state, tokens, tokens.begin());
   }
 
+  GameState CommandParser::Help(GameState current_state) {
+    reply_queue.PushMessage("You can say: ");
+    reply_queue.PushMessage("\"go [direction]\", \"go to <room>\" or \"turn <direction>\"");
+    reply_queue.PushMessage("Synonyms for \"go\" are \"move\", \"step\" and \"walk\".");
+    reply_queue.PushMessage("Synonyms for \"turn\" are \"face\" and \"rotate\".");
+    reply_queue.PushMessage("Possible directions are \"forward\", \"backward\", \"left\", \"right\" (relative) or \"north\", \"south\", \"east\", \"west\" \"northeast\", \"northwest\", \"southeast\", \"southwest\" (absolute) and \"around\" (for turning).");
+    reply_queue.PushMessage("Absolute directions can be abbreviated as \"n\", \"s\", etc.");
+    reply_queue.PushMessage("Possible rooms are \"RoomA\" through \"RoomL\".");
+    reply_queue.PushMessage("You may also move by saying a direction directly and omitting the verb.");
+    return current_state;
+  }
+
   GameState CommandParser::Move(GameState current_state,
-                                const std::vector<std::string> &tokens, TokenIterator token) {
+                                const Tokens &tokens, TokenIterator token) {
     if (tokens.end() == token) {
       current_state.player.position_target += current_state.player.direction * kSpeed;
       reply_queue.PushMessage("You move forward.");
@@ -79,7 +92,7 @@ namespace textengine {
   }
 
   GameState CommandParser::MoveTo(textengine::GameState current_state,
-                                  const std::vector<std::string> &tokens, TokenIterator token)  {
+                                  const Tokens &tokens, TokenIterator token)  {
     if (tokens.end() == token) {
       return current_state;
     }
@@ -106,9 +119,11 @@ namespace textengine {
   }
 
   GameState CommandParser::Parse(GameState current_state,
-                                 const std::vector<std::string> &tokens, TokenIterator token) {
+                                 const Tokens &tokens, TokenIterator token) {
     if (tokens.end() == token) {
       return current_state;
+    } else if ("help" == *token) {
+      return Help(current_state);
     } else if ("go" == *token || "move" == *token || "step" == *token || "walk" == *token) {
       return Move(current_state, tokens, std::next(token));
     } else if ("face" == *token || "rotate" == *token || "turn" == *token) {
@@ -168,7 +183,7 @@ namespace textengine {
   }
 
   GameState CommandParser::Turn(GameState current_state,
-                                const std::vector<std::string> &tokens, TokenIterator token) {
+                                const Tokens &tokens, TokenIterator token) {
     if (tokens.end() == token) {
       return current_state;
     } else if ("left" == *token) {
