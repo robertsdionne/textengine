@@ -6,6 +6,7 @@
 #include "gamestate.h"
 #include "glfwapplication.h"
 #include "keyboard.h"
+#include "log.h"
 #include "mesh.h"
 #include "mesheditor.h"
 #include "meshloader.h"
@@ -33,7 +34,7 @@ int main(int argument_count, char *arguments[]) {
   textengine::CommandTokenizer tokenizer;
   textengine::CommandParser parser{tokenizer, mesh, reply_queue};
   textengine::GameState initial_state;
-  std::ofstream playtest_log{kPlaytestLog};
+  textengine::Log playtest_log{kPlaytestLog};
   textengine::Updater updater{command_queue, reply_queue,
       playtest_log, parser, mesh, initial_state};
   std::default_random_engine engine;

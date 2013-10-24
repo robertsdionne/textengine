@@ -63,6 +63,7 @@
 		468E01471783DFA100301C1C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01461783DFA100301C1C /* IOKit.framework */; };
 		468E015A1783F03D00301C1C /* simplexnoise1234.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 468EFC681783DC1E00301C1C /* simplexnoise1234.cpp */; };
 		468E015D1783F10600301C1C /* libsimplexnoise1234.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01561783F02800301C1C /* libsimplexnoise1234.a */; };
+		46A11D39181964B700105526 /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A11D37181964B600105526 /* log.cpp */; };
 		46AB32EC180F2F1F003DDECF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FCB7180F1D5200B00F93 /* SystemConfiguration.framework */; };
 		46AB32ED180F2F28003DDECF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FCB5180F1D4B00B00F93 /* CFNetwork.framework */; };
 		46AB32EE180F2F2C003DDECF /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46AB32C7180F1EA0003DDECF /* libssl.dylib */; };
@@ -1237,6 +1238,8 @@
 		468E01561783F02800301C1C /* libsimplexnoise1234.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsimplexnoise1234.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		468EFC681783DC1E00301C1C /* simplexnoise1234.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = simplexnoise1234.cpp; sourceTree = "<group>"; };
 		468EFC691783DC1E00301C1C /* simplexnoise1234.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = simplexnoise1234.h; sourceTree = "<group>"; };
+		46A11D37181964B600105526 /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = log.cpp; sourceTree = "<group>"; };
+		46A11D38181964B700105526 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
 		46AB32C7180F1EA0003DDECF /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
 		46B9824C17E69E9C00B59145 /* libglfw.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libglfw.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		46B9875117E6A37700B59145 /* checks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = checks.h; sourceTree = "<group>"; };
@@ -2751,6 +2754,8 @@
 				46B9875617E6A62500B59145 /* glfwapplication.h */,
 				460F81B117EA1C3B00D765F5 /* keyboard.cpp */,
 				460F81B217EA1C3B00D765F5 /* keyboard.h */,
+				46A11D37181964B600105526 /* log.cpp */,
+				46A11D38181964B700105526 /* log.h */,
 				46B9A6091771F0F800E43B24 /* main.cpp */,
 				460B492917F47E24006B4828 /* mesh.cpp */,
 				460B492817F47E24006B4828 /* mesh.h */,
@@ -3064,6 +3069,7 @@
 				46B9A60A1771F0F800E43B24 /* main.cpp in Sources */,
 				46B9875917E6A62500B59145 /* glfwapplication.cpp in Sources */,
 				4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */,
+				46A11D39181964B700105526 /* log.cpp in Sources */,
 				460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */,
 				462B4A6417EA43AA006FE9BB /* vertexarray.cpp in Sources */,
 				46FBD343180F572400F7C5F8 /* websocketprompt.cpp in Sources */,

@@ -8,6 +8,7 @@
 #include "commandparser.h"
 #include "gamestate.h"
 #include "keyboard.h"
+#include "log.h"
 #include "mesh.h"
 #include "synchronizedqueue.h"
 #include "updater.h"
@@ -15,7 +16,7 @@
 namespace textengine {
 
   Updater::Updater(SynchronizedQueue &command_queue, SynchronizedQueue &reply_queue,
-                   std::ofstream &playtest_log, CommandParser &parser,
+                   Log &playtest_log, CommandParser &parser,
                    Mesh &mesh, const GameState &initial_state)
   : command_queue(command_queue), reply_queue(reply_queue), playtest_log(playtest_log),
     parser(parser), mesh(mesh), current_state(initial_state), clock(), last_approach_times(),
@@ -33,7 +34,7 @@ namespace textengine {
     GameState next_state = current_state;
     if (command_queue.HasMessage()) {
       const std::string message = command_queue.PopMessage();
-      playtest_log << message << std::endl;
+      playtest_log.LogMessage(message);
       next_state = parser.Parse(next_state, message);
     }
     next_state.player = UpdateCharacter(next_state.player);
@@ -67,13 +68,10 @@ namespace textengine {
   CharacterInfo Updater::UpdateCharacter(CharacterInfo current_character) const {
     CharacterInfo next_character = current_character;
     if (next_character.room_target) {
-      //      std::cout << "has room target" << std::endl;
       auto current_face = FindFaceThatContainsPoint(next_character.position);
       if (current_face && next_character.room_target == current_face->room_info) {
-        //        std::cout << "reached target" << std::endl;
         next_character.room_target = nullptr;
       } else if (current_face && next_character.room_target) {
-        //        std::cout << "pursuing target" << std::endl;
         std::unordered_map<Mesh::Face *, float> distances;
         for (auto &face : mesh.get_faces()) {
           if (next_character.room_target == face->room_info) {
@@ -96,7 +94,6 @@ namespace textengine {
             Mesh::Face *argmin = nullptr;
             Mesh::HalfEdge *edge = face->face_edge;
             do {
-              //          std::cout << "finding minimum" << std::endl;
               if (edge->opposite) {
                 const auto h01 = edge->opposite->face->face_edge;
                 const auto h12 = h01->next;
@@ -114,7 +111,6 @@ namespace textengine {
               edge = edge->next;
             } while (edge != face->face_edge);
             if (argmin) {
-              //          std::cout << "found minimum target" << std::endl;
               const auto h01 = face->face_edge;
               const auto h12 = h01->next;
               const auto h20 = h12->next;
@@ -122,7 +118,6 @@ namespace textengine {
               const auto v0 = h01->start->position, v1 = h12->start->position, v2 = h20->start->position;
               const auto centroid = (v0 + v1 + v2) / 3.0f;
               distances.at(face.get()) = minimum + glm::length(target - centroid);
-              //              std::cout << "updating face " << face.get() << " with value " << minimum + glm::length(target - centroid) << std::endl;
             }
           }
         }
@@ -131,7 +126,6 @@ namespace textengine {
         Mesh::Face *argmin = nullptr;
         Mesh::HalfEdge *edge = current_face->face_edge;
         do {
-          //          std::cout << "finding minimum" << std::endl;
           if (edge->opposite) {
             const auto h01 = edge->opposite->face->face_edge;
             const auto h12 = h01->next;
@@ -149,7 +143,6 @@ namespace textengine {
           edge = edge->next;
         } while (edge != current_face->face_edge);
         if (argmin) {
-          //          std::cout << "found minimum target" << std::endl;
           next_character.direction_target = glm::normalize(target - next_character.position);
           next_character.position_target = target;
         }
@@ -190,16 +183,12 @@ namespace textengine {
     const auto p = glm::vec3(point, 0.0f);
     const float u = (glm::cross(p, p2-p0).z - glm::cross(p0, p2-p0).z) / glm::cross(p1-p0, p2-p0).z;
     const float v = (glm::cross(p0, p1-p0).z - glm::cross(p, p1-p0).z) / glm::cross(p1-p0, p2-p0).z;
-//    if (0 <= u && 0 <= v && (u + v) <= 1) {
-//      std::cout << u << ", " << v << std::endl;
-//    }
     return 0 <= u && 0 <= v && (u + v) <= 1;
   }
 
   Mesh::Face *Updater::FindFaceThatContainsPoint(glm::vec2 point) const {
     for (auto &face : mesh.get_faces()) {
       if (FaceContainsPoint(face.get(), point)) {
-//        std::cout << "face contains point" << std::endl;
         return face.get();
       }
     }
