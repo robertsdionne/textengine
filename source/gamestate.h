@@ -2,8 +2,10 @@
 #define TEXTENGINE_GAMESTATE_H_
 
 #include <glm/glm.hpp>
+#include <string>
 #include <vector>
 
+#include "drawable.h"
 #include "mesh.h"
 
 namespace textengine {
@@ -25,6 +27,14 @@ namespace textengine {
     AiState ai_state;
   };
 
+  struct Item {
+    glm::vec2 position;
+    std::string name;
+    glm::vec4 color;
+
+    bool operator ==(const Item &other);
+  };
+
   class GameState {
   public:
     GameState();
@@ -33,8 +43,14 @@ namespace textengine {
 
     virtual ~GameState() = default;
 
+    Drawable TriangulateItems() const;
+
+    Drawable WireframeItems() const;
+
     CharacterInfo player;
     std::vector<NonPlayerCharacterInfo> non_player_characters;
+    std::vector<Item> items;
+    std::vector<Item> inventory;
   };
 
 }  // namespace textengine

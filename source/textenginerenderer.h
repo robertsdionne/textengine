@@ -150,11 +150,13 @@ namespace textengine {
     VertexArray player_array, player_edge_array, mesh_array, mesh_edge_array,
         pathfinding_edges_array, pathfinding_nodes_array, selected_face_array,
         selected_interior_edge_array, selected_exterior_edge_array, selected_point_array,
-        move_indicator_array, selection_box_array, npc_array, npc_edge_array;
+        move_indicator_array, selection_box_array, npc_array, npc_edge_array, item_array,
+        item_edge_array;
     Buffer player_buffer, player_edge_buffer, mesh_buffer, mesh_edge_buffer,
         pathfinding_edges_buffer, pathfinding_nodes_buffer, selected_face_buffer,
         selected_interior_edge_buffer, selected_exterior_edge_buffer, selected_point_buffer,
-        move_indicator_buffer, selection_box_buffer, npc_buffer, npc_edge_buffer;
+        move_indicator_buffer, selection_box_buffer, npc_buffer, npc_edge_buffer, item_buffer,
+        item_edge_buffer;
 
     glm::mat4 model_view, projection;
   };

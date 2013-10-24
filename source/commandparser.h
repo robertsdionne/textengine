@@ -26,7 +26,15 @@ namespace textengine {
     using Tokens = std::vector<std::string>;
     using TokenIterator = std::vector<std::string>::const_iterator;
 
+    bool FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const;
+
+    Mesh::Face *FindFaceThatContainsPoint(glm::vec2 point) const;
+
     GameState Help(GameState current_state);
+
+    GameState Inventory(GameState current_state);
+
+    GameState Look(GameState current_state);
 
     GameState Move(GameState current_state, const Tokens &tokens, TokenIterator token);
 
@@ -35,6 +43,8 @@ namespace textengine {
     GameState Parse(GameState current_state, const Tokens &tokens, TokenIterator token);
     
     GameState Quit(GameState current_state);
+
+    GameState Take(GameState current_state, const Tokens &tokens, TokenIterator token);
 
     GameState Turn(GameState current_state, const Tokens &tokens, TokenIterator token);
 

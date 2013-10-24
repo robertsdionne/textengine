@@ -151,9 +151,21 @@ namespace textengine {
     npc_edge_array.Create();
     vertex_format.Apply(npc_edge_array, edge_program);
     CHECK_STATE(!glGetError());
+
+    item_buffer.Create(GL_ARRAY_BUFFER);
+    item_array.Create();
+    vertex_format.Apply(item_array, face_program);
+    CHECK_STATE(!glGetError());
+
+    item_edge_buffer.Create(GL_ARRAY_BUFFER);
+    item_edge_array.Create();
+    vertex_format.Apply(item_edge_array, edge_program);
+    CHECK_STATE(!glGetError());
   }
 
   void TextEngineRenderer::Render() {
+    GameState current_state = updater.GetCurrentState();
+
     Drawable face_data = mesh.Triangulate();
     mesh_buffer.Data(sizeof(float) * face_data.data_size, face_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
@@ -203,9 +215,16 @@ namespace textengine {
                  selection_box_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    Drawable item_data = current_state.TriangulateItems();
+    item_buffer.Data(sizeof(float) * item_data.data_size, item_data.data.get(), GL_STREAM_DRAW);
+    CHECK_STATE(!glGetError());
 
-    GameState current_state = updater.GetCurrentState();
+    Drawable item_edge_data = current_state.WireframeItems();
+    item_edge_buffer.Data(sizeof(float) * item_edge_data.data_size,
+                          item_edge_data.data.get(), GL_STREAM_DRAW);
+    CHECK_STATE(!glGetError());
+
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     face_program.Use();
     face_program.Uniforms({
@@ -358,6 +377,28 @@ namespace textengine {
     });
     player_edge_array.Bind();
     glDrawArrays(GL_LINES, 0, 6);
+    CHECK_STATE(!glGetError());
+
+    face_program.Use();
+    face_program.Uniforms({
+      {u8"projection", &projection},
+      {u8"model_view", &model_view}
+    });
+    item_array.Bind();
+    glDrawArrays(item_data.element_type, 0, item_data.element_count);
+    CHECK_STATE(!glGetError());
+
+    edge_program.Use();
+    edge_program.Uniforms({
+      {u8"projection", &projection},
+      {u8"model_view", &model_view}
+    });
+    edge_program.Uniforms({
+      {u8"line_width", 0.00125},
+      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+    });
+    item_edge_array.Bind();
+    glDrawArrays(item_edge_data.element_type, 0, item_edge_data.element_count);
     CHECK_STATE(!glGetError());
 
     for (auto &character : current_state.non_player_characters) {
