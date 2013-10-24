@@ -1,6 +1,7 @@
 #include <cmath>
 #include <glm/glm.hpp>
 #include <limits>
+#include <string>
 #include <unordered_map>
 
 #include "checks.h"
@@ -14,9 +15,11 @@
 namespace textengine {
 
   Updater::Updater(SynchronizedQueue &command_queue, SynchronizedQueue &reply_queue,
-                   CommandParser &parser, Mesh &mesh, const GameState &initial_state)
-  : command_queue(command_queue), reply_queue(reply_queue), parser(parser), mesh(mesh),
-    current_state(initial_state), clock(), last_approach_times(), phrase_index() {}
+                   std::ofstream &playtest_log, CommandParser &parser,
+                   Mesh &mesh, const GameState &initial_state)
+  : command_queue(command_queue), reply_queue(reply_queue), playtest_log(playtest_log),
+    parser(parser), mesh(mesh), current_state(initial_state), clock(), last_approach_times(),
+    phrase_index() {}
 
   GameState Updater::GetCurrentState() {
     return current_state;
@@ -29,7 +32,9 @@ namespace textengine {
   GameState Updater::Update(const GameState current_state) {
     GameState next_state = current_state;
     if (command_queue.HasMessage()) {
-      next_state = parser.Parse(next_state, command_queue.PopMessage());
+      const std::string message = command_queue.PopMessage();
+      playtest_log << message << std::endl;
+      next_state = parser.Parse(next_state, message);
     }
     next_state.player = UpdateCharacter(next_state.player);
     int index;

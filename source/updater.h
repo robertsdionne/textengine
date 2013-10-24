@@ -2,6 +2,7 @@
 #define TEXTENGINE_UPDATER_H_
 
 #include <chrono>
+#include <fstream>
 #include <unordered_map>
 
 #include "gamestate.h"
@@ -15,8 +16,9 @@ namespace textengine {
 
   class Updater {
   public:
-    Updater(SynchronizedQueue &command_queue, SynchronizedQueue &reply_queue,
-            CommandParser &parser, Mesh &mesh, const GameState &initial_state);
+    Updater(SynchronizedQueue &command_queue,
+            SynchronizedQueue &reply_queue, std::ofstream &playtest_log, CommandParser &parser,
+            Mesh &mesh, const GameState &initial_state);
 
     virtual ~Updater() = default;
 
@@ -37,6 +39,7 @@ namespace textengine {
 
   private:
     SynchronizedQueue &command_queue, &reply_queue;
+    std::ofstream &playtest_log;
     CommandParser &parser;
     Mesh &mesh;
     GameState current_state;
