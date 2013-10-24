@@ -10,21 +10,26 @@ namespace textengine {
     return !queue.empty();
   }
 
-  std::string SynchronizedQueue::PeekMessage() {
+  SynchronizedQueue::Message SynchronizedQueue::PeekMessage() {
     std::lock_guard<std::mutex> lock(mutex);
     return queue.front();
   }
 
-  std::string SynchronizedQueue::PopMessage() {
+  SynchronizedQueue::Message SynchronizedQueue::PopMessage() {
     std::lock_guard<std::mutex> lock(mutex);
-    std::string result = queue.front();
+    Message result = queue.front();
     queue.pop();
     return result;
   }
 
   void SynchronizedQueue::PushMessage(const std::string &message) {
     std::lock_guard<std::mutex> lock(mutex);
-    queue.push(message);
+    queue.push({message, false});
+  }
+
+  void SynchronizedQueue::PushReport(const std::string &report) {
+    std::lock_guard<std::mutex> lock(mutex);
+    queue.push({report, true});
   }
 
 }  // namespace textengine

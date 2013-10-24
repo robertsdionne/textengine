@@ -9,21 +9,28 @@ namespace textengine {
 
   class SynchronizedQueue {
   public:
+    struct Message {
+      std::string message;
+      bool is_report;
+    };
+
     SynchronizedQueue() = default;
 
     virtual ~SynchronizedQueue() = default;
 
     bool HasMessage();
 
-    std::string PeekMessage();
+    Message PeekMessage();
 
-    std::string PopMessage();
+    Message PopMessage();
 
     void PushMessage(const std::string &message);
 
+    void PushReport(const std::string &report);
+
   private:
     std::mutex mutex;
-    std::queue<std::string> queue;
+    std::queue<Message> queue;
   };
 
 }  // namespace textengine

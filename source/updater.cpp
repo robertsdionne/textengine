@@ -33,7 +33,7 @@ namespace textengine {
   GameState Updater::Update(const GameState current_state) {
     GameState next_state = current_state;
     if (command_queue.HasMessage()) {
-      const std::string message = command_queue.PopMessage();
+      const std::string message = command_queue.PopMessage().message;
       playtest_log.LogMessage(message);
       next_state = parser.Parse(next_state, message);
     }

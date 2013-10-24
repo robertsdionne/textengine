@@ -56,11 +56,12 @@ PerWordScrollBehavior.prototype.indexInto = function(line, cursor) {
  * @param {boolean=} opt_isCommand
  * @param {boolean=} opt_isDeath
  */
-var GameState = function(timestamp, description, opt_isCommand, opt_isDeath) {
+var GameState = function(timestamp, description, opt_isCommand, opt_isDeath, opt_isReport) {
   this.timestamp = timestamp;
   this.description = description;
   this.isCommand = opt_isCommand;
   this.isDeath = opt_isDeath;
+  this.isReport = opt_isReport;
 };
 
 
@@ -70,6 +71,12 @@ GameState.prototype.toDomNode = function(cursor, scrollBehavior) {
   }
   if (this.isCommand) {
     var element = document.createElement('b');
+    element.className = 'command';
+    element.textContent = scrollBehavior.slice(this.description, 0, cursor);
+    return element;
+  } else if (this.isReport) {
+    var element = document.createElement('p');
+    element.className = 'report';
     element.textContent = scrollBehavior.slice(this.description, 0, cursor);
     return element;
   } else {
@@ -144,7 +151,7 @@ var open = function() {
 
 var message = function(event) {
   var payload = JSON.parse(event.data);
-  lines.push(new Line([new GameState(t += 1.0, payload.message)]));
+  lines.push(new Line([new GameState(t += 1.0, payload.message, false, false, payload.is_report)]));
   lineCursor += 1;
   display();
 };

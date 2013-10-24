@@ -27,14 +27,14 @@ namespace textengine {
   }
 
   GameState CommandParser::Help(GameState current_state) {
-    reply_queue.PushMessage("You can say: ");
-    reply_queue.PushMessage("\"go [direction]\", \"go to <room>\" or \"turn <direction>\"");
-    reply_queue.PushMessage("Synonyms for \"go\" are \"move\", \"step\" and \"walk\".");
-    reply_queue.PushMessage("Synonyms for \"turn\" are \"face\" and \"rotate\".");
-    reply_queue.PushMessage("Possible directions are \"forward\", \"backward\", \"left\", \"right\" (relative) or \"north\", \"south\", \"east\", \"west\" \"northeast\", \"northwest\", \"southeast\", \"southwest\" (absolute) and \"around\" (for turning).");
-    reply_queue.PushMessage("Absolute directions can be abbreviated as \"n\", \"s\", etc.");
-    reply_queue.PushMessage("Possible rooms are \"RoomA\" through \"RoomL\".");
-    reply_queue.PushMessage("You may also move by saying a direction directly and omitting the verb.");
+    reply_queue.PushReport("You can say: ");
+    reply_queue.PushReport("\"go [direction]\", \"go to <room>\" or \"turn <direction>\"");
+    reply_queue.PushReport("Synonyms for \"go\" are \"move\", \"step\" and \"walk\".");
+    reply_queue.PushReport("Synonyms for \"turn\" are \"face\" and \"rotate\".");
+    reply_queue.PushReport("Possible directions are \"forward\", \"backward\", \"left\", \"right\" (relative) or \"north\", \"south\", \"east\", \"west\" \"northeast\", \"northwest\", \"southeast\", \"southwest\" (absolute) and \"around\" (for turning).");
+    reply_queue.PushReport("Absolute directions can be abbreviated as \"n\", \"s\", etc.");
+    reply_queue.PushReport("Possible rooms are \"RoomA\" through \"RoomL\".");
+    reply_queue.PushReport("You may also move by saying a direction directly and omitting the verb.");
     return current_state;
   }
 

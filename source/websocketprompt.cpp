@@ -118,7 +118,9 @@ namespace textengine {
   std::unique_ptr<picojson::value> WebSocketPrompt::HandleResponse() {
     if (reply_queue.HasMessage()) {
       picojson::object response;
-      response["message"] = picojson::value(reply_queue.PopMessage());
+      const SynchronizedQueue::Message message = reply_queue.PopMessage();
+      response["message"] = picojson::value(message.message);
+      response["is_report"] = picojson::value(message.is_report);
       std::unique_ptr<picojson::value> result{new picojson::value(response)};
       return result;
     } else {
