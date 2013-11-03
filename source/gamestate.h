@@ -1,7 +1,9 @@
 #ifndef TEXTENGINE_GAMESTATE_H_
 #define TEXTENGINE_GAMESTATE_H_
 
+#include <Box2D/Box2D.h>
 #include <glm/glm.hpp>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -37,11 +39,11 @@ namespace textengine {
 
   class GameState {
   public:
-    GameState();
+    GameState(std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries);
 
     GameState(glm::vec2 player_position, glm::vec2 player_direction);
 
-    virtual ~GameState() = default;
+    virtual ~GameState();
 
     Drawable TriangulateItems() const;
 
@@ -51,6 +53,8 @@ namespace textengine {
     std::vector<NonPlayerCharacterInfo> non_player_characters;
     std::vector<Item> items;
     std::vector<Item> inventory;
+    b2World world;
+    b2Body *boundary;
   };
 
 }  // namespace textengine

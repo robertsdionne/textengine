@@ -62,6 +62,8 @@ namespace textengine {
 
     Vertex *ExtrudeEdge(HalfEdge *edge);
 
+    std::vector<std::unique_ptr<std::vector<glm::vec2>>> Boundaries() const;
+
     Drawable Points() const;
 
     Drawable Triangulate() const;

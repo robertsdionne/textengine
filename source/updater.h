@@ -18,7 +18,7 @@ namespace textengine {
   public:
     Updater(SynchronizedQueue &command_queue,
             SynchronizedQueue &reply_queue, Log &playtest_log, CommandParser &parser,
-            Joystick &joystick, Mesh &mesh, const GameState &initial_state);
+            Joystick &joystick, Mesh &mesh, GameState &initial_state);
 
     virtual ~Updater() = default;
 
@@ -43,7 +43,7 @@ namespace textengine {
     CommandParser &parser;
     Joystick &joystick;
     Mesh &mesh;
-    GameState current_state;
+    GameState &current_state;
     std::chrono::high_resolution_clock clock;
     std::unordered_map<int, std::chrono::high_resolution_clock::time_point> last_approach_times;
     int phrase_index;

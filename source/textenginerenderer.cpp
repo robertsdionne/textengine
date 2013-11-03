@@ -164,7 +164,7 @@ namespace textengine {
   }
 
   void TextEngineRenderer::Render() {
-    GameState current_state = updater.GetCurrentState();
+    GameState &current_state = updater.GetCurrentState();
 
     Drawable face_data = mesh.Triangulate();
     mesh_buffer.Data(sizeof(float) * face_data.data_size, face_data.data.get(), GL_STREAM_DRAW);

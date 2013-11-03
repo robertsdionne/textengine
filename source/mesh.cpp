@@ -230,6 +230,34 @@ namespace textengine {
     }
   }
 
+  std::vector<std::unique_ptr<std::vector<glm::vec2>>> Mesh::Boundaries() const {
+    std::unordered_set<HalfEdge *> unused_border_edges;
+    for (auto &half_edge : half_edges) {
+      if (!half_edge->opposite) {
+        unused_border_edges.insert(half_edge.get());
+      }
+    }
+    std::vector<std::unique_ptr<std::vector<glm::vec2>>> result;
+    while (unused_border_edges.size()) {
+      auto *first = *unused_border_edges.begin();
+      unused_border_edges.erase(first);
+      auto *loop = new std::vector<glm::vec2>();
+      loop->push_back(first->start->position);
+      HalfEdge *next = first->next;
+      do {
+        if (next->opposite) {
+          next = next->opposite->next;
+        } else {
+          loop->push_back(next->start->position);
+          unused_border_edges.erase(next);
+          next = next->next;
+        }
+      } while (first != next);
+      result.emplace_back(loop);
+    }
+    return result;
+  }
+
   Drawable Mesh::Points() const {
     Drawable drawable;
     constexpr size_t kCoordinatesPerVertex = 2;

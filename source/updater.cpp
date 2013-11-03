@@ -18,7 +18,7 @@ namespace textengine {
 
   Updater::Updater(SynchronizedQueue &command_queue, SynchronizedQueue &reply_queue,
                    Log &playtest_log, CommandParser &parser, Joystick &joystick,
-                   Mesh &mesh, const GameState &initial_state)
+                   Mesh &mesh, GameState &initial_state)
   : command_queue(command_queue), reply_queue(reply_queue), playtest_log(playtest_log),
     parser(parser), joystick(joystick), mesh(mesh), current_state(initial_state), clock(),
     last_approach_times(), phrase_index() {}
