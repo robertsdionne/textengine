@@ -25,7 +25,7 @@ namespace textengine {
 
     GameState &GetCurrentState();
 
-    virtual void Update();
+    virtual void Update() override;
 
   private:
     void Update(GameState &current_state);

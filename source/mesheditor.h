@@ -53,7 +53,7 @@ namespace textengine {
 
     Drawable SelectionBox() const;
 
-    virtual void Update();
+    virtual void Update() override;
 
   private:
     Mesh::RoomInfo *CreateRandomizedRoomInfo();

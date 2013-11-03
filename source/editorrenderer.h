@@ -22,11 +22,11 @@ namespace textengine {
 
     virtual ~EditorRenderer() = default;
 
-    virtual void Change(int width, int height);
+    virtual void Change(int width, int height) override;
 
-    virtual void Create();
+    virtual void Create() override;
 
-    virtual void Render();
+    virtual void Render() override;
     
   private:
     MeshRenderer &mesh_renderer;

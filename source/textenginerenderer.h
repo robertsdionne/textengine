@@ -1,6 +1,7 @@
 #ifndef TEXTENGINE_TEXTENGINERENDERER_H_
 #define TEXTENGINE_TEXTENGINERENDERER_H_
 
+#include <Box2D/Box2D.h>
 #include <glm/glm.hpp>
 #include <iostream>
 
@@ -23,30 +24,26 @@ namespace textengine {
 
     virtual ~TextEngineRenderer() = default;
 
-    virtual void Change(int width, int height);
+    virtual void Change(int width, int height) override;
 
-    virtual void Create();
+    virtual void Create() override;
 
-    virtual void Render();
+    virtual void Render() override;
 
-	/// Draw a closed polygon provided in CCW order.
-	virtual void DrawPolygon(const b2Vec2* vertices, int32 vertex_count, const b2Color& color);
+	virtual void DrawPolygon(const b2Vec2* vertices,
+                             int32 vertex_count, const b2Color& color) override;
 
-	/// Draw a solid closed polygon provided in CCW order.
-	virtual void DrawSolidPolygon(const b2Vec2* vertices, int32 vertex_count, const b2Color& color);
+	virtual void DrawSolidPolygon(const b2Vec2* vertices,
+                                  int32 vertex_count, const b2Color& color) override;
 
-	/// Draw a circle.
-	virtual void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color);
+	virtual void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color) override;
 
-	/// Draw a solid circle.
-	virtual void DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color);
+	virtual void DrawSolidCircle(const b2Vec2& center,
+                                 float32 radius, const b2Vec2& axis, const b2Color& color) override;
 
-	/// Draw a line segment.
-	virtual void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color);
+	virtual void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) override;
 
-	/// Draw a transform. Choose your own length scale.
-	/// @param xf a transform.
-	virtual void DrawTransform(const b2Transform& xf);
+	virtual void DrawTransform(const b2Transform& xf) override;
     
   private:
     Updater &updater;
