@@ -30,13 +30,17 @@ namespace textengine {
   private:
     void Update(GameState &current_state);
 
-    CharacterInfo UpdateCharacter(CharacterInfo current_character) const;
+    CharacterInfo UpdateCharacter(CharacterInfo current_character, float dt) const;
 
     NonPlayerCharacterInfo UpdateNonPlayerCharacter(NonPlayerCharacterInfo current_character) const;
 
     bool FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const;
 
     Mesh::Face *FindFaceThatContainsPoint(glm::vec2 point) const;
+
+    glm::vec2 SupremumNormalize(glm::vec2 vector);
+
+    glm::vec2 SquareToRound(glm::vec2 vector);
 
   private:
     SynchronizedQueue &command_queue, &reply_queue;

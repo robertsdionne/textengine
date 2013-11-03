@@ -50,9 +50,10 @@ namespace textengine {
       auto force = 0.0001f * (desired_velocity - current_velocity);
       current_state.player_body->ApplyForceToCenter(b2Vec2(force.x, force.y));
       auto dt = 0.016f;
-//      if (glm::length(offset) == 0) {
-//        dt *= glm::length(offset2);
-//      }
+      if (glm::length(offset) == 0 &&
+          joystick.GetButtonPressureVelocity(Joystick::PressureButton::kX) == 0) {
+        dt *= glm::length(SquareToRound(offset2));
+      }
       current_state.world.Step(dt, 8, 3);
       current_state.player.position += offset;
       current_state.player.position_target += offset;
@@ -75,11 +76,11 @@ namespace textengine {
         while (angle_target - angle < -M_PI) {
           angle_target += 2.0 * M_PI;
         }
-        const float final_angle = glm::mix(angle, angle_target, 0.1f);
+        const float final_angle = glm::mix(angle, angle_target, 0.1f / 0.016f * dt);
         current_state.player_view_direction = glm::vec2(glm::cos(final_angle),
                                                         glm::sin(final_angle));
       }
-      current_state.player = UpdateCharacter(current_state.player);
+      current_state.player = UpdateCharacter(current_state.player, dt);
       int index;
       std::string phrases[] = {
         "Someone brushes hurriedly past you.",
@@ -92,7 +93,7 @@ namespace textengine {
       };
       for (auto &character : current_state.non_player_characters) {
         character = UpdateNonPlayerCharacter(character);
-        character.character = UpdateCharacter(character.character);
+        character.character = UpdateCharacter(character.character, dt);
         if (glm::length(character.character.position - current_state.player.position) < 0.1) {
           if (last_approach_times.end() == last_approach_times.find(index)) {
             last_approach_times.insert({index, clock.now()});
@@ -107,7 +108,7 @@ namespace textengine {
     }
   }
 
-  CharacterInfo Updater::UpdateCharacter(CharacterInfo current_character) const {
+  CharacterInfo Updater::UpdateCharacter(CharacterInfo current_character, float dt) const {
     CharacterInfo next_character = current_character;
     if (next_character.room_target) {
       auto current_face = FindFaceThatContainsPoint(next_character.position);
@@ -199,10 +200,10 @@ namespace textengine {
     while (angle_target - angle < -M_PI) {
       angle_target += 2.0 * M_PI;
     }
-    const float final_angle = glm::mix(angle, angle_target, 0.1f);
+    const float final_angle = glm::mix(angle, angle_target, 0.1f / 0.016f * dt);
     next_character.direction = glm::vec2(glm::cos(final_angle), glm::sin(final_angle));
     next_character.position = glm::mix(next_character.position,
-                                       next_character.position_target, 0.1f);
+                                       next_character.position_target, 0.1f / 0.016f * dt);
     return next_character;
   }
 
@@ -213,6 +214,18 @@ namespace textengine {
       current_character.character.room_target = mesh.get_room_infos()[index].get();
     }
     return current_character;
+  }
+
+  glm::vec2 Updater::SupremumNormalize(glm::vec2 vector) {
+    return vector / std::max(glm::abs(vector.x), glm::abs(vector.y));
+  }
+
+  glm::vec2 Updater::SquareToRound(glm::vec2 vector) {
+    auto supremum_normalized = SupremumNormalize(vector);
+    if (glm::length(supremum_normalized) > 0) {
+      vector /= glm::length(supremum_normalized);
+    }
+    return vector;
   }
 
   bool Updater::FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const {
