@@ -46,8 +46,38 @@ namespace textengine {
                                       current_state.player_body->GetLinearVelocity().y);
     if (glm::length(offset) > 0 || glm::length(offset2) > 0 ||
         joystick.GetButtonPressureVelocity(Joystick::PressureButton::kX) > 0) {
-      auto desired_velocity = SquareToRound(offset);
-      auto force = 0.0001f * (desired_velocity - current_velocity);
+      auto position = glm::vec2(current_state.player_body->GetPosition().x,
+                                current_state.player_body->GetPosition().y);
+      auto current_face = FindFaceThatContainsPoint(position);
+      float maximum = -std::numeric_limits<float>::infinity();
+      glm::vec2 target;
+      Mesh::Face *argmax = nullptr;
+      Mesh::HalfEdge *edge = current_face->face_edge;
+      do {
+        if (edge->opposite) {
+          const auto h01 = edge->opposite->face->face_edge;
+          const auto h12 = h01->next;
+          const auto h20 = h12->next;
+          CHECK_STATE(h01 == h20->next);
+          const auto v0 = h01->start->position, v1 = h12->start->position, v2 = h20->start->position;
+          const auto centroid = (v0 + v1 + v2) / 3.0f;
+          const float dot_product = glm::dot(glm::normalize(centroid - position), SquareToRound(offset));
+          if (dot_product > 0 && dot_product > maximum) {
+            maximum = dot_product;
+            argmax = edge->opposite->face;
+            target = centroid;
+          }
+        }
+        edge = edge->next;
+      } while (edge != current_face->face_edge);
+      if (argmax) {
+        current_state.player.direction_target = glm::normalize(target - position);
+        current_state.player.position_target = target;
+      } else if (glm::length(offset) > 0) {
+        current_state.player.direction_target = glm::normalize(SquareToRound(offset));
+      }
+      auto desired_velocity = 25.0f * glm::length(SquareToRound(offset)) * (current_state.player.position_target - position);
+      auto force = current_state.player_body->GetMass() * (desired_velocity - current_velocity);
       current_state.player_body->ApplyForceToCenter(b2Vec2(force.x, force.y));
       auto dt = 0.016f;
       if (glm::length(offset) == 0 &&
@@ -55,11 +85,9 @@ namespace textengine {
         dt *= glm::length(SquareToRound(offset2));
       }
       current_state.world.Step(dt, 8, 3);
-      current_state.player.position += offset;
-      current_state.player.position_target += offset;
-      if (glm::length(offset) > 0) {
-        current_state.player.direction_target = glm::normalize(offset);
-      }
+//      if (glm::length(offset) > 0) {
+//        current_state.player.direction_target = glm::normalize(offset);
+//      }
       {
         if (glm::length(offset2) > 0) {
           current_state.player_view_direction_target = glm::normalize(offset2);
