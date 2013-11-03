@@ -46,7 +46,7 @@ namespace textengine {
                                       current_state.player_body->GetLinearVelocity().y);
     if (glm::length(offset) > 0 || glm::length(offset2) > 0 ||
         joystick.GetButtonPressureVelocity(Joystick::PressureButton::kX) > 0) {
-      auto desired_velocity = offset;
+      auto desired_velocity = SquareToRound(offset);
       auto force = 0.0001f * (desired_velocity - current_velocity);
       current_state.player_body->ApplyForceToCenter(b2Vec2(force.x, force.y));
       auto dt = 0.016f;
