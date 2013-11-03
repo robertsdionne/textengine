@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "controller.h"
+
 namespace textengine {
 
   class Keyboard;
@@ -14,7 +16,7 @@ namespace textengine {
   class Mesh::Vertex;
   class Mouse;
 
-  class MeshEditor {
+  class MeshEditor : public Controller {
   public:
     MeshEditor(int width, int height, Keyboard &keyboard, Mouse &mouse, Mesh &mesh,
                std::default_random_engine &engine);
@@ -51,7 +53,7 @@ namespace textengine {
 
     Drawable SelectionBox() const;
 
-    void Update();
+    virtual void Update();
 
   private:
     Mesh::RoomInfo *CreateRandomizedRoomInfo();

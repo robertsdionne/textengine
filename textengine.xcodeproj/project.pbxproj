@@ -1374,6 +1374,7 @@
 		461229DB17FBA08C00F04521 /* meshloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meshloader.h; sourceTree = "<group>"; };
 		461717CB18269E200070ABED /* editor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = editor; sourceTree = BUILT_PRODUCTS_DIR; };
 		461717D518269E970070ABED /* editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = editor.cpp; sourceTree = "<group>"; };
+		461717F51826A5F80070ABED /* controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controller.h; sourceTree = "<group>"; };
 		461879D117FB5E2E000B32F6 /* picojson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = picojson.h; sourceTree = "<group>"; };
 		461879D517FB5F0D000B32F6 /* meshserializer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = meshserializer.cpp; sourceTree = "<group>"; };
 		461879D617FB5F0D000B32F6 /* meshserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meshserializer.h; sourceTree = "<group>"; };
@@ -3198,6 +3199,7 @@
 				4600EB9017EBC8F9003BA3C3 /* commandtokenizer.h */,
 				46FBD347180F76BE00F7C5F8 /* console.cpp */,
 				46FBD348180F76BE00F7C5F8 /* console.h */,
+				461717F51826A5F80070ABED /* controller.h */,
 				462B4A6917EA9760006FE9BB /* drawable.h */,
 				461717D518269E970070ABED /* editor.cpp */,
 				464A57F5181B0D8300FAF563 /* exporter.cpp */,

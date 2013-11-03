@@ -4,6 +4,7 @@
 #include <chrono>
 #include <unordered_map>
 
+#include "controller.h"
 #include "gamestate.h"
 #include "mesh.h"
 
@@ -14,7 +15,7 @@ namespace textengine {
   class Log;
   class SynchronizedQueue;
 
-  class Updater {
+  class Updater : public Controller {
   public:
     Updater(SynchronizedQueue &command_queue,
             SynchronizedQueue &reply_queue, Log &playtest_log, CommandParser &parser,
@@ -24,7 +25,7 @@ namespace textengine {
 
     GameState &GetCurrentState();
 
-    void Update();
+    virtual void Update();
 
   private:
     void Update(GameState &current_state);
