@@ -44,7 +44,7 @@ namespace textengine {
                                       current_state.player_body->GetLinearVelocity().y);
     auto desired_velocity = offset;
     auto force = 0.0001f * (desired_velocity - current_velocity);
-    std::cout << force.x << " " << force.y << std::endl;
+//    std::cout << force.x << " " << force.y << std::endl;
     current_state.player_body->ApplyForceToCenter(b2Vec2(force.x, force.y));
     current_state.world.Step(0.016f, 8, 3);
     current_state.player.position += offset;

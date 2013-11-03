@@ -1,4 +1,5 @@
 #include <chrono>
+#include <cmath>
 #include <map>
 
 #include "checks.h"
@@ -53,7 +54,8 @@ namespace textengine {
   pressure_buttons(), previous_pressure_buttons(), last_update_time(), dt() {}
 
   float Joystick::GetAxis(Axis axis) {
-    return axes[axis];
+    std::cout << axes[axis] << std::endl;
+    return std::abs(axes[axis]) > kDeadZone ? axes[axis] : 0.0f;
   }
 
   float Joystick::GetAxisVelocity(Axis axis) {

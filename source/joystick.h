@@ -60,6 +60,8 @@ namespace textengine {
     };
     static std::map<PressureButton, std::string> pressure_button_names;
 
+    static constexpr float kDeadZone = 0.1f;
+
     Joystick(int joystick_id);
 
     virtual ~Joystick() = default;
