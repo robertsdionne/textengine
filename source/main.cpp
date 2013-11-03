@@ -60,7 +60,8 @@ int main(int argument_count, char *arguments[]) {
   //prompt.Run();
   textengine::Mesh mesh;
   textengine::MeshLoader loader;
-  mesh = loader.ReadMesh("../resource/output.json");
+  const std::string filename = argument_count > 1 ? arguments[1] : "..resource/output.json";
+  mesh = loader.ReadMesh(filename);
   textengine::CommandTokenizer tokenizer;
   textengine::CommandParser parser{tokenizer, mesh, reply_queue};
   textengine::GameState initial_state{mesh.Boundaries()};
