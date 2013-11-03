@@ -11,8 +11,8 @@
 #include "keyboard.h"
 #include "log.h"
 #include "mesh.h"
-#include "mesheditor.h"
 #include "meshloader.h"
+#include "meshrenderer.h"
 #include "mouse.h"
 #include "synchronizedqueue.h"
 #include "textenginerenderer.h"
@@ -79,9 +79,8 @@ int main(int argument_count, char *arguments[]) {
   textengine::Log playtest_log{kPlaytestLog};
   textengine::Updater updater{command_queue, reply_queue,
       playtest_log, parser, joystick, mesh, initial_state};
-  std::default_random_engine engine;
-  textengine::MeshEditor editor{kWindowWidth, kWindowHeight, keyboard, mouse, mesh, engine};
-  textengine::TextEngineRenderer renderer{updater, mesh, editor};
+  textengine::MeshRenderer mesh_renderer{mesh};
+  textengine::TextEngineRenderer renderer{updater, mesh_renderer};
   initial_state.world.SetDebugDraw(&renderer);
   textengine::GlfwApplication application{argument_count, arguments, kWindowWidth, kWindowHeight,
                                           kWindowTitle, updater, renderer, keyboard, mouse,

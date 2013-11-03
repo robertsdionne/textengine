@@ -10,7 +10,6 @@
 		4600EB9117EBC8F9003BA3C3 /* commandtokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4600EB8F17EBC8F9003BA3C3 /* commandtokenizer.cpp */; };
 		4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4607741F17E8EC0100896A15 /* textenginerenderer.cpp */; };
 		460B492A17F47E24006B4828 /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460B492917F47E24006B4828 /* mesh.cpp */; };
-		460B492D17F4AC88006B4828 /* mesheditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460B492B17F4AC87006B4828 /* mesheditor.cpp */; };
 		460B493017F4B48F006B4828 /* mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460B492E17F4B48E006B4828 /* mouse.cpp */; };
 		460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B117EA1C3B00D765F5 /* keyboard.cpp */; };
 		460FF9B118103B310053F813 /* eglext.h in Headers */ = {isa = PBXBuildFile; fileRef = 460FF86518103B300053F813 /* eglext.h */; };
@@ -63,19 +62,15 @@
 		461717E21826A3010070ABED /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01441783DF9200301C1C /* OpenGL.framework */; };
 		461717E31826A3490070ABED /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01421783DF4C00301C1C /* Cocoa.framework */; };
 		461717E41826A34E0070ABED /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01461783DFA100301C1C /* IOKit.framework */; };
-		461717E51826A5290070ABED /* commandparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70FB17EB944400CD9E9D /* commandparser.cpp */; };
-		461717E61826A5290070ABED /* commandtokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4600EB8F17EBC8F9003BA3C3 /* commandtokenizer.cpp */; };
 		461717E71826A5390070ABED /* glfwapplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9875517E6A62500B59145 /* glfwapplication.cpp */; };
-		461717E81826A5470070ABED /* synchronizedqueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FBD344180F6F7600F7C5F8 /* synchronizedqueue.cpp */; };
-		461717E91826A5530070ABED /* textenginerenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4607741F17E8EC0100896A15 /* textenginerenderer.cpp */; };
-		461717EA1826A5620070ABED /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A11D37181964B600105526 /* log.cpp */; };
-		461717EB1826A5780070ABED /* gamestate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70F817EB92F900CD9E9D /* gamestate.cpp */; };
 		461717EC1826A59D0070ABED /* buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A6217EA43AA006FE9BB /* buffer.cpp */; };
 		461717ED1826A59D0070ABED /* joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464E367E1825B4BC00AC0AC0 /* joystick.cpp */; };
 		461717EE1826A59D0070ABED /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A6017EA43AA006FE9BB /* program.cpp */; };
 		461717EF1826A59D0070ABED /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A5E17EA43AA006FE9BB /* shader.cpp */; };
-		461717F01826A59D0070ABED /* updater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70FE17EB96D500CD9E9D /* updater.cpp */; };
 		461717F31826A5B40070ABED /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 464E36851825D1B400AC0AC0 /* libbox2d.a */; };
+		461717FA1826A9700070ABED /* meshrenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461717F81826A9700070ABED /* meshrenderer.cpp */; };
+		461717FB1826A9700070ABED /* meshrenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461717F81826A9700070ABED /* meshrenderer.cpp */; };
+		461717FE1826A97C0070ABED /* editorrenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461717FC1826A97C0070ABED /* editorrenderer.cpp */; };
 		461879D717FB5F0D000B32F6 /* meshserializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461879D517FB5F0D000B32F6 /* meshserializer.cpp */; };
 		462B4A6417EA43AA006FE9BB /* vertexarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A5D17EA43AA006FE9BB /* vertexarray.cpp */; };
 		462B4A6517EA43AA006FE9BB /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A5E17EA43AA006FE9BB /* shader.cpp */; };
@@ -1375,6 +1370,11 @@
 		461717CB18269E200070ABED /* editor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = editor; sourceTree = BUILT_PRODUCTS_DIR; };
 		461717D518269E970070ABED /* editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = editor.cpp; sourceTree = "<group>"; };
 		461717F51826A5F80070ABED /* controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controller.h; sourceTree = "<group>"; };
+		461717F81826A9700070ABED /* meshrenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = meshrenderer.cpp; sourceTree = "<group>"; };
+		461717F91826A9700070ABED /* meshrenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meshrenderer.h; sourceTree = "<group>"; };
+		461717FC1826A97C0070ABED /* editorrenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = editorrenderer.cpp; sourceTree = "<group>"; };
+		461717FD1826A97C0070ABED /* editorrenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = editorrenderer.h; sourceTree = "<group>"; };
+		461717FF1826A9D20070ABED /* shaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shaders.h; sourceTree = "<group>"; };
 		461879D117FB5E2E000B32F6 /* picojson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = picojson.h; sourceTree = "<group>"; };
 		461879D517FB5F0D000B32F6 /* meshserializer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = meshserializer.cpp; sourceTree = "<group>"; };
 		461879D617FB5F0D000B32F6 /* meshserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meshserializer.h; sourceTree = "<group>"; };
@@ -3202,6 +3202,8 @@
 				461717F51826A5F80070ABED /* controller.h */,
 				462B4A6917EA9760006FE9BB /* drawable.h */,
 				461717D518269E970070ABED /* editor.cpp */,
+				461717FC1826A97C0070ABED /* editorrenderer.cpp */,
+				461717FD1826A97C0070ABED /* editorrenderer.h */,
 				464A57F5181B0D8300FAF563 /* exporter.cpp */,
 				466E70F817EB92F900CD9E9D /* gamestate.cpp */,
 				466E70F917EB92F900CD9E9D /* gamestate.h */,
@@ -3220,6 +3222,8 @@
 				460B492C17F4AC88006B4828 /* mesheditor.h */,
 				461229DA17FBA08C00F04521 /* meshloader.cpp */,
 				461229DB17FBA08C00F04521 /* meshloader.h */,
+				461717F81826A9700070ABED /* meshrenderer.cpp */,
+				461717F91826A9700070ABED /* meshrenderer.h */,
 				461879D517FB5F0D000B32F6 /* meshserializer.cpp */,
 				461879D617FB5F0D000B32F6 /* meshserializer.h */,
 				460B492E17F4B48E006B4828 /* mouse.cpp */,
@@ -3230,6 +3234,7 @@
 				46B9875817E6A62500B59145 /* renderer.h */,
 				462B4A5E17EA43AA006FE9BB /* shader.cpp */,
 				462B4A5F17EA43AA006FE9BB /* shader.h */,
+				461717FF1826A9D20070ABED /* shaders.h */,
 				46FBD344180F6F7600F7C5F8 /* synchronizedqueue.cpp */,
 				46FBD345180F6F7600F7C5F8 /* synchronizedqueue.h */,
 				4607741F17E8EC0100896A15 /* textenginerenderer.cpp */,
@@ -3637,17 +3642,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				461717EC1826A59D0070ABED /* buffer.cpp in Sources */,
+				461717FE1826A97C0070ABED /* editorrenderer.cpp in Sources */,
 				461717ED1826A59D0070ABED /* joystick.cpp in Sources */,
 				461717EE1826A59D0070ABED /* program.cpp in Sources */,
+				461717FB1826A9700070ABED /* meshrenderer.cpp in Sources */,
 				461717EF1826A59D0070ABED /* shader.cpp in Sources */,
-				461717F01826A59D0070ABED /* updater.cpp in Sources */,
-				461717EB1826A5780070ABED /* gamestate.cpp in Sources */,
-				461717EA1826A5620070ABED /* log.cpp in Sources */,
-				461717E91826A5530070ABED /* textenginerenderer.cpp in Sources */,
-				461717E81826A5470070ABED /* synchronizedqueue.cpp in Sources */,
 				461717E71826A5390070ABED /* glfwapplication.cpp in Sources */,
-				461717E51826A5290070ABED /* commandparser.cpp in Sources */,
-				461717E61826A5290070ABED /* commandtokenizer.cpp in Sources */,
 				461717E01826A2F30070ABED /* vertexarray.cpp in Sources */,
 				461717E11826A2F30070ABED /* vertexformat.cpp in Sources */,
 				461717DF1826A03B0070ABED /* meshloader.cpp in Sources */,
@@ -3668,6 +3668,7 @@
 				46B9875917E6A62500B59145 /* glfwapplication.cpp in Sources */,
 				4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */,
 				46A11D39181964B700105526 /* log.cpp in Sources */,
+				461717FA1826A9700070ABED /* meshrenderer.cpp in Sources */,
 				460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */,
 				462B4A6417EA43AA006FE9BB /* vertexarray.cpp in Sources */,
 				46FBD343180F572400F7C5F8 /* websocketprompt.cpp in Sources */,
@@ -3686,7 +3687,6 @@
 				4600EB9117EBC8F9003BA3C3 /* commandtokenizer.cpp in Sources */,
 				460B492A17F47E24006B4828 /* mesh.cpp in Sources */,
 				464E36801825B4BC00AC0AC0 /* joystick.cpp in Sources */,
-				460B492D17F4AC88006B4828 /* mesheditor.cpp in Sources */,
 				460B493017F4B48F006B4828 /* mouse.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
