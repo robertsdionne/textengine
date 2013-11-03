@@ -44,7 +44,7 @@ namespace textengine {
       player_body_definition.angularDamping = 0.1;
       player_body = world.CreateBody(&player_body_definition);
       b2CircleShape player_shape;
-      player_shape.m_radius = 0.01;
+      player_shape.m_radius = 0.001;
       b2FixtureDef player_fixture_definition;
       player_fixture_definition.shape = &player_shape;
       player_fixture_definition.density = 0.1;

@@ -19,7 +19,7 @@ namespace textengine {
   class MeshEditor : public Controller {
   public:
     MeshEditor(int width, int height, Keyboard &keyboard, Mouse &mouse, Mesh &mesh,
-               std::default_random_engine &engine);
+               std::default_random_engine &engine, const std::string &filename);
 
     virtual ~MeshEditor() = default;
 
@@ -87,6 +87,7 @@ namespace textengine {
     MoveMode moving;
     ScaleMode scaling;
     std::default_random_engine &engine;
+    std::string filename;
     std::uniform_real_distribution<> uniform_real;
     std::uniform_int_distribution<char> uniform_int;
   };

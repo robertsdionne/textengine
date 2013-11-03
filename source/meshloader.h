@@ -17,7 +17,11 @@ namespace textengine {
 
     Mesh ReadMesh(const std::string &filename) const;
 
+    Mesh ReadOrCreateMesh(const std::string &filename) const;
+
   private:
+    Mesh ReadMesh(std::ifstream &in) const;
+
     void ReadVertex(const picojson::value &vertex_in,
                     const std::vector<std::unique_ptr<Mesh::HalfEdge>> &half_edges,
                     Mesh::Vertex *vertex_out) const;

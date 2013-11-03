@@ -9,6 +9,7 @@
 #include "mesheditor.h"
 #include "meshloader.h"
 #include "meshrenderer.h"
+#include "meshserializer.h"
 #include "mouse.h"
 
 constexpr const char *kPlaytestLog = u8"editor.log";
@@ -23,12 +24,16 @@ int main(int argument_count, char *arguments[]) {
   textengine::Joystick joystick{GLFW_JOYSTICK_1};
   textengine::Mesh mesh;
   textengine::MeshLoader loader;
-  mesh = loader.ReadMesh(arguments[1]);
+  mesh = loader.ReadOrCreateMesh(arguments[1]);
   std::default_random_engine engine;
-  textengine::MeshEditor editor{kWindowWidth, kWindowHeight, keyboard, mouse, mesh, engine};
+  textengine::MeshEditor editor{kWindowWidth, kWindowHeight,
+    keyboard, mouse, mesh, engine, arguments[1]};
   textengine::MeshRenderer mesh_renderer{mesh};
   textengine::EditorRenderer renderer{mesh_renderer, editor};
   textengine::GlfwApplication application{argument_count, arguments, kWindowWidth, kWindowHeight,
     kWindowTitle, editor, renderer, keyboard, mouse, joystick};
-  return application.Run();
+  application.Run();
+  textengine::MeshSerializer serializer;
+  serializer.WriteMesh(arguments[1], mesh);
+  return 0;
 }

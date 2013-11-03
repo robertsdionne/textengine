@@ -52,6 +52,7 @@ void PutItemInRoom(const std::string &item, const std::string &room, textengine:
 }
 
 int main(int argument_count, char *arguments[]) {
+  const std::string filename = argument_count > 1 ? arguments[1] : "../resource/output.json";
   textengine::Keyboard keyboard;
   textengine::Mouse mouse;
   textengine::Joystick joystick(GLFW_JOYSTICK_1);
@@ -60,7 +61,6 @@ int main(int argument_count, char *arguments[]) {
   //prompt.Run();
   textengine::Mesh mesh;
   textengine::MeshLoader loader;
-  const std::string filename = argument_count > 1 ? arguments[1] : "..resource/output.json";
   mesh = loader.ReadMesh(filename);
   textengine::CommandTokenizer tokenizer;
   textengine::CommandParser parser{tokenizer, mesh, reply_queue};

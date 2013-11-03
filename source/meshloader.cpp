@@ -12,6 +12,19 @@ namespace textengine {
   Mesh MeshLoader::ReadMesh(const std::string &filename) const {
     std::ifstream in(filename);
     CHECK_STATE(!in.fail());
+    return ReadMesh(in);
+  }
+
+  Mesh MeshLoader::ReadOrCreateMesh(const std::string &filename) const {
+    std::ifstream in(filename);
+    if (in.fail()) {
+      return Mesh();
+    } else {
+      return ReadMesh(in);
+    }
+  }
+
+  Mesh MeshLoader::ReadMesh(std::ifstream &in) const {
     picojson::value value;
     in >> value;
     in.close();

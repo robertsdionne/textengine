@@ -9,6 +9,7 @@
 #include <iostream>
 #include <iterator>
 #include <limits>
+#include <string>
 #include <unordered_set>
 #include <vector>
 
@@ -24,11 +25,11 @@
 namespace textengine {
 
   MeshEditor::MeshEditor(int width, int height, Keyboard &keyboard, Mouse &mouse, Mesh &mesh,
-                         std::default_random_engine &engine)
+                         std::default_random_engine &engine, const std::string &filename)
   : width(width), height(height), keyboard(keyboard), mouse(mouse), mesh(mesh), selected_vertices(),
   additionally_selected_vertices(), selected_vertex_positions(), cursor_start_position(),
   center_of_mass(), model_view_projection(), add_selecting(), rotating(), selecting(), moving(),
-  scaling(), engine(engine), uniform_real(), uniform_int(0, 26) {}
+  scaling(), engine(engine), filename(filename), uniform_real(), uniform_int(0, 26) {}
 
   glm::vec2 MeshEditor::get_cursor_position() const {
     const glm::mat4 normalized_to_reversed = glm::scale(glm::mat4(), glm::vec3(1.0f, -1.0f, 1.0f));
@@ -518,12 +519,12 @@ namespace textengine {
                          (ScaleMode::kFalse != scaling) || selecting);
     if (ready && keyboard.GetKeyVelocity(GLFW_KEY_1) > 0) {
       MeshSerializer serializer;
-      serializer.WriteMesh("../resource/output.json", mesh);
+      serializer.WriteMesh(filename, mesh);
     }
     if (ready && keyboard.GetKeyVelocity(GLFW_KEY_2) > 0) {
       selected_vertices.clear();
       MeshLoader loader;
-      mesh = loader.ReadMesh("../resource/output.json");
+      mesh = loader.ReadMesh(filename);
     }
     if (ready && keyboard.GetKeyVelocity(GLFW_KEY_A) > 0) {
       if (selected_vertices.empty()) {
@@ -532,6 +533,21 @@ namespace textengine {
         }
       } else {
         selected_vertices.clear();
+      }
+    }
+    if (ready && keyboard.GetKeyVelocity(GLFW_KEY_N) > 0 &&
+        0 == mesh.get_vertices().size()) {
+      selected_vertices.clear();
+      mesh.AddDefaultFace(get_cursor_position());
+      for (auto &vertex : mesh.get_vertices()) {
+        selected_vertices.insert(vertex.get());
+      }
+      if (!selected_vertices.empty()) {
+        for (auto vertex : selected_vertices) {
+          selected_vertex_positions[vertex] = vertex->position;
+        }
+        moving = MoveMode::kBoth;
+        cursor_start_position = get_cursor_position();
       }
     }
     if (ready && keyboard.GetKeyVelocity(GLFW_KEY_D) > 0) {
@@ -610,6 +626,7 @@ namespace textengine {
       for (auto duplicate_face : duplicate_faces) {
         auto face = duplicate_face_map.at(duplicate_face);
         duplicate_face->face_edge = half_edge_map.at(face->face_edge);
+        duplicate_face->room_info = nullptr;
       }
 
       selected_vertices.clear();
