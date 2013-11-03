@@ -23,29 +23,28 @@ namespace textengine {
     parser(parser), joystick(joystick), mesh(mesh), current_state(initial_state), clock(),
     last_approach_times(), phrase_index() {}
 
-  GameState Updater::GetCurrentState() {
+  GameState &Updater::GetCurrentState() {
     return current_state;
   }
 
   void Updater::Update() {
-    current_state = Update(current_state);
+    Update(current_state);
   }
 
-  GameState Updater::Update(const GameState current_state) {
-    GameState next_state = current_state;
+  void Updater::Update(GameState &current_state) {
     if (command_queue.HasMessage()) {
       const std::string message = command_queue.PopMessage().message;
       playtest_log.LogMessage(message);
-      next_state = parser.Parse(next_state, message);
+      parser.Parse(current_state, message);
     }
     const glm::vec2 offset = glm::vec2(joystick.GetAxis(Joystick::Axis::kLeftX), -joystick.GetAxis(Joystick::Axis::kLeftY)) * 0.016f;
-    next_state.player.position += offset;
-    next_state.player.position_target += offset;
+    current_state.player.position += offset;
+    current_state.player.position_target += offset;
 
     const float angle_offset = -joystick.GetAxis(Joystick::Axis::kRightX);
-    const float angle = glm::atan(next_state.player.direction.y, next_state.player.direction.x) + angle_offset;
-    float angle_target = glm::atan(next_state.player.direction_target.y,
-                                   next_state.player.direction_target.x) + angle_offset;
+    const float angle = glm::atan(current_state.player.direction.y, current_state.player.direction.x) + angle_offset;
+    float angle_target = glm::atan(current_state.player.direction_target.y,
+                                   current_state.player.direction_target.x) + angle_offset;
     while (angle_target - angle > M_PI) {
       angle_target -= 2.0 * M_PI;
     }
@@ -53,8 +52,8 @@ namespace textengine {
       angle_target += 2.0 * M_PI;
     }
     const float final_angle = glm::mix(angle, angle_target, 0.1f);
-    next_state.player.direction = glm::vec2(glm::cos(final_angle), glm::sin(final_angle));
-    next_state.player = UpdateCharacter(next_state.player);
+    current_state.player.direction = glm::vec2(glm::cos(final_angle), glm::sin(final_angle));
+    current_state.player = UpdateCharacter(current_state.player);
     int index;
     std::string phrases[] = {
       "Someone brushes hurriedly past you.",
@@ -65,10 +64,10 @@ namespace textengine {
       "Someone passes by.",
       "A passerby approaches and departs."
     };
-    for (auto &character : next_state.non_player_characters) {
+    for (auto &character : current_state.non_player_characters) {
       character = UpdateNonPlayerCharacter(character);
       character.character = UpdateCharacter(character.character);
-      if (glm::length(character.character.position - next_state.player.position) < 0.1) {
+      if (glm::length(character.character.position - current_state.player.position) < 0.1) {
         if (last_approach_times.end() == last_approach_times.find(index)) {
           last_approach_times.insert({index, clock.now()});
           reply_queue.PushMessage(phrases[phrase_index++ % 7]);
@@ -79,7 +78,6 @@ namespace textengine {
       }
       index += 1;
     }
-    return next_state;
   }
 
   CharacterInfo Updater::UpdateCharacter(CharacterInfo current_character) const {

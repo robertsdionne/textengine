@@ -21,12 +21,12 @@ namespace textengine {
                                Mesh &mesh, SynchronizedQueue &reply_queue)
   : tokenizer(tokenizer), mesh(mesh), reply_queue(reply_queue) {}
 
-  GameState CommandParser::Parse(GameState current_state, std::string command) {
+  void CommandParser::Parse(GameState &current_state, std::string command) {
     const std::vector<std::string> tokens = tokenizer.Tokenize(command);
-    return Parse(current_state, tokens, tokens.begin());
+    Parse(current_state, tokens, tokens.begin());
   }
 
-  GameState CommandParser::Help(GameState current_state) {
+  void CommandParser::Help() {
     reply_queue.PushReport("You can say: ");
     reply_queue.PushReport("\"look\", \"go [direction]\", \"go to <room>\", \"turn <direction>\", \"take <item>\" or \"inventory\".");
     reply_queue.PushReport("Synonyms for \"go\" are \"move\", \"step\" and \"walk\".");
@@ -36,10 +36,9 @@ namespace textengine {
     reply_queue.PushReport("Absolute directions can be abbreviated as \"n\", \"s\", etc.");
     reply_queue.PushReport("Possible rooms are \"RoomA\" through \"RoomL\".");
     reply_queue.PushReport("You may also move by saying a direction directly and omitting the verb.");
-    return current_state;
   }
 
-  GameState CommandParser::Inventory(GameState current_state) {
+  void CommandParser::Inventory(const GameState &current_state) {
     if (current_state.inventory.size()) {
       std::ostringstream out;
       out << "You have ";
@@ -50,7 +49,6 @@ namespace textengine {
     } else {
       reply_queue.PushMessage("You have nothing.");
     }
-    return current_state;
   }
 
   bool CommandParser::FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const {
@@ -75,7 +73,7 @@ namespace textengine {
     return nullptr;
   }
 
-  GameState CommandParser::Look(GameState current_state) {
+  void CommandParser::Look(const GameState &current_state) {
     std::ostringstream out;
     out << "You see ";
     Mesh::Face *current_face = FindFaceThatContainsPoint(current_state.player.position);
@@ -93,11 +91,10 @@ namespace textengine {
       out << "nothing.";
     }
     reply_queue.PushMessage(out.str());
-    return current_state;
   }
 
-  GameState CommandParser::Move(GameState current_state,
-                                const Tokens &tokens, TokenIterator token) {
+  void CommandParser::Move(GameState &current_state,
+                           const Tokens &tokens, TokenIterator token) {
     if (tokens.end() == token) {
       current_state.player.position_target += current_state.player.direction * kSpeed;
       reply_queue.PushMessage("You move forward.");
@@ -146,13 +143,12 @@ namespace textengine {
     } else {
       reply_queue.PushMessage("I do not know where you want to go.");
     }
-    return current_state;
   }
 
-  GameState CommandParser::MoveTo(textengine::GameState current_state,
+  void CommandParser::MoveTo(GameState &current_state,
                                   const Tokens &tokens, TokenIterator token)  {
     if (tokens.end() == token) {
-      return current_state;
+      return;
     }
     current_state.player.room_target = nullptr;
     Mesh::RoomInfo *room_target = nullptr;
@@ -173,25 +169,24 @@ namespace textengine {
     } else {
       reply_queue.PushMessage("You head towards \"" + *token + "\".");
     }
-    return current_state;
   }
 
-  GameState CommandParser::Parse(GameState current_state,
-                                 const Tokens &tokens, TokenIterator token) {
+  void CommandParser::Parse(GameState &current_state,
+                            const Tokens &tokens, TokenIterator token) {
     if (tokens.end() == token) {
-      return current_state;
+      return;
     } else if ("help" == *token) {
-      return Help(current_state);
+      Help();
     } else if("look" == *token) {
-      return Look(current_state);
+      Look(current_state);
     } else if ("take" == *token || "get" == *token) {
-      return Take(current_state, tokens, std::next(token));
+      Take(current_state, tokens, std::next(token));
     } else if ("inventory" == *token) {
-      return Inventory(current_state);
+      Inventory(current_state);
     } else if ("go" == *token || "move" == *token || "step" == *token || "walk" == *token) {
-      return Move(current_state, tokens, std::next(token));
+      Move(current_state, tokens, std::next(token));
     } else if ("face" == *token || "rotate" == *token || "turn" == *token) {
-      return Turn(current_state, tokens, std::next(token));
+      Turn(current_state, tokens, std::next(token));
     } else if ("forward" == *token) {
       current_state.player.position_target += current_state.player.direction_target * kSpeed;
       reply_queue.PushMessage("You move forward.");
@@ -233,22 +228,20 @@ namespace textengine {
       current_state.player.position_target += glm::normalize(glm::vec2(-1, -1)) * kSpeed;
       reply_queue.PushMessage("You move southwest.");
     } else if ("exit" == *token || "quit" == *token) {
-      reply_queue.PushMessage("You quit.");
-      return Quit(current_state);
+      Quit();
     } else {
       reply_queue.PushMessage("I do not know what that means.");
     }
-    return current_state;
   }
 
-  GameState CommandParser::Quit(GameState current_state) {
+  void CommandParser::Quit() {
+    reply_queue.PushMessage("You quit.");
     glfwSetWindowShouldClose(glfwGetCurrentContext(), true);
-    return current_state;
   }
 
-  GameState CommandParser::Take(GameState current_state, const Tokens &tokens, TokenIterator token) {
+  void CommandParser::Take(GameState &current_state, const Tokens &tokens, TokenIterator token) {
     if (tokens.end() == token) {
-      return current_state;
+      return;
     } else {
       std::string item_name = *token;
       Item *found_item = nullptr;
@@ -272,13 +265,12 @@ namespace textengine {
         reply_queue.PushMessage("You don't see a " + item_name + " here.");
       }
     }
-    return current_state;
   }
 
-  GameState CommandParser::Turn(GameState current_state,
-                                const Tokens &tokens, TokenIterator token) {
+  void CommandParser::Turn(GameState &current_state,
+                           const Tokens &tokens, TokenIterator token) {
     if (tokens.end() == token) {
-      return current_state;
+      return;
     } else if ("left" == *token) {
       current_state.player.direction_target = glm::vec2(-current_state.player.direction_target.y,
                                                         current_state.player.direction_target.x);
@@ -317,7 +309,6 @@ namespace textengine {
     } else {
       reply_queue.PushMessage("I do not know where you want to turn.");
     }
-    return current_state;
   }
 
 }

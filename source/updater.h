@@ -22,12 +22,12 @@ namespace textengine {
 
     virtual ~Updater() = default;
 
-    GameState GetCurrentState();
+    GameState &GetCurrentState();
 
     void Update();
 
   private:
-    GameState Update(GameState current_state);
+    void Update(GameState &current_state);
 
     CharacterInfo UpdateCharacter(CharacterInfo current_character) const;
 

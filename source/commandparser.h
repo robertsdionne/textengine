@@ -18,7 +18,7 @@ namespace textengine {
 
     virtual ~CommandParser() = default;
 
-    GameState Parse(GameState current_state, std::string command);
+    void Parse(GameState &current_state, std::string command);
 
   private:
     static constexpr float kSpeed = 0.04f;
@@ -30,23 +30,23 @@ namespace textengine {
 
     Mesh::Face *FindFaceThatContainsPoint(glm::vec2 point) const;
 
-    GameState Help(GameState current_state);
+    void Help();
 
-    GameState Inventory(GameState current_state);
+    void Inventory(const GameState &current_state);
 
-    GameState Look(GameState current_state);
+    void Look(const GameState &current_state);
 
-    GameState Move(GameState current_state, const Tokens &tokens, TokenIterator token);
+    void Move(GameState &current_state, const Tokens &tokens, TokenIterator token);
 
-    GameState MoveTo(GameState current_state, const Tokens &tokens, TokenIterator token);
+    void MoveTo(GameState &current_state, const Tokens &tokens, TokenIterator token);
 
-    GameState Parse(GameState current_state, const Tokens &tokens, TokenIterator token);
+    void Parse(GameState &current_state, const Tokens &tokens, TokenIterator token);
     
-    GameState Quit(GameState current_state);
+    void Quit();
 
-    GameState Take(GameState current_state, const Tokens &tokens, TokenIterator token);
+    void Take(GameState &current_state, const Tokens &tokens, TokenIterator token);
 
-    GameState Turn(GameState current_state, const Tokens &tokens, TokenIterator token);
+    void Turn(GameState &current_state, const Tokens &tokens, TokenIterator token);
 
     CommandTokenizer &tokenizer;
     Mesh &mesh;
