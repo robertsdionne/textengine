@@ -9,6 +9,7 @@
 namespace textengine {
 
   class Keyboard;
+  class Joystick;
   class Mouse;
   class Renderer;
   class Updater;
@@ -17,7 +18,7 @@ namespace textengine {
   public:
     GlfwApplication(int argument_count, char *arguments[], int width, int height,
                     const std::string &title, Updater &updater, Renderer &renderer,
-                    Keyboard &keyboard, Mouse &mouse);
+                    Keyboard &keyboard, Mouse &mouse, Joystick &joystick);
 
     virtual ~GlfwApplication();
 
@@ -44,6 +45,7 @@ namespace textengine {
     Renderer &renderer;
     Keyboard &keyboard;
     Mouse &mouse;
+    Joystick &joystick;
   };
 
 }  // namespace textengine

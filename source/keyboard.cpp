@@ -2,16 +2,12 @@
 
 namespace textengine {
 
+  float Keyboard::GetKeyVelocity(int key) {
+    return (keys[key] - previous_keys[key]) * dt;
+  }
+
   bool Keyboard::IsKeyDown(const int key) {
     return keys[key];
-  }
-
-  bool Keyboard::IsKeyJustPressed(const int key) {
-    return keys[key] && !previous_keys[key];
-  }
-
-  bool Keyboard::IsKeyJustReleased(const int key) {
-    return !keys[key] && previous_keys[key];
   }
 
   void Keyboard::OnKeyDown(const int key) {
@@ -24,6 +20,9 @@ namespace textengine {
 
   void Keyboard::Update() {
     previous_keys = keys;
+    auto now = std::chrono::high_resolution_clock::now();
+    dt = std::chrono::duration_cast<std::chrono::duration<float>>(now - last_update_time).count();
+    last_update_time = now;
   }
 
 }  // namespace textengine

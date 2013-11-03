@@ -1,7 +1,8 @@
 #ifndef TEXTENGINE_KEYBOARD_H_
 #define TEXTENGINE_KEYBOARD_H_
 
-#include <map>
+#include <chrono>
+#include <unordered_map>
 
 namespace textengine {
 
@@ -11,11 +12,9 @@ namespace textengine {
 
     virtual ~Keyboard() = default;
 
+    float GetKeyVelocity(int key);
+
     bool IsKeyDown(int key);
-
-    bool IsKeyJustPressed(int key);
-
-    bool IsKeyJustReleased(int key);
 
     void OnKeyDown(int key);
 
@@ -24,7 +23,9 @@ namespace textengine {
     void Update();
 
   private:
-    std::map<int, bool> keys, previous_keys;
+    std::unordered_map<int, bool> keys, previous_keys;
+    std::chrono::high_resolution_clock::time_point last_update_time;
+    float dt;
   };
 
 }  // namespace textengine

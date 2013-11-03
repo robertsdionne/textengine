@@ -7,6 +7,7 @@
 #include "checks.h"
 #include "commandparser.h"
 #include "gamestate.h"
+#include "joystick.h"
 #include "keyboard.h"
 #include "log.h"
 #include "mesh.h"
@@ -16,11 +17,11 @@
 namespace textengine {
 
   Updater::Updater(SynchronizedQueue &command_queue, SynchronizedQueue &reply_queue,
-                   Log &playtest_log, CommandParser &parser,
+                   Log &playtest_log, CommandParser &parser, Joystick &joystick,
                    Mesh &mesh, const GameState &initial_state)
   : command_queue(command_queue), reply_queue(reply_queue), playtest_log(playtest_log),
-    parser(parser), mesh(mesh), current_state(initial_state), clock(), last_approach_times(),
-    phrase_index() {}
+    parser(parser), joystick(joystick), mesh(mesh), current_state(initial_state), clock(),
+    last_approach_times(), phrase_index() {}
 
   GameState Updater::GetCurrentState() {
     return current_state;
@@ -37,6 +38,22 @@ namespace textengine {
       playtest_log.LogMessage(message);
       next_state = parser.Parse(next_state, message);
     }
+    const glm::vec2 offset = glm::vec2(joystick.GetAxis(Joystick::Axis::kLeftX), -joystick.GetAxis(Joystick::Axis::kLeftY)) * 0.016f;
+    next_state.player.position += offset;
+    next_state.player.position_target += offset;
+
+    const float angle_offset = -joystick.GetAxis(Joystick::Axis::kRightX);
+    const float angle = glm::atan(next_state.player.direction.y, next_state.player.direction.x) + angle_offset;
+    float angle_target = glm::atan(next_state.player.direction_target.y,
+                                   next_state.player.direction_target.x) + angle_offset;
+    while (angle_target - angle > M_PI) {
+      angle_target -= 2.0 * M_PI;
+    }
+    while (angle_target - angle < -M_PI) {
+      angle_target += 2.0 * M_PI;
+    }
+    const float final_angle = glm::mix(angle, angle_target, 0.1f);
+    next_state.player.direction = glm::vec2(glm::cos(final_angle), glm::sin(final_angle));
     next_state.player = UpdateCharacter(next_state.player);
     int index;
     std::string phrases[] = {

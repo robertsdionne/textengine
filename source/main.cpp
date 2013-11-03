@@ -7,6 +7,7 @@
 #include "commandtokenizer.h"
 #include "gamestate.h"
 #include "glfwapplication.h"
+#include "joystick.h"
 #include "keyboard.h"
 #include "log.h"
 #include "mesh.h"
@@ -53,6 +54,7 @@ void PutItemInRoom(const std::string &item, const std::string &room, textengine:
 int main(int argument_count, char *arguments[]) {
   textengine::Keyboard keyboard;
   textengine::Mouse mouse;
+  textengine::Joystick joystick(GLFW_JOYSTICK_1);
   textengine::SynchronizedQueue command_queue, reply_queue;
   textengine::WebSocketPrompt prompt{command_queue, reply_queue, kPrompt};
   prompt.Run();
@@ -76,12 +78,13 @@ int main(int argument_count, char *arguments[]) {
   PutItemInRoom("note", "RoomL", mesh, initial_state);
   textengine::Log playtest_log{kPlaytestLog};
   textengine::Updater updater{command_queue, reply_queue,
-      playtest_log, parser, mesh, initial_state};
+      playtest_log, parser, joystick, mesh, initial_state};
   std::default_random_engine engine;
   textengine::MeshEditor editor{kWindowWidth, kWindowHeight, keyboard, mouse, mesh, engine};
   textengine::TextEngineRenderer renderer{updater, mesh, editor};
   textengine::GlfwApplication application{argument_count, arguments, kWindowWidth, kWindowHeight,
-                                          kWindowTitle, updater, renderer, keyboard, mouse};
+                                          kWindowTitle, updater, renderer, keyboard, mouse,
+                                          joystick};
   application.Run();
   return 0;
 }

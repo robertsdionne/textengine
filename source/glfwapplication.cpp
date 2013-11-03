@@ -5,6 +5,7 @@
 #include "checks.h"
 #include "glfwapplication.h"
 #include "keyboard.h"
+#include "joystick.h"
 #include "mouse.h"
 #include "renderer.h"
 #include "updater.h"
@@ -15,10 +16,10 @@ namespace textengine {
 
   GlfwApplication::GlfwApplication(int argument_count, char *arguments[], int width, int height,
                                    const std::string &title, Updater &updater, Renderer &renderer,
-                                   Keyboard &keyboard, Mouse &mouse)
+                                   Keyboard &keyboard, Mouse &mouse, Joystick &joystick)
   : window(nullptr), argument_count(argument_count), arguments(arguments), width(width),
   height(height), title(title), updater(updater), renderer(renderer), keyboard(keyboard),
-  mouse(mouse) {
+  mouse(mouse), joystick(joystick) {
     instance = this;
   }
 
@@ -84,6 +85,7 @@ namespace textengine {
     glfwSetFramebufferSizeCallback(window, HandleReshape);
     glfwMakeContextCurrent(window);
     std::cout << glGetString(GL_VERSION) << std::endl;
+    std::cout << glfwGetJoystickName(GLFW_JOYSTICK_1) << std::endl;
     renderer.Create();
     int framebuffer_width, framebuffer_height;
     glfwGetFramebufferSize(window, &framebuffer_width, &framebuffer_height);
@@ -93,6 +95,7 @@ namespace textengine {
       updater.Update();
       keyboard.Update();
       mouse.Update();
+      joystick.Update();
       glfwSwapBuffers(window);
       glfwPollEvents();
     }
