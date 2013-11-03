@@ -34,6 +34,22 @@ namespace textengine {
         boundary_fixture_definition.shape = &boundary_shape;
         GameState::boundary->CreateFixture(&boundary_fixture_definition);
       }
+      b2BodyDef player_body_definition;
+      player_body_definition.type = b2_dynamicBody;
+      player_body_definition.position.Set(player.position.x, player.position.y);
+      player_body_definition.linearVelocity.Set(0, 0);
+      player_body_definition.linearDamping = 2;
+      player_body_definition.angularVelocity = 0;
+      player_body_definition.angularDamping = 0.1;
+      player_body = world.CreateBody(&player_body_definition);
+      b2CircleShape player_shape;
+      player_shape.m_radius = 0.01;
+      b2FixtureDef player_fixture_definition;
+      player_fixture_definition.shape = &player_shape;
+      player_fixture_definition.density = 0.1;
+      player_fixture_definition.restitution = 0.1;
+      player_fixture_definition.friction = 0.1;
+      player_body->CreateFixture(&player_fixture_definition);
   }
 
   GameState::GameState(glm::vec2 player_position,

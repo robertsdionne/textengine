@@ -55,6 +55,9 @@ namespace textengine {
     std::vector<Item> inventory;
     b2World world;
     b2Body *boundary;
+    b2Body *player_body;
+    glm::vec2 player_direction;
+    glm::vec2 player_direction_target;
   };
 
 }  // namespace textengine

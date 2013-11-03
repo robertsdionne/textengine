@@ -1,3 +1,4 @@
+#include <Box2D/Box2D.h>
 #include <cmath>
 #include <glm/glm.hpp>
 #include <limits>
@@ -37,7 +38,15 @@ namespace textengine {
       playtest_log.LogMessage(message);
       parser.Parse(current_state, message);
     }
-    const glm::vec2 offset = glm::vec2(joystick.GetAxis(Joystick::Axis::kLeftX), -joystick.GetAxis(Joystick::Axis::kLeftY)) * 0.016f;
+    auto offset = glm::vec2(joystick.GetAxis(Joystick::Axis::kLeftX),
+                            -joystick.GetAxis(Joystick::Axis::kLeftY));
+    auto current_velocity = glm::vec2(current_state.player_body->GetLinearVelocity().x,
+                                      current_state.player_body->GetLinearVelocity().y);
+    auto desired_velocity = offset;
+    auto force = 0.0001f * (desired_velocity - current_velocity);
+    std::cout << force.x << " " << force.y << std::endl;
+    current_state.player_body->ApplyForceToCenter(b2Vec2(force.x, force.y));
+    current_state.world.Step(0.016f, 8, 3);
     current_state.player.position += offset;
     current_state.player.position_target += offset;
     if (glm::length(offset) > 0) {
