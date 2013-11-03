@@ -49,11 +49,35 @@ namespace textengine {
       auto desired_velocity = offset;
       auto force = 0.0001f * (desired_velocity - current_velocity);
       current_state.player_body->ApplyForceToCenter(b2Vec2(force.x, force.y));
-      current_state.world.Step(0.016f, 8, 3);
+      auto dt = 0.016f;
+//      if (glm::length(offset) == 0) {
+//        dt *= glm::length(offset2);
+//      }
+      current_state.world.Step(dt, 8, 3);
       current_state.player.position += offset;
       current_state.player.position_target += offset;
       if (glm::length(offset) > 0) {
         current_state.player.direction_target = glm::normalize(offset);
+      }
+      {
+        if (glm::length(offset2) > 0) {
+          current_state.player_view_direction_target = glm::normalize(offset2);
+        } else {
+          current_state.player_view_direction_target = current_state.player.direction_target;
+        }
+        const float angle = glm::atan(current_state.player_view_direction.y,
+                                      current_state.player_view_direction.x);
+        float angle_target = glm::atan(current_state.player_view_direction_target.y,
+                                       current_state.player_view_direction_target.x);
+        while (angle_target - angle > M_PI) {
+          angle_target -= 2.0 * M_PI;
+        }
+        while (angle_target - angle < -M_PI) {
+          angle_target += 2.0 * M_PI;
+        }
+        const float final_angle = glm::mix(angle, angle_target, 0.1f);
+        current_state.player_view_direction = glm::vec2(glm::cos(final_angle),
+                                                        glm::sin(final_angle));
       }
       current_state.player = UpdateCharacter(current_state.player);
       int index;

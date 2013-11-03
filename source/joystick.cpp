@@ -96,7 +96,7 @@ namespace textengine {
       buttons[static_cast<Button>(i)] = button_data[i];
     }
     for (auto i = static_cast<int>(PressureButton::kBegin); i < static_cast<int>(PressureButton::kEnd); ++i) {
-      pressure_buttons[static_cast<PressureButton>(i)] = button_data[i];
+      pressure_buttons[static_cast<PressureButton>(i)] = button_data[i] / 255.0f;
     }
     auto now = std::chrono::high_resolution_clock::now();
     dt = std::chrono::duration_cast<std::chrono::duration<float>>(now - last_update_time).count();

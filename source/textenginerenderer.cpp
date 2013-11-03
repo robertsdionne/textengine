@@ -25,6 +25,8 @@ namespace textengine {
   void TextEngineRenderer::Create() {
     //SetFlags(b2Draw::e_centerOfMassBit | b2Draw::e_jointBit | b2Draw::e_pairBit | b2Draw::e_shapeBit);
     glClearColor(0.0, 0.0, 0.0, 1.0);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     vertex_shader.Create(GL_VERTEX_SHADER, {kVertexShaderSource});
     point_geometry_shader.Create(GL_GEOMETRY_SHADER, {kPointGeometryShaderSource});
@@ -68,12 +70,24 @@ namespace textengine {
       0.0f, -2.0f, 1.0f, 1.0f, 1.0f, 1.0f
     };
 
+    float player_view_data[] = {
+      0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.2f,
+      1.0f, -2.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+      1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 0.0f
+    };
+
     vertex_format.Create({
       {u8"vertex_position", GL_FLOAT, 2},
       {u8"vertex_color", GL_FLOAT, 4}
     });
 
     mesh_renderer.Create();
+
+    player_view_buffer.Create(GL_ARRAY_BUFFER);
+    player_view_buffer.Data(sizeof(player_view_data), player_view_data, GL_STATIC_DRAW);
+    player_view_array.Create();
+    vertex_format.Apply(player_view_array, face_program);
+    CHECK_STATE(!glGetError());
 
     player_buffer.Create(GL_ARRAY_BUFFER);
     player_buffer.Data(sizeof(player_data), player_data, GL_STATIC_DRAW);
@@ -235,6 +249,20 @@ namespace textengine {
     const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(position, 0.0)) *
                                                       glm::rotate(glm::mat4(), glm::degrees(angle), glm::vec3(0, 0, 1)) *
                                                       glm::scale(glm::mat4(), glm::vec3(0.01)));
+
+    const float angle2 = glm::atan(current_state.player_view_direction.y, current_state.player_view_direction.x);
+    const glm::mat4 player_view_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(position, 0.0)) *
+                                                           glm::rotate(glm::mat4(), glm::degrees(angle2), glm::vec3(0, 0, 1)) *
+                                                           glm::scale(glm::mat4(), glm::vec3(0.3f)));
+
+    face_program.Use();
+    face_program.Uniforms({
+      {u8"projection", &projection},
+      {u8"model_view", &player_view_model_view}
+    });
+    player_view_array.Bind();
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    CHECK_STATE(!glGetError());
 
     face_program.Use();
     face_program.Uniforms({

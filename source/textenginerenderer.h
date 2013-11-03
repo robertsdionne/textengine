@@ -54,9 +54,9 @@ namespace textengine {
     Program edge_program, face_program, point_program;
     VertexFormat vertex_format;
     VertexArray player_array, player_edge_array, npc_array, npc_edge_array, item_array,
-        item_edge_array;
+        item_edge_array, player_view_array;
     Buffer player_buffer, player_edge_buffer, npc_buffer, npc_edge_buffer, item_buffer,
-        item_edge_buffer;
+        item_edge_buffer, player_view_buffer;
 
     glm::mat4 model_view, projection;
   };

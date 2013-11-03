@@ -56,8 +56,8 @@ namespace textengine {
     b2World world;
     b2Body *boundary;
     b2Body *player_body;
-    glm::vec2 player_direction;
-    glm::vec2 player_direction_target;
+    glm::vec2 player_view_direction;
+    glm::vec2 player_view_direction_target;
   };
 
 }  // namespace textengine

@@ -13,7 +13,8 @@ namespace textengine {
 
   GameState::GameState(std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries)
   : player{glm::vec2(), glm::vec2(), glm::vec2(0, 1), glm::vec2(0, 1), nullptr},
-    non_player_characters(), world(b2Vec2(0, 0)) {
+  non_player_characters(), world(b2Vec2(0, 0)), player_view_direction(glm::vec2(0, 1)),
+  player_view_direction_target(glm::vec2(0, 1)) {
     for (auto i = 0; i < 3; ++i) {
       non_player_characters.push_back({
         {glm::vec2(), glm::vec2(), glm::vec2(0, 1), glm::vec2(0, 1), nullptr},
