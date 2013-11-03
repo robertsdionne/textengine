@@ -714,9 +714,6 @@ namespace textengine {
     if (ready && keyboard.GetKeyVelocity(GLFW_KEY_SPACE) > 0) {
       if (!selected_faces().empty()) {
         auto room_info = CreateRandomizedRoomInfo();
-        std::cout << "Created room: " << room_info->name << std::endl;
-        std::cout << "  with color: " << room_info->color.r << ", " << room_info->color.g << ", "
-        << room_info->color.b << std::endl;
         mesh.get_room_infos().emplace_back(room_info);
         for (auto face : selected_faces()) {
           face->room_info = room_info;

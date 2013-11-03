@@ -82,7 +82,6 @@ namespace textengine {
   }
 
   void Mesh::AddFace(Vertex *vertex0, Vertex *vertex1, Vertex *vertex2) {
-    std::cout << std::endl;
     std::unordered_set<const Vertex *> face_vertices;
     face_vertices.insert(vertex0);
     face_vertices.insert(vertex1);
@@ -92,7 +91,6 @@ namespace textengine {
           face_vertices.end() != face_vertices.find(face->face_edge->next->start) &&
           face_vertices.end() != face_vertices.find(face->face_edge->next->next->start)) {
         // Face already exists
-        std::cout << "face already exists" << std::endl;
         return;
       }
     }
@@ -100,7 +98,7 @@ namespace textengine {
     glm::vec3 d01 = glm::vec3(vertex1->position - vertex0->position, 0.0f);
     glm::vec3 d02 = glm::vec3(vertex2->position - vertex0->position, 0.0f);
     if (glm::cross(d01, d02).z < 0) {
-      std::cout << "swapping vertex1 and vertex2 to preserve right-hand rule" << std::endl;
+      // swapping vertex1 and vertex2 to preserve right-hand rule
       std::swap(vertex1, vertex2);
     }
 
@@ -108,29 +106,26 @@ namespace textengine {
     for (auto &edge : half_edges) {
       if (vertex0 == edge->start && vertex1 == edge->next->start) {
         // Edge already exists
-        std::cout << "edge01 already exists" << std::endl;
         return;
       }
       if (vertex1 == edge->start && vertex0 == edge->next->start) {
-        std::cout << "found opposite edge10" << std::endl;
+        // found opposite edge
         half_edge10 = edge.get();
       }
       if (vertex1 == edge->start && vertex2 == edge->next->start) {
         // Edge already exists
-        std::cout << "edge12 already exists" << std::endl;
         return;
       }
       if (vertex2 == edge->start && vertex1 == edge->next->start) {
-        std::cout << "found opposite edge21" << std::endl;
+        // found opposite edge
         half_edge21 = edge.get();
       }
       if (vertex2 == edge->start && vertex0 == edge->next->start) {
         // Edge already exists
-        std::cout << "edge20 already exists" << std::endl;
         return;
       }
       if (vertex0 == edge->start && vertex2 == edge->next->start) {
-        std::cout << "found opposite edge02" << std::endl;
+        // found opposite edge
         half_edge02 = edge.get();
       }
     }
