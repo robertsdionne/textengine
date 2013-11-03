@@ -40,19 +40,9 @@ namespace textengine {
     const glm::vec2 offset = glm::vec2(joystick.GetAxis(Joystick::Axis::kLeftX), -joystick.GetAxis(Joystick::Axis::kLeftY)) * 0.016f;
     current_state.player.position += offset;
     current_state.player.position_target += offset;
-
-    const float angle_offset = -joystick.GetAxis(Joystick::Axis::kRightX);
-    const float angle = glm::atan(current_state.player.direction.y, current_state.player.direction.x) + angle_offset;
-    float angle_target = glm::atan(current_state.player.direction_target.y,
-                                   current_state.player.direction_target.x) + angle_offset;
-    while (angle_target - angle > M_PI) {
-      angle_target -= 2.0 * M_PI;
+    if (glm::length(offset) > 0) {
+      current_state.player.direction_target = glm::normalize(offset);
     }
-    while (angle_target - angle < -M_PI) {
-      angle_target += 2.0 * M_PI;
-    }
-    const float final_angle = glm::mix(angle, angle_target, 0.1f);
-    current_state.player.direction = glm::vec2(glm::cos(final_angle), glm::sin(final_angle));
     current_state.player = UpdateCharacter(current_state.player);
     int index;
     std::string phrases[] = {

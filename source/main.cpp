@@ -82,6 +82,7 @@ int main(int argument_count, char *arguments[]) {
   std::default_random_engine engine;
   textengine::MeshEditor editor{kWindowWidth, kWindowHeight, keyboard, mouse, mesh, engine};
   textengine::TextEngineRenderer renderer{updater, mesh, editor};
+  initial_state.world.SetDebugDraw(&renderer);
   textengine::GlfwApplication application{argument_count, arguments, kWindowWidth, kWindowHeight,
                                           kWindowTitle, updater, renderer, keyboard, mouse,
                                           joystick};
