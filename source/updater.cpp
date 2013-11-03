@@ -40,41 +40,46 @@ namespace textengine {
     }
     auto offset = glm::vec2(joystick.GetAxis(Joystick::Axis::kLeftX),
                             -joystick.GetAxis(Joystick::Axis::kLeftY));
+    auto offset2 = glm::vec2(joystick.GetAxis(Joystick::Axis::kRightX),
+                             -joystick.GetAxis(Joystick::Axis::kRightY));
     auto current_velocity = glm::vec2(current_state.player_body->GetLinearVelocity().x,
                                       current_state.player_body->GetLinearVelocity().y);
-    auto desired_velocity = offset;
-    auto force = 0.0001f * (desired_velocity - current_velocity);
-    current_state.player_body->ApplyForceToCenter(b2Vec2(force.x, force.y));
-    current_state.world.Step(0.016f, 8, 3);
-    current_state.player.position += offset;
-    current_state.player.position_target += offset;
-    if (glm::length(offset) > 0) {
-      current_state.player.direction_target = glm::normalize(offset);
-    }
-    current_state.player = UpdateCharacter(current_state.player);
-    int index;
-    std::string phrases[] = {
-      "Someone brushes hurriedly past you.",
-      "You pass someone.",
-      "One of those thugs shoves past you.",
-      "Someone bumps into you.",
-      "Someone bumps your arm.",
-      "Someone passes by.",
-      "A passerby approaches and departs."
-    };
-    for (auto &character : current_state.non_player_characters) {
-      character = UpdateNonPlayerCharacter(character);
-      character.character = UpdateCharacter(character.character);
-      if (glm::length(character.character.position - current_state.player.position) < 0.1) {
-        if (last_approach_times.end() == last_approach_times.find(index)) {
-          last_approach_times.insert({index, clock.now()});
-          reply_queue.PushMessage(phrases[phrase_index++ % 7]);
-        } else if (clock.now() - last_approach_times.at(index) > std::chrono::seconds(2)) {
-          reply_queue.PushMessage(phrases[phrase_index++ % 7]);
-          last_approach_times.at(index) = clock.now();
-        }
+    if (glm::length(offset) > 0 || glm::length(offset2) > 0 ||
+        joystick.GetButtonPressureVelocity(Joystick::PressureButton::kX) > 0) {
+      auto desired_velocity = offset;
+      auto force = 0.0001f * (desired_velocity - current_velocity);
+      current_state.player_body->ApplyForceToCenter(b2Vec2(force.x, force.y));
+      current_state.world.Step(0.016f, 8, 3);
+      current_state.player.position += offset;
+      current_state.player.position_target += offset;
+      if (glm::length(offset) > 0) {
+        current_state.player.direction_target = glm::normalize(offset);
       }
-      index += 1;
+      current_state.player = UpdateCharacter(current_state.player);
+      int index;
+      std::string phrases[] = {
+        "Someone brushes hurriedly past you.",
+        "You pass someone.",
+        "One of those thugs shoves past you.",
+        "Someone bumps into you.",
+        "Someone bumps your arm.",
+        "Someone passes by.",
+        "A passerby approaches and departs."
+      };
+      for (auto &character : current_state.non_player_characters) {
+        character = UpdateNonPlayerCharacter(character);
+        character.character = UpdateCharacter(character.character);
+        if (glm::length(character.character.position - current_state.player.position) < 0.1) {
+          if (last_approach_times.end() == last_approach_times.find(index)) {
+            last_approach_times.insert({index, clock.now()});
+            reply_queue.PushMessage(phrases[phrase_index++ % 7]);
+          } else if (clock.now() - last_approach_times.at(index) > std::chrono::seconds(2)) {
+            reply_queue.PushMessage(phrases[phrase_index++ % 7]);
+            last_approach_times.at(index) = clock.now();
+          }
+        }
+        index += 1;
+      }
     }
   }
 
