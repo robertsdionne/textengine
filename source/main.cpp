@@ -85,6 +85,5 @@ int main(int argument_count, char *arguments[]) {
   textengine::GlfwApplication application{argument_count, arguments, kWindowWidth, kWindowHeight,
                                           kWindowTitle, updater, renderer, keyboard, mouse,
                                           joystick};
-  application.Run();
-  return 0;
+  return application.Run();
 }

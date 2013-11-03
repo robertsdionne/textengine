@@ -22,7 +22,7 @@ namespace textengine {
 
     virtual ~GlfwApplication();
 
-    virtual void Run() override;
+    virtual int Run() override;
 
   protected:
     static void HandleKeyboard(GLFWwindow *window, int key, int scancode, int action, int mods);

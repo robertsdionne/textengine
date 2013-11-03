@@ -14,7 +14,7 @@
 constexpr const char *kPlaytestLog = u8"editor.log";
 constexpr int kWindowHeight = 800;
 constexpr int kWindowWidth = 1280;
-constexpr const char *kWindowTitle = u8"textengine";
+constexpr const char *kWindowTitle = u8"textengine editor";
 
 int main(int argument_count, char *arguments[]) {
   CHECK_STATE(argument_count > 1);
@@ -30,6 +30,5 @@ int main(int argument_count, char *arguments[]) {
   textengine::EditorRenderer renderer{mesh_renderer, editor};
   textengine::GlfwApplication application{argument_count, arguments, kWindowWidth, kWindowHeight,
     kWindowTitle, editor, renderer, keyboard, mouse, joystick};
-  application.Run();
-  return 0;
+  return application.Run();
 }

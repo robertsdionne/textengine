@@ -9,7 +9,7 @@ namespace textengine {
     DECLARE_INTERFACE(Application);
 
   public:
-    virtual void Run() = 0;
+    virtual int Run() = 0;
   };
 
 }  // namespace textengine

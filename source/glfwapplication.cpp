@@ -72,7 +72,7 @@ namespace textengine {
     }
   }
 
-  void GlfwApplication::Run() {
+  int GlfwApplication::Run() {
     CHECK_STATE(glfwInit() != -1);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
@@ -101,6 +101,7 @@ namespace textengine {
       glfwPollEvents();
     }
     glfwTerminate();
+    return 0;
   }
 
 }  // namespace textengine
