@@ -20,7 +20,7 @@ namespace textengine {
                                    Joystick &joystick)
   : window(nullptr), argument_count(argument_count), arguments(arguments), width(width),
   height(height), title(title), controller(controller), renderer(renderer), keyboard(keyboard),
-  mouse(mouse), joystick(joystick) {
+  mouse(mouse), joystick(joystick), minimized(false) {
     instance = this;
   }
 
@@ -92,6 +92,15 @@ namespace textengine {
     glfwGetFramebufferSize(window, &framebuffer_width, &framebuffer_height);
     HandleReshape(window, framebuffer_width, framebuffer_height);
     while (!glfwWindowShouldClose(window)) {
+      if (keyboard.GetKeyVelocity(GLFW_KEY_TAB) > 0) {
+        if (minimized) {
+          glfwSetWindowSize(window, width, height);
+          minimized = false;
+        } else {
+          glfwSetWindowSize(window, kMinimizedWidth, kMinimizedHeight);
+          minimized = true;
+        }
+      }
       renderer.Render();
       controller.Update();
       keyboard.Update();

@@ -1,3 +1,5 @@
+#include <ApplicationServices/ApplicationServices.h>
+#include <CoreFoundation/CFBundle.h>
 #include <chrono>
 #include <iostream>
 #include <sstream>
@@ -149,6 +151,13 @@ namespace textengine {
     CHECK_STATE(context);
     std::chrono::high_resolution_clock clock;
     auto old_time = clock.now();
+
+    const std::string url_string = "http://localhost:8888";
+    CFURLRef url = CFURLCreateWithBytes(nullptr, (UInt8 *)(url_string.c_str()),
+                                        url_string.size(), kCFStringEncodingUTF8, nullptr);
+    LSOpenCFURLRef(url, nullptr);
+    CFRelease(url);
+
     int result = 0;
     while (result >= 0) {
       auto new_time = clock.now();

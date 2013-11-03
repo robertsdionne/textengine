@@ -58,7 +58,7 @@ int main(int argument_count, char *arguments[]) {
   textengine::Joystick joystick(GLFW_JOYSTICK_1);
   textengine::SynchronizedQueue command_queue, reply_queue;
   textengine::WebSocketPrompt prompt{command_queue, reply_queue, kPrompt};
-  //prompt.Run();
+  prompt.Run();
   textengine::Mesh mesh;
   textengine::MeshLoader loader;
   mesh = loader.ReadMesh(filename);

@@ -25,6 +25,10 @@ namespace textengine {
     virtual int Run() override;
 
   protected:
+    static constexpr int kMinimizedWidth = 200;
+
+    static constexpr int kMinimizedHeight = 1;
+
     static void HandleKeyboard(GLFWwindow *window, int key, int scancode, int action, int mods);
 
     static void HandleMouseButton(GLFWwindow *window, int button, int action, int mods);
@@ -46,6 +50,7 @@ namespace textengine {
     Keyboard &keyboard;
     Mouse &mouse;
     Joystick &joystick;
+    bool minimized;
   };
 
 }  // namespace textengine
