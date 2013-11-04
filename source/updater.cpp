@@ -44,8 +44,9 @@ namespace textengine {
                              -joystick.GetAxis(Joystick::Axis::kRightY));
     auto current_velocity = glm::vec2(current_state.player_body->GetLinearVelocity().x,
                                       current_state.player_body->GetLinearVelocity().y);
+    std::cout << joystick.GetButtonPressure(Joystick::PressureButton::kX) << std::endl;
     if (glm::length(offset) > 0 || glm::length(offset2) > 0 ||
-        joystick.GetButtonPressureVelocity(Joystick::PressureButton::kX) > 0) {
+        joystick.GetButtonPressure(Joystick::PressureButton::kX) > 0) {
       auto position = glm::vec2(current_state.player_body->GetPosition().x,
                                 current_state.player_body->GetPosition().y);
       auto current_face = FindFaceThatContainsPoint(position);
@@ -81,7 +82,7 @@ namespace textengine {
       current_state.player_body->ApplyForceToCenter(b2Vec2(force.x, force.y));
       auto dt = 0.016f;
       if (glm::length(offset) == 0 &&
-          joystick.GetButtonPressureVelocity(Joystick::PressureButton::kX) == 0) {
+          joystick.GetButtonPressure(Joystick::PressureButton::kX) == 0) {
         dt *= glm::length(SquareToRound(offset2));
       }
       current_state.world.Step(dt, 8, 3);
