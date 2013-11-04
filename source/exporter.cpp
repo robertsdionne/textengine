@@ -4,9 +4,10 @@
 #include "checks.h"
 
 int main(int argument_count, char *arguments[]) {
-  std::ifstream in("../resource/output.json");
+  CHECK_STATE(argument_count > 2);
+  std::ifstream in(arguments[1]);
   CHECK_STATE(in.is_open());
-  std::ofstream out("output.obj");
+  std::ofstream out(arguments[2]);
   CHECK_STATE(out.is_open());
   picojson::value value;
   in >> value;
