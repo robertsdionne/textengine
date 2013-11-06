@@ -1,7 +1,6 @@
 #ifndef TEXTENGINE_TEXTENGINERENDERER_H_
 #define TEXTENGINE_TEXTENGINERENDERER_H_
 
-#include <Box2D/Box2D.h>
 #include <glm/glm.hpp>
 #include <iostream>
 
@@ -18,7 +17,7 @@ namespace textengine {
   class SubjectiveMeshRenderer;
   class Updater;
 
-  class TextEngineRenderer : public Renderer, public b2Draw {
+  class TextEngineRenderer : public Renderer {
   public:
     TextEngineRenderer(Updater &updater, SubjectiveMeshRenderer &mesh_renderer);
 
@@ -29,21 +28,6 @@ namespace textengine {
     virtual void Create() override;
 
     virtual void Render() override;
-
-	virtual void DrawPolygon(const b2Vec2* vertices,
-                             int32 vertex_count, const b2Color& color) override;
-
-	virtual void DrawSolidPolygon(const b2Vec2* vertices,
-                                  int32 vertex_count, const b2Color& color) override;
-
-	virtual void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color) override;
-
-	virtual void DrawSolidCircle(const b2Vec2& center,
-                                 float32 radius, const b2Vec2& axis, const b2Color& color) override;
-
-	virtual void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) override;
-
-	virtual void DrawTransform(const b2Transform& xf) override;
     
   private:
     Updater &updater;

@@ -23,7 +23,6 @@ namespace textengine {
   }
 
   void TextEngineRenderer::Create() {
-    //SetFlags(b2Draw::e_centerOfMassBit | b2Draw::e_jointBit | b2Draw::e_pairBit | b2Draw::e_shapeBit);
     glClearColor(0.0, 0.0, 0.0, 1.0);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -122,109 +121,6 @@ namespace textengine {
     item_edge_array.Create();
     vertex_format.Apply(item_edge_array, edge_program);
     CHECK_STATE(!glGetError());
-  }
-
-  void TextEngineRenderer::DrawPolygon(const b2Vec2* vertices,
-                                       int32 vertex_count, const b2Color& color) {
-    auto data = std::unique_ptr<float[]>(new float[6 * vertex_count]);
-    for (auto i = 0; i < vertex_count; ++i) {
-      data[6 * i + 0] = vertices[i].x;
-      data[6 * i + 1] = vertices[i].y;
-      data[6 * i + 2] = color.r;
-      data[6 * i + 3] = color.g;
-      data[6 * i + 4] = color.b;
-      data[6 * i + 5] = 1.0f;
-    }
-    Buffer vertex_buffer;
-    vertex_buffer.Create(GL_ARRAY_BUFFER);
-    vertex_buffer.Data(sizeof(float) * 6 * vertex_count, data.get(), GL_STREAM_DRAW);
-    VertexArray vertex_array;
-    vertex_array.Create();
-    vertex_format.Apply(vertex_array, edge_program);
-    CHECK_STATE(!glGetError());
-    edge_program.Use();
-    edge_program.Uniforms({
-      {u8"projection", &projection},
-      {u8"model_view", &model_view}
-    });
-    edge_program.Uniforms({
-      {u8"line_width", 0.005},
-      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
-    });
-    vertex_array.Bind();
-    glDrawArrays(GL_LINE_LOOP, 0, vertex_count);
-    CHECK_STATE(!glGetError());
-  }
-
-  void TextEngineRenderer::DrawSolidPolygon(const b2Vec2* vertices,
-                                            int32 vertex_count, const b2Color& color) {
-    auto data = std::unique_ptr<float[]>(new float[6 * vertex_count]);
-    for (auto i = 0; i < vertex_count; ++i) {
-      data[6 * i + 0] = vertices[i].x;
-      data[6 * i + 1] = vertices[i].y;
-      data[6 * i + 2] = color.r;
-      data[6 * i + 3] = color.g;
-      data[6 * i + 4] = color.b;
-      data[6 * i + 5] = 1.0f;
-    }
-    Buffer vertex_buffer;
-    vertex_buffer.Create(GL_ARRAY_BUFFER);
-    vertex_buffer.Data(sizeof(float) * 6 * vertex_count, data.get(), GL_STREAM_DRAW);
-    VertexArray vertex_array;
-    vertex_array.Create();
-    vertex_format.Apply(vertex_array, edge_program);
-    CHECK_STATE(!glGetError());
-    edge_program.Use();
-    edge_program.Uniforms({
-      {u8"projection", &projection},
-      {u8"model_view", &model_view}
-    });
-    edge_program.Uniforms({
-      {u8"line_width", 0.005},
-      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
-    });
-    vertex_array.Bind();
-    glDrawArrays(GL_LINE_LOOP, 0, vertex_count);
-    CHECK_STATE(!glGetError());
-  }
-
-  void TextEngineRenderer::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color) {
-
-  }
-
-  void TextEngineRenderer::DrawSolidCircle(const b2Vec2& center, float32 radius,
-                                           const b2Vec2& axis, const b2Color& color) {
-
-  }
-
-  void TextEngineRenderer::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color) {
-    float data[] = {
-      p1.x, p1.y, color.r, color.g, color.b, 1.0f,
-      p2.x, p2.y, color.r, color.g, color.b, 1.0f
-    };
-    Buffer vertex_buffer;
-    vertex_buffer.Create(GL_ARRAY_BUFFER);
-    vertex_buffer.Data(sizeof(float) * 6 * 2, data, GL_STREAM_DRAW);
-    VertexArray vertex_array;
-    vertex_array.Create();
-    vertex_format.Apply(vertex_array, edge_program);
-    CHECK_STATE(!glGetError());
-    edge_program.Use();
-    edge_program.Uniforms({
-      {u8"projection", &projection},
-      {u8"model_view", &model_view}
-    });
-    edge_program.Uniforms({
-      {u8"line_width", 0.005},
-      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
-    });
-    vertex_array.Bind();
-    glDrawArrays(GL_LINES, 0, 2);
-    CHECK_STATE(!glGetError());
-  }
-
-  void TextEngineRenderer::DrawTransform(const b2Transform& xf) {
-
   }
 
   void TextEngineRenderer::Render() {
