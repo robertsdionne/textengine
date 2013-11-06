@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <deque>
+#include <functional>
 #include <glm/glm.hpp>
 #include <memory>
 #include <unordered_map>
@@ -16,21 +17,37 @@ namespace textengine {
   glm::vec2 Mesh::Face::centroid() const {
     auto centroid = glm::vec2();
     auto count = 1.0f;
-    for (auto half_edge : neighbors()) {
+    ForEachHalfEdge([&] (HalfEdge *half_edge) {
       centroid += (half_edge->start->position - centroid) / count;
       count += 1;
-    }
+    });
     return centroid;
   }
 
-  std::vector<Mesh::HalfEdge *> Mesh::Face::neighbors() const {
-    auto neighbors = std::vector<HalfEdge *>();
+  void Mesh::Face::ForEachFace(std::function<void(Face *)> body) const {
     auto half_edge = face_edge;
     do {
-      neighbors.push_back(half_edge);
+      if (half_edge->opposite) {
+        body(half_edge->opposite->face);
+      }
       half_edge = half_edge->next;
     } while (face_edge != half_edge);
-    return neighbors;
+  }
+
+  void Mesh::Face::ForEachHalfEdge(std::function<void(HalfEdge *)> body) const {
+    auto half_edge = face_edge;
+    do {
+      body(half_edge);
+      half_edge = half_edge->next;
+    } while (face_edge != half_edge);
+  }
+
+  void Mesh::Face::ForEachVertex(std::function<void(Vertex *)> body) const {
+    auto half_edge = face_edge;
+    do {
+      body(half_edge->start);
+      half_edge = half_edge->next;
+    } while (face_edge != half_edge);
   }
 
   Mesh::Mesh(std::vector<std::unique_ptr<Face>> &&faces,
@@ -453,18 +470,6 @@ namespace textengine {
     return nullptr;
   }
 
-  std::vector<Mesh::Face *> Mesh::FindNeighbors(Face *face) const {
-    auto neighbors = std::vector<Face *>();
-    auto half_edge = face->face_edge;
-    do {
-      if (half_edge->opposite) {
-        neighbors.push_back(half_edge->opposite->face);
-      }
-      half_edge = half_edge->next;
-    } while (half_edge != face->face_edge);
-    return neighbors;
-  }
-
   void Mesh::FindVisibleFaces(glm::vec2 perspective, int max_depth,
                               std::vector<Face *> &visible_faces,
                               std::unordered_map<Face *, float> &depths) const {
@@ -480,12 +485,12 @@ namespace textengine {
         queue.pop_front();
         visible_faces.push_back(face);
         visited.insert(face);
-        for (auto neighbor : FindNeighbors(face)) {
+        face->ForEachFace([&] (Face *neighbor) {
           if (visited.end() == visited.find(neighbor) && depth < max_depth) {
             depths.insert({neighbor, depth + 1});
             queue.push_back(neighbor);
           }
-        }
+        });
       }
     }
   }
@@ -496,11 +501,9 @@ namespace textengine {
     auto visible_faces = std::vector<Face *>();
     FindVisibleFaces(perspective, max_depth, visible_faces, depths);
     for (auto face : visible_faces) {
-      auto half_edge = face->face_edge;
-      do {
+      face->ForEachHalfEdge([&] (HalfEdge *half_edge) {
         visible_half_edges.push_back(half_edge);
-        half_edge = half_edge->next;
-      } while (half_edge != face->face_edge);
+      });
     }
   }
 

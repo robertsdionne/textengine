@@ -1,6 +1,7 @@
 #ifndef TEXTENGINE_MESH_H_
 #define TEXTENGINE_MESH_H_
 
+#include <functional>
 #include <glm/glm.hpp>
 #include <memory>
 #include <vector>
@@ -13,6 +14,7 @@ namespace textengine {
   public:
     struct HalfEdge;
     struct RoomInfo;
+    struct Vertex;
 
     struct Face {
       HalfEdge *face_edge;
@@ -20,7 +22,11 @@ namespace textengine {
 
       glm::vec2 centroid() const;
 
-      std::vector<HalfEdge *> neighbors() const;
+      void ForEachFace(std::function<void(Face *)> body) const;
+
+      void ForEachHalfEdge(std::function<void(HalfEdge *)> body) const;
+
+      void ForEachVertex(std::function<void(Vertex *)> body) const;
     };
 
     struct Vertex {
@@ -84,8 +90,6 @@ namespace textengine {
     bool FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const;
 
     Mesh::Face *FindFaceThatContainsPoint(glm::vec2 point) const;
-
-    std::vector<Face *> FindNeighbors(Face *face) const;
 
     void FindVisibleFaces(glm::vec2 perspective, int max_depth,
                           std::vector<Face *> &visible_faces,

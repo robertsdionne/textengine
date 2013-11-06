@@ -44,7 +44,6 @@ namespace textengine {
                              -joystick.GetAxis(Joystick::Axis::kRightY));
     auto current_velocity = glm::vec2(current_state.player_body->GetLinearVelocity().x,
                                       current_state.player_body->GetLinearVelocity().y);
-    std::cout << joystick.GetButtonPressure(Joystick::PressureButton::kX) << std::endl;
     if (glm::length(offset) > 0 || glm::length(offset2) > 0 ||
         joystick.GetButtonPressure(Joystick::PressureButton::kX) > 0) {
       auto position = glm::vec2(current_state.player_body->GetPosition().x,
@@ -53,8 +52,7 @@ namespace textengine {
       float maximum = -std::numeric_limits<float>::infinity();
       glm::vec2 target;
       Mesh::Face *argmax = nullptr;
-      Mesh::HalfEdge *edge = current_face->face_edge;
-      do {
+      current_face->ForEachHalfEdge([&] (Mesh::HalfEdge *edge) {
         if (edge->opposite) {
           const auto centroid = edge->opposite->face->centroid();
           const float dot_product = glm::dot(glm::normalize(centroid - position), SquareToRound(offset));
@@ -64,8 +62,7 @@ namespace textengine {
             target = centroid;
           }
         }
-        edge = edge->next;
-      } while (edge != current_face->face_edge);
+      });
       if (argmax) {
         current_state.player.direction_target = glm::normalize(target - position);
         current_state.player.position_target = target;
@@ -159,8 +156,7 @@ namespace textengine {
             float minimum = std::numeric_limits<float>::infinity();
             glm::vec2 target;
             Mesh::Face *argmin = nullptr;
-            Mesh::HalfEdge *edge = face->face_edge;
-            do {
+            face->ForEachHalfEdge([&] (Mesh::HalfEdge *edge) {
               if (edge->opposite) {
                 const float distance = distances.at(edge->opposite->face);
                 if (distance < minimum) {
@@ -169,8 +165,7 @@ namespace textengine {
                   target = edge->opposite->face->centroid();
                 }
               }
-              edge = edge->next;
-            } while (edge != face->face_edge);
+            });
             if (argmin) {
               const auto h01 = face->face_edge;
               const auto h12 = h01->next;
@@ -184,8 +179,7 @@ namespace textengine {
         float minimum = std::numeric_limits<float>::infinity();
         glm::vec2 target;
         Mesh::Face *argmin = nullptr;
-        Mesh::HalfEdge *edge = current_face->face_edge;
-        do {
+        current_face->ForEachHalfEdge([&] (Mesh::HalfEdge *edge) {
           if (edge->opposite) {
             const float distance = distances.at(edge->opposite->face);
             if (distance < minimum) {
@@ -194,8 +188,7 @@ namespace textengine {
               target = edge->opposite->face->centroid();
             }
           }
-          edge = edge->next;
-        } while (edge != current_face->face_edge);
+        });
         if (argmin) {
           next_character.direction_target = glm::normalize(target - next_character.position);
           next_character.position_target = target;
