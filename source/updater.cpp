@@ -1,4 +1,3 @@
-#include <Box2D/Box2D.h>
 #include <cmath>
 #include <glm/glm.hpp>
 #include <limits>
@@ -42,12 +41,9 @@ namespace textengine {
                             -joystick.GetAxis(Joystick::Axis::kLeftY));
     auto offset2 = glm::vec2(joystick.GetAxis(Joystick::Axis::kRightX),
                              -joystick.GetAxis(Joystick::Axis::kRightY));
-    auto current_velocity = glm::vec2(current_state.player_body->GetLinearVelocity().x,
-                                      current_state.player_body->GetLinearVelocity().y);
     if (glm::length(offset) > 0 || glm::length(offset2) > 0 ||
         joystick.GetButtonPressure(Joystick::PressureButton::kX) > 0) {
-      auto position = glm::vec2(current_state.player_body->GetPosition().x,
-                                current_state.player_body->GetPosition().y);
+      auto position = current_state.player.position;
       auto current_face = FindFaceThatContainsPoint(position);
       float maximum = -std::numeric_limits<float>::infinity();
       glm::vec2 target;
@@ -69,18 +65,11 @@ namespace textengine {
       } else if (glm::length(offset) > 0) {
         current_state.player.direction_target = glm::normalize(SquareToRound(offset));
       }
-      auto desired_velocity = 25.0f * glm::length(SquareToRound(offset)) * (current_state.player.position_target - position);
-      auto force = current_state.player_body->GetMass() * (desired_velocity - current_velocity);
-      current_state.player_body->ApplyForceToCenter(b2Vec2(force.x, force.y));
       auto dt = 0.016f;
       if (glm::length(offset) == 0 &&
           joystick.GetButtonPressure(Joystick::PressureButton::kX) == 0) {
         dt *= glm::length(SquareToRound(offset2));
       }
-      current_state.world.Step(dt, 8, 3);
-//      if (glm::length(offset) > 0) {
-//        current_state.player.direction_target = glm::normalize(offset);
-//      }
       {
         if (glm::length(offset2) > 0) {
           current_state.player_view_direction_target = glm::normalize(offset2);
@@ -101,7 +90,7 @@ namespace textengine {
         current_state.player_view_direction = glm::vec2(glm::cos(final_angle),
                                                         glm::sin(final_angle));
       }
-      current_state.player = UpdateCharacter(current_state.player, dt);
+      current_state.player = UpdateCharacter(current_state.player, dt, dt * glm::length(SquareToRound(offset)));
       int index;
       std::string phrases[] = {
         "Someone brushes hurriedly past you.",
@@ -114,7 +103,7 @@ namespace textengine {
       };
       for (auto &character : current_state.non_player_characters) {
         character = UpdateNonPlayerCharacter(character);
-        character.character = UpdateCharacter(character.character, dt);
+        character.character = UpdateCharacter(character.character, dt, dt);
         if (glm::length(character.character.position - current_state.player.position) < 0.1) {
           if (last_approach_times.end() == last_approach_times.find(index)) {
             last_approach_times.insert({index, clock.now()});
@@ -129,7 +118,7 @@ namespace textengine {
     }
   }
 
-  CharacterInfo Updater::UpdateCharacter(CharacterInfo current_character, float dt) const {
+  CharacterInfo Updater::UpdateCharacter(CharacterInfo current_character, float dt, float dt2) const {
     CharacterInfo next_character = current_character;
     if (next_character.room_target) {
       auto current_face = FindFaceThatContainsPoint(next_character.position);
@@ -207,7 +196,7 @@ namespace textengine {
     const float final_angle = glm::mix(angle, angle_target, 0.1f / 0.016f * dt);
     next_character.direction = glm::vec2(glm::cos(final_angle), glm::sin(final_angle));
     next_character.position = glm::mix(next_character.position,
-                                       next_character.position_target, 0.1f / 0.016f * dt);
+                                       next_character.position_target, 0.1f / 0.016f * dt2);
     return next_character;
   }
 

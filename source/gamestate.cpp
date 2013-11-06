@@ -11,9 +11,9 @@ namespace textengine {
     return name == other.name;
   }
 
-  GameState::GameState(std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries)
+  GameState::GameState()
   : player{glm::vec2(), glm::vec2(), glm::vec2(0, 1), glm::vec2(0, 1), nullptr},
-  non_player_characters(), world(b2Vec2(0, 0)), player_view_direction(glm::vec2(0, 1)),
+  non_player_characters(), player_view_direction(glm::vec2(0, 1)),
   player_view_direction_target(glm::vec2(0, 1)) {
     for (auto i = 0; i < 3; ++i) {
       non_player_characters.push_back({
@@ -21,58 +21,18 @@ namespace textengine {
         {i}
       });
     }
-      b2BodyDef boundary_body_definition;
-      boundary_body_definition.position.Set(0, 0);
-      boundary = world.CreateBody(&boundary_body_definition);
-      for (auto &boundary : boundaries) {
-        auto vertices = std::unique_ptr<b2Vec2[]>(new b2Vec2[boundary->size()]);
-        for (auto i = 0; i < boundary->size(); ++i) {
-          vertices[i].Set((*boundary)[i].x, (*boundary)[i].y);
-        }
-        b2ChainShape boundary_shape;
-        boundary_shape.CreateLoop(vertices.get(), static_cast<int>(boundary->size()));
-        b2FixtureDef boundary_fixture_definition;
-        boundary_fixture_definition.shape = &boundary_shape;
-        GameState::boundary->CreateFixture(&boundary_fixture_definition);
-      }
-      b2BodyDef player_body_definition;
-      player_body_definition.type = b2_dynamicBody;
-      player_body_definition.position.Set(player.position.x, player.position.y);
-      player_body_definition.linearVelocity.Set(0, 0);
-      player_body_definition.linearDamping = 2;
-      player_body_definition.angularVelocity = 0;
-      player_body_definition.angularDamping = 0.1;
-      player_body = world.CreateBody(&player_body_definition);
-      b2CircleShape player_shape;
-      player_shape.m_radius = 0.001;
-      b2FixtureDef player_fixture_definition;
-      player_fixture_definition.shape = &player_shape;
-      player_fixture_definition.density = 0.1;
-      player_fixture_definition.restitution = 0.1;
-      player_fixture_definition.friction = 0.1;
-      player_body->CreateFixture(&player_fixture_definition);
   }
 
   GameState::GameState(glm::vec2 player_position,
                        glm::vec2 player_direction)
   : player{player_position, player_position, player_direction, player_direction, nullptr},
-    non_player_characters(), world(b2Vec2(0, 0)) {
+    non_player_characters() {
     for (auto i = 0; i < 3; ++i) {
       non_player_characters.push_back({
         {glm::vec2(), glm::vec2(), glm::vec2(0, 1), glm::vec2(0, 1), nullptr},
         {i}
       });
     }
-  }
-
-  GameState::~GameState() {
-    b2Fixture *fixture = boundary->GetFixtureList();
-    while (fixture) {
-      auto next = fixture->GetNext();
-      boundary->DestroyFixture(fixture);
-      fixture = next;
-    }
-    world.DestroyBody(boundary);
   }
 
   Drawable GameState::TriangulateItems() const {

@@ -78,7 +78,6 @@
 		462B4A6717EA43AA006FE9BB /* buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A6217EA43AA006FE9BB /* buffer.cpp */; };
 		464A57F6181B0D8300FAF563 /* exporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464A57F5181B0D8300FAF563 /* exporter.cpp */; };
 		464E36801825B4BC00AC0AC0 /* joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464E367E1825B4BC00AC0AC0 /* joystick.cpp */; };
-		464E374B1825D21400AC0AC0 /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 464E36851825D1B400AC0AC0 /* libbox2d.a */; };
 		464E37B21825D28800AC0AC0 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 464E374E1825D28800AC0AC0 /* Box2D.h */; };
 		464E37B31825D28800AC0AC0 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464E37521825D28800AC0AC0 /* b2BroadPhase.cpp */; };
 		464E37B41825D28800AC0AC0 /* b2BroadPhase.h in Headers */ = {isa = PBXBuildFile; fileRef = 464E37531825D28800AC0AC0 /* b2BroadPhase.h */; };
@@ -226,13 +225,6 @@
 			remoteInfo = glfw;
 		};
 		461717F11826A5AE0070ABED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 463E3D5B1767FB9000A4466B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 464E36841825D1B400AC0AC0;
-			remoteInfo = box2d;
-		};
-		464E37491825D20D00AC0AC0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 463E3D5B1767FB9000A4466B /* Project object */;
 			proxyType = 1;
@@ -1602,7 +1594,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				464E374B1825D21400AC0AC0 /* libbox2d.a in Frameworks */,
 				46AB32ED180F2F28003DDECF /* CFNetwork.framework in Frameworks */,
 				468E01431783DF4C00301C1C /* Cocoa.framework in Frameworks */,
 				468E01471783DFA100301C1C /* IOKit.framework in Frameworks */,
@@ -3514,7 +3505,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				464E374A1825D20D00AC0AC0 /* PBXTargetDependency */,
 				46D0FCB3180F1B5C00B00F93 /* PBXTargetDependency */,
 				46B9842D17E69EC300B59145 /* PBXTargetDependency */,
 				468E015C1783F10100301C1C /* PBXTargetDependency */,
@@ -3827,11 +3817,6 @@
 			isa = PBXTargetDependency;
 			target = 464E36841825D1B400AC0AC0 /* box2d */;
 			targetProxy = 461717F11826A5AE0070ABED /* PBXContainerItemProxy */;
-		};
-		464E374A1825D20D00AC0AC0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 464E36841825D1B400AC0AC0 /* box2d */;
-			targetProxy = 464E37491825D20D00AC0AC0 /* PBXContainerItemProxy */;
 		};
 		468E015C1783F10100301C1C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

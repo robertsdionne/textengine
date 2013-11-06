@@ -52,7 +52,7 @@ int main(int argument_count, char *arguments[]) {
   mesh = loader.ReadMesh(filename);
   textengine::CommandTokenizer tokenizer;
   textengine::CommandParser parser{tokenizer, mesh, reply_queue};
-  textengine::GameState initial_state{mesh.Boundaries()};
+  textengine::GameState initial_state;
   PutItemInRoom("book", "RoomA", mesh, initial_state);
   PutItemInRoom("teacup", "RoomB", mesh, initial_state);
   PutItemInRoom("bread", "RoomC", mesh, initial_state);

@@ -137,8 +137,7 @@ namespace textengine {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    const glm::vec2 position = glm::vec2(current_state.player_body->GetPosition().x,
-                                         current_state.player_body->GetPosition().y);
+    const glm::vec2 position = current_state.player.position;
 
     mesh_renderer.SetPerspective(position);
     mesh_renderer.Render();
@@ -219,8 +218,6 @@ namespace textengine {
       npc_edge_array.Bind();
       glDrawArrays(GL_LINES, 0, 6);
       CHECK_STATE(!glGetError());
-
-      current_state.world.DrawDebugData();
     }
   }
 

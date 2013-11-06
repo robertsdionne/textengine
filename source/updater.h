@@ -30,7 +30,7 @@ namespace textengine {
   private:
     void Update(GameState &current_state);
 
-    CharacterInfo UpdateCharacter(CharacterInfo current_character, float dt) const;
+    CharacterInfo UpdateCharacter(CharacterInfo current_character, float dt, float dt2) const;
 
     NonPlayerCharacterInfo UpdateNonPlayerCharacter(NonPlayerCharacterInfo current_character) const;
 
