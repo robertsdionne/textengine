@@ -13,6 +13,26 @@
 
 namespace textengine {
 
+  glm::vec2 Mesh::Face::centroid() const {
+    auto centroid = glm::vec2();
+    auto count = 1.0f;
+    for (auto half_edge : neighbors()) {
+      centroid += (half_edge->start->position - centroid) / count;
+      count += 1;
+    }
+    return centroid;
+  }
+
+  std::vector<Mesh::HalfEdge *> Mesh::Face::neighbors() const {
+    auto neighbors = std::vector<HalfEdge *>();
+    auto half_edge = face_edge;
+    do {
+      neighbors.push_back(half_edge);
+      half_edge = half_edge->next;
+    } while (face_edge != half_edge);
+    return neighbors;
+  }
+
   Mesh::Mesh(std::vector<std::unique_ptr<Face>> &&faces,
              std::vector<std::unique_ptr<HalfEdge>> &&half_edges,
              std::vector<std::unique_ptr<Vertex>> &&vertices,

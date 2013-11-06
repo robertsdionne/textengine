@@ -17,6 +17,10 @@ namespace textengine {
     struct Face {
       HalfEdge *face_edge;
       RoomInfo *room_info;
+
+      glm::vec2 centroid() const;
+
+      std::vector<HalfEdge *> neighbors() const;
     };
 
     struct Vertex {

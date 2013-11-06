@@ -58,8 +58,6 @@ namespace textengine {
   private:
     Mesh::RoomInfo *CreateRandomizedRoomInfo();
 
-    glm::vec2 FaceCentroid(const Mesh::Face *face) const;
-
     enum class ScaleMode {
       kFalse = 0,
       kAll,

@@ -56,12 +56,7 @@ namespace textengine {
       Mesh::HalfEdge *edge = current_face->face_edge;
       do {
         if (edge->opposite) {
-          const auto h01 = edge->opposite->face->face_edge;
-          const auto h12 = h01->next;
-          const auto h20 = h12->next;
-          CHECK_STATE(h01 == h20->next);
-          const auto v0 = h01->start->position, v1 = h12->start->position, v2 = h20->start->position;
-          const auto centroid = (v0 + v1 + v2) / 3.0f;
+          const auto centroid = edge->opposite->face->centroid();
           const float dot_product = glm::dot(glm::normalize(centroid - position), SquareToRound(offset));
           if (dot_product > 0 && dot_product > maximum) {
             maximum = dot_product;
@@ -167,17 +162,11 @@ namespace textengine {
             Mesh::HalfEdge *edge = face->face_edge;
             do {
               if (edge->opposite) {
-                const auto h01 = edge->opposite->face->face_edge;
-                const auto h12 = h01->next;
-                const auto h20 = h12->next;
-                CHECK_STATE(h01 == h20->next);
-                const auto v0 = h01->start->position, v1 = h12->start->position, v2 = h20->start->position;
-                const auto centroid = (v0 + v1 + v2) / 3.0f;
                 const float distance = distances.at(edge->opposite->face);
                 if (distance < minimum) {
                   minimum = distance;
                   argmin = edge->opposite->face;
-                  target = centroid;
+                  target = edge->opposite->face->centroid();
                 }
               }
               edge = edge->next;
@@ -188,8 +177,7 @@ namespace textengine {
               const auto h20 = h12->next;
               CHECK_STATE(h01 == h20->next);
               const auto v0 = h01->start->position, v1 = h12->start->position, v2 = h20->start->position;
-              const auto centroid = (v0 + v1 + v2) / 3.0f;
-              distances.at(face.get()) = minimum + glm::length(target - centroid);
+              distances.at(face.get()) = minimum + glm::length(target - face->centroid());
             }
           }
         }
@@ -199,17 +187,11 @@ namespace textengine {
         Mesh::HalfEdge *edge = current_face->face_edge;
         do {
           if (edge->opposite) {
-            const auto h01 = edge->opposite->face->face_edge;
-            const auto h12 = h01->next;
-            const auto h20 = h12->next;
-            CHECK_STATE(h01 == h20->next);
-            const auto v0 = h01->start->position, v1 = h12->start->position, v2 = h20->start->position;
-            const auto centroid = (v0 + v1 + v2) / 3.0f;
             const float distance = distances.at(edge->opposite->face);
             if (distance < minimum) {
               minimum = distance;
               argmin = edge->opposite->face;
-              target = centroid;
+              target = edge->opposite->face->centroid();
             }
           }
           edge = edge->next;

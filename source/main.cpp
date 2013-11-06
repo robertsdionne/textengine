@@ -28,23 +28,11 @@ constexpr const char *kWindowTitle = u8"textengine";
 std::random_device generator;
 std::uniform_real_distribution<float> my_random;
 
-glm::vec2 FaceCentroid(const textengine::Mesh::Face *face) {
-  glm::vec2 total = glm::vec2();
-  float count = 0;
-  textengine::Mesh::HalfEdge *edge = face->face_edge;
-  do {
-    total += edge->start->position;
-    count += 1;
-    edge = edge->next;
-  } while (edge != face->face_edge);
-  return total / count;
-}
-
 void PutItemInRoom(const std::string &item, const std::string &room, textengine::Mesh &mesh, textengine::GameState &state) {
   for (auto &face : mesh.get_faces()) {
     if (face->room_info && room == face->room_info->name) {
       state.items.push_back({
-        FaceCentroid(face.get()), item, glm::vec4(my_random(generator), my_random(generator), my_random(generator), 1)
+        face->centroid(), item, glm::vec4(my_random(generator), my_random(generator), my_random(generator), 1)
       });
       return;
     }

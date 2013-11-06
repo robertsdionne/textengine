@@ -138,18 +138,6 @@ namespace textengine {
     return room_info;
   }
 
-  glm::vec2 MeshEditor::FaceCentroid(const Mesh::Face *face) const {
-    glm::vec2 total = glm::vec2();
-    float count = 0;
-    Mesh::HalfEdge *edge = face->face_edge;
-    do {
-      total += edge->start->position;
-      count += 1;
-      edge = edge->next;
-    } while (edge != face->face_edge);
-    return total / count;
-  }
-
   Drawable MeshEditor::HighlightedPoints() const {
     std::unordered_set<Mesh::Vertex *> vertices = potentially_selected_vertices();
     Drawable drawable;
@@ -398,10 +386,10 @@ namespace textengine {
     int index = 0;
     for (auto &half_edge : mesh.get_half_edges()) {
       if (half_edge->opposite) {
-        const glm::vec2 centroid = FaceCentroid(half_edge->face);
-        const glm::vec2 opposite_centroid = FaceCentroid(half_edge->opposite->face);
-        const glm::vec4 color = half_edge->face->room_info ? half_edge->face->room_info->color / 2.0f : glm::vec4(0.0f, 0.0f, 0.64f, 1.0f);
-        const glm::vec4 opposite_color = half_edge->opposite->face->room_info ? half_edge->opposite->face->room_info->color / 2.0f : glm::vec4(0.0f, 0.0f, 0.64f, 1.0f);
+        const auto centroid = half_edge->face->centroid();
+        const auto opposite_centroid = half_edge->opposite->face->centroid();
+        const auto color = half_edge->face->room_info ? half_edge->face->room_info->color / 2.0f : glm::vec4(0.0f, 0.0f, 0.64f, 1.0f);
+        const auto opposite_color = half_edge->opposite->face->room_info ? half_edge->opposite->face->room_info->color / 2.0f : glm::vec4(0.0f, 0.0f, 0.64f, 1.0f);
         drawable.data[index + 0] = centroid.x;
         drawable.data[index + 1] = centroid.y;
         drawable.data[index + 2] = color.r;
@@ -430,7 +418,7 @@ namespace textengine {
     drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
     int index = 0;
     for (auto &face : mesh.get_faces()) {
-      const glm::vec2 centroid = FaceCentroid(face.get());
+      const glm::vec2 centroid = face->centroid();
       const glm::vec4 color = face->room_info ? face->room_info->color / 4.0f : glm::vec4(0.0f, 0.0f, 0.32f, 1.0f);
       drawable.data[index + 0] = centroid.x;
       drawable.data[index + 1] = centroid.y;
