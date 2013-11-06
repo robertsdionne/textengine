@@ -15,12 +15,12 @@
 
 namespace textengine {
 
-  class MeshRenderer;
+  class SubjectiveMeshRenderer;
   class Updater;
 
   class TextEngineRenderer : public Renderer, public b2Draw {
   public:
-    TextEngineRenderer(Updater &updater, MeshRenderer &mesh_renderer);
+    TextEngineRenderer(Updater &updater, SubjectiveMeshRenderer &mesh_renderer);
 
     virtual ~TextEngineRenderer() = default;
 
@@ -47,7 +47,7 @@ namespace textengine {
     
   private:
     Updater &updater;
-    MeshRenderer &mesh_renderer;
+    SubjectiveMeshRenderer &mesh_renderer;
     float inverse_aspect_ratio;
 
     Shader edge_geometry_shader, fragment_shader, point_geometry_shader, vertex_shader;

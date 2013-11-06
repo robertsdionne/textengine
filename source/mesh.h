@@ -68,7 +68,28 @@ namespace textengine {
 
     Drawable Triangulate() const;
 
+    Drawable Triangulate(glm::vec2 perspective) const;
+
     Drawable Wireframe() const;
+
+    Drawable Wireframe(glm::vec2 perspective) const;
+
+  private:
+    static constexpr auto kMaxDepth = 12;
+
+    bool FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const;
+
+    Mesh::Face *FindFaceThatContainsPoint(glm::vec2 point) const;
+
+    std::vector<Face *> FindNeighbors(Face *face) const;
+
+    void FindVisibleFaces(glm::vec2 perspective, int max_depth,
+                          std::vector<Face *> &visible_faces,
+                          std::unordered_map<Face *, float> &depths) const;
+
+    void FindVisibleHalfEdges(glm::vec2 perspective, int max_depth,
+                              std::vector<HalfEdge *> &visible_half_edges,
+                              std::unordered_map<Face *, float> &depths) const;
 
   private:
     std::vector<std::unique_ptr<Face>> faces;

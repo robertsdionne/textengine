@@ -1,6 +1,8 @@
 #include <algorithm>
+#include <deque>
 #include <glm/glm.hpp>
 #include <memory>
+#include <unordered_map>
 #include <unordered_set>
 #include <utility>
 #include <vector>
@@ -306,6 +308,49 @@ namespace textengine {
     return drawable;
   }
 
+  Drawable Mesh::Triangulate(glm::vec2 perspective) const {
+    auto visible_faces = std::vector<Face *>();
+    auto depths = std::unordered_map<Face *, float>();
+    FindVisibleFaces(perspective, kMaxDepth, visible_faces, depths);
+    Drawable drawable;
+    constexpr size_t kVerticesPerFace = 3;
+    constexpr size_t kCoordinatesPerVertex = 2;
+    constexpr size_t kColorComponentsPerVertex = 4;
+    constexpr size_t kFaceSize = kVerticesPerFace * (kCoordinatesPerVertex + kColorComponentsPerVertex);
+    drawable.data_size = kFaceSize * visible_faces.size();
+    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+    for (auto i = 0; i < visible_faces.size(); ++i) {
+      const float brightness = 1.0f - pow(depths.at(visible_faces[i]) / kMaxDepth, 2.0f);
+      const glm::vec4 color = brightness * (visible_faces[i]->room_info ? visible_faces[i]->room_info->color : glm::vec4(glm::vec3(0.64f), 1.0f));
+      const auto h01 = visible_faces[i]->face_edge;
+      const auto h12 = h01->next;
+      const auto h20 = h12->next;
+      CHECK_STATE(h01 == h20->next);
+      const auto v0 = h01->start, v1 = h12->start, v2 = h20->start;
+      drawable.data[kFaceSize * i + 0] = v0->position.x;
+      drawable.data[kFaceSize * i + 1] = v0->position.y;
+      drawable.data[kFaceSize * i + 2] = color.r;
+      drawable.data[kFaceSize * i + 3] = color.g;
+      drawable.data[kFaceSize * i + 4] = color.b;
+      drawable.data[kFaceSize * i + 5] = color.a;
+      drawable.data[kFaceSize * i + 6] = v1->position.x;
+      drawable.data[kFaceSize * i + 7] = v1->position.y;
+      drawable.data[kFaceSize * i + 8] = color.r;
+      drawable.data[kFaceSize * i + 9] = color.g;
+      drawable.data[kFaceSize * i + 10] = color.b;
+      drawable.data[kFaceSize * i + 11] = color.a;
+      drawable.data[kFaceSize * i + 12] = v2->position.x;
+      drawable.data[kFaceSize * i + 13] = v2->position.y;
+      drawable.data[kFaceSize * i + 14] = color.r;
+      drawable.data[kFaceSize * i + 15] = color.g;
+      drawable.data[kFaceSize * i + 16] = color.b;
+      drawable.data[kFaceSize * i + 17] = color.a;
+    }
+    drawable.element_count = static_cast<GLsizei>(kVerticesPerFace * visible_faces.size());
+    drawable.element_type = GL_TRIANGLES;
+    return drawable;
+  }
+
   Drawable Mesh::Wireframe() const {
     Drawable drawable;
     constexpr size_t kVerticesPerEdge = 2;
@@ -332,6 +377,111 @@ namespace textengine {
     drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * half_edges.size());
     drawable.element_type = GL_LINES;
     return drawable;
+  }
+
+  Drawable Mesh::Wireframe(glm::vec2 perspective) const {
+    auto visible_half_edges = std::vector<HalfEdge *>();
+    auto depths = std::unordered_map<Face *, float>();
+    FindVisibleHalfEdges(perspective, kMaxDepth, visible_half_edges, depths);
+    Drawable drawable;
+    constexpr size_t kVerticesPerEdge = 2;
+    constexpr size_t kCoordinatesPerVertex = 2;
+    constexpr size_t kColorComponentsPerVertex = 4;
+    constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
+    drawable.data_size = kEdgeSize * visible_half_edges.size();
+    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+    for (auto i = 0; i < visible_half_edges.size(); ++i) {
+      const float brightness = 1.0f - pow(depths.at(visible_half_edges[i]->face) / kMaxDepth, 2.0f);
+      const glm::vec4 color = brightness * (visible_half_edges[i]->face->room_info ? visible_half_edges[i]->face->room_info->color / 2.0f : glm::vec4(glm::vec3(0.32f), 1.0f));
+      drawable.data[kEdgeSize * i + 0] = visible_half_edges[i]->start->position.x;
+      drawable.data[kEdgeSize * i + 1] = visible_half_edges[i]->start->position.y;
+      drawable.data[kEdgeSize * i + 2] = color.r * brightness;
+      drawable.data[kEdgeSize * i + 3] = color.g * brightness;
+      drawable.data[kEdgeSize * i + 4] = color.b * brightness;
+      drawable.data[kEdgeSize * i + 5] = color.a;
+      drawable.data[kEdgeSize * i + 6] = visible_half_edges[i]->next->start->position.x;
+      drawable.data[kEdgeSize * i + 7] = visible_half_edges[i]->next->start->position.y;
+      drawable.data[kEdgeSize * i + 8] = color.r * brightness;
+      drawable.data[kEdgeSize * i + 9] = color.g * brightness;
+      drawable.data[kEdgeSize * i + 10] = color.b * brightness;
+      drawable.data[kEdgeSize * i + 11] = color.a;
+    }
+    drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * visible_half_edges.size());
+    drawable.element_type = GL_LINES;
+    return drawable;
+  }
+
+  bool Mesh::FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const {
+    const auto h01 = face->face_edge;
+    const auto h12 = h01->next;
+    const auto h20 = h12->next;
+    CHECK_STATE(h01 == h20->next);
+    const auto v0 = h01->start, v1 = h12->start, v2 = h20->start;
+    const auto p0 = glm::vec3(v0->position, 0.0f), p1 = glm::vec3(v1->position, 0.0f), p2 = glm::vec3(v2->position, 0.0f);
+    const auto p = glm::vec3(point, 0.0f);
+    const float u = (glm::cross(p, p2-p0).z - glm::cross(p0, p2-p0).z) / glm::cross(p1-p0, p2-p0).z;
+    const float v = (glm::cross(p0, p1-p0).z - glm::cross(p, p1-p0).z) / glm::cross(p1-p0, p2-p0).z;
+    return 0 <= u && 0 <= v && (u + v) <= 1;
+  }
+
+  Mesh::Face *Mesh::FindFaceThatContainsPoint(glm::vec2 point) const {
+    for (auto &face : faces) {
+      if (FaceContainsPoint(face.get(), point)) {
+        return face.get();
+      }
+    }
+    return nullptr;
+  }
+
+  std::vector<Mesh::Face *> Mesh::FindNeighbors(Face *face) const {
+    auto neighbors = std::vector<Face *>();
+    auto half_edge = face->face_edge;
+    do {
+      if (half_edge->opposite) {
+        neighbors.push_back(half_edge->opposite->face);
+      }
+      half_edge = half_edge->next;
+    } while (half_edge != face->face_edge);
+    return neighbors;
+  }
+
+  void Mesh::FindVisibleFaces(glm::vec2 perspective, int max_depth,
+                              std::vector<Face *> &visible_faces,
+                              std::unordered_map<Face *, float> &depths) const {
+    auto start = FindFaceThatContainsPoint(perspective);
+    if (start) {
+      auto queue = std::deque<Face *>();
+      queue.push_back(start);
+      depths.insert({start, 0});
+      auto visited = std::unordered_set<Face *>();
+      while (queue.size()) {
+        auto face = queue.front();
+        auto depth = depths.at(face);
+        queue.pop_front();
+        visible_faces.push_back(face);
+        visited.insert(face);
+        for (auto neighbor : FindNeighbors(face)) {
+          if (visited.end() == visited.find(neighbor) && depth < max_depth) {
+            depths.insert({neighbor, depth + 1});
+            queue.push_back(neighbor);
+          }
+        }
+      }
+    }
+  }
+
+  void Mesh::FindVisibleHalfEdges(glm::vec2 perspective, int max_depth,
+                                  std::vector<HalfEdge *> &visible_half_edges,
+                                  std::unordered_map<Face *, float> &depths) const {
+    auto visible_faces = std::vector<Face *>();
+    FindVisibleFaces(perspective, max_depth, visible_faces, depths);
+    for (auto face : visible_faces) {
+      auto half_edge = face->face_edge;
+      do {
+        visible_half_edges.push_back(half_edge);
+        half_edge = half_edge->next;
+      } while (half_edge != face->face_edge);
+    }
   }
 
 }  // namespace textengine

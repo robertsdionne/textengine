@@ -5,13 +5,13 @@
 
 #include "checks.h"
 #include "gamestate.h"
-#include "meshrenderer.h"
+#include "subjectivemeshrenderer.h"
 #include "textenginerenderer.h"
 #include "updater.h"
 
 namespace textengine {
 
-  TextEngineRenderer::TextEngineRenderer(Updater &updater, MeshRenderer &mesh_renderer)
+  TextEngineRenderer::TextEngineRenderer(Updater &updater, SubjectiveMeshRenderer &mesh_renderer)
   : updater(updater), mesh_renderer(mesh_renderer), model_view(glm::mat4()),
     projection(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)) {}
 
@@ -241,28 +241,16 @@ namespace textengine {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    const glm::vec2 position = glm::vec2(current_state.player_body->GetPosition().x,
+                                         current_state.player_body->GetPosition().y);
+
+    mesh_renderer.SetPerspective(position);
     mesh_renderer.Render();
 
     const float angle = glm::atan(current_state.player.direction.y, current_state.player.direction.x);
-    const glm::vec2 position = glm::vec2(current_state.player_body->GetPosition().x,
-                                         current_state.player_body->GetPosition().y);
     const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(position, 0.0)) *
                                                       glm::rotate(glm::mat4(), glm::degrees(angle), glm::vec3(0, 0, 1)) *
                                                       glm::scale(glm::mat4(), glm::vec3(0.01)));
-
-    const float angle2 = glm::atan(current_state.player_view_direction.y, current_state.player_view_direction.x);
-    const glm::mat4 player_view_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(position, 0.0)) *
-                                                           glm::rotate(glm::mat4(), glm::degrees(angle2), glm::vec3(0, 0, 1)) *
-                                                           glm::scale(glm::mat4(), glm::vec3(0.3f)));
-
-    face_program.Use();
-    face_program.Uniforms({
-      {u8"projection", &projection},
-      {u8"model_view", &player_view_model_view}
-    });
-    player_view_array.Bind();
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    CHECK_STATE(!glGetError());
 
     face_program.Use();
     face_program.Uniforms({

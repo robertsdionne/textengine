@@ -170,6 +170,7 @@
 		464E380A1825D28800AC0AC0 /* b2WheelJoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 464E37AE1825D28800AC0AC0 /* b2WheelJoint.h */; };
 		464E380B1825D28800AC0AC0 /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464E37B01825D28800AC0AC0 /* b2Rope.cpp */; };
 		464E380C1825D28800AC0AC0 /* b2Rope.h in Headers */ = {isa = PBXBuildFile; fileRef = 464E37B11825D28800AC0AC0 /* b2Rope.h */; };
+		46544499182AD3B400A531CD /* subjectivemeshrenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46544497182AD3B400A531CD /* subjectivemeshrenderer.cpp */; };
 		466E70FA17EB92F900CD9E9D /* gamestate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70F817EB92F900CD9E9D /* gamestate.cpp */; };
 		466E70FD17EB944400CD9E9D /* commandparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70FB17EB944400CD9E9D /* commandparser.cpp */; };
 		466E710017EB96D600CD9E9D /* updater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70FE17EB96D500CD9E9D /* updater.cpp */; };
@@ -1485,6 +1486,8 @@
 		464E37AE1825D28800AC0AC0 /* b2WheelJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2WheelJoint.h; sourceTree = "<group>"; };
 		464E37B01825D28800AC0AC0 /* b2Rope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2Rope.cpp; sourceTree = "<group>"; };
 		464E37B11825D28800AC0AC0 /* b2Rope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2Rope.h; sourceTree = "<group>"; };
+		46544497182AD3B400A531CD /* subjectivemeshrenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = subjectivemeshrenderer.cpp; sourceTree = "<group>"; };
+		46544498182AD3B400A531CD /* subjectivemeshrenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = subjectivemeshrenderer.h; sourceTree = "<group>"; };
 		466E70F817EB92F900CD9E9D /* gamestate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gamestate.cpp; sourceTree = "<group>"; };
 		466E70F917EB92F900CD9E9D /* gamestate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gamestate.h; sourceTree = "<group>"; };
 		466E70FB17EB944400CD9E9D /* commandparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commandparser.cpp; sourceTree = "<group>"; };
@@ -3235,6 +3238,8 @@
 				462B4A5E17EA43AA006FE9BB /* shader.cpp */,
 				462B4A5F17EA43AA006FE9BB /* shader.h */,
 				461717FF1826A9D20070ABED /* shaders.h */,
+				46544497182AD3B400A531CD /* subjectivemeshrenderer.cpp */,
+				46544498182AD3B400A531CD /* subjectivemeshrenderer.h */,
 				46FBD344180F6F7600F7C5F8 /* synchronizedqueue.cpp */,
 				46FBD345180F6F7600F7C5F8 /* synchronizedqueue.h */,
 				4607741F17E8EC0100896A15 /* textenginerenderer.cpp */,
@@ -3664,6 +3669,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46544499182AD3B400A531CD /* subjectivemeshrenderer.cpp in Sources */,
 				46B9A60A1771F0F800E43B24 /* main.cpp in Sources */,
 				46B9875917E6A62500B59145 /* glfwapplication.cpp in Sources */,
 				4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */,
@@ -4132,6 +4138,7 @@
 				461717D218269E200070ABED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		463E3D5E1767FB9000A4466B /* Build configuration list for PBXProject "textengine" */ = {
 			isa = XCConfigurationList;
