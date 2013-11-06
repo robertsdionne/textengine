@@ -29,7 +29,7 @@ namespace textengine {
 
     virtual void Render() override;
 
-    void SetPerspective(glm::vec2 perspective);
+    void SetPerspective(glm::vec2 perspective, glm::vec2 camera_position);
     
   private:
     Mesh &mesh;

@@ -14,7 +14,7 @@ namespace textengine {
   GameState::GameState()
   : player{glm::vec2(), glm::vec2(), glm::vec2(0, 1), glm::vec2(0, 1), nullptr},
   non_player_characters(), player_view_direction(glm::vec2(0, 1)),
-  player_view_direction_target(glm::vec2(0, 1)) {
+  player_view_direction_target(glm::vec2(0, 1)), camera_position() {
     for (auto i = 0; i < 3; ++i) {
       non_player_characters.push_back({
         {glm::vec2(), glm::vec2(), glm::vec2(0, 1), glm::vec2(0, 1), nullptr},

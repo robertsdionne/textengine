@@ -54,6 +54,7 @@ namespace textengine {
     std::vector<Item> inventory;
     glm::vec2 player_view_direction;
     glm::vec2 player_view_direction_target;
+    glm::vec2 camera_position;
   };
 
 }  // namespace textengine

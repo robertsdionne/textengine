@@ -41,6 +41,7 @@ namespace textengine {
                             -joystick.GetAxis(Joystick::Axis::kLeftY));
     auto offset2 = glm::vec2(joystick.GetAxis(Joystick::Axis::kRightX),
                              -joystick.GetAxis(Joystick::Axis::kRightY));
+    auto dt = 0.016f;
     if (glm::length(offset) > 0 || glm::length(offset2) > 0 ||
         joystick.GetButtonPressure(Joystick::PressureButton::kX) > 0) {
       auto position = current_state.player.position;
@@ -65,7 +66,6 @@ namespace textengine {
       } else if (glm::length(offset) > 0) {
         current_state.player.direction_target = glm::normalize(SquareToRound(offset));
       }
-      auto dt = 0.016f;
       if (glm::length(offset) == 0 &&
           joystick.GetButtonPressure(Joystick::PressureButton::kX) == 0) {
         dt *= glm::length(SquareToRound(offset2));
@@ -116,6 +116,7 @@ namespace textengine {
         index += 1;
       }
     }
+    current_state.camera_position = glm::mix(current_state.camera_position, current_state.player.position, 1e-2f / 0.016f * dt);
   }
 
   CharacterInfo Updater::UpdateCharacter(CharacterInfo current_character, float dt, float dt2) const {

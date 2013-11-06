@@ -139,13 +139,15 @@ namespace textengine {
 
     const glm::vec2 position = current_state.player.position;
 
-    mesh_renderer.SetPerspective(position);
+    mesh_renderer.SetPerspective(position, current_state.camera_position);
     mesh_renderer.Render();
 
+    model_view = glm::translate(glm::mat4(), glm::vec3(-current_state.camera_position, 0.0f));
+
     const float angle = glm::atan(current_state.player.direction.y, current_state.player.direction.x);
-    const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(position, 0.0)) *
+    const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(position, 0.0f)) *
                                                       glm::rotate(glm::mat4(), glm::degrees(angle), glm::vec3(0, 0, 1)) *
-                                                      glm::scale(glm::mat4(), glm::vec3(0.01)));
+                                                      glm::scale(glm::mat4(), glm::vec3(0.01f)));
 
     face_program.Use();
     face_program.Uniforms({
