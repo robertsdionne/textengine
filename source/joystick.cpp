@@ -81,22 +81,24 @@ namespace textengine {
     previous_axes = axes;
     previous_buttons = buttons;
     previous_pressure_buttons = pressure_buttons;
-    int axis_count = 0;
-    const float *axis_data = glfwGetJoystickAxes(joystick_id, &axis_count);
-    CHECK_STATE(axis_count);
-    CHECK_STATE(axis_data);
-    for (auto i = 0; i < axis_count; ++i) {
-      axes[static_cast<Axis>(i)] = axis_data[i];
-    }
-    int button_count = 0;
-    const unsigned char *button_data = glfwGetJoystickButtons(joystick_id, &button_count);
-    CHECK_STATE(button_count);
-    CHECK_STATE(button_data);
-    for (auto i = static_cast<int>(Button::kBegin); i < static_cast<int>(Button::kEnd); ++i) {
-      buttons[static_cast<Button>(i)] = button_data[i];
-    }
-    for (auto i = static_cast<int>(PressureButton::kBegin); i < static_cast<int>(PressureButton::kEnd); ++i) {
-      pressure_buttons[static_cast<PressureButton>(i)] = button_data[i] / 255.0f;
+    if (glfwJoystickPresent(joystick_id)) {
+      int axis_count = 0;
+      const float *axis_data = glfwGetJoystickAxes(joystick_id, &axis_count);
+      CHECK_STATE(axis_count);
+      CHECK_STATE(axis_data);
+      for (auto i = 0; i < axis_count; ++i) {
+        axes[static_cast<Axis>(i)] = axis_data[i];
+      }
+      int button_count = 0;
+      const unsigned char *button_data = glfwGetJoystickButtons(joystick_id, &button_count);
+      CHECK_STATE(button_count);
+      CHECK_STATE(button_data);
+      for (auto i = static_cast<int>(Button::kBegin); i < static_cast<int>(Button::kEnd); ++i) {
+        buttons[static_cast<Button>(i)] = button_data[i];
+      }
+      for (auto i = static_cast<int>(PressureButton::kBegin); i < static_cast<int>(PressureButton::kEnd); ++i) {
+        pressure_buttons[static_cast<PressureButton>(i)] = button_data[i] / 255.0f;
+      }
     }
     auto now = std::chrono::high_resolution_clock::now();
     dt = std::chrono::duration_cast<std::chrono::duration<float>>(now - last_update_time).count();
