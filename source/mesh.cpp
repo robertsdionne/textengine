@@ -523,13 +523,13 @@ namespace textengine {
     constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
     const size_t exterior_edges = std::count_if(half_edges.begin(), half_edges.end(),
                                                 [] (const std::unique_ptr<HalfEdge> &half_edge) {
-                                                  return !half_edge->opposite;
+                                                  return !half_edge->opposite && half_edge->seen;
                                                 });
     drawable.data_size = kEdgeSize * exterior_edges;
     drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
     int index = 0;
     for (auto &half_edge : half_edges) {
-      if (!half_edge->opposite) {
+      if (!half_edge->opposite && half_edge->seen) {
         const glm::vec4 color = half_edge->face->room_info ? half_edge->face->room_info->color / 2.0f : glm::vec4(glm::vec3(0.32f), 1.0f);
         drawable.data[index + 0] = half_edge->start->position.x;
         drawable.data[index + 1] = half_edge->start->position.y;
@@ -579,6 +579,9 @@ namespace textengine {
     auto start = FindFaceThatContainsPoint(perspective);
     if (start) {
       auto queue = std::deque<Face *>();
+      start->ForEachHalfEdge([&] (HalfEdge *half_edge) {
+        half_edge->seen = true;
+      });
       queue.push_back(start);
       depths.insert({start, 0});
       auto visited = std::unordered_set<Face *>();

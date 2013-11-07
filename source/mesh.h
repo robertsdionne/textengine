@@ -38,6 +38,7 @@ namespace textengine {
       Face *face;
       HalfEdge *next, *opposite, *previous;
       Vertex *start;
+      bool seen;
     };
 
     struct RoomInfo {
