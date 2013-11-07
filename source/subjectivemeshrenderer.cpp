@@ -47,16 +47,16 @@ namespace textengine {
     mesh_edge_array.Create();
     vertex_format.Apply(mesh_edge_array, edge_program);
     CHECK_STATE(!glGetError());
+
+    mesh_shadow_buffer.Create(GL_ARRAY_BUFFER);
+    mesh_shadow_array.Create();
+    vertex_format.Apply(mesh_shadow_array, face_program);
+    CHECK_STATE(!glGetError());
   }
 
   void SubjectiveMeshRenderer::Render() {
     Drawable face_data = mesh.Triangulate(perspective);
     mesh_buffer.Data(sizeof(float) * face_data.data_size, face_data.data.get(), GL_STREAM_DRAW);
-    CHECK_STATE(!glGetError());
-
-    Drawable edge_data = mesh.Wireframe(perspective);
-    mesh_edge_buffer.Data(sizeof(float) * edge_data.data_size,
-                          edge_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     face_program.Use();
@@ -66,6 +66,28 @@ namespace textengine {
     });
     mesh_array.Bind();
     glDrawArrays(face_data.element_type, 0, face_data.element_count);
+    CHECK_STATE(!glGetError());
+  }
+
+  void SubjectiveMeshRenderer::RenderShadows() {
+    Drawable shadow_data = mesh.Shadows(perspective);
+    mesh_shadow_buffer.Data(sizeof(float) * shadow_data.data_size, shadow_data.data.get(), GL_STREAM_DRAW);
+    CHECK_STATE(!glGetError());
+
+    face_program.Use();
+    face_program.Uniforms({
+      {u8"projection", &projection},
+      {u8"model_view", &model_view}
+    });
+    mesh_shadow_array.Bind();
+    glDrawArrays(shadow_data.element_type, 0, shadow_data.element_count);
+    CHECK_STATE(!glGetError());
+  }
+
+  void SubjectiveMeshRenderer::RenderOutline() {
+    Drawable edge_data = mesh.WireframeExterior();
+    mesh_edge_buffer.Data(sizeof(float) * edge_data.data_size,
+                          edge_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     edge_program.Use();

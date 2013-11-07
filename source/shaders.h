@@ -108,7 +108,11 @@ namespace textengine {
   out vec4 fragment_color;
 
   void main() {
-    fragment_color = gl_FrontFacing ? vertex.color : vec4(1, 0, 0, 1);
+    if (gl_FrontFacing) {
+      fragment_color = vertex.color;
+    } else {
+      discard;
+    }
   }
   )glsl";
 

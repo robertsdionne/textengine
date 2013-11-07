@@ -74,7 +74,11 @@ namespace textengine {
 
     std::vector<std::unique_ptr<std::vector<glm::vec2>>> Boundaries() const;
 
+    std::vector<HalfEdge *> Exterior() const;
+
     Drawable Points() const;
+
+    Drawable Shadows(glm::vec2 perspective) const;
 
     Drawable Triangulate() const;
 
@@ -83,6 +87,8 @@ namespace textengine {
     Drawable Wireframe() const;
 
     Drawable Wireframe(glm::vec2 perspective) const;
+
+    Drawable WireframeExterior() const;
 
   private:
     static constexpr auto kMaxDepth = 12;

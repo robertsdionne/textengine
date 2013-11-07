@@ -221,6 +221,9 @@ namespace textengine {
       glDrawArrays(GL_LINES, 0, 6);
       CHECK_STATE(!glGetError());
     }
+
+    mesh_renderer.RenderShadows();
+    mesh_renderer.RenderOutline();
   }
 
 }  // namespace textengine
