@@ -85,7 +85,7 @@ namespace textengine {
   }
 
   void SubjectiveMeshRenderer::RenderOutline() {
-    Drawable edge_data = mesh.WireframeExterior();
+    Drawable edge_data = mesh.Wireframe(perspective);
     mesh_edge_buffer.Data(sizeof(float) * edge_data.data_size,
                           edge_data.data.get(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());

@@ -110,6 +110,7 @@ namespace textengine {
     half_edge_out->previous = previous_index < 0 ? nullptr : half_edges[previous_index].get();
     half_edge_out->start = start_index < 0 ? nullptr : vertices[start_index].get();
     half_edge_out->seen = false;
+    half_edge_out->generative = object["generative"].is<bool>() ? object["generative"].get<bool>() : false;
   }
 
   void MeshLoader::ReadFace(const picojson::value &face_in,

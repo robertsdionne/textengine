@@ -1,9 +1,11 @@
 #include <algorithm>
 #include <deque>
 #include <functional>
+#define GLM_SWIZZLE
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <memory>
+#include <simplexnoise1234.h>
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
@@ -14,6 +16,9 @@
 #include "mesh.h"
 
 namespace textengine {
+
+  std::default_random_engine Mesh::generator;
+  std::uniform_real_distribution<float> Mesh::distribution;
 
   glm::vec2 Mesh::Face::centroid() const {
     auto centroid = glm::vec2();
@@ -215,6 +220,10 @@ namespace textengine {
 
   Mesh::Vertex *Mesh::ExtrudeEdge(Mesh::HalfEdge *edge) {
     if (!edge->opposite) {
+      if (edge->generative) {
+        edge->generative = false;
+      }
+
       const auto point0 = edge->next->start->position, point1 = edge->start->position;
       const auto point2 = (point0 + point1) / 2.0f;
       auto vertex0 = edge->next->start, vertex1 = edge->start, vertex2 = new Vertex;
@@ -235,18 +244,21 @@ namespace textengine {
       half_edge01->opposite = edge;
       half_edge01->previous = half_edge20;
       half_edge01->start = vertex0;
+      half_edge01->generative = false;
 
       half_edge12->face = face;
       half_edge12->next = half_edge20;
       half_edge12->opposite = nullptr;
       half_edge12->previous = half_edge01;
       half_edge12->start = vertex1;
+      half_edge12->generative = false;
 
       half_edge20->face = face;
       half_edge20->next = half_edge01;
       half_edge20->opposite = nullptr;
       half_edge20->previous = half_edge12;
       half_edge20->start = vertex2;
+      half_edge20->generative = false;
 
       face->face_edge = half_edge01;
       face->room_info = nullptr;
@@ -511,7 +523,10 @@ namespace textengine {
     drawable.data_size = kEdgeSize * half_edges.size();
     drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
     for (auto i = 0; i < half_edges.size(); ++i) {
-      const glm::vec4 color = half_edges[i]->face->room_info ? half_edges[i]->face->room_info->color / 2.0f : glm::vec4(glm::vec3(0.32f), 1.0f);
+      glm::vec4 color = half_edges[i]->face->room_info ? half_edges[i]->face->room_info->color / 2.0f : glm::vec4(glm::vec3(0.32f), 1.0f);
+      if (half_edges[i]->generative) {
+        color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+      }
       drawable.data[kEdgeSize * i + 0] = half_edges[i]->start->position.x;
       drawable.data[kEdgeSize * i + 1] = half_edges[i]->start->position.y;
       drawable.data[kEdgeSize * i + 2] = color.r;
@@ -543,7 +558,10 @@ namespace textengine {
     drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
     for (auto i = 0; i < visible_half_edges.size(); ++i) {
       const float brightness = 1.0f - pow(depths.at(visible_half_edges[i]->face) / kMaxDepth, 2.0f);
-      const glm::vec4 color = brightness * (visible_half_edges[i]->face->room_info ? visible_half_edges[i]->face->room_info->color / 2.0f : glm::vec4(glm::vec3(0.32f), 1.0f));
+      glm::vec4 color = brightness * (visible_half_edges[i]->face->room_info ? visible_half_edges[i]->face->room_info->color / 2.0f : glm::vec4(glm::vec3(0.32f), 1.0f));
+      if (visible_half_edges[i]->generative) {
+        color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+      }
       drawable.data[kEdgeSize * i + 0] = visible_half_edges[i]->start->position.x;
       drawable.data[kEdgeSize * i + 1] = visible_half_edges[i]->start->position.y;
       drawable.data[kEdgeSize * i + 2] = color.r * brightness;
@@ -662,6 +680,52 @@ namespace textengine {
       face->ForEachHalfEdge([&] (HalfEdge *half_edge) {
         visible_half_edges.push_back(half_edge);
       });
+    }
+  }
+
+  void Mesh::ExtrudeGenerativeEdges(glm::vec2 perspective) {
+    auto visible_half_edges = std::vector<HalfEdge *>();
+    auto depths = std::unordered_map<Face *, float>();
+    FindVisibleHalfEdges(perspective, kMaxDepth, visible_half_edges, depths);
+    auto generative_half_edges = std::vector<HalfEdge *>();
+    for (auto half_edge : visible_half_edges) {
+      if (half_edge->generative) {
+        generative_half_edges.push_back(half_edge);
+      }
+    }
+    for (auto half_edge : generative_half_edges) {
+      ExtrudeGenerativeEdge(half_edge);
+    }
+  }
+
+  void Mesh::ExtrudeGenerativeEdge(HalfEdge *edge) {
+    auto centroid = (edge->next->start->position + edge->start->position) / 2.0f;
+    auto perpendicular = glm::normalize(edge->start->position -
+                                        edge->next->start->position).yx() * glm::vec2(-1.0f, 1.0f) * glm::clamp(0.2f * std::abs(SimplexNoise1234::noise(centroid.x + centroid.y)), 0.05f, 0.2f);
+    auto vertex = ExtrudeEdge(edge);
+    edge->generative = false;
+    if (vertex) {
+      vertex->position = centroid + perpendicular;
+      auto chance0 = distribution(generator);
+      if (chance0 < 0.9f) {
+        edge = vertex->vertex_edge->previous;
+        centroid = (edge->next->start->position + edge->start->position) / 2.0f;
+        perpendicular = (edge->start->position -
+                         edge->next->start->position).yx() * glm::vec2(-1.0f, 1.0f) * (sqrtf(3.0f) / 2.0f);
+        vertex = ExtrudeEdge(edge);
+        if (vertex) {
+          vertex->position = centroid + perpendicular;
+          vertex->vertex_edge->generative = true;
+          auto chance1 = distribution(generator);
+          std::cout << chance1 << std::endl;
+          if (chance1 < 0.2f) {
+            std::cout << "double split" << std::endl;
+            vertex->vertex_edge->previous->generative = true;
+          }
+        }
+      } else {
+        vertex->vertex_edge->generative = true;
+      }
     }
   }
 

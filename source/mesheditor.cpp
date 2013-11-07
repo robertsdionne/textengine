@@ -792,6 +792,13 @@ namespace textengine {
         half_edge->opposite = nullptr;
       }
     }
+    if (ready && !selected_half_edges().empty() && keyboard.GetKeyVelocity(GLFW_KEY_Y) > 0) {
+      for (auto half_edge : selected_half_edges()) {
+        if (!half_edge->opposite) {
+          half_edge->generative = true;
+        }
+      }
+    }
     if (ready && !selected_vertices.empty() && keyboard.GetKeyVelocity(GLFW_KEY_S) > 0) {
       scaling = ScaleMode::kAll;
       for (auto vertex : selected_vertices) {

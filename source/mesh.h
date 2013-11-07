@@ -4,6 +4,7 @@
 #include <functional>
 #include <glm/glm.hpp>
 #include <memory>
+#include <random>
 #include <vector>
 
 #include "drawable.h"
@@ -38,7 +39,7 @@ namespace textengine {
       Face *face;
       HalfEdge *next, *opposite, *previous;
       Vertex *start;
-      bool seen;
+      bool seen, generative;
     };
 
     struct RoomInfo {
@@ -77,6 +78,8 @@ namespace textengine {
 
     std::vector<HalfEdge *> Exterior() const;
 
+    void ExtrudeGenerativeEdges(glm::vec2 perspective);
+
     Drawable Points() const;
 
     Drawable Shadows(glm::vec2 perspective) const;
@@ -106,11 +109,16 @@ namespace textengine {
                               std::vector<HalfEdge *> &visible_half_edges,
                               std::unordered_map<Face *, float> &depths) const;
 
+    void ExtrudeGenerativeEdge(HalfEdge *edge);
+
   private:
     std::vector<std::unique_ptr<Face>> faces;
     std::vector<std::unique_ptr<HalfEdge>> half_edges;
     std::vector<std::unique_ptr<Vertex>> vertices;
     std::vector<std::unique_ptr<RoomInfo>> room_infos;
+
+    static std::default_random_engine generator;
+    static std::uniform_real_distribution<float> distribution;
   };
 
 }  // namespace textengine

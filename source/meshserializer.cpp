@@ -70,6 +70,7 @@ namespace textengine {
     object["opposite"] = picojson::value(half_edge_indices.at(half_edge->opposite));
     object["previous"] = picojson::value(half_edge_indices.at(half_edge->previous));
     object["start"] = picojson::value(vertex_indices.at(half_edge->start));
+    object["generative"] = picojson::value(half_edge->generative);
     return picojson::value(object);
   }
 
