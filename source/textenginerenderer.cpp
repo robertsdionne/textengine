@@ -223,7 +223,7 @@ namespace textengine {
     }
 
     mesh_renderer.RenderShadows();
-    mesh_renderer.RenderOutline();
+//    mesh_renderer.RenderOutline();
   }
 
 }  // namespace textengine

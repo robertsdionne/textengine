@@ -2,6 +2,7 @@
 #include <deque>
 #include <functional>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <memory>
 #include <unordered_map>
 #include <unordered_set>
@@ -319,7 +320,7 @@ namespace textengine {
   Drawable Mesh::Shadows(glm::vec2 perspective) const {
     auto exterior_half_edges = Exterior();
     Drawable drawable;
-    constexpr size_t kVerticesPerEdge = 6;
+    constexpr size_t kVerticesPerEdge = 12;
     constexpr size_t kCoordinatesPerVertex = 2;
     constexpr size_t kColorComponentsPerVertex = 4;
     constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
@@ -329,8 +330,17 @@ namespace textengine {
       const glm::vec4 color = glm::vec4(glm::vec3(), 1.0f);
       const auto v0 = exterior_half_edges[i]->start->position;
       const auto v1 = exterior_half_edges[i]->next->start->position;
-      const auto v2 = 10.0f * glm::normalize(v0 - perspective) + v0;
-      const auto v3 = 10.0f * glm::normalize(v1 - perspective) + v1;
+      const auto dir2 = glm::normalize(v0 - perspective);
+      const auto dir3 = glm::normalize(v1 - perspective);
+      const auto theta = 1.0f / (glm::length(v0 - perspective) + glm::length(v1 - perspective)) * M_PI / 180.0f;
+      const auto rotate = glm::mat2(cos(theta), -sin(theta), sin(theta), cos(theta));
+      const auto dir2_prime = rotate * dir2;
+      const auto dir3_prime = glm::transpose(rotate) * dir3;
+      const auto length = 10.0f;
+      const auto v2 = length * dir2 + v0;
+      const auto v3 = length * dir3 + v1;
+      const auto v2_prime = 0.2f * dir2_prime + v0;
+      const auto v3_prime = 0.2f * dir3_prime + v1;
       drawable.data[kEdgeSize * i + 0] = v2.x;
       drawable.data[kEdgeSize * i + 1] = v2.y;
       drawable.data[kEdgeSize * i + 2] = color.r;
@@ -367,6 +377,43 @@ namespace textengine {
       drawable.data[kEdgeSize * i + 33] = color.g;
       drawable.data[kEdgeSize * i + 34] = color.b;
       drawable.data[kEdgeSize * i + 35] = color.a;
+
+      drawable.data[kEdgeSize * i + 36] = v2_prime.x;
+      drawable.data[kEdgeSize * i + 37] = v2_prime.y;
+      drawable.data[kEdgeSize * i + 38] = color.r;
+      drawable.data[kEdgeSize * i + 39] = color.g;
+      drawable.data[kEdgeSize * i + 40] = color.b;
+      drawable.data[kEdgeSize * i + 41] = 0.0f;
+      drawable.data[kEdgeSize * i + 42] = v2.x;
+      drawable.data[kEdgeSize * i + 43] = v2.y;
+      drawable.data[kEdgeSize * i + 44] = color.r;
+      drawable.data[kEdgeSize * i + 45] = color.g;
+      drawable.data[kEdgeSize * i + 46] = color.b;
+      drawable.data[kEdgeSize * i + 47] = color.a;
+      drawable.data[kEdgeSize * i + 48] = v0.x;
+      drawable.data[kEdgeSize * i + 49] = v0.y;
+      drawable.data[kEdgeSize * i + 50] = color.r;
+      drawable.data[kEdgeSize * i + 51] = color.g;
+      drawable.data[kEdgeSize * i + 52] = color.b;
+      drawable.data[kEdgeSize * i + 53] = 0.75f;
+      drawable.data[kEdgeSize * i + 54] = v3.x;
+      drawable.data[kEdgeSize * i + 55] = v3.y;
+      drawable.data[kEdgeSize * i + 56] = color.r;
+      drawable.data[kEdgeSize * i + 57] = color.g;
+      drawable.data[kEdgeSize * i + 58] = color.b;
+      drawable.data[kEdgeSize * i + 59] = color.a;
+      drawable.data[kEdgeSize * i + 60] = v3_prime.x;
+      drawable.data[kEdgeSize * i + 61] = v3_prime.y;
+      drawable.data[kEdgeSize * i + 62] = color.r;
+      drawable.data[kEdgeSize * i + 63] = color.g;
+      drawable.data[kEdgeSize * i + 64] = color.b;
+      drawable.data[kEdgeSize * i + 65] = 0.0f;
+      drawable.data[kEdgeSize * i + 66] = v1.x;
+      drawable.data[kEdgeSize * i + 67] = v1.y;
+      drawable.data[kEdgeSize * i + 68] = color.r;
+      drawable.data[kEdgeSize * i + 69] = color.g;
+      drawable.data[kEdgeSize * i + 70] = color.b;
+      drawable.data[kEdgeSize * i + 71] = 0.75f;
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * exterior_half_edges.size());
     drawable.element_type = GL_TRIANGLES;
@@ -588,6 +635,11 @@ namespace textengine {
       while (queue.size()) {
         auto face = queue.front();
         auto depth = depths.at(face);
+        if (depth < 4) {
+          face->ForEachHalfEdge([&] (HalfEdge *half_edge) {
+            half_edge->seen = true;
+          });
+        }
         queue.pop_front();
         visible_faces.push_back(face);
         visited.insert(face);

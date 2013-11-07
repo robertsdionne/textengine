@@ -15,7 +15,7 @@ namespace textengine {
   : player{glm::vec2(), glm::vec2(), glm::vec2(0, 1), glm::vec2(0, 1), nullptr},
   non_player_characters(), player_view_direction(glm::vec2(0, 1)),
   player_view_direction_target(glm::vec2(0, 1)), camera_position() {
-    for (auto i = 0; i < 3; ++i) {
+    for (auto i = 0; i < 0; ++i) {
       non_player_characters.push_back({
         {glm::vec2(), glm::vec2(), glm::vec2(0, 1), glm::vec2(0, 1), nullptr},
         {i}
@@ -27,7 +27,7 @@ namespace textengine {
                        glm::vec2 player_direction)
   : player{player_position, player_position, player_direction, player_direction, nullptr},
     non_player_characters() {
-    for (auto i = 0; i < 3; ++i) {
+    for (auto i = 0; i < 0; ++i) {
       non_player_characters.push_back({
         {glm::vec2(), glm::vec2(), glm::vec2(0, 1), glm::vec2(0, 1), nullptr},
         {i}
