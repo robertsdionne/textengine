@@ -787,6 +787,11 @@ namespace textengine {
         center_of_mass += (vertex->position - center_of_mass) / i++;
       }
     }
+    if (ready && !selected_half_edges().empty() && keyboard.GetKeyVelocity(GLFW_KEY_T) > 0) {
+      for (auto half_edge : selected_half_edges()) {
+        half_edge->opposite = nullptr;
+      }
+    }
     if (ready && !selected_vertices.empty() && keyboard.GetKeyVelocity(GLFW_KEY_S) > 0) {
       scaling = ScaleMode::kAll;
       for (auto vertex : selected_vertices) {
