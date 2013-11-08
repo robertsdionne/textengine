@@ -76,6 +76,7 @@
 		462B4A6517EA43AA006FE9BB /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A5E17EA43AA006FE9BB /* shader.cpp */; };
 		462B4A6617EA43AA006FE9BB /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A6017EA43AA006FE9BB /* program.cpp */; };
 		462B4A6717EA43AA006FE9BB /* buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A6217EA43AA006FE9BB /* buffer.cpp */; };
+		46401B18182C732700A73BDC /* libsimplexnoise1234.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01561783F02800301C1C /* libsimplexnoise1234.a */; };
 		464A57F6181B0D8300FAF563 /* exporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464A57F5181B0D8300FAF563 /* exporter.cpp */; };
 		464E36801825B4BC00AC0AC0 /* joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464E367E1825B4BC00AC0AC0 /* joystick.cpp */; };
 		464E37B21825D28800AC0AC0 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 464E374E1825D28800AC0AC0 /* Box2D.h */; };
@@ -230,6 +231,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 464E36841825D1B400AC0AC0;
 			remoteInfo = box2d;
+		};
+		46401B16182C732200A73BDC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 463E3D5B1767FB9000A4466B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 468E01551783F02800301C1C;
+			remoteInfo = simplexnoise1234;
 		};
 		468E015B1783F10100301C1C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1582,6 +1590,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46401B18182C732700A73BDC /* libsimplexnoise1234.a in Frameworks */,
 				461717F31826A5B40070ABED /* libbox2d.a in Frameworks */,
 				461717E41826A34E0070ABED /* IOKit.framework in Frameworks */,
 				461717E31826A3490070ABED /* Cocoa.framework in Frameworks */,
@@ -3486,6 +3495,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				46401B17182C732200A73BDC /* PBXTargetDependency */,
 				461717F21826A5AE0070ABED /* PBXTargetDependency */,
 				461717D818269EDE0070ABED /* PBXTargetDependency */,
 			);
@@ -3817,6 +3827,11 @@
 			isa = PBXTargetDependency;
 			target = 464E36841825D1B400AC0AC0 /* box2d */;
 			targetProxy = 461717F11826A5AE0070ABED /* PBXContainerItemProxy */;
+		};
+		46401B17182C732200A73BDC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 468E01551783F02800301C1C /* simplexnoise1234 */;
+			targetProxy = 46401B16182C732200A73BDC /* PBXContainerItemProxy */;
 		};
 		468E015C1783F10100301C1C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
