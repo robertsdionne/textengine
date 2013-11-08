@@ -116,7 +116,7 @@ namespace textengine {
         index += 1;
       }
     }
-    current_state.camera_position = glm::mix(current_state.camera_position, current_state.player.position, 1e-2f / 0.016f * dt);
+    current_state.camera_position = glm::mix(current_state.camera_position, current_state.player.position, 2e-2f / 0.016f * dt);
 //    if (joystick.GetButtonVelocity(Joystick::Button::kX) > 0) {
 //      mesh.ExtrudeGenerativeEdges(current_state.player.position);
 //    }

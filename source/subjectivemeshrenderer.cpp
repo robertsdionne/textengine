@@ -106,7 +106,7 @@ namespace textengine {
 
   void SubjectiveMeshRenderer::SetPerspective(glm::vec2 perspective, glm::vec2 camera_position) {
     this->perspective = perspective;
-    model_view = glm::translate(glm::mat4(), glm::vec3(-camera_position, 0.0f));
+    model_view = glm::scale(glm::mat4(), glm::vec3(2.0f)) * glm::translate(glm::mat4(), glm::vec3(-camera_position, 0.0f));
   }
 
 }  // namespace textengine

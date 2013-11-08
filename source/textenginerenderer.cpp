@@ -142,7 +142,7 @@ namespace textengine {
     mesh_renderer.SetPerspective(position, current_state.camera_position);
     mesh_renderer.Render();
 
-    model_view = glm::translate(glm::mat4(), glm::vec3(-current_state.camera_position, 0.0f));
+    model_view = glm::scale(glm::mat4(), glm::vec3(2.0f)) * glm::translate(glm::mat4(), glm::vec3(-current_state.camera_position, 0.0f));
 
     const float angle = glm::atan(current_state.player.direction.y, current_state.player.direction.x);
     const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(position, 0.0f)) *
@@ -223,7 +223,6 @@ namespace textengine {
     }
 
     mesh_renderer.RenderShadows();
-//    mesh_renderer.RenderOutline();
   }
 
 }  // namespace textengine
