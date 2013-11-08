@@ -99,18 +99,21 @@ namespace textengine {
     half_edge01->opposite = nullptr;
     half_edge01->previous = half_edge20;
     half_edge01->start = vertex0;
+    half_edge01->generative = false;
 
     half_edge12->face = face;
     half_edge12->next = half_edge20;
     half_edge12->opposite = nullptr;
     half_edge12->previous = half_edge01;
     half_edge12->start = vertex1;
+    half_edge12->generative = false;
 
     half_edge20->face = face;
     half_edge20->next = half_edge01;
     half_edge20->opposite = nullptr;
     half_edge20->previous = half_edge12;
     half_edge20->start = vertex2;
+    half_edge20->generative = false;
 
     face->face_edge = half_edge01;
     face->room_info = nullptr;
@@ -183,6 +186,7 @@ namespace textengine {
     half_edge01->opposite = half_edge10;
     half_edge01->previous = half_edge20;
     half_edge01->start = vertex0;
+    half_edge01->generative = false;
 
     if (half_edge10) {
       half_edge10->opposite = half_edge01;
@@ -193,6 +197,7 @@ namespace textengine {
     half_edge12->opposite = half_edge21;
     half_edge12->previous = half_edge01;
     half_edge12->start = vertex1;
+    half_edge12->generative = false;
 
     if (half_edge21) {
       half_edge21->opposite = half_edge12;
@@ -203,6 +208,7 @@ namespace textengine {
     half_edge20->opposite = half_edge02;
     half_edge20->previous = half_edge12;
     half_edge20->start = vertex2;
+    half_edge20->generative = false;
 
     if (half_edge02) {
       half_edge02->opposite = half_edge20;
