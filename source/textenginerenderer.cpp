@@ -127,12 +127,11 @@ namespace textengine {
     GameState &current_state = updater.GetCurrentState();
 
     Drawable item_data = current_state.TriangulateItems();
-    item_buffer.Data(sizeof(float) * item_data.data_size, item_data.data.get(), GL_STREAM_DRAW);
+    item_buffer.Data(item_data.data_size(), item_data.data.data(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable item_edge_data = current_state.WireframeItems();
-    item_edge_buffer.Data(sizeof(float) * item_edge_data.data_size,
-                          item_edge_data.data.get(), GL_STREAM_DRAW);
+    item_edge_buffer.Data(item_edge_data.data_size(), item_edge_data.data.data(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

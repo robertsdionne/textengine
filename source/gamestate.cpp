@@ -45,46 +45,22 @@ namespace textengine {
     const auto p0 = glm::vec2(kSize, kSize), p1 = glm::vec2(-kSize, kSize),
         p2 = glm::vec2(-kSize, -kSize), p3 = glm::vec2(kSize, -kSize);
     Drawable drawable;
-    drawable.data_size = kItemSize * items.size();
-    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
-    int index = 0;
+    drawable.data.reserve(kItemSize * items.size());
     for (auto &item : items) {
-      drawable.data[index++] = (item.position + p0).x;
-      drawable.data[index++] = (item.position + p0).y;
-      drawable.data[index++] = item.color.r;
-      drawable.data[index++] = item.color.g;
-      drawable.data[index++] = item.color.b;
-      drawable.data[index++] = item.color.a;
-      drawable.data[index++] = (item.position + p1).x;
-      drawable.data[index++] = (item.position + p1).y;
-      drawable.data[index++] = item.color.r;
-      drawable.data[index++] = item.color.g;
-      drawable.data[index++] = item.color.b;
-      drawable.data[index++] = item.color.a;
-      drawable.data[index++] = (item.position + p2).x;
-      drawable.data[index++] = (item.position + p2).y;
-      drawable.data[index++] = item.color.r;
-      drawable.data[index++] = item.color.g;
-      drawable.data[index++] = item.color.b;
-      drawable.data[index++] = item.color.a;
-      drawable.data[index++] = (item.position + p0).x;
-      drawable.data[index++] = (item.position + p0).y;
-      drawable.data[index++] = item.color.r;
-      drawable.data[index++] = item.color.g;
-      drawable.data[index++] = item.color.b;
-      drawable.data[index++] = item.color.a;
-      drawable.data[index++] = (item.position + p2).x;
-      drawable.data[index++] = (item.position + p2).y;
-      drawable.data[index++] = item.color.r;
-      drawable.data[index++] = item.color.g;
-      drawable.data[index++] = item.color.b;
-      drawable.data[index++] = item.color.a;
-      drawable.data[index++] = (item.position + p3).x;
-      drawable.data[index++] = (item.position + p3).y;
-      drawable.data[index++] = item.color.r;
-      drawable.data[index++] = item.color.g;
-      drawable.data[index++] = item.color.b;
-      drawable.data[index++] = item.color.a;
+      drawable.data.insert(drawable.data.cend(), {
+        (item.position + p0).x, (item.position + p0).y,
+        item.color.r, item.color.g, item.color.b, item.color.a,
+        (item.position + p1).x, (item.position + p1).y,
+        item.color.r, item.color.g, item.color.b, item.color.a,
+        (item.position + p2).x, (item.position + p2).y,
+        item.color.r, item.color.g, item.color.b, item.color.a,
+        (item.position + p0).x, (item.position + p0).y,
+        item.color.r, item.color.g, item.color.b, item.color.a,
+        (item.position + p2).x, (item.position + p2).y,
+        item.color.r, item.color.g, item.color.b, item.color.a,
+        (item.position + p3).x, (item.position + p3).y,
+        item.color.r, item.color.g, item.color.b, item.color.a
+      });
     }
     drawable.element_count = static_cast<GLsizei>(kFacesPerItem * kVerticesPerFace * items.size());
     drawable.element_type = GL_TRIANGLES;
@@ -101,59 +77,27 @@ namespace textengine {
     const auto p0 = glm::vec2(kSize, kSize), p1 = glm::vec2(-kSize, kSize),
         p2 = glm::vec2(-kSize, -kSize), p3 = glm::vec2(kSize, -kSize);
     Drawable drawable;
-    drawable.data_size = kItemSize * items.size();
-    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
-    int index = 0;
+    drawable.data.reserve(kItemSize * items.size());
     for (auto &item : items) {
       const glm::vec4 color = item.color / 2.0f;
-      drawable.data[index++] = (item.position + p0).x;
-      drawable.data[index++] = (item.position + p0).y;
-      drawable.data[index++] = color.r;
-      drawable.data[index++] = color.g;
-      drawable.data[index++] = color.b;
-      drawable.data[index++] = color.a;
-      drawable.data[index++] = (item.position + p1).x;
-      drawable.data[index++] = (item.position + p1).y;
-      drawable.data[index++] = color.r;
-      drawable.data[index++] = color.g;
-      drawable.data[index++] = color.b;
-      drawable.data[index++] = color.a;
-      drawable.data[index++] = (item.position + p1).x;
-      drawable.data[index++] = (item.position + p1).y;
-      drawable.data[index++] = color.r;
-      drawable.data[index++] = color.g;
-      drawable.data[index++] = color.b;
-      drawable.data[index++] = color.a;
-      drawable.data[index++] = (item.position + p2).x;
-      drawable.data[index++] = (item.position + p2).y;
-      drawable.data[index++] = color.r;
-      drawable.data[index++] = color.g;
-      drawable.data[index++] = color.b;
-      drawable.data[index++] = color.a;
-      drawable.data[index++] = (item.position + p2).x;
-      drawable.data[index++] = (item.position + p2).y;
-      drawable.data[index++] = color.r;
-      drawable.data[index++] = color.g;
-      drawable.data[index++] = color.b;
-      drawable.data[index++] = color.a;
-      drawable.data[index++] = (item.position + p3).x;
-      drawable.data[index++] = (item.position + p3).y;
-      drawable.data[index++] = color.r;
-      drawable.data[index++] = color.g;
-      drawable.data[index++] = color.b;
-      drawable.data[index++] = color.a;
-      drawable.data[index++] = (item.position + p3).x;
-      drawable.data[index++] = (item.position + p3).y;
-      drawable.data[index++] = color.r;
-      drawable.data[index++] = color.g;
-      drawable.data[index++] = color.b;
-      drawable.data[index++] = color.a;
-      drawable.data[index++] = (item.position + p0).x;
-      drawable.data[index++] = (item.position + p0).y;
-      drawable.data[index++] = color.r;
-      drawable.data[index++] = color.g;
-      drawable.data[index++] = color.b;
-      drawable.data[index++] = color.a;
+      drawable.data.insert(drawable.data.cend(), {
+        (item.position + p0).x, (item.position + p0).y,
+        color.r, color.g, color.b, color.a,
+        (item.position + p1).x, (item.position + p1).y,
+        color.r, color.g, color.b, color.a,
+        (item.position + p1).x, (item.position + p1).y,
+        color.r, color.g, color.b, color.a,
+        (item.position + p2).x, (item.position + p2).y,
+        color.r, color.g, color.b, color.a,
+        (item.position + p2).x, (item.position + p2).y,
+        color.r, color.g, color.b, color.a,
+        (item.position + p3).x, (item.position + p3).y,
+        color.r, color.g, color.b, color.a,
+        (item.position + p3).x, (item.position + p3).y,
+        color.r, color.g, color.b, color.a,
+        (item.position + p0).x, (item.position + p0).y,
+        color.r, color.g, color.b, color.a
+      });
     }
     drawable.element_count = static_cast<GLsizei>(kEdgesPerItem * kVerticesPerEdge * items.size());
     drawable.element_type = GL_LINES;

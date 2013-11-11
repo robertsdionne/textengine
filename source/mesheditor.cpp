@@ -144,16 +144,13 @@ namespace textengine {
     constexpr size_t kCoordinatesPerVertex = 2;
     constexpr size_t kColorComponentsPerVertex = 4;
     const auto color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
-    drawable.data_size = (kCoordinatesPerVertex + kColorComponentsPerVertex) * vertices.size();
-    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+    drawable.data.reserve((kCoordinatesPerVertex + kColorComponentsPerVertex) * vertices.size());
     auto vertex = vertices.begin();
     for (auto i = 0; i < vertices.size(); ++i, ++vertex) {
-      drawable.data[(kCoordinatesPerVertex + kColorComponentsPerVertex) * i + 0] = (*vertex)->position.x;
-      drawable.data[(kCoordinatesPerVertex + kColorComponentsPerVertex) * i + 1] = (*vertex)->position.y;
-      drawable.data[(kCoordinatesPerVertex + kColorComponentsPerVertex) * i + 2] = color.r;
-      drawable.data[(kCoordinatesPerVertex + kColorComponentsPerVertex) * i + 3] = color.g;
-      drawable.data[(kCoordinatesPerVertex + kColorComponentsPerVertex) * i + 4] = color.b;
-      drawable.data[(kCoordinatesPerVertex + kColorComponentsPerVertex) * i + 5] = color.a;
+      drawable.data.insert(drawable.data.cend(), {
+        (*vertex)->position.x, (*vertex)->position.y,
+        color.r, color.g, color.b, color.a
+      });
     }
     drawable.element_count = static_cast<GLsizei>(vertices.size());
     drawable.element_type = GL_POINTS;
@@ -167,8 +164,7 @@ namespace textengine {
     constexpr size_t kCoordinatesPerVertex = 2;
     constexpr size_t kColorComponentsPerVertex = 4;
     constexpr size_t kFaceSize = kVerticesPerFace * (kCoordinatesPerVertex + kColorComponentsPerVertex);
-    drawable.data_size = kFaceSize * faces.size();
-    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+    drawable.data.reserve(kFaceSize * faces.size());
     auto face = faces.begin();
     const auto color = glm::vec4(0.32f, 0.0f, 0.0f, 1.0f);
     for (auto i = 0; i < faces.size(); ++i, ++face) {
@@ -177,24 +173,14 @@ namespace textengine {
       const auto h20 = h12->next;
       CHECK_STATE(h01 == h20->next);
       const auto v0 = h01->start, v1 = h12->start, v2 = h20->start;
-      drawable.data[kFaceSize * i + 0] = v0->position.x;
-      drawable.data[kFaceSize * i + 1] = v0->position.y;
-      drawable.data[kFaceSize * i + 2] = color.r;
-      drawable.data[kFaceSize * i + 3] = color.g;
-      drawable.data[kFaceSize * i + 4] = color.b;
-      drawable.data[kFaceSize * i + 5] = color.a;
-      drawable.data[kFaceSize * i + 6] = v1->position.x;
-      drawable.data[kFaceSize * i + 7] = v1->position.y;
-      drawable.data[kFaceSize * i + 8] = color.r;
-      drawable.data[kFaceSize * i + 9] = color.g;
-      drawable.data[kFaceSize * i + 10] = color.b;
-      drawable.data[kFaceSize * i + 11] = color.a;
-      drawable.data[kFaceSize * i + 12] = v2->position.x;
-      drawable.data[kFaceSize * i + 13] = v2->position.y;
-      drawable.data[kFaceSize * i + 14] = color.r;
-      drawable.data[kFaceSize * i + 15] = color.g;
-      drawable.data[kFaceSize * i + 16] = color.b;
-      drawable.data[kFaceSize * i + 17] = color.a;
+      drawable.data.insert(drawable.data.cend(), {
+        v0->position.x, v0->position.y,
+        color.r, color.g, color.b, color.a,
+        v1->position.x, v1->position.y,
+        color.r, color.g, color.b, color.a,
+        v2->position.x, v2->position.y,
+        color.r, color.g, color.b, color.a
+      });
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerFace * faces.size());
     drawable.element_type = GL_TRIANGLES;
@@ -213,24 +199,15 @@ namespace textengine {
                                                   return half_edge->opposite;
                                                 });
     const auto color = glm::vec4(0.64f, 0.0f, 0.0f, 1.0f);
-    drawable.data_size = kEdgeSize * interior_edges;
-    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
-    int index = 0;
+    drawable.data.reserve(kEdgeSize * interior_edges);
     for (auto &half_edge : half_edges) {
       if (half_edge->opposite) {
-        drawable.data[index + 0] = half_edge->start->position.x;
-        drawable.data[index + 1] = half_edge->start->position.y;
-        drawable.data[index + 2] = color.r;
-        drawable.data[index + 3] = color.g;
-        drawable.data[index + 4] = color.b;
-        drawable.data[index + 5] = color.a;
-        drawable.data[index + 6] = half_edge->next->start->position.x;
-        drawable.data[index + 7] = half_edge->next->start->position.y;
-        drawable.data[index + 8] = color.r;
-        drawable.data[index + 9] = color.g;
-        drawable.data[index + 10] = color.b;
-        drawable.data[index + 11] = color.a;
-        index += kEdgeSize;
+        drawable.data.insert(drawable.data.cend(), {
+          half_edge->start->position.x, half_edge->start->position.y,
+          color.r, color.g, color.b, color.a,
+          half_edge->next->start->position.x, half_edge->next->start->position.y,
+          color.r, color.g, color.b, color.a
+        });
       }
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * interior_edges);
@@ -250,24 +227,15 @@ namespace textengine {
                                                   return !half_edge->opposite;
                                                 });
     const auto color = glm::vec4(0.64f, 0.0f, 0.0f, 1.0f);
-    drawable.data_size = kEdgeSize * exterior_edges;
-    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
-    int index = 0;
+    drawable.data.reserve(kEdgeSize * exterior_edges);
     for (auto &half_edge : half_edges) {
       if (!half_edge->opposite) {
-        drawable.data[index + 0] = half_edge->start->position.x;
-        drawable.data[index + 1] = half_edge->start->position.y;
-        drawable.data[index + 2] = color.r;
-        drawable.data[index + 3] = color.g;
-        drawable.data[index + 4] = color.b;
-        drawable.data[index + 5] = color.a;
-        drawable.data[index + 6] = half_edge->next->start->position.x;
-        drawable.data[index + 7] = half_edge->next->start->position.y;
-        drawable.data[index + 8] = color.r;
-        drawable.data[index + 9] = color.g;
-        drawable.data[index + 10] = color.b;
-        drawable.data[index + 11] = color.a;
-        index += kEdgeSize;
+        drawable.data.insert(drawable.data.cend(), {
+          half_edge->start->position.x, half_edge->start->position.y,
+          color.r, color.g, color.b, color.a,
+          half_edge->next->start->position.x, half_edge->next->start->position.y,
+          color.r, color.g, color.b, color.a
+        });
       }
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * exterior_edges);
@@ -283,87 +251,69 @@ namespace textengine {
     constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
     const glm::vec4 color = glm::vec4(0.64, 0.64, 0.0, 1);
     if (MoveMode::kFalse != moving) {
-      drawable.data_size = kEdgeSize;
-      drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+      drawable.data.reserve(kEdgeSize);
       const glm::vec2 cursor_end_position = get_cursor_position();
-      drawable.data[0] = cursor_start_position.x;
-      drawable.data[1] = cursor_start_position.y;
-      drawable.data[2] = color.r;
-      drawable.data[3] = color.g;
-      drawable.data[4] = color.b;
-      drawable.data[5] = color.a;
+      drawable.data.insert(drawable.data.cend(), {
+        cursor_start_position.x, cursor_start_position.y,
+        color.r, color.g, color.b, color.a
+      });
       if (MoveMode::kBoth == moving) {
-        drawable.data[6] = cursor_end_position.x;
-        drawable.data[7] = cursor_end_position.y;
+        drawable.data.insert(drawable.data.cend(), {
+          cursor_end_position.x, cursor_end_position.y
+        });
       } else if (MoveMode::kX == moving) {
-        drawable.data[6] = cursor_end_position.x;
-        drawable.data[7] = cursor_start_position.y;
+        drawable.data.insert(drawable.data.cend(), {
+          cursor_end_position.x, cursor_start_position.y
+        });
       } else if (MoveMode::kY == moving) {
-        drawable.data[6] = cursor_start_position.x;
-        drawable.data[7] = cursor_end_position.y;
+        drawable.data.insert(drawable.data.cend(), {
+          cursor_start_position.x, cursor_end_position.y
+        });
       }
-      drawable.data[8] = color.r;
-      drawable.data[9] = color.g;
-      drawable.data[10] = color.b;
-      drawable.data[11] = color.a;
+      drawable.data.insert(drawable.data.cend(), {
+        cursor_end_position.x, cursor_end_position.y,
+        color.r, color.g, color.b, color.a
+      });
       drawable.element_count = 2;
     } else if (rotating) {
-      drawable.data_size = kEdgeSize * 2;
-      drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+      drawable.data.reserve(kEdgeSize * 2);
       const glm::vec2 cursor_end_position = get_cursor_position();
-      drawable.data[0] = center_of_mass.x;
-      drawable.data[1] = center_of_mass.y;
-      drawable.data[2] = color.r;
-      drawable.data[3] = color.g;
-      drawable.data[4] = color.b;
-      drawable.data[5] = color.a;
-      drawable.data[6] = cursor_start_position.x;
-      drawable.data[7] = cursor_start_position.y;
-      drawable.data[8] = color.r;
-      drawable.data[9] = color.g;
-      drawable.data[10] = color.b;
-      drawable.data[11] = color.a;
-      drawable.data[12] = center_of_mass.x;
-      drawable.data[13] = center_of_mass.y;
-      drawable.data[14] = color.r;
-      drawable.data[15] = color.g;
-      drawable.data[16] = color.b;
-      drawable.data[17] = color.a;
-      drawable.data[18] = cursor_end_position.x;
-      drawable.data[19] = cursor_end_position.y;
-      drawable.data[20] = color.r;
-      drawable.data[21] = color.g;
-      drawable.data[22] = color.b;
-      drawable.data[23] = color.a;
+      drawable.data.insert(drawable.data.cend(), {
+        center_of_mass.x, center_of_mass.y,
+        color.r, color.g, color.b, color.a,
+        cursor_start_position.x, cursor_start_position.y,
+        color.r, color.g, color.b, color.a,
+        center_of_mass.x, center_of_mass.y,
+        color.r, color.g, color.b, color.a,
+        cursor_end_position.x, cursor_end_position.y,
+        color.r, color.g, color.b, color.a,
+      });
       drawable.element_count = 4;
     } else if (ScaleMode::kFalse != scaling) {
-      drawable.data_size = kEdgeSize;
-      drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+      drawable.data.reserve(kEdgeSize);
       const glm::vec2 cursor_end_position = get_cursor_position();
-      drawable.data[0] = center_of_mass.x;
-      drawable.data[1] = center_of_mass.y;
-      drawable.data[2] = color.r;
-      drawable.data[3] = color.g;
-      drawable.data[4] = color.b;
-      drawable.data[5] = color.a;
+      drawable.data.insert(drawable.data.cend(), {
+        center_of_mass.x, center_of_mass.y,
+        color.r, color.g, color.b, color.a
+      });
       if (ScaleMode::kAll == scaling || ScaleMode::kBoth == scaling) {
-        drawable.data[6] = cursor_end_position.x;
-        drawable.data[7] = cursor_end_position.y;
+        drawable.data.insert(drawable.data.cend(), {
+          cursor_end_position.x, cursor_end_position.y
+        });
       } else if (ScaleMode::kX == scaling) {
-        drawable.data[6] = cursor_end_position.x;
-        drawable.data[7] = center_of_mass.y;
+        drawable.data.insert(drawable.data.cend(), {
+          cursor_end_position.x, center_of_mass.y
+        });
       } else if (ScaleMode::kY == scaling) {
-        drawable.data[6] = center_of_mass.x;
-        drawable.data[7] = cursor_end_position.y;
+        drawable.data.insert(drawable.data.cend(), {
+          center_of_mass.x, cursor_end_position.y
+        });
       }
-      drawable.data[8] = color.r;
-      drawable.data[9] = color.g;
-      drawable.data[10] = color.b;
-      drawable.data[11] = color.a;
+      drawable.data.insert(drawable.data.cend(), {
+        color.r, color.g, color.b, color.a
+      });
       drawable.element_count = 2;
     } else {
-      drawable.data_size = 0;
-      drawable.data = std::unique_ptr<float[]>();
       drawable.element_count = 0;
     }
     drawable.element_type = GL_LINES;
@@ -381,28 +331,19 @@ namespace textengine {
                                                 [] (const std::unique_ptr<Mesh::HalfEdge> &half_edge) {
                                                   return half_edge->opposite;
                                                 });
-    drawable.data_size = kEdgeSize * interior_edges;
-    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
-    int index = 0;
+    drawable.data.reserve(kEdgeSize * interior_edges);
     for (auto &half_edge : mesh.get_half_edges()) {
       if (half_edge->opposite) {
         const auto centroid = half_edge->face->centroid();
         const auto opposite_centroid = half_edge->opposite->face->centroid();
         const auto color = half_edge->face->room_info ? half_edge->face->room_info->color / 2.0f : glm::vec4(0.0f, 0.0f, 0.64f, 1.0f);
         const auto opposite_color = half_edge->opposite->face->room_info ? half_edge->opposite->face->room_info->color / 2.0f : glm::vec4(0.0f, 0.0f, 0.64f, 1.0f);
-        drawable.data[index + 0] = centroid.x;
-        drawable.data[index + 1] = centroid.y;
-        drawable.data[index + 2] = color.r;
-        drawable.data[index + 3] = color.g;
-        drawable.data[index + 4] = color.b;
-        drawable.data[index + 5] = color.a;
-        drawable.data[index + 6] = opposite_centroid.x;
-        drawable.data[index + 7] = opposite_centroid.y;
-        drawable.data[index + 8] = opposite_color.r;
-        drawable.data[index + 9] = opposite_color.g;
-        drawable.data[index + 10] = opposite_color.b;
-        drawable.data[index + 11] = opposite_color.a;
-        index += kEdgeSize;
+        drawable.data.insert(drawable.data.cend(), {
+          centroid.x, centroid.y,
+          color.r, color.g, color.b, color.a,
+          opposite_centroid.x, opposite_centroid.y,
+          opposite_color.r, opposite_color.g, opposite_color.b, opposite_color.a
+        });
       }
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * interior_edges);
@@ -414,19 +355,14 @@ namespace textengine {
     Drawable drawable;
     constexpr size_t kCoordinatesPerVertex = 2;
     constexpr size_t kColorComponentsPerVertex = 4;
-    drawable.data_size = (kCoordinatesPerVertex + kColorComponentsPerVertex) * mesh.get_faces().size();
-    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
-    int index = 0;
+    drawable.data.reserve((kCoordinatesPerVertex + kColorComponentsPerVertex) * mesh.get_faces().size());
     for (auto &face : mesh.get_faces()) {
       const glm::vec2 centroid = face->centroid();
       const glm::vec4 color = face->room_info ? face->room_info->color / 4.0f : glm::vec4(0.0f, 0.0f, 0.32f, 1.0f);
-      drawable.data[index + 0] = centroid.x;
-      drawable.data[index + 1] = centroid.y;
-      drawable.data[index + 2] = color.r;
-      drawable.data[index + 3] = color.g;
-      drawable.data[index + 4] = color.b;
-      drawable.data[index + 5] = color.a;
-      index += kCoordinatesPerVertex + kColorComponentsPerVertex;
+      drawable.data.insert(drawable.data.cend(), {
+        centroid.x, centroid.y,
+        color.r, color.g, color.b, color.a,
+      });
     }
     drawable.element_count = static_cast<GLsizei>(mesh.get_faces().size());
     drawable.element_type = GL_POINTS;
@@ -441,61 +377,28 @@ namespace textengine {
       constexpr size_t kColorComponentsPerVertex = 4;
       constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
       const auto color = glm::vec4(0.64f, 0.64f, 0.0f, 1.0f);
-      drawable.data_size = kEdgeSize * 4;
-      drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+      drawable.data.reserve(kEdgeSize * 4);
       const glm::vec2 cursor_end_position = get_cursor_position();
-      drawable.data[0] = cursor_start_position.x;
-      drawable.data[1] = cursor_start_position.y;
-      drawable.data[2] = color.r;
-      drawable.data[3] = color.g;
-      drawable.data[4] = color.b;
-      drawable.data[5] = color.a;
-      drawable.data[6] = cursor_end_position.x;
-      drawable.data[7] = cursor_start_position.y;
-      drawable.data[8] = color.r;
-      drawable.data[9] = color.g;
-      drawable.data[10] = color.b;
-      drawable.data[11] = color.a;
-      drawable.data[12] = cursor_start_position.x;
-      drawable.data[13] = cursor_start_position.y;
-      drawable.data[14] = color.r;
-      drawable.data[15] = color.g;
-      drawable.data[16] = color.b;
-      drawable.data[17] = color.a;
-      drawable.data[18] = cursor_start_position.x;
-      drawable.data[19] = cursor_end_position.y;
-      drawable.data[20] = color.r;
-      drawable.data[21] = color.g;
-      drawable.data[22] = color.b;
-      drawable.data[23] = color.a;
-      drawable.data[24] = cursor_end_position.x;
-      drawable.data[25] = cursor_end_position.y;
-      drawable.data[26] = color.r;
-      drawable.data[27] = color.g;
-      drawable.data[28] = color.b;
-      drawable.data[29] = color.a;
-      drawable.data[30] = cursor_start_position.x;
-      drawable.data[31] = cursor_end_position.y;
-      drawable.data[32] = color.r;
-      drawable.data[33] = color.g;
-      drawable.data[34] = color.b;
-      drawable.data[35] = color.a;
-      drawable.data[36] = cursor_end_position.x;
-      drawable.data[37] = cursor_end_position.y;
-      drawable.data[38] = color.r;
-      drawable.data[39] = color.g;
-      drawable.data[40] = color.b;
-      drawable.data[41] = color.a;
-      drawable.data[42] = cursor_end_position.x;
-      drawable.data[43] = cursor_start_position.y;
-      drawable.data[44] = color.r;
-      drawable.data[45] = color.g;
-      drawable.data[46] = color.b;
-      drawable.data[47] = color.a;
+      drawable.data.insert(drawable.data.cend(), {
+        cursor_start_position.x, cursor_start_position.y,
+        color.r, color.g, color.b, color.a,
+        cursor_end_position.x, cursor_start_position.y,
+        color.r, color.g, color.b, color.a,
+        cursor_start_position.x, cursor_start_position.y,
+        color.r, color.g, color.b, color.a,
+        cursor_start_position.x, cursor_end_position.y,
+        color.r, color.g, color.b, color.a,
+        cursor_end_position.x, cursor_end_position.y,
+        color.r, color.g, color.b, color.a,
+        cursor_start_position.x, cursor_end_position.y,
+        color.r, color.g, color.b, color.a,
+        cursor_end_position.x, cursor_end_position.y,
+        color.r, color.g, color.b, color.a,
+        cursor_end_position.x, cursor_start_position.y,
+        color.r, color.g, color.b, color.a,
+      });
       drawable.element_count = 8;
     } else {
-      drawable.data_size = 0;
-      drawable.data = std::unique_ptr<float[]>();
       drawable.element_count = 0;
     }
     drawable.element_type = GL_LINES;

@@ -51,12 +51,11 @@ namespace textengine {
 
   void MeshRenderer::Render() {
     Drawable face_data = mesh.Triangulate();
-    mesh_buffer.Data(sizeof(float) * face_data.data_size, face_data.data.get(), GL_STREAM_DRAW);
+    mesh_buffer.Data(face_data.data_size(), face_data.data.data(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable edge_data = mesh.Wireframe();
-    mesh_edge_buffer.Data(sizeof(float) * edge_data.data_size,
-                          edge_data.data.get(), GL_STREAM_DRAW);
+    mesh_edge_buffer.Data(edge_data.data_size(), edge_data.data.data(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     face_program.Use();

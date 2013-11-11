@@ -93,43 +93,43 @@ namespace textengine {
 
   void EditorRenderer::Render() {
     Drawable pathfinding_edges_data = editor.PathfindingEdges();
-    pathfinding_edges_buffer.Data(sizeof(float) * pathfinding_edges_data.data_size,
-                 pathfinding_edges_data.data.get(), GL_STREAM_DRAW);
+    pathfinding_edges_buffer.Data(pathfinding_edges_data.data_size(),
+                 pathfinding_edges_data.data.data(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable pathfinding_nodes_data = editor.PathfindingNodes();
-    pathfinding_nodes_buffer.Data(sizeof(float) * pathfinding_nodes_data.data_size,
-                 pathfinding_nodes_data.data.get(), GL_STREAM_DRAW);
+    pathfinding_nodes_buffer.Data(pathfinding_nodes_data.data_size(),
+                 pathfinding_nodes_data.data.data(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable selected_face_data = editor.HighlightedTriangles();
-    selected_face_buffer.Data(sizeof(float) * selected_face_data.data_size,
-                 selected_face_data.data.get(), GL_STREAM_DRAW);
+    selected_face_buffer.Data(selected_face_data.data_size(),
+                 selected_face_data.data.data(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable selected_interior_edge_data = editor.HighlightedWireframe();
-    selected_interior_edge_buffer.Data(sizeof(float) * selected_interior_edge_data.data_size,
-                 selected_interior_edge_data.data.get(), GL_STREAM_DRAW);
+    selected_interior_edge_buffer.Data(selected_interior_edge_data.data_size(),
+                 selected_interior_edge_data.data.data(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable selected_exterior_edge_data = editor.HighlightedWireframeExterior();
-    selected_exterior_edge_buffer.Data(sizeof(float) * selected_exterior_edge_data.data_size,
-                 selected_exterior_edge_data.data.get(), GL_STREAM_DRAW);
+    selected_exterior_edge_buffer.Data(selected_exterior_edge_data.data_size(),
+                 selected_exterior_edge_data.data.data(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable selected_point_data = editor.HighlightedPoints();
-    selected_point_buffer.Data(sizeof(float) * selected_point_data.data_size,
-                 selected_point_data.data.get(), GL_STREAM_DRAW);
+    selected_point_buffer.Data(selected_point_data.data_size(),
+                 selected_point_data.data.data(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable move_indicator_data = editor.MoveScaleIndicator();
-    move_indicator_buffer.Data(sizeof(float) * move_indicator_data.data_size,
-                 move_indicator_data.data.get(), GL_STREAM_DRAW);
+    move_indicator_buffer.Data(move_indicator_data.data_size(),
+                 move_indicator_data.data.data(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     Drawable selection_box_data = editor.SelectionBox();
-    selection_box_buffer.Data(sizeof(float) * selection_box_data.data_size,
-                 selection_box_data.data.get(), GL_STREAM_DRAW);
+    selection_box_buffer.Data(selection_box_data.data_size(),
+                 selection_box_data.data.data(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

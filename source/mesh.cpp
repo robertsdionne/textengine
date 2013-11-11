@@ -324,11 +324,11 @@ namespace textengine {
   Drawable Mesh::Points() const {
     Drawable drawable;
     constexpr size_t kCoordinatesPerVertex = 2;
-    drawable.data_size = kCoordinatesPerVertex * vertices.size();
-    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+    drawable.data.reserve(kCoordinatesPerVertex * vertices.size());
     for (auto i = 0; i < vertices.size(); ++i) {
-      drawable.data[kCoordinatesPerVertex * i + 0] = vertices[i]->position.x;
-      drawable.data[kCoordinatesPerVertex * i + 1] = vertices[i]->position.y;
+      drawable.data.insert(drawable.data.cend(), {
+        vertices[i]->position.x, vertices[i]->position.y
+      });
     }
     drawable.element_count = static_cast<GLsizei>(vertices.size());
     drawable.element_type = GL_POINTS;
@@ -342,8 +342,7 @@ namespace textengine {
     constexpr size_t kCoordinatesPerVertex = 2;
     constexpr size_t kColorComponentsPerVertex = 4;
     constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
-    drawable.data_size = kEdgeSize * exterior_half_edges.size();
-    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+    drawable.data.reserve(kEdgeSize * exterior_half_edges.size());
     for (auto i = 0; i < exterior_half_edges.size(); ++i) {
       const glm::vec4 color = glm::vec4(glm::vec3(), 1.0f);
       const auto v0 = exterior_half_edges[i]->start->position;
@@ -359,79 +358,33 @@ namespace textengine {
       const auto v3 = length * dir3 + v1;
       const auto v2_prime = 0.2f * dir2_prime + v0;
       const auto v3_prime = 0.2f * dir3_prime + v1;
-      drawable.data[kEdgeSize * i + 0] = v2.x;
-      drawable.data[kEdgeSize * i + 1] = v2.y;
-      drawable.data[kEdgeSize * i + 2] = color.r;
-      drawable.data[kEdgeSize * i + 3] = color.g;
-      drawable.data[kEdgeSize * i + 4] = color.b;
-      drawable.data[kEdgeSize * i + 5] = color.a;
-      drawable.data[kEdgeSize * i + 6] = v1.x;
-      drawable.data[kEdgeSize * i + 7] = v1.y;
-      drawable.data[kEdgeSize * i + 8] = color.r;
-      drawable.data[kEdgeSize * i + 9] = color.g;
-      drawable.data[kEdgeSize * i + 10] = color.b;
-      drawable.data[kEdgeSize * i + 11] = color.a;
-      drawable.data[kEdgeSize * i + 12] = v0.x;
-      drawable.data[kEdgeSize * i + 13] = v0.y;
-      drawable.data[kEdgeSize * i + 14] = color.r;
-      drawable.data[kEdgeSize * i + 15] = color.g;
-      drawable.data[kEdgeSize * i + 16] = color.b;
-      drawable.data[kEdgeSize * i + 17] = color.a;
-      drawable.data[kEdgeSize * i + 18] = v2.x;
-      drawable.data[kEdgeSize * i + 19] = v2.y;
-      drawable.data[kEdgeSize * i + 20] = color.r;
-      drawable.data[kEdgeSize * i + 21] = color.g;
-      drawable.data[kEdgeSize * i + 22] = color.b;
-      drawable.data[kEdgeSize * i + 23] = color.a;
-      drawable.data[kEdgeSize * i + 24] = v3.x;
-      drawable.data[kEdgeSize * i + 25] = v3.y;
-      drawable.data[kEdgeSize * i + 26] = color.r;
-      drawable.data[kEdgeSize * i + 27] = color.g;
-      drawable.data[kEdgeSize * i + 28] = color.b;
-      drawable.data[kEdgeSize * i + 29] = color.a;
-      drawable.data[kEdgeSize * i + 30] = v1.x;
-      drawable.data[kEdgeSize * i + 31] = v1.y;
-      drawable.data[kEdgeSize * i + 32] = color.r;
-      drawable.data[kEdgeSize * i + 33] = color.g;
-      drawable.data[kEdgeSize * i + 34] = color.b;
-      drawable.data[kEdgeSize * i + 35] = color.a;
+      drawable.data.insert(drawable.data.cend(), {
+        v2.x, v2.y,
+        color.r, color.g, color.b, color.a,
+        v1.x, v1.y,
+        color.r, color.g, color.b, color.a,
+        v0.x, v0.y,
+        color.r, color.g, color.b, color.a,
+        v2.x, v2.y,
+        color.r, color.g, color.b, color.a,
+        v3.x, v3.y,
+        color.r, color.g, color.b, color.a,
+        v1.x, v1.y,
+        color.r, color.g, color.b, color.a,
 
-      drawable.data[kEdgeSize * i + 36] = v2_prime.x;
-      drawable.data[kEdgeSize * i + 37] = v2_prime.y;
-      drawable.data[kEdgeSize * i + 38] = color.r;
-      drawable.data[kEdgeSize * i + 39] = color.g;
-      drawable.data[kEdgeSize * i + 40] = color.b;
-      drawable.data[kEdgeSize * i + 41] = 0.0f;
-      drawable.data[kEdgeSize * i + 42] = v2.x;
-      drawable.data[kEdgeSize * i + 43] = v2.y;
-      drawable.data[kEdgeSize * i + 44] = color.r;
-      drawable.data[kEdgeSize * i + 45] = color.g;
-      drawable.data[kEdgeSize * i + 46] = color.b;
-      drawable.data[kEdgeSize * i + 47] = color.a;
-      drawable.data[kEdgeSize * i + 48] = v0.x;
-      drawable.data[kEdgeSize * i + 49] = v0.y;
-      drawable.data[kEdgeSize * i + 50] = color.r;
-      drawable.data[kEdgeSize * i + 51] = color.g;
-      drawable.data[kEdgeSize * i + 52] = color.b;
-      drawable.data[kEdgeSize * i + 53] = 0.75f;
-      drawable.data[kEdgeSize * i + 54] = v3.x;
-      drawable.data[kEdgeSize * i + 55] = v3.y;
-      drawable.data[kEdgeSize * i + 56] = color.r;
-      drawable.data[kEdgeSize * i + 57] = color.g;
-      drawable.data[kEdgeSize * i + 58] = color.b;
-      drawable.data[kEdgeSize * i + 59] = color.a;
-      drawable.data[kEdgeSize * i + 60] = v3_prime.x;
-      drawable.data[kEdgeSize * i + 61] = v3_prime.y;
-      drawable.data[kEdgeSize * i + 62] = color.r;
-      drawable.data[kEdgeSize * i + 63] = color.g;
-      drawable.data[kEdgeSize * i + 64] = color.b;
-      drawable.data[kEdgeSize * i + 65] = 0.0f;
-      drawable.data[kEdgeSize * i + 66] = v1.x;
-      drawable.data[kEdgeSize * i + 67] = v1.y;
-      drawable.data[kEdgeSize * i + 68] = color.r;
-      drawable.data[kEdgeSize * i + 69] = color.g;
-      drawable.data[kEdgeSize * i + 70] = color.b;
-      drawable.data[kEdgeSize * i + 71] = 0.75f;
+        v2_prime.x, v2_prime.y,
+        color.r, color.g, color.b, 0.0f,
+        v2.x, v2.y,
+        color.r, color.g, color.b, color.a,
+        v0.x, v0.y,
+        color.r, color.g, color.b, 0.75f,
+        v3.x, v3.y,
+        color.r, color.g, color.b, color.a,
+        v3_prime.x, v3_prime.y,
+        color.r, color.g, color.b, 0.0f,
+        v1.x, v1.y,
+        color.r, color.g, color.b, 0.75f
+      });
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * exterior_half_edges.size());
     drawable.element_type = GL_TRIANGLES;
@@ -444,8 +397,7 @@ namespace textengine {
     constexpr size_t kCoordinatesPerVertex = 2;
     constexpr size_t kColorComponentsPerVertex = 4;
     constexpr size_t kFaceSize = kVerticesPerFace * (kCoordinatesPerVertex + kColorComponentsPerVertex);
-    drawable.data_size = kFaceSize * faces.size();
-    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+    drawable.data.reserve(kFaceSize * faces.size());
     for (auto i = 0; i < faces.size(); ++i) {
       const glm::vec4 color = faces[i]->room_info ? faces[i]->room_info->color : glm::vec4(glm::vec3(0.64f), 1.0f);
       const auto h01 = faces[i]->face_edge;
@@ -453,24 +405,14 @@ namespace textengine {
       const auto h20 = h12->next;
       CHECK_STATE(h01 == h20->next);
       const auto v0 = h01->start, v1 = h12->start, v2 = h20->start;
-      drawable.data[kFaceSize * i + 0] = v0->position.x;
-      drawable.data[kFaceSize * i + 1] = v0->position.y;
-      drawable.data[kFaceSize * i + 2] = color.r;
-      drawable.data[kFaceSize * i + 3] = color.g;
-      drawable.data[kFaceSize * i + 4] = color.b;
-      drawable.data[kFaceSize * i + 5] = color.a;
-      drawable.data[kFaceSize * i + 6] = v1->position.x;
-      drawable.data[kFaceSize * i + 7] = v1->position.y;
-      drawable.data[kFaceSize * i + 8] = color.r;
-      drawable.data[kFaceSize * i + 9] = color.g;
-      drawable.data[kFaceSize * i + 10] = color.b;
-      drawable.data[kFaceSize * i + 11] = color.a;
-      drawable.data[kFaceSize * i + 12] = v2->position.x;
-      drawable.data[kFaceSize * i + 13] = v2->position.y;
-      drawable.data[kFaceSize * i + 14] = color.r;
-      drawable.data[kFaceSize * i + 15] = color.g;
-      drawable.data[kFaceSize * i + 16] = color.b;
-      drawable.data[kFaceSize * i + 17] = color.a;
+      drawable.data.insert(drawable.data.cend(), {
+        v0->position.x, v0->position.y,
+        color.r, color.g, color.b, color.a,
+        v1->position.x, v1->position.y,
+        color.r, color.g, color.b, color.a,
+        v2->position.x, v2->position.y,
+        color.r, color.g, color.b, color.a
+      });
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerFace * faces.size());
     drawable.element_type = GL_TRIANGLES;
@@ -486,8 +428,7 @@ namespace textengine {
     constexpr size_t kCoordinatesPerVertex = 2;
     constexpr size_t kColorComponentsPerVertex = 4;
     constexpr size_t kFaceSize = kVerticesPerFace * (kCoordinatesPerVertex + kColorComponentsPerVertex);
-    drawable.data_size = kFaceSize * visible_faces.size();
-    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+    drawable.data.reserve(kFaceSize * visible_faces.size());
     for (auto i = 0; i < visible_faces.size(); ++i) {
       const float brightness = 1.0f - pow(depths.at(visible_faces[i]) / kMaxDepth, 2.0f);
       const glm::vec4 color = brightness * (visible_faces[i]->room_info ? visible_faces[i]->room_info->color : glm::vec4(glm::vec3(0.64f), 1.0f));
@@ -496,24 +437,14 @@ namespace textengine {
       const auto h20 = h12->next;
       CHECK_STATE(h01 == h20->next);
       const auto v0 = h01->start, v1 = h12->start, v2 = h20->start;
-      drawable.data[kFaceSize * i + 0] = v0->position.x;
-      drawable.data[kFaceSize * i + 1] = v0->position.y;
-      drawable.data[kFaceSize * i + 2] = color.r;
-      drawable.data[kFaceSize * i + 3] = color.g;
-      drawable.data[kFaceSize * i + 4] = color.b;
-      drawable.data[kFaceSize * i + 5] = color.a;
-      drawable.data[kFaceSize * i + 6] = v1->position.x;
-      drawable.data[kFaceSize * i + 7] = v1->position.y;
-      drawable.data[kFaceSize * i + 8] = color.r;
-      drawable.data[kFaceSize * i + 9] = color.g;
-      drawable.data[kFaceSize * i + 10] = color.b;
-      drawable.data[kFaceSize * i + 11] = color.a;
-      drawable.data[kFaceSize * i + 12] = v2->position.x;
-      drawable.data[kFaceSize * i + 13] = v2->position.y;
-      drawable.data[kFaceSize * i + 14] = color.r;
-      drawable.data[kFaceSize * i + 15] = color.g;
-      drawable.data[kFaceSize * i + 16] = color.b;
-      drawable.data[kFaceSize * i + 17] = color.a;
+      drawable.data.insert(drawable.data.cend(), {
+        v0->position.x, v0->position.y,
+        color.r, color.g, color.b, color.a,
+        v1->position.x, v1->position.y,
+        color.r, color.g, color.b, color.a,
+        v2->position.x, v2->position.y,
+        color.r, color.g, color.b, color.a
+      });
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerFace * visible_faces.size());
     drawable.element_type = GL_TRIANGLES;
@@ -526,25 +457,18 @@ namespace textengine {
     constexpr size_t kCoordinatesPerVertex = 2;
     constexpr size_t kColorComponentsPerVertex = 4;
     constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
-    drawable.data_size = kEdgeSize * half_edges.size();
-    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+    drawable.data.reserve(kEdgeSize * half_edges.size());
     for (auto i = 0; i < half_edges.size(); ++i) {
       glm::vec4 color = half_edges[i]->face->room_info ? half_edges[i]->face->room_info->color / 2.0f : glm::vec4(glm::vec3(0.32f), 1.0f);
       if (half_edges[i]->generative) {
         color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
       }
-      drawable.data[kEdgeSize * i + 0] = half_edges[i]->start->position.x;
-      drawable.data[kEdgeSize * i + 1] = half_edges[i]->start->position.y;
-      drawable.data[kEdgeSize * i + 2] = color.r;
-      drawable.data[kEdgeSize * i + 3] = color.g;
-      drawable.data[kEdgeSize * i + 4] = color.b;
-      drawable.data[kEdgeSize * i + 5] = color.a;
-      drawable.data[kEdgeSize * i + 6] = half_edges[i]->next->start->position.x;
-      drawable.data[kEdgeSize * i + 7] = half_edges[i]->next->start->position.y;
-      drawable.data[kEdgeSize * i + 8] = color.r;
-      drawable.data[kEdgeSize * i + 9] = color.g;
-      drawable.data[kEdgeSize * i + 10] = color.b;
-      drawable.data[kEdgeSize * i + 11] = color.a;
+      drawable.data.insert(drawable.data.cend(), {
+        half_edges[i]->start->position.x, half_edges[i]->start->position.y,
+        color.r, color.g, color.b, color.a,
+        half_edges[i]->next->start->position.x, half_edges[i]->next->start->position.y,
+        color.r, color.g, color.b, color.a
+      });
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * half_edges.size());
     drawable.element_type = GL_LINES;
@@ -560,26 +484,19 @@ namespace textengine {
     constexpr size_t kCoordinatesPerVertex = 2;
     constexpr size_t kColorComponentsPerVertex = 4;
     constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
-    drawable.data_size = kEdgeSize * visible_half_edges.size();
-    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
+    drawable.data.reserve(kEdgeSize * visible_half_edges.size());
     for (auto i = 0; i < visible_half_edges.size(); ++i) {
       const float brightness = 1.0f - pow(depths.at(visible_half_edges[i]->face) / kMaxDepth, 2.0f);
       glm::vec4 color = brightness * (visible_half_edges[i]->face->room_info ? visible_half_edges[i]->face->room_info->color / 2.0f : glm::vec4(glm::vec3(0.32f), 1.0f));
       if (visible_half_edges[i]->generative) {
         color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
       }
-      drawable.data[kEdgeSize * i + 0] = visible_half_edges[i]->start->position.x;
-      drawable.data[kEdgeSize * i + 1] = visible_half_edges[i]->start->position.y;
-      drawable.data[kEdgeSize * i + 2] = color.r * brightness;
-      drawable.data[kEdgeSize * i + 3] = color.g * brightness;
-      drawable.data[kEdgeSize * i + 4] = color.b * brightness;
-      drawable.data[kEdgeSize * i + 5] = color.a;
-      drawable.data[kEdgeSize * i + 6] = visible_half_edges[i]->next->start->position.x;
-      drawable.data[kEdgeSize * i + 7] = visible_half_edges[i]->next->start->position.y;
-      drawable.data[kEdgeSize * i + 8] = color.r * brightness;
-      drawable.data[kEdgeSize * i + 9] = color.g * brightness;
-      drawable.data[kEdgeSize * i + 10] = color.b * brightness;
-      drawable.data[kEdgeSize * i + 11] = color.a;
+      drawable.data.insert(drawable.data.cend(), {
+        visible_half_edges[i]->start->position.x, visible_half_edges[i]->start->position.y,
+        color.r, color.g, color.b, color.a,
+        visible_half_edges[i]->next->start->position.x, visible_half_edges[i]->next->start->position.y,
+        color.r, color.g, color.b, color.a
+      });
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * visible_half_edges.size());
     drawable.element_type = GL_LINES;
@@ -596,25 +513,16 @@ namespace textengine {
                                                 [] (const std::unique_ptr<HalfEdge> &half_edge) {
                                                   return !half_edge->opposite && half_edge->seen;
                                                 });
-    drawable.data_size = kEdgeSize * exterior_edges;
-    drawable.data = std::unique_ptr<float[]>{new float[drawable.data_size]};
-    int index = 0;
+    drawable.data.reserve(kEdgeSize * exterior_edges);
     for (auto &half_edge : half_edges) {
       if (!half_edge->opposite && half_edge->seen) {
         const glm::vec4 color = half_edge->face->room_info ? half_edge->face->room_info->color / 2.0f : glm::vec4(glm::vec3(0.32f), 1.0f);
-        drawable.data[index + 0] = half_edge->start->position.x;
-        drawable.data[index + 1] = half_edge->start->position.y;
-        drawable.data[index + 2] = color.r;
-        drawable.data[index + 3] = color.g;
-        drawable.data[index + 4] = color.b;
-        drawable.data[index + 5] = color.a;
-        drawable.data[index + 6] = half_edge->next->start->position.x;
-        drawable.data[index + 7] = half_edge->next->start->position.y;
-        drawable.data[index + 8] = color.r;
-        drawable.data[index + 9] = color.g;
-        drawable.data[index + 10] = color.b;
-        drawable.data[index + 11] = color.a;
-        index += kEdgeSize;
+        drawable.data.insert(drawable.data.cend(), {
+          half_edge->start->position.x, half_edge->start->position.y,
+          color.r, color.g, color.b, color.a,
+          half_edge->next->start->position.x, half_edge->next->start->position.y,
+          color.r, color.g, color.b, color.a
+        });
       }
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * exterior_edges);

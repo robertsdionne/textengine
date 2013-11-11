@@ -180,6 +180,8 @@
 		468E015A1783F03D00301C1C /* simplexnoise1234.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 468EFC681783DC1E00301C1C /* simplexnoise1234.cpp */; };
 		468E015D1783F10600301C1C /* libsimplexnoise1234.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01561783F02800301C1C /* libsimplexnoise1234.a */; };
 		46A11D39181964B700105526 /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A11D37181964B600105526 /* log.cpp */; };
+		46A73D3E183137CC009F8B77 /* drawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A73D3D183137CC009F8B77 /* drawable.cpp */; };
+		46A73D3F183143A2009F8B77 /* drawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A73D3D183137CC009F8B77 /* drawable.cpp */; };
 		46AB32EC180F2F1F003DDECF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FCB7180F1D5200B00F93 /* SystemConfiguration.framework */; };
 		46AB32ED180F2F28003DDECF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46D0FCB5180F1D4B00B00F93 /* CFNetwork.framework */; };
 		46AB32EE180F2F2C003DDECF /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46AB32C7180F1EA0003DDECF /* libssl.dylib */; };
@@ -1503,6 +1505,7 @@
 		468EFC691783DC1E00301C1C /* simplexnoise1234.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = simplexnoise1234.h; sourceTree = "<group>"; };
 		46A11D37181964B600105526 /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = log.cpp; sourceTree = "<group>"; };
 		46A11D38181964B700105526 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
+		46A73D3D183137CC009F8B77 /* drawable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawable.cpp; sourceTree = "<group>"; };
 		46AB32C7180F1EA0003DDECF /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
 		46B9824C17E69E9C00B59145 /* libglfw.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libglfw.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		46B9875117E6A37700B59145 /* checks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = checks.h; sourceTree = "<group>"; };
@@ -3203,6 +3206,7 @@
 				46FBD347180F76BE00F7C5F8 /* console.cpp */,
 				46FBD348180F76BE00F7C5F8 /* console.h */,
 				461717F51826A5F80070ABED /* controller.h */,
+				46A73D3D183137CC009F8B77 /* drawable.cpp */,
 				462B4A6917EA9760006FE9BB /* drawable.h */,
 				461717D518269E970070ABED /* editor.cpp */,
 				461717FC1826A97C0070ABED /* editorrenderer.cpp */,
@@ -3646,6 +3650,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46A73D3F183143A2009F8B77 /* drawable.cpp in Sources */,
 				461717EC1826A59D0070ABED /* buffer.cpp in Sources */,
 				461717FE1826A97C0070ABED /* editorrenderer.cpp in Sources */,
 				461717ED1826A59D0070ABED /* joystick.cpp in Sources */,
@@ -3672,6 +3677,7 @@
 				46544499182AD3B400A531CD /* subjectivemeshrenderer.cpp in Sources */,
 				46B9A60A1771F0F800E43B24 /* main.cpp in Sources */,
 				46B9875917E6A62500B59145 /* glfwapplication.cpp in Sources */,
+				46A73D3E183137CC009F8B77 /* drawable.cpp in Sources */,
 				4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */,
 				46A11D39181964B700105526 /* log.cpp in Sources */,
 				461717FA1826A9700070ABED /* meshrenderer.cpp in Sources */,

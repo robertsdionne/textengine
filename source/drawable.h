@@ -14,10 +14,11 @@
 namespace textengine {
 
   struct Drawable {
-    std::unique_ptr<float[]> data;
-    size_t data_size;
+    std::vector<float> data;
     GLenum element_type;
     GLsizei element_count;
+
+    size_t data_size() const;
   };
 
 }  // namespace textengine
