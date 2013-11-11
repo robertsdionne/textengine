@@ -9,8 +9,9 @@
 namespace textengine {
 
   class Controller;
-  class Keyboard;
+  class Input;
   class Joystick;
+  class Keyboard;
   class Mouse;
   class Renderer;
 
@@ -18,7 +19,7 @@ namespace textengine {
   public:
     GlfwApplication(int argument_count, char *arguments[], int width, int height,
                     const std::string &title, Controller &controller, Renderer &renderer,
-                    Keyboard &keyboard, Mouse &mouse, Joystick &joystick);
+                    Input &input, Joystick &joystick, Keyboard &keyboard, Mouse &mouse);
 
     virtual ~GlfwApplication();
 
@@ -33,8 +34,6 @@ namespace textengine {
 
     static void HandleMouseButton(GLFWwindow *window, int button, int action, int mods);
 
-    static void HandleMouseCursorMove(GLFWwindow *window, double x, double y);
-
     static void HandleReshape(GLFWwindow *window, int width, int height);
 
     static GlfwApplication *instance;
@@ -47,9 +46,10 @@ namespace textengine {
     const std::string title;
     Controller &controller;
     Renderer &renderer;
+    Input &input;
+    Joystick &joystick;
     Keyboard &keyboard;
     Mouse &mouse;
-    Joystick &joystick;
     bool minimized;
   };
 

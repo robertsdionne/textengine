@@ -17,6 +17,8 @@ namespace textengine {
 
     float GetButtonVelocity(int button);
 
+    glm::vec2 GetCursorVelocity();
+
     bool HasCursorMoved() const;
 
     bool IsButtonDown(int button);

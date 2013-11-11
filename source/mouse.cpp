@@ -14,6 +14,10 @@ namespace textengine {
     return (buttons[button] - previous_buttons[button]) * dt;
   }
 
+  glm::vec2 Mouse::GetCursorVelocity() {
+    return (cursor_position - previous_cursor_position) * dt;
+  }
+
   bool Mouse::HasCursorMoved() const {
     return glm::vec2(0, 0) != cursor_position - previous_cursor_position;
   }

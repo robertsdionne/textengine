@@ -11,7 +11,7 @@
 namespace textengine {
 
   class CommandParser;
-  class Joystick;
+  class Input;
   class Log;
   class SynchronizedQueue;
 
@@ -19,7 +19,7 @@ namespace textengine {
   public:
     Updater(SynchronizedQueue &command_queue,
             SynchronizedQueue &reply_queue, Log &playtest_log, CommandParser &parser,
-            Joystick &joystick, Mesh &mesh, GameState &initial_state);
+            Input &input, Mesh &mesh, GameState &initial_state);
 
     virtual ~Updater() = default;
 
@@ -46,7 +46,7 @@ namespace textengine {
     SynchronizedQueue &command_queue, &reply_queue;
     Log &playtest_log;
     CommandParser &parser;
-    Joystick &joystick;
+    Input &input;
     Mesh &mesh;
     GameState &current_state;
     std::chrono::high_resolution_clock clock;

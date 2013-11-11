@@ -76,6 +76,7 @@
 		462B4A6517EA43AA006FE9BB /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A5E17EA43AA006FE9BB /* shader.cpp */; };
 		462B4A6617EA43AA006FE9BB /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A6017EA43AA006FE9BB /* program.cpp */; };
 		462B4A6717EA43AA006FE9BB /* buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A6217EA43AA006FE9BB /* buffer.cpp */; };
+		463F38AF18316A39001326C3 /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463F38AD18316A39001326C3 /* input.cpp */; };
 		46401B18182C732700A73BDC /* libsimplexnoise1234.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01561783F02800301C1C /* libsimplexnoise1234.a */; };
 		464A57F6181B0D8300FAF563 /* exporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464A57F5181B0D8300FAF563 /* exporter.cpp */; };
 		464E36801825B4BC00AC0AC0 /* joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464E367E1825B4BC00AC0AC0 /* joystick.cpp */; };
@@ -1390,6 +1391,8 @@
 		462B4A6217EA43AA006FE9BB /* buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = buffer.cpp; sourceTree = "<group>"; };
 		462B4A6317EA43AA006FE9BB /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
 		462B4A6917EA9760006FE9BB /* drawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = drawable.h; sourceTree = "<group>"; };
+		463F38AD18316A39001326C3 /* input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = input.cpp; sourceTree = "<group>"; };
+		463F38AE18316A39001326C3 /* input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = input.h; sourceTree = "<group>"; };
 		464A57EC181B0D4600FAF563 /* exporter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = exporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		464A57F5181B0D8300FAF563 /* exporter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = exporter.cpp; sourceTree = "<group>"; };
 		464E367E1825B4BC00AC0AC0 /* joystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = joystick.cpp; sourceTree = "<group>"; };
@@ -3216,6 +3219,8 @@
 				466E70F917EB92F900CD9E9D /* gamestate.h */,
 				46B9875517E6A62500B59145 /* glfwapplication.cpp */,
 				46B9875617E6A62500B59145 /* glfwapplication.h */,
+				463F38AD18316A39001326C3 /* input.cpp */,
+				463F38AE18316A39001326C3 /* input.h */,
 				464E367E1825B4BC00AC0AC0 /* joystick.cpp */,
 				464E367F1825B4BC00AC0AC0 /* joystick.h */,
 				460F81B117EA1C3B00D765F5 /* keyboard.cpp */,
@@ -3691,6 +3696,7 @@
 				460FFA321810634C0053F813 /* vertexformat.cpp in Sources */,
 				46FBD33D180F4C7F00F7C5F8 /* commandlineprompt.cpp in Sources */,
 				462B4A6717EA43AA006FE9BB /* buffer.cpp in Sources */,
+				463F38AF18316A39001326C3 /* input.cpp in Sources */,
 				466E70FA17EB92F900CD9E9D /* gamestate.cpp in Sources */,
 				466E70FD17EB944400CD9E9D /* commandparser.cpp in Sources */,
 				466E710017EB96D600CD9E9D /* updater.cpp in Sources */,

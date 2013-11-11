@@ -7,7 +7,7 @@
 #include "checks.h"
 #include "commandparser.h"
 #include "gamestate.h"
-#include "joystick.h"
+#include "input.h"
 #include "keyboard.h"
 #include "log.h"
 #include "mesh.h"
@@ -17,10 +17,10 @@
 namespace textengine {
 
   Updater::Updater(SynchronizedQueue &command_queue, SynchronizedQueue &reply_queue,
-                   Log &playtest_log, CommandParser &parser, Joystick &joystick,
+                   Log &playtest_log, CommandParser &parser, Input &input,
                    Mesh &mesh, GameState &initial_state)
   : command_queue(command_queue), reply_queue(reply_queue), playtest_log(playtest_log),
-    parser(parser), joystick(joystick), mesh(mesh), current_state(initial_state), clock(),
+    parser(parser), input(input), mesh(mesh), current_state(initial_state), clock(),
     last_approach_times(), phrase_index() {}
 
   GameState &Updater::GetCurrentState() {
@@ -37,13 +37,10 @@ namespace textengine {
       playtest_log.LogMessage(message);
       parser.Parse(current_state, message);
     }
-    auto offset = glm::vec2(joystick.GetAxis(Joystick::Axis::kLeftX),
-                            -joystick.GetAxis(Joystick::Axis::kLeftY));
-    auto offset2 = glm::vec2(joystick.GetAxis(Joystick::Axis::kRightX),
-                             -joystick.GetAxis(Joystick::Axis::kRightY));
+    auto offset = input.GetPrimaryAxes();
+    auto offset2 = input.GetSecondaryAxes();
     auto dt = 0.016f;
-    if (glm::length(offset) > 0 || glm::length(offset2) > 0 ||
-        joystick.GetButtonPressure(Joystick::PressureButton::kX) > 0) {
+    if (glm::length(offset) > 0 || glm::length(offset2) > 0 || input.GetXButton() > 0) {
       auto position = current_state.player.position;
       auto current_face = FindFaceThatContainsPoint(position);
       float maximum = -std::numeric_limits<float>::infinity();
@@ -66,8 +63,7 @@ namespace textengine {
       } else if (glm::length(offset) > 0) {
         current_state.player.direction_target = glm::normalize(SquareToRound(offset));
       }
-      if (glm::length(offset) == 0 &&
-          joystick.GetButtonPressure(Joystick::PressureButton::kX) == 0) {
+      if (glm::length(offset) == 0 && input.GetXButton() == 0) {
         dt *= glm::length(SquareToRound(offset2));
       }
       {

@@ -5,8 +5,9 @@
 #include "checks.h"
 #include "controller.h"
 #include "glfwapplication.h"
-#include "keyboard.h"
+#include "input.h"
 #include "joystick.h"
+#include "keyboard.h"
 #include "mouse.h"
 #include "renderer.h"
 
@@ -16,11 +17,11 @@ namespace textengine {
 
   GlfwApplication::GlfwApplication(int argument_count, char *arguments[], int width, int height,
                                    const std::string &title, Controller &controller,
-                                   Renderer &renderer, Keyboard &keyboard, Mouse &mouse,
-                                   Joystick &joystick)
+                                   Renderer &renderer, Input &input, Joystick &joystick,
+                                   Keyboard &keyboard, Mouse &mouse)
   : window(nullptr), argument_count(argument_count), arguments(arguments), width(width),
-  height(height), title(title), controller(controller), renderer(renderer), keyboard(keyboard),
-  mouse(mouse), joystick(joystick), minimized(false) {
+  height(height), title(title), controller(controller), renderer(renderer), input(input),
+  joystick(joystick), keyboard(keyboard), mouse(mouse), minimized(false) {
     instance = this;
   }
 
@@ -60,12 +61,6 @@ namespace textengine {
     }
   }
 
-  void GlfwApplication::HandleMouseCursorMove(GLFWwindow *window, double x, double y) {
-    if (instance) {
-      instance->mouse.OnCursorMove(glm::vec2(x, y));
-    }
-  }
-
   void GlfwApplication::HandleReshape(GLFWwindow *window, int width, int height) {
     if (instance) {
       instance->renderer.Change(width, height);
@@ -82,7 +77,6 @@ namespace textengine {
     CHECK_STATE(window != nullptr);
     glfwSetKeyCallback(window, HandleKeyboard);
     glfwSetMouseButtonCallback(window, HandleMouseButton);
-    glfwSetCursorPosCallback(window, HandleMouseCursorMove);
     glfwSetFramebufferSizeCallback(window, HandleReshape);
     glfwMakeContextCurrent(window);
     std::cout << glGetString(GL_VERSION) << std::endl;
@@ -105,7 +99,11 @@ namespace textengine {
       controller.Update();
       keyboard.Update();
       mouse.Update();
+      double x, y;
+      glfwGetCursorPos(window, &x, &y);
+      mouse.OnCursorMove(glm::vec2(x, y));
       joystick.Update();
+      input.Update();
       glfwSwapBuffers(window);
       glfwPollEvents();
     }
