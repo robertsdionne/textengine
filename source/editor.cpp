@@ -3,6 +3,7 @@
 #include "checks.h"
 #include "editorrenderer.h"
 #include "glfwapplication.h"
+#include "input.h"
 #include "keyboard.h"
 #include "joystick.h"
 #include "mesh.h"
@@ -19,9 +20,10 @@ constexpr const char *kWindowTitle = u8"textengine editor";
 
 int main(int argument_count, char *arguments[]) {
   CHECK_STATE(argument_count > 1);
+  textengine::Joystick joystick{GLFW_JOYSTICK_1};
   textengine::Keyboard keyboard;
   textengine::Mouse mouse;
-  textengine::Joystick joystick{GLFW_JOYSTICK_1};
+  textengine::Input input{joystick, keyboard, mouse};
   textengine::Mesh mesh;
   textengine::MeshLoader loader;
   mesh = loader.ReadOrCreateMesh(arguments[1]);
@@ -31,7 +33,7 @@ int main(int argument_count, char *arguments[]) {
   textengine::MeshRenderer mesh_renderer{mesh};
   textengine::EditorRenderer renderer{mesh_renderer, editor};
   textengine::GlfwApplication application{argument_count, arguments, kWindowWidth, kWindowHeight,
-    kWindowTitle, editor, renderer, keyboard, mouse, joystick};
+    kWindowTitle, editor, renderer, input, joystick, keyboard, mouse};
   application.Run();
   textengine::MeshSerializer serializer;
   serializer.WriteMesh(arguments[1], mesh);
