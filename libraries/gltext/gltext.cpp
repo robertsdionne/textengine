@@ -25,7 +25,6 @@
 #include "gltext.hpp"
 
 #include <assert.h>
-#include <iostream>
 #include <math.h>
 #include <map>
 
@@ -41,12 +40,12 @@ static void* glPointer(const char* funcname) {
 #include <GLFW/glfw3.h>
 
 static void* glPointer(const char* funcname) {
-    return (void*)glfwGetProcAddress(funcname);
+  return reinterpret_cast<void *>(glfwGetProcAddress(funcname));
 }
 #endif
 
 // These need to be included after the windows stuff
-#include <GLFW/glfw3.h>
+#include "gl3.h"
 #include "harfbuzz/hb-ft.h"
 
 #define GLYPH_VERT_SIZE (4*4*sizeof(GLfloat))
@@ -61,7 +60,7 @@ struct GlyphVert {
 
 static const char* shader_vert =
 "\n\
-#version 410\n\
+#version 410 core\n\
 \n\
 in vec2 v;\n\
 in vec2 t;\n\
@@ -78,7 +77,7 @@ void main() {\n\
 
 static const char* shader_frag =
 "\n\
-#version 410\n\
+#version 410 core\n\
 \n\
 in vec2 c;\n\
 out vec4 col;\n\
@@ -155,24 +154,24 @@ public:
     
     FontSystem() {
         FT_Init_FreeType(&library);
-//        initGlPointers();
-        fs = glCreateShader(GL_FRAGMENT_SHADER);
-        vs = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(fs, 1, &shader_frag, 0);
-      glShaderSource(vs, 1, &shader_vert, 0);
-      glCompileShader(fs);
-      glCompileShader(vs);
-        prog = glCreateProgram();
-        glAttachShader(prog, fs);
-        glAttachShader(prog, vs);
-        glBindAttribLocation(prog, 0, "v");
-        glBindAttribLocation(prog, 1, "t");
-        glLinkProgram(prog);
-        glUseProgram(prog);
-        glUniform1i(glGetUniformLocation(prog, "tex"), 0);
-        scale_loc = glGetUniformLocation(prog, "s");
-        pos_loc = glGetUniformLocation(prog, "p");
-        col_loc = glGetUniformLocation(prog, "color");
+        initGlPointers();
+        fs = gltextCreateShader(GL_FRAGMENT_SHADER);
+        vs = gltextCreateShader(GL_VERTEX_SHADER);
+        gltextShaderSource(fs, 1, &shader_frag, 0);
+        gltextShaderSource(vs, 1, &shader_vert, 0);
+        gltextCompileShader(fs);
+        gltextCompileShader(vs);
+        prog = gltextCreateProgram();
+        gltextAttachShader(prog, fs);
+        gltextAttachShader(prog, vs);
+        gltextBindAttribLocation(prog, 0, "v");
+        gltextBindAttribLocation(prog, 1, "t");
+        gltextLinkProgram(prog);
+        gltextUseProgram(prog);
+        gltextUniform1i(gltextGetUniformLocation(prog, "tex"), 0);
+        scale_loc = gltextGetUniformLocation(prog, "s");
+        pos_loc = gltextGetUniformLocation(prog, "p");
+        col_loc = gltextGetUniformLocation(prog, "color");
     }
     ~FontSystem() {
         FT_Done_FreeType(library);
@@ -244,20 +243,20 @@ struct FontPimpl {
         
         short max_glyphs = (cache_w / x_size)*(cache_h / y_size);
         
-        glGenVertexArrays(1, &vao);
-        glGenBuffers(1, &vbo);
-        glGenBuffers(1, &ibo);
-        glBindVertexArray(vao);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-        glBufferData(GL_ARRAY_BUFFER, GLYPH_VERT_SIZE*max_glyphs, NULL, GL_DYNAMIC_DRAW);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, GLYPH_IDX_SIZE*max_glyphs, NULL, GL_DYNAMIC_DRAW);
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), 0);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), (GLvoid*)(2*sizeof(float)));
+        gltextGenVertexArrays(1, &vao);
+        gltextGenBuffers(1, &vbo);
+        gltextGenBuffers(1, &ibo);
+        gltextBindVertexArray(vao);
+        gltextBindBuffer(GL_ARRAY_BUFFER, vbo);
+        gltextBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+        gltextBufferData(GL_ARRAY_BUFFER, GLYPH_VERT_SIZE*max_glyphs, NULL, GL_DYNAMIC_DRAW);
+        gltextBufferData(GL_ELEMENT_ARRAY_BUFFER, GLYPH_IDX_SIZE*max_glyphs, NULL, GL_DYNAMIC_DRAW);
+        gltextEnableVertexAttribArray(0);
+        gltextEnableVertexAttribArray(1);
+        gltextVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), 0);
+        gltextVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), (GLvoid*)(2*sizeof(float)));
         
-        glActiveTexture(GL_TEXTURE0);
+        gltextActiveTexture(GL_TEXTURE0);
         glGenTextures(1, &tex);
         glBindTexture(GL_TEXTURE_2D, tex);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_R8, cache_w, cache_h, 0, GL_RED, GL_UNSIGNED_BYTE, NULL);
@@ -270,9 +269,9 @@ struct FontPimpl {
     void cleanup() {
         hb_font_destroy(font);
         glDeleteTextures(1, &tex);
-        glDeleteBuffers(1, &vbo);
-        glDeleteBuffers(1, &ibo);
-        glDeleteVertexArrays(1, &vao);
+        gltextDeleteBuffers(1, &vbo);
+        gltextDeleteBuffers(1, &ibo);
+        gltextDeleteVertexArrays(1, &vao);
     }
 
     std::map<FT_UInt, unsigned>::iterator cacheGlyph(FT_UInt codepoint)
@@ -294,12 +293,12 @@ struct FontPimpl {
             pitch = -pitch;
             need_inverse_texcoords = false;
         } 
-      glPixelStorei(GL_UNPACK_ROW_LENGTH, pitch);
+        glPixelStorei(GL_UNPACK_ROW_LENGTH, pitch);
         if(texpos_x + face->glyph->bitmap.width > cache_w) {
             texpos_x = 0;
             texpos_y += y_size;
         }
-      glTexSubImage2D(GL_TEXTURE_2D, 0, texpos_x, texpos_y, face->glyph->bitmap.width, face->glyph->bitmap.rows, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
+        glTexSubImage2D(GL_TEXTURE_2D, 0, texpos_x, texpos_y, face->glyph->bitmap.width, face->glyph->bitmap.rows, GL_RED, GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
     
         float hori_offset = face->glyph->bitmap_left;
         float vert_offset = face->glyph->bitmap_top - face->glyph->bitmap.rows;
@@ -333,15 +332,15 @@ struct FontPimpl {
         ur.t = ul.t;
         short glyph_offset = num_glyphs_cached * 4;
         unsigned short indices[6] = {
-          static_cast<unsigned short>(glyph_offset+0),
-          static_cast<unsigned short>(glyph_offset+2),
-          static_cast<unsigned short>(glyph_offset+3),
-          static_cast<unsigned short>(glyph_offset+0),
-          static_cast<unsigned short>(glyph_offset+3),
-          static_cast<unsigned short>(glyph_offset+1)
+            static_cast<unsigned short>(glyph_offset+0),
+            static_cast<unsigned short>(glyph_offset+2),
+            static_cast<unsigned short>(glyph_offset+3),
+            static_cast<unsigned short>(glyph_offset+0),
+            static_cast<unsigned short>(glyph_offset+3),
+            static_cast<unsigned short>(glyph_offset+1)
         };
-      glBufferSubData(GL_ARRAY_BUFFER, (GLintptr)(num_glyphs_cached*GLYPH_VERT_SIZE), GLYPH_VERT_SIZE, corners);
-      glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, (GLintptr)(num_glyphs_cached*GLYPH_IDX_SIZE), GLYPH_IDX_SIZE, indices);
+        gltextBufferSubData(GL_ARRAY_BUFFER, (GLintptr)(num_glyphs_cached*GLYPH_VERT_SIZE), GLYPH_VERT_SIZE, corners);
+        gltextBufferSubData(GL_ELEMENT_ARRAY_BUFFER, (GLintptr)(num_glyphs_cached*GLYPH_IDX_SIZE), GLYPH_IDX_SIZE, indices);
         texpos_x += x_size;
         num_glyphs_cached++;
         return glyphs.insert(std::make_pair(codepoint, num_glyphs_cached-1)).first;
@@ -458,12 +457,12 @@ void Font::cacheCharacters(std::string chars) {
     hb_glyph_info_t* glyphs = hb_buffer_get_glyph_infos(buffer, 0);
     hb_glyph_position_t* positions = hb_buffer_get_glyph_positions(buffer, 0);
 
-  glActiveTexture(GL_TEXTURE0);
-  glBindTexture(GL_TEXTURE_2D, self->tex);
-  glBindVertexArray(self->vao);
+    gltextActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, self->tex);
+    gltextBindVertexArray(self->vao);
 
-  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    
     for(unsigned i = 0; i < len; i++) {
         std::map<FT_UInt, unsigned>::iterator g = self->glyphs.find(glyphs[i].codepoint);
         if(g == self->glyphs.end()) {
@@ -484,15 +483,15 @@ void Font::draw(std::string text) {
     hb_glyph_info_t* glyphs = hb_buffer_get_glyph_infos(buffer, 0);
     hb_glyph_position_t* positions = hb_buffer_get_glyph_positions(buffer, 0);
 
-    glActiveTexture(GL_TEXTURE0);
+    gltextActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, self->tex);
-    if(glBindSampler) {
-        glBindSampler(0, 0);
+    if(gltextBindSampler) {
+        gltextBindSampler(0, 0);
     }
-    glBindVertexArray(self->vao);
-    glUseProgram(FontSystem::instance().prog);
-    glUniform2i(FontSystem::instance().scale_loc, self->window_w, self->window_h);
-    glUniform3f(FontSystem::instance().col_loc, self->pen_r, self->pen_g, self->pen_b);
+    gltextBindVertexArray(self->vao);
+    gltextUseProgram(FontSystem::instance().prog);
+    gltextUniform2i(FontSystem::instance().scale_loc, self->window_w, self->window_h);
+    gltextUniform3f(FontSystem::instance().col_loc, self->pen_r, self->pen_g, self->pen_b);
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -504,7 +503,7 @@ void Font::draw(std::string text) {
 
         unsigned glyph = g->second;
         
-        glUniform2i(FontSystem::instance().pos_loc, self->pen_x+positions[i].x_offset, self->pen_y+positions[i].y_offset);
+        gltextUniform2i(FontSystem::instance().pos_loc, self->pen_x+positions[i].x_offset, self->pen_y+positions[i].y_offset);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, (GLvoid*)(glyph*GLYPH_IDX_SIZE));
         self->pen_x += positions[i].x_advance >> 6;
         self->pen_y += positions[i].y_advance >> 6;
