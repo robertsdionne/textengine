@@ -1,6 +1,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <gltext.hpp>
 #include <memory>
 
 #include "checks.h"
@@ -20,6 +21,7 @@ namespace textengine {
     inverse_aspect_ratio = static_cast<float>(height) / static_cast<float>(width);
     projection = glm::ortho(-1.0f, 1.0f, -inverse_aspect_ratio, inverse_aspect_ratio, -1.0f, 1.0f);
     mesh_renderer.Change(width, height);
+    font.setDisplaySize(width, height);
   }
 
   void TextEngineRenderer::Create() {
@@ -121,6 +123,9 @@ namespace textengine {
     item_edge_array.Create();
     vertex_format.Apply(item_edge_array, edge_program);
     CHECK_STATE(!glGetError());
+
+    font = gltext::Font("../resource/ubuntu-font-family-0.80/Ubuntu-R.ttf", 32, 1024, 1024);
+    font.cacheCharacters("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890");
   }
 
   void TextEngineRenderer::Render() {
@@ -222,6 +227,9 @@ namespace textengine {
     }
 
     mesh_renderer.RenderShadows();
+
+    font.setPenPosition(400, 400);
+    font.draw("Hello world!");
   }
 
 }  // namespace textengine

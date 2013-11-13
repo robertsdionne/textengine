@@ -2,6 +2,7 @@
 #define TEXTENGINE_TEXTENGINERENDERER_H_
 
 #include <glm/glm.hpp>
+#include <gltext.hpp>
 #include <iostream>
 
 #include "buffer.h"
@@ -43,6 +44,7 @@ namespace textengine {
         item_edge_buffer, player_view_buffer;
 
     glm::mat4 model_view, projection;
+    gltext::Font font;
   };
 
 }  // namespace textengine
