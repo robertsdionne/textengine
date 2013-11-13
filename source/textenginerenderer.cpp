@@ -125,7 +125,7 @@ namespace textengine {
     CHECK_STATE(!glGetError());
 
     font = gltext::Font("../resource/ubuntu-font-family-0.80/Ubuntu-R.ttf", 32, 1024, 1024);
-    font.cacheCharacters("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890");
+    font.cacheCharacters("1234567890!@#$%^&*()abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;'[]\\<>?:\"{}|-=_+");
   }
 
   void TextEngineRenderer::Render() {
@@ -227,9 +227,6 @@ namespace textengine {
     }
 
     mesh_renderer.RenderShadows();
-
-    font.setPenPosition(400, 400);
-    font.draw("Hello world!");
   }
 
 }  // namespace textengine
