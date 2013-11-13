@@ -271,6 +271,7 @@ namespace textengine {
         });
       }
       drawable.data.insert(drawable.data.cend(), {
+        color.r, color.g, color.b, color.a,
         cursor_end_position.x, cursor_end_position.y,
         color.r, color.g, color.b, color.a
       });
@@ -513,6 +514,7 @@ namespace textengine {
           duplicate_half_edge->previous = nullptr;
         }
         duplicate_half_edge->start = vertex_map.at(half_edge->start);
+        duplicate_half_edge->generative = false;
       }
       for (auto duplicate_face : duplicate_faces) {
         auto face = duplicate_face_map.at(duplicate_face);
@@ -692,7 +694,7 @@ namespace textengine {
     }
     if (ready && !selected_half_edges().empty() && keyboard.GetKeyVelocity(GLFW_KEY_T) > 0) {
       for (auto half_edge : selected_half_edges()) {
-        half_edge->opposite = nullptr;
+        half_edge->transparent = !half_edge->transparent;
       }
     }
     if (ready && !selected_half_edges().empty() && keyboard.GetKeyVelocity(GLFW_KEY_Y) > 0) {

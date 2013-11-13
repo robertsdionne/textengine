@@ -31,18 +31,24 @@ namespace textengine {
     };
 
     struct Vertex {
+      Vertex() = default;
+
       HalfEdge *vertex_edge;
       glm::vec2 position;
     };
 
     struct HalfEdge {
+      HalfEdge() = default;
+
       Face *face;
       HalfEdge *next, *opposite, *previous;
       Vertex *start;
-      bool seen, generative;
+      bool seen, generative, transparent;
     };
 
     struct RoomInfo {
+      RoomInfo() = default;
+
       std::string name;
       glm::vec4 color;
     };

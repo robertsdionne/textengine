@@ -826,6 +826,7 @@
 		46E297AA18340E370065D56E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46E297A818340DFD0065D56E /* CoreFoundation.framework */; };
 		46E297AB18340E3D0065D56E /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01441783DF9200301C1C /* OpenGL.framework */; };
 		46E297AC18340E430065D56E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01421783DF4C00301C1C /* Cocoa.framework */; };
+		46E297AD18341EE70065D56E /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463F38AD18316A39001326C3 /* input.cpp */; };
 		46FBD33D180F4C7F00F7C5F8 /* commandlineprompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FBD33B180F4C7F00F7C5F8 /* commandlineprompt.cpp */; };
 		46FBD343180F572400F7C5F8 /* websocketprompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FBD341180F572400F7C5F8 /* websocketprompt.cpp */; };
 		46FBD346180F6F7600F7C5F8 /* synchronizedqueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46FBD344180F6F7600F7C5F8 /* synchronizedqueue.cpp */; };
@@ -4876,12 +4877,10 @@
 		463E3D5A1767FB9000A4466B = {
 			isa = PBXGroup;
 			children = (
-				46E297A818340DFD0065D56E /* CoreFoundation.framework */,
 				46D21C0E1771F2A600C896A4 /* binary */,
 				468EF71B1783DC1B00301C1C /* libraries */,
 				46FBD338180F335C00F7C5F8 /* resource */,
 				46B9A6081771F0F800E43B24 /* source */,
-				46E2955F18340A030065D56E /* libgraphite2.a */,
 			);
 			sourceTree = "<group>";
 		};
@@ -5055,6 +5054,7 @@
 				464E374C1825D28800AC0AC0 /* Box2D-2.2.1 */,
 				46D0FCB5180F1D4B00B00F93 /* CFNetwork.framework */,
 				468E01421783DF4C00301C1C /* Cocoa.framework */,
+				46E297A818340DFD0065D56E /* CoreFoundation.framework */,
 				468E01461783DFA100301C1C /* IOKit.framework */,
 				468E01441783DF9200301C1C /* OpenGL.framework */,
 				46D0FCB7180F1D5200B00F93 /* SystemConfiguration.framework */,
@@ -6607,6 +6607,7 @@
 				46B25A3618333782003584B6 /* libfreetype2.a */,
 				46B9824C17E69E9C00B59145 /* libglfw.a */,
 				46B25900183333B9003584B6 /* libgltext.a */,
+				46E2955F18340A030065D56E /* libgraphite2.a */,
 				468E01561783F02800301C1C /* libsimplexnoise1234.a */,
 				46D0FBFB180F1A7C00B00F93 /* libwebsockets.a */,
 				46D21C101771F2B900C896A4 /* textengine */,
@@ -8158,6 +8159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46E297AD18341EE70065D56E /* input.cpp in Sources */,
 				46A73D3F183143A2009F8B77 /* drawable.cpp in Sources */,
 				461717EC1826A59D0070ABED /* buffer.cpp in Sources */,
 				461717FE1826A97C0070ABED /* editorrenderer.cpp in Sources */,

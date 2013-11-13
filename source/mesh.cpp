@@ -344,47 +344,49 @@ namespace textengine {
     constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
     drawable.data.reserve(kEdgeSize * exterior_half_edges.size());
     for (auto i = 0; i < exterior_half_edges.size(); ++i) {
-      const glm::vec4 color = glm::vec4(glm::vec3(), 1.0f);
-      const auto v0 = exterior_half_edges[i]->start->position;
-      const auto v1 = exterior_half_edges[i]->next->start->position;
-      const auto dir2 = glm::normalize(v0 - perspective);
-      const auto dir3 = glm::normalize(v1 - perspective);
-      const auto theta = 1.0f / (glm::length(v0 - perspective) + glm::length(v1 - perspective)) * M_PI / 180.0f;
-      const auto rotate = glm::mat2(cos(theta), -sin(theta), sin(theta), cos(theta));
-      const auto dir2_prime = rotate * dir2;
-      const auto dir3_prime = glm::transpose(rotate) * dir3;
-      const auto length = 10.0f;
-      const auto v2 = length * dir2 + v0;
-      const auto v3 = length * dir3 + v1;
-      const auto v2_prime = 0.2f * dir2_prime + v0;
-      const auto v3_prime = 0.2f * dir3_prime + v1;
-      drawable.data.insert(drawable.data.cend(), {
-        v2.x, v2.y,
-        color.r, color.g, color.b, color.a,
-        v1.x, v1.y,
-        color.r, color.g, color.b, color.a,
-        v0.x, v0.y,
-        color.r, color.g, color.b, color.a,
-        v2.x, v2.y,
-        color.r, color.g, color.b, color.a,
-        v3.x, v3.y,
-        color.r, color.g, color.b, color.a,
-        v1.x, v1.y,
-        color.r, color.g, color.b, color.a,
+      if (!exterior_half_edges[i]->transparent) {
+        const glm::vec4 color = glm::vec4(glm::vec3(), 1.0f);
+        const auto v0 = exterior_half_edges[i]->start->position;
+        const auto v1 = exterior_half_edges[i]->next->start->position;
+        const auto dir2 = glm::normalize(v0 - perspective);
+        const auto dir3 = glm::normalize(v1 - perspective);
+        const auto theta = 1.0f / (glm::length(v0 - perspective) + glm::length(v1 - perspective)) * M_PI / 180.0f;
+        const auto rotate = glm::mat2(cos(theta), -sin(theta), sin(theta), cos(theta));
+        const auto dir2_prime = rotate * dir2;
+        const auto dir3_prime = glm::transpose(rotate) * dir3;
+        const auto length = 10.0f;
+        const auto v2 = length * dir2 + v0;
+        const auto v3 = length * dir3 + v1;
+        const auto v2_prime = 0.2f * dir2_prime + v0;
+        const auto v3_prime = 0.2f * dir3_prime + v1;
+        drawable.data.insert(drawable.data.cend(), {
+          v2.x, v2.y,
+          color.r, color.g, color.b, color.a,
+          v1.x, v1.y,
+          color.r, color.g, color.b, color.a,
+          v0.x, v0.y,
+          color.r, color.g, color.b, color.a,
+          v2.x, v2.y,
+          color.r, color.g, color.b, color.a,
+          v3.x, v3.y,
+          color.r, color.g, color.b, color.a,
+          v1.x, v1.y,
+          color.r, color.g, color.b, color.a,
 
-        v2_prime.x, v2_prime.y,
-        color.r, color.g, color.b, 0.0f,
-        v2.x, v2.y,
-        color.r, color.g, color.b, color.a,
-        v0.x, v0.y,
-        color.r, color.g, color.b, 0.75f,
-        v3.x, v3.y,
-        color.r, color.g, color.b, color.a,
-        v3_prime.x, v3_prime.y,
-        color.r, color.g, color.b, 0.0f,
-        v1.x, v1.y,
-        color.r, color.g, color.b, 0.75f
-      });
+          v2_prime.x, v2_prime.y,
+          color.r, color.g, color.b, 0.0f,
+          v2.x, v2.y,
+          color.r, color.g, color.b, color.a,
+          v0.x, v0.y,
+          color.r, color.g, color.b, 0.75f,
+          v3.x, v3.y,
+          color.r, color.g, color.b, color.a,
+          v3_prime.x, v3_prime.y,
+          color.r, color.g, color.b, 0.0f,
+          v1.x, v1.y,
+          color.r, color.g, color.b, 0.75f
+        });
+      }
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * exterior_half_edges.size());
     drawable.element_type = GL_TRIANGLES;
@@ -428,11 +430,11 @@ namespace textengine {
     constexpr size_t kCoordinatesPerVertex = 2;
     constexpr size_t kColorComponentsPerVertex = 4;
     constexpr size_t kFaceSize = kVerticesPerFace * (kCoordinatesPerVertex + kColorComponentsPerVertex);
-    drawable.data.reserve(kFaceSize * visible_faces.size());
-    for (auto i = 0; i < visible_faces.size(); ++i) {
-      const float brightness = 1.0f - pow(depths.at(visible_faces[i]) / kMaxDepth, 2.0f);
-      const glm::vec4 color = brightness * (visible_faces[i]->room_info ? visible_faces[i]->room_info->color : glm::vec4(glm::vec3(0.64f), 1.0f));
-      const auto h01 = visible_faces[i]->face_edge;
+    drawable.data.reserve(kFaceSize * faces.size());
+    for (auto i = 0; i < faces.size(); ++i) {
+      const float brightness = 1.0f - pow(2.0f * glm::length(faces[i]->centroid() - perspective), 2.0f);
+      const glm::vec4 color = brightness * (faces[i]->room_info ? faces[i]->room_info->color : glm::vec4(glm::vec3(0.64f), 1.0f));
+      const auto h01 = faces[i]->face_edge;
       const auto h12 = h01->next;
       const auto h20 = h12->next;
       CHECK_STATE(h01 == h20->next);
@@ -446,7 +448,7 @@ namespace textengine {
         color.r, color.g, color.b, color.a
       });
     }
-    drawable.element_count = static_cast<GLsizei>(kVerticesPerFace * visible_faces.size());
+    drawable.element_count = static_cast<GLsizei>(kVerticesPerFace * faces.size());
     drawable.element_type = GL_TRIANGLES;
     return drawable;
   }
