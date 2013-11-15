@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iostream>
 #include "BVH.h"
 #include "Log.h"
 #include "Stopwatch.h"
@@ -45,6 +46,7 @@ bool BVH::getIntersection(const Ray& ray, IntersectionInfo* intersection, bool o
   if( node.rightOffset == 0 ) {
    for(uint32_t o=0;o<node.nPrims;++o) {
 				const Object* obj = (*build_prims)[node.start+o];
+
 				bool hit = obj->getIntersection(ray, intersection);
 
 				// If we're only looking for occlusion, then any hit is good enough
@@ -101,11 +103,17 @@ bool BVH::getIntersection(const Ray& ray, IntersectionInfo* intersection, bool o
 }
 
 BVH::~BVH() {
- delete[] flatTree;
+// if (flatTree) {
+//  delete[] flatTree;
+//  flatTree = nullptr;
+// }
+}
+
+BVH::BVH() : nNodes(0), nLeafs(0), leafSize(4), build_prims(nullptr), flatTree(nullptr) {
 }
 
 BVH::BVH(std::vector<Object*>* objects, uint32_t leafSize) 
-: nNodes(0), nLeafs(0), leafSize(leafSize), build_prims(objects), flatTree(NULL) {
+: nNodes(0), nLeafs(0), leafSize(leafSize), build_prims(objects), flatTree(nullptr) {
  Stopwatch sw;
 
  // Build the tree based on the input object data set. 
@@ -159,7 +167,6 @@ void BVH::build()
 		node.start = start;
 		node.nPrims = nPrims;
 		node.rightOffset = Untouched;
-
 		// Calculate the bounding box for this node
 		BBox bb( (*build_prims)[start]->getBBox());
 		BBox bc( (*build_prims)[start]->getCentroid());

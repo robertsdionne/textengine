@@ -29,6 +29,7 @@ namespace textengine {
   }
 
   void Updater::Setup() {
+    mesh.UpdateBvh();
     CalculateDistanceTo("Staircase", distances_to_staircase);
     CalculateDistanceTo("East Platform Edge", distances_to_east_platform_edge);
     CalculateDistanceTo("West Platform Edge", distances_to_west_platform_edge);

@@ -9,119 +9,6 @@
 /* Begin PBXBuildFile section */
 		4600EB9117EBC8F9003BA3C3 /* commandtokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4600EB8F17EBC8F9003BA3C3 /* commandtokenizer.cpp */; };
 		4607742117E8EC0100896A15 /* textenginerenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4607741F17E8EC0100896A15 /* textenginerenderer.cpp */; };
-		46077E9318365E7F0007FD46 /* Config.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AA418365E7C0007FD46 /* Config.hh */; };
-		46077E9418365E7F0007FD46 /* LoopSchemeMaskT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AA518365E7C0007FD46 /* LoopSchemeMaskT.hh */; };
-		46077E9518365E7F0007FD46 /* MathDefs.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AA618365E7C0007FD46 /* MathDefs.hh */; };
-		46077E9618365E7F0007FD46 /* NormalConeT.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077AA718365E7C0007FD46 /* NormalConeT.cc */; };
-		46077E9718365E7F0007FD46 /* NormalConeT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AA818365E7C0007FD46 /* NormalConeT.hh */; };
-		46077E9818365E7F0007FD46 /* Plane3d.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AA918365E7C0007FD46 /* Plane3d.hh */; };
-		46077E9918365E7F0007FD46 /* QuadricT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AAA18365E7C0007FD46 /* QuadricT.hh */; };
-		46077E9A18365E7F0007FD46 /* VectorT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AAB18365E7C0007FD46 /* VectorT.hh */; };
-		46077E9B18365E7F0007FD46 /* VectorT_inc.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AAC18365E7C0007FD46 /* VectorT_inc.hh */; };
-		46077E9C18365E7F0007FD46 /* BinaryHelper.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077AAF18365E7C0007FD46 /* BinaryHelper.cc */; };
-		46077E9D18365E7F0007FD46 /* BinaryHelper.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AB018365E7C0007FD46 /* BinaryHelper.hh */; };
-		46077E9E18365E7F0007FD46 /* BaseExporter.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AB318365E7C0007FD46 /* BaseExporter.hh */; };
-		46077E9F18365E7F0007FD46 /* ExporterT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AB418365E7C0007FD46 /* ExporterT.hh */; };
-		46077EA018365E7F0007FD46 /* BaseImporter.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AB718365E7C0007FD46 /* BaseImporter.hh */; };
-		46077EA118365E7F0007FD46 /* ImporterT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AB818365E7C0007FD46 /* ImporterT.hh */; };
-		46077EA218365E7F0007FD46 /* IOInstances.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AB918365E7C0007FD46 /* IOInstances.hh */; };
-		46077EA318365E7F0007FD46 /* IOManager.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077ABA18365E7C0007FD46 /* IOManager.cc */; };
-		46077EA418365E7F0007FD46 /* IOManager.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077ABB18365E7C0007FD46 /* IOManager.hh */; };
-		46077EA518365E7F0007FD46 /* MeshIO.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077ABC18365E7C0007FD46 /* MeshIO.hh */; };
-		46077EA618365E7F0007FD46 /* OFFFormat.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077ABD18365E7C0007FD46 /* OFFFormat.hh */; };
-		46077EA718365E7F0007FD46 /* OMFormat.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077ABE18365E7C0007FD46 /* OMFormat.cc */; };
-		46077EA818365E7F0007FD46 /* OMFormat.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077ABF18365E7C0007FD46 /* OMFormat.hh */; };
-		46077EA918365E7F0007FD46 /* OMFormatT.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077AC018365E7C0007FD46 /* OMFormatT.cc */; };
-		46077EAA18365E7F0007FD46 /* Options.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AC118365E7C0007FD46 /* Options.hh */; };
-		46077EAB18365E7F0007FD46 /* BaseReader.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077AC418365E7C0007FD46 /* BaseReader.cc */; };
-		46077EAC18365E7F0007FD46 /* BaseReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AC518365E7C0007FD46 /* BaseReader.hh */; };
-		46077EAD18365E7F0007FD46 /* OBJReader.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077AC618365E7C0007FD46 /* OBJReader.cc */; };
-		46077EAE18365E7F0007FD46 /* OBJReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AC718365E7C0007FD46 /* OBJReader.hh */; };
-		46077EAF18365E7F0007FD46 /* OFFReader.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077AC818365E7C0007FD46 /* OFFReader.cc */; };
-		46077EB018365E7F0007FD46 /* OFFReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AC918365E7C0007FD46 /* OFFReader.hh */; };
-		46077EB118365E7F0007FD46 /* OMReader.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077ACA18365E7C0007FD46 /* OMReader.cc */; };
-		46077EB218365E7F0007FD46 /* OMReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077ACB18365E7C0007FD46 /* OMReader.hh */; };
-		46077EB318365E7F0007FD46 /* PLYReader.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077ACC18365E7C0007FD46 /* PLYReader.cc */; };
-		46077EB418365E7F0007FD46 /* PLYReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077ACD18365E7C0007FD46 /* PLYReader.hh */; };
-		46077EB518365E7F0007FD46 /* STLReader.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077ACE18365E7C0007FD46 /* STLReader.cc */; };
-		46077EB618365E7F0007FD46 /* STLReader.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077ACF18365E7C0007FD46 /* STLReader.hh */; };
-		46077EB718365E7F0007FD46 /* SR_binary.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AD018365E7C0007FD46 /* SR_binary.hh */; };
-		46077EB818365E7F0007FD46 /* SR_binary_spec.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AD118365E7C0007FD46 /* SR_binary_spec.hh */; };
-		46077EB918365E7F0007FD46 /* SR_rbo.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AD518365E7C0007FD46 /* SR_rbo.hh */; };
-		46077EBA18365E7F0007FD46 /* SR_store.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AD618365E7C0007FD46 /* SR_store.hh */; };
-		46077EBB18365E7F0007FD46 /* SR_types.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AD718365E7C0007FD46 /* SR_types.hh */; };
-		46077EBC18365E7F0007FD46 /* StoreRestore.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AD818365E7C0007FD46 /* StoreRestore.hh */; };
-		46077EBD18365E7F0007FD46 /* BaseWriter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077ADB18365E7C0007FD46 /* BaseWriter.cc */; };
-		46077EBE18365E7F0007FD46 /* BaseWriter.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077ADC18365E7C0007FD46 /* BaseWriter.hh */; };
-		46077EBF18365E7F0007FD46 /* OBJWriter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077ADD18365E7C0007FD46 /* OBJWriter.cc */; };
-		46077EC018365E7F0007FD46 /* OBJWriter.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077ADE18365E7C0007FD46 /* OBJWriter.hh */; };
-		46077EC118365E7F0007FD46 /* OFFWriter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077ADF18365E7C0007FD46 /* OFFWriter.cc */; };
-		46077EC218365E7F0007FD46 /* OFFWriter.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AE018365E7C0007FD46 /* OFFWriter.hh */; };
-		46077EC318365E7F0007FD46 /* OMWriter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077AE118365E7C0007FD46 /* OMWriter.cc */; };
-		46077EC418365E7F0007FD46 /* OMWriter.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AE218365E7C0007FD46 /* OMWriter.hh */; };
-		46077EC518365E7F0007FD46 /* PLYWriter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077AE318365E7C0007FD46 /* PLYWriter.cc */; };
-		46077EC618365E7F0007FD46 /* PLYWriter.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AE418365E7C0007FD46 /* PLYWriter.hh */; };
-		46077EC718365E7F0007FD46 /* STLWriter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077AE518365E7C0007FD46 /* STLWriter.cc */; };
-		46077EC818365E7F0007FD46 /* STLWriter.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AE618365E7C0007FD46 /* STLWriter.hh */; };
-		46077EC918365E7F0007FD46 /* ArrayItems.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AE918365E7C0007FD46 /* ArrayItems.hh */; };
-		46077ECA18365E7F0007FD46 /* ArrayKernel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077AEA18365E7C0007FD46 /* ArrayKernel.cc */; };
-		46077ECB18365E7F0007FD46 /* ArrayKernel.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AEB18365E7C0007FD46 /* ArrayKernel.hh */; };
-		46077ECC18365E7F0007FD46 /* ArrayKernelT.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077AEC18365E7C0007FD46 /* ArrayKernelT.cc */; };
-		46077ECD18365E7F0007FD46 /* AttribKernelT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AED18365E7C0007FD46 /* AttribKernelT.hh */; };
-		46077ECE18365E7F0007FD46 /* Attributes.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AEE18365E7C0007FD46 /* Attributes.hh */; };
-		46077ECF18365E7F0007FD46 /* BaseKernel.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077AEF18365E7C0007FD46 /* BaseKernel.cc */; };
-		46077ED018365E7F0007FD46 /* BaseKernel.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AF018365E7C0007FD46 /* BaseKernel.hh */; };
-		46077ED118365E7F0007FD46 /* BaseMesh.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AF118365E7C0007FD46 /* BaseMesh.hh */; };
-		46077ED218365E7F0007FD46 /* Casts.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AF218365E7C0007FD46 /* Casts.hh */; };
-		46077ED318365E7F0007FD46 /* CirculatorsT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AF318365E7C0007FD46 /* CirculatorsT.hh */; };
-		46077ED418365E7F0007FD46 /* FinalMeshItemsT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AF418365E7C0007FD46 /* FinalMeshItemsT.hh */; };
-		46077ED518365E7F0007FD46 /* circulators_header.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AF618365E7C0007FD46 /* circulators_header.hh */; };
-		46077ED618365E7F0007FD46 /* circulators_template.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AF718365E7C0007FD46 /* circulators_template.hh */; };
-		46077ED718365E7F0007FD46 /* footer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AF818365E7C0007FD46 /* footer.hh */; };
-		46077ED818365E7F0007FD46 /* iterators_header.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AFA18365E7C0007FD46 /* iterators_header.hh */; };
-		46077ED918365E7F0007FD46 /* iterators_template.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AFB18365E7C0007FD46 /* iterators_template.hh */; };
-		46077EDA18365E7F0007FD46 /* Handles.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AFC18365E7C0007FD46 /* Handles.hh */; };
-		46077EDB18365E7F0007FD46 /* IteratorsT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AFD18365E7C0007FD46 /* IteratorsT.hh */; };
-		46077EDC18365E7F0007FD46 /* PolyConnectivity.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077AFE18365E7C0007FD46 /* PolyConnectivity.cc */; };
-		46077EDD18365E7F0007FD46 /* PolyConnectivity.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077AFF18365E7C0007FD46 /* PolyConnectivity.hh */; };
-		46077EDE18365E7F0007FD46 /* PolyMesh_ArrayKernelT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B0018365E7C0007FD46 /* PolyMesh_ArrayKernelT.hh */; };
-		46077EDF18365E7F0007FD46 /* PolyMeshT.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077B0118365E7C0007FD46 /* PolyMeshT.cc */; };
-		46077EE018365E7F0007FD46 /* PolyMeshT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B0218365E7C0007FD46 /* PolyMeshT.hh */; };
-		46077EE118365E7F0007FD46 /* Status.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B0318365E7C0007FD46 /* Status.hh */; };
-		46077EE218365E7F0007FD46 /* Traits.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B0418365E7C0007FD46 /* Traits.hh */; };
-		46077EE318365E7F0007FD46 /* TriConnectivity.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077B0518365E7C0007FD46 /* TriConnectivity.cc */; };
-		46077EE418365E7F0007FD46 /* TriConnectivity.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B0618365E7C0007FD46 /* TriConnectivity.hh */; };
-		46077EE518365E7F0007FD46 /* TriMesh_ArrayKernelT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B0718365E7C0007FD46 /* TriMesh_ArrayKernelT.hh */; };
-		46077EE618365E7F0007FD46 /* TriMeshT.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077B0818365E7C0007FD46 /* TriMeshT.cc */; };
-		46077EE718365E7F0007FD46 /* TriMeshT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B0918365E7C0007FD46 /* TriMeshT.hh */; };
-		46077EE818365E7F0007FD46 /* compiler.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B0C18365E7C0007FD46 /* compiler.hh */; };
-		46077EE918365E7F0007FD46 /* config.h in Headers */ = {isa = PBXBuildFile; fileRef = 46077B0D18365E7C0007FD46 /* config.h */; };
-		46077EEA18365E7F0007FD46 /* config.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B0E18365E7C0007FD46 /* config.hh */; };
-		46077EEB18365E7F0007FD46 /* mostream.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B0F18365E7C0007FD46 /* mostream.hh */; };
-		46077EEC18365E7F0007FD46 /* omstream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077B1018365E7C0007FD46 /* omstream.cc */; };
-		46077EED18365E7F0007FD46 /* omstream.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B1118365E7C0007FD46 /* omstream.hh */; };
-		46077EEE18365E7F0007FD46 /* OpenMeshDLLMacros.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B1218365E7C0007FD46 /* OpenMeshDLLMacros.hh */; };
-		46077EEF18365E7F0007FD46 /* newClass.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077B1418365E7C0007FD46 /* newClass.cc */; };
-		46077EF018365E7F0007FD46 /* newClass.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B1518365E7C0007FD46 /* newClass.hh */; };
-		46077EF118365E7F0007FD46 /* newClassT.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077B1718365E7C0007FD46 /* newClassT.cc */; };
-		46077EF218365E7F0007FD46 /* newClassT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B1818365E7C0007FD46 /* newClassT.hh */; };
-		46077EF318365E7F0007FD46 /* AutoPropertyHandleT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B1C18365E7C0007FD46 /* AutoPropertyHandleT.hh */; };
-		46077EF418365E7F0007FD46 /* BaseProperty.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077B1D18365E7C0007FD46 /* BaseProperty.cc */; };
-		46077EF518365E7F0007FD46 /* BaseProperty.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B1E18365E7C0007FD46 /* BaseProperty.hh */; };
-		46077EF618365E7F0007FD46 /* color_cast.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B1F18365E7C0007FD46 /* color_cast.hh */; };
-		46077EF718365E7F0007FD46 /* Endian.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077B2018365E7C0007FD46 /* Endian.cc */; };
-		46077EF818365E7F0007FD46 /* Endian.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B2118365E7C0007FD46 /* Endian.hh */; };
-		46077EF918365E7F0007FD46 /* GenProg.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B2218365E7C0007FD46 /* GenProg.hh */; };
-		46077EFA18365E7F0007FD46 /* Noncopyable.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B2318365E7C0007FD46 /* Noncopyable.hh */; };
-		46077EFB18365E7F0007FD46 /* Property.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B2418365E7C0007FD46 /* Property.hh */; };
-		46077EFC18365E7F0007FD46 /* PropertyContainer.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B2518365E7C0007FD46 /* PropertyContainer.hh */; };
-		46077EFD18365E7F0007FD46 /* PropertyManager.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B2618365E7C0007FD46 /* PropertyManager.hh */; };
-		46077EFE18365E7F0007FD46 /* RandomNumberGenerator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077B2718365E7C0007FD46 /* RandomNumberGenerator.cc */; };
-		46077EFF18365E7F0007FD46 /* RandomNumberGenerator.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B2818365E7C0007FD46 /* RandomNumberGenerator.hh */; };
-		46077F0018365E7F0007FD46 /* SingletonT.cc in Sources */ = {isa = PBXBuildFile; fileRef = 46077B2918365E7C0007FD46 /* SingletonT.cc */; };
-		46077F0118365E7F0007FD46 /* SingletonT.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B2A18365E7C0007FD46 /* SingletonT.hh */; };
-		46077F0218365E7F0007FD46 /* vector_cast.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B2B18365E7C0007FD46 /* vector_cast.hh */; };
-		46077F0318365E7F0007FD46 /* vector_traits.hh in Headers */ = {isa = PBXBuildFile; fileRef = 46077B2C18365E7C0007FD46 /* vector_traits.hh */; };
 		460B492A17F47E24006B4828 /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460B492917F47E24006B4828 /* mesh.cpp */; };
 		460B493017F4B48F006B4828 /* mouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460B492E17F4B48E006B4828 /* mouse.cpp */; };
 		460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 460F81B117EA1C3B00D765F5 /* keyboard.cpp */; };
@@ -815,8 +702,6 @@
 		46B25F4318333794003584B6 /* winfnt.c in Sources */ = {isa = PBXBuildFile; fileRef = 46B25D5718333793003584B6 /* winfnt.c */; };
 		46B25F4418333794003584B6 /* winfnt.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B25D5818333793003584B6 /* winfnt.h */; };
 		46B25F4718333D83003584B6 /* libfreetype2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B25A3618333782003584B6 /* libfreetype2.a */; };
-		46B4C5A41836628D00FDB0CA /* libopenmesh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46076B4F18365DF60007FD46 /* libopenmesh.a */; };
-		46B4C5A7183670E600FDB0CA /* libopenmesh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46076B4F18365DF60007FD46 /* libopenmesh.a */; };
 		46B4C5C01836883800FDB0CA /* BBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B4C5B11836883800FDB0CA /* BBox.cpp */; };
 		46B4C5C11836883800FDB0CA /* BBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B4C5B21836883800FDB0CA /* BBox.h */; };
 		46B4C5C21836883800FDB0CA /* BVH.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B4C5B31836883800FDB0CA /* BVH.cpp */; };
@@ -996,20 +881,6 @@
 			remoteGlobalIDString = 46B25A3518333782003584B6;
 			remoteInfo = freetype2;
 		};
-		46B4C5A21836628500FDB0CA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 463E3D5B1767FB9000A4466B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 46076B4E18365DF60007FD46;
-			remoteInfo = openmesh;
-		};
-		46B4C5A5183670E200FDB0CA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 463E3D5B1767FB9000A4466B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 46076B4E18365DF60007FD46;
-			remoteInfo = openmesh;
-		};
 		46B4C5CD1836889A00FDB0CA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 463E3D5B1767FB9000A4466B /* Project object */;
@@ -1074,7 +945,6 @@
 		4600EB8F17EBC8F9003BA3C3 /* commandtokenizer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commandtokenizer.cpp; sourceTree = "<group>"; };
 		4600EB9017EBC8F9003BA3C3 /* commandtokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commandtokenizer.h; sourceTree = "<group>"; };
 		46074B02180F316700823E55 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		46076B4F18365DF60007FD46 /* libopenmesh.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libopenmesh.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		46076B5418365E120007FD46 /* .qmake.cache */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .qmake.cache; sourceTree = "<group>"; };
 		46076B5518365E120007FD46 /* ACGMakefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ACGMakefile; sourceTree = "<group>"; };
 		46076B5618365E120007FD46 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
@@ -3309,8 +3179,8 @@
 		46B4C5AC1836882800FDB0CA /* libfastbvh.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfastbvh.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		46B4C5B11836883800FDB0CA /* BBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BBox.cpp; sourceTree = "<group>"; };
 		46B4C5B21836883800FDB0CA /* BBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBox.h; sourceTree = "<group>"; };
-		46B4C5B31836883800FDB0CA /* BVH.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BVH.cpp; sourceTree = "<group>"; };
-		46B4C5B41836883800FDB0CA /* BVH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVH.h; sourceTree = "<group>"; };
+		46B4C5B31836883800FDB0CA /* BVH.cpp */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 1; lastKnownFileType = sourcecode.cpp.cpp; path = BVH.cpp; sourceTree = "<group>"; };
+		46B4C5B41836883800FDB0CA /* BVH.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 1; lastKnownFileType = sourcecode.c.h; path = BVH.h; sourceTree = "<group>"; };
 		46B4C5B51836883800FDB0CA /* IntersectionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntersectionInfo.h; sourceTree = "<group>"; };
 		46B4C5B61836883800FDB0CA /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
 		46B4C5B71836883800FDB0CA /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
@@ -3813,18 +3683,10 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		46076B4C18365DF60007FD46 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		461717C818269E200070ABED /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46B4C5A7183670E600FDB0CA /* libopenmesh.a in Frameworks */,
 				46401B18182C732700A73BDC /* libsimplexnoise1234.a in Frameworks */,
 				461717E41826A34E0070ABED /* IOKit.framework in Frameworks */,
 				461717E31826A3490070ABED /* Cocoa.framework in Frameworks */,
@@ -3838,7 +3700,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				46B4C5CF183688A200FDB0CA /* libfastbvh.a in Frameworks */,
-				46B4C5A41836628D00FDB0CA /* libopenmesh.a in Frameworks */,
 				46E297AC18340E430065D56E /* Cocoa.framework in Frameworks */,
 				46E297AB18340E3D0065D56E /* OpenGL.framework in Frameworks */,
 				46E297AA18340E370065D56E /* CoreFoundation.framework in Frameworks */,
@@ -7404,7 +7265,6 @@
 				46B9824C17E69E9C00B59145 /* libglfw.a */,
 				46B25900183333B9003584B6 /* libgltext.a */,
 				46E2955F18340A030065D56E /* libgraphite2.a */,
-				46076B4F18365DF60007FD46 /* libopenmesh.a */,
 				468E01561783F02800301C1C /* libsimplexnoise1234.a */,
 				46D0FBFB180F1A7C00B00F93 /* libwebsockets.a */,
 				46D21C101771F2B900C896A4 /* textengine */,
@@ -8264,95 +8124,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		46076B4D18365DF60007FD46 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				46077EBC18365E7F0007FD46 /* StoreRestore.hh in Headers */,
-				46077F0118365E7F0007FD46 /* SingletonT.hh in Headers */,
-				46077E9D18365E7F0007FD46 /* BinaryHelper.hh in Headers */,
-				46077ED418365E7F0007FD46 /* FinalMeshItemsT.hh in Headers */,
-				46077EFA18365E7F0007FD46 /* Noncopyable.hh in Headers */,
-				46077E9718365E7F0007FD46 /* NormalConeT.hh in Headers */,
-				46077EED18365E7F0007FD46 /* omstream.hh in Headers */,
-				46077EFC18365E7F0007FD46 /* PropertyContainer.hh in Headers */,
-				46077E9318365E7F0007FD46 /* Config.hh in Headers */,
-				46077EE118365E7F0007FD46 /* Status.hh in Headers */,
-				46077EE718365E7F0007FD46 /* TriMeshT.hh in Headers */,
-				46077EB918365E7F0007FD46 /* SR_rbo.hh in Headers */,
-				46077EB418365E7F0007FD46 /* PLYReader.hh in Headers */,
-				46077EDE18365E7F0007FD46 /* PolyMesh_ArrayKernelT.hh in Headers */,
-				46077E9818365E7F0007FD46 /* Plane3d.hh in Headers */,
-				46077EA018365E7F0007FD46 /* BaseImporter.hh in Headers */,
-				46077EC918365E7F0007FD46 /* ArrayItems.hh in Headers */,
-				46077ED218365E7F0007FD46 /* Casts.hh in Headers */,
-				46077EB618365E7F0007FD46 /* STLReader.hh in Headers */,
-				46077ED618365E7F0007FD46 /* circulators_template.hh in Headers */,
-				46077EA118365E7F0007FD46 /* ImporterT.hh in Headers */,
-				46077EFF18365E7F0007FD46 /* RandomNumberGenerator.hh in Headers */,
-				46077F0218365E7F0007FD46 /* vector_cast.hh in Headers */,
-				46077EB718365E7F0007FD46 /* SR_binary.hh in Headers */,
-				46077EC818365E7F0007FD46 /* STLWriter.hh in Headers */,
-				46077EDD18365E7F0007FD46 /* PolyConnectivity.hh in Headers */,
-				46077EC618365E7F0007FD46 /* PLYWriter.hh in Headers */,
-				46077EFD18365E7F0007FD46 /* PropertyManager.hh in Headers */,
-				46077EE418365E7F0007FD46 /* TriConnectivity.hh in Headers */,
-				46077EE818365E7F0007FD46 /* compiler.hh in Headers */,
-				46077EBA18365E7F0007FD46 /* SR_store.hh in Headers */,
-				46077EC018365E7F0007FD46 /* OBJWriter.hh in Headers */,
-				46077EA218365E7F0007FD46 /* IOInstances.hh in Headers */,
-				46077EFB18365E7F0007FD46 /* Property.hh in Headers */,
-				46077EB818365E7F0007FD46 /* SR_binary_spec.hh in Headers */,
-				46077EEB18365E7F0007FD46 /* mostream.hh in Headers */,
-				46077EA618365E7F0007FD46 /* OFFFormat.hh in Headers */,
-				46077ECE18365E7F0007FD46 /* Attributes.hh in Headers */,
-				46077EF018365E7F0007FD46 /* newClass.hh in Headers */,
-				46077EA518365E7F0007FD46 /* MeshIO.hh in Headers */,
-				46077EF218365E7F0007FD46 /* newClassT.hh in Headers */,
-				46077E9E18365E7F0007FD46 /* BaseExporter.hh in Headers */,
-				46077EF818365E7F0007FD46 /* Endian.hh in Headers */,
-				46077EBE18365E7F0007FD46 /* BaseWriter.hh in Headers */,
-				46077EC218365E7F0007FD46 /* OFFWriter.hh in Headers */,
-				46077EBB18365E7F0007FD46 /* SR_types.hh in Headers */,
-				46077EE218365E7F0007FD46 /* Traits.hh in Headers */,
-				46077EAC18365E7F0007FD46 /* BaseReader.hh in Headers */,
-				46077E9918365E7F0007FD46 /* QuadricT.hh in Headers */,
-				46077ED318365E7F0007FD46 /* CirculatorsT.hh in Headers */,
-				46077EEE18365E7F0007FD46 /* OpenMeshDLLMacros.hh in Headers */,
-				46077ED118365E7F0007FD46 /* BaseMesh.hh in Headers */,
-				46077E9418365E7F0007FD46 /* LoopSchemeMaskT.hh in Headers */,
-				46077ED718365E7F0007FD46 /* footer.hh in Headers */,
-				46077EB218365E7F0007FD46 /* OMReader.hh in Headers */,
-				46077EA418365E7F0007FD46 /* IOManager.hh in Headers */,
-				46077ED918365E7F0007FD46 /* iterators_template.hh in Headers */,
-				46077EAA18365E7F0007FD46 /* Options.hh in Headers */,
-				46077EE018365E7F0007FD46 /* PolyMeshT.hh in Headers */,
-				46077EEA18365E7F0007FD46 /* config.hh in Headers */,
-				46077ED018365E7F0007FD46 /* BaseKernel.hh in Headers */,
-				46077EAE18365E7F0007FD46 /* OBJReader.hh in Headers */,
-				46077ECD18365E7F0007FD46 /* AttribKernelT.hh in Headers */,
-				46077EB018365E7F0007FD46 /* OFFReader.hh in Headers */,
-				46077EC418365E7F0007FD46 /* OMWriter.hh in Headers */,
-				46077ED818365E7F0007FD46 /* iterators_header.hh in Headers */,
-				46077E9518365E7F0007FD46 /* MathDefs.hh in Headers */,
-				46077EA818365E7F0007FD46 /* OMFormat.hh in Headers */,
-				46077EE518365E7F0007FD46 /* TriMesh_ArrayKernelT.hh in Headers */,
-				46077F0318365E7F0007FD46 /* vector_traits.hh in Headers */,
-				46077EDB18365E7F0007FD46 /* IteratorsT.hh in Headers */,
-				46077E9B18365E7F0007FD46 /* VectorT_inc.hh in Headers */,
-				46077EF918365E7F0007FD46 /* GenProg.hh in Headers */,
-				46077EF618365E7F0007FD46 /* color_cast.hh in Headers */,
-				46077EE918365E7F0007FD46 /* config.h in Headers */,
-				46077ED518365E7F0007FD46 /* circulators_header.hh in Headers */,
-				46077EDA18365E7F0007FD46 /* Handles.hh in Headers */,
-				46077EF518365E7F0007FD46 /* BaseProperty.hh in Headers */,
-				46077EF318365E7F0007FD46 /* AutoPropertyHandleT.hh in Headers */,
-				46077E9F18365E7F0007FD46 /* ExporterT.hh in Headers */,
-				46077ECB18365E7F0007FD46 /* ArrayKernel.hh in Headers */,
-				46077E9A18365E7F0007FD46 /* VectorT.hh in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		464E36831825D1B400AC0AC0 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -8842,23 +8613,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		46076B4E18365DF60007FD46 /* openmesh */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 46076B5218365DF60007FD46 /* Build configuration list for PBXNativeTarget "openmesh" */;
-			buildPhases = (
-				46076B4B18365DF60007FD46 /* Sources */,
-				46076B4C18365DF60007FD46 /* Frameworks */,
-				46076B4D18365DF60007FD46 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = openmesh;
-			productName = openmesh;
-			productReference = 46076B4F18365DF60007FD46 /* libopenmesh.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		461717CA18269E200070ABED /* editor */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 461717D318269E200070ABED /* Build configuration list for PBXNativeTarget "editor" */;
@@ -8870,7 +8624,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				46B4C5A6183670E200FDB0CA /* PBXTargetDependency */,
 				46401B17182C732200A73BDC /* PBXTargetDependency */,
 				461717D818269EDE0070ABED /* PBXTargetDependency */,
 			);
@@ -8891,7 +8644,6 @@
 			);
 			dependencies = (
 				46B4C5CE1836889A00FDB0CA /* PBXTargetDependency */,
-				46B4C5A31836628500FDB0CA /* PBXTargetDependency */,
 				46A1F26718333F36002C21FE /* PBXTargetDependency */,
 				46D0FCB3180F1B5C00B00F93 /* PBXTargetDependency */,
 				46B9842D17E69EC300B59145 /* PBXTargetDependency */,
@@ -9088,51 +8840,12 @@
 				46B258FF183333B9003584B6 /* gltext */,
 				46B25A3518333782003584B6 /* freetype2 */,
 				46E2955E18340A030065D56E /* graphite2 */,
-				46076B4E18365DF60007FD46 /* openmesh */,
 				46B4C5AB1836882800FDB0CA /* fastbvh */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		46076B4B18365DF60007FD46 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				46077F0018365E7F0007FD46 /* SingletonT.cc in Sources */,
-				46077E9C18365E7F0007FD46 /* BinaryHelper.cc in Sources */,
-				46077EF718365E7F0007FD46 /* Endian.cc in Sources */,
-				46077E9618365E7F0007FD46 /* NormalConeT.cc in Sources */,
-				46077EEF18365E7F0007FD46 /* newClass.cc in Sources */,
-				46077EDF18365E7F0007FD46 /* PolyMeshT.cc in Sources */,
-				46077EC718365E7F0007FD46 /* STLWriter.cc in Sources */,
-				46077ECA18365E7F0007FD46 /* ArrayKernel.cc in Sources */,
-				46077EC318365E7F0007FD46 /* OMWriter.cc in Sources */,
-				46077EE318365E7F0007FD46 /* TriConnectivity.cc in Sources */,
-				46077EAB18365E7F0007FD46 /* BaseReader.cc in Sources */,
-				46077EC118365E7F0007FD46 /* OFFWriter.cc in Sources */,
-				46077EBF18365E7F0007FD46 /* OBJWriter.cc in Sources */,
-				46077EDC18365E7F0007FD46 /* PolyConnectivity.cc in Sources */,
-				46077EBD18365E7F0007FD46 /* BaseWriter.cc in Sources */,
-				46077EFE18365E7F0007FD46 /* RandomNumberGenerator.cc in Sources */,
-				46077EB318365E7F0007FD46 /* PLYReader.cc in Sources */,
-				46077EC518365E7F0007FD46 /* PLYWriter.cc in Sources */,
-				46077EAD18365E7F0007FD46 /* OBJReader.cc in Sources */,
-				46077EF118365E7F0007FD46 /* newClassT.cc in Sources */,
-				46077EA318365E7F0007FD46 /* IOManager.cc in Sources */,
-				46077EB118365E7F0007FD46 /* OMReader.cc in Sources */,
-				46077EB518365E7F0007FD46 /* STLReader.cc in Sources */,
-				46077EE618365E7F0007FD46 /* TriMeshT.cc in Sources */,
-				46077EA718365E7F0007FD46 /* OMFormat.cc in Sources */,
-				46077ECF18365E7F0007FD46 /* BaseKernel.cc in Sources */,
-				46077EEC18365E7F0007FD46 /* omstream.cc in Sources */,
-				46077EAF18365E7F0007FD46 /* OFFReader.cc in Sources */,
-				46077ECC18365E7F0007FD46 /* ArrayKernelT.cc in Sources */,
-				46077EF418365E7F0007FD46 /* BaseProperty.cc in Sources */,
-				46077EA918365E7F0007FD46 /* OMFormatT.cc in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		461717C718269E200070ABED /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -9622,16 +9335,6 @@
 			target = 46B25A3518333782003584B6 /* freetype2 */;
 			targetProxy = 46B25F4518333D7B003584B6 /* PBXContainerItemProxy */;
 		};
-		46B4C5A31836628500FDB0CA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 46076B4E18365DF60007FD46 /* openmesh */;
-			targetProxy = 46B4C5A21836628500FDB0CA /* PBXContainerItemProxy */;
-		};
-		46B4C5A6183670E200FDB0CA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 46076B4E18365DF60007FD46 /* openmesh */;
-			targetProxy = 46B4C5A5183670E200FDB0CA /* PBXContainerItemProxy */;
-		};
 		46B4C5CE1836889A00FDB0CA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 46B4C5AB1836882800FDB0CA /* fastbvh */;
@@ -9655,47 +9358,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		46076B5018365DF60007FD46 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		46076B5118365DF60007FD46 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				ENABLE_NS_ASSERTIONS = NO;
-				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		461717D118269E200070ABED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -9934,7 +9596,6 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -9957,7 +9618,6 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				ENABLE_NS_ASSERTIONS = NO;
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -9975,7 +9635,6 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -10000,7 +9659,6 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				ENABLE_NS_ASSERTIONS = NO;
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"GL_GLEXT_PROTOTYPES=1",
 					"GLFW_INCLUDE_GLCOREARB=1",
@@ -10024,7 +9682,6 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -10047,7 +9704,6 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				ENABLE_NS_ASSERTIONS = NO;
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -10124,7 +9780,6 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -10148,7 +9803,6 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				ENABLE_NS_ASSERTIONS = NO;
 				EXECUTABLE_PREFIX = lib;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -10162,15 +9816,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		46076B5218365DF60007FD46 /* Build configuration list for PBXNativeTarget "openmesh" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				46076B5018365DF60007FD46 /* Debug */,
-				46076B5118365DF60007FD46 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		461717D318269E200070ABED /* Build configuration list for PBXNativeTarget "editor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

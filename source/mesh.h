@@ -1,9 +1,9 @@
 #ifndef TEXTENGINE_MESH_H_
 #define TEXTENGINE_MESH_H_
 
+#include <BVH.h>
 #include <functional>
 #include <glm/glm.hpp>
-#include <kdtree++/kdtree.hpp>
 #include <memory>
 #include <random>
 #include <vector>
@@ -37,30 +37,28 @@ namespace textengine {
       void ForEachVertex(std::function<void(Vertex *)> body) const;
     };
 
-    struct Vertex {
-      Vertex() : vertex_edge(), position() {}
-
-      HalfEdge *vertex_edge;
-      glm::vec2 position;
-    };
-
-    struct VertexValue {
-      using value_type = float;
-
-      VertexValue(Vertex *vertex) : vertex(vertex) {}
-
-      static float access(VertexValue value, size_t k);
-
-      Vertex *vertex;
-    };
-
-    struct HalfEdge {
+    struct HalfEdge : public Object {
       HalfEdge() : face(), next(), opposite(), previous(), start(), seen(), generative(), obstacle() {}
+
+      virtual bool getIntersection(const Ray& ray, IntersectionInfo* intersection) const override;
+
+      virtual Vector3 getNormal(const IntersectionInfo& I) const override;
+
+      virtual BBox getBBox() const override;
+
+      virtual Vector3 getCentroid() const override;
 
       Face *face;
       HalfEdge *next, *opposite, *previous;
       Vertex *start;
       bool seen, generative, obstacle;
+    };
+
+    struct Vertex {
+      Vertex() : vertex_edge(), position() {}
+
+      HalfEdge *vertex_edge;
+      glm::vec2 position;
     };
 
     struct RoomInfo {
@@ -70,7 +68,7 @@ namespace textengine {
       glm::vec4 color;
     };
 
-    Mesh() = default;
+    Mesh();
 
     Mesh(Mesh &&mesh) = default;
 
@@ -117,9 +115,9 @@ namespace textengine {
 
     Drawable WireframeExterior() const;
 
-    bool FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const;
-
     Mesh::Face *FindFaceThatContainsPoint(glm::vec2 point) const;
+
+    void UpdateBvh();
 
   private:
     static constexpr auto kMaxDepth = 12;
@@ -134,15 +132,13 @@ namespace textengine {
 
     void ExtrudeGenerativeEdge(HalfEdge *edge);
 
-    using VertexTree = KDTree::KDTree<2, VertexValue, std::function<float(VertexValue, size_t)>>;
-
   private:
     std::vector<std::unique_ptr<Face>> faces;
     std::vector<std::unique_ptr<HalfEdge>> half_edges;
     std::vector<std::unique_ptr<Vertex>> vertices;
     std::vector<std::unique_ptr<RoomInfo>> room_infos;
 
-    VertexTree vertex_tree;
+    BVH bvh;
 
     static std::default_random_engine generator;
     static std::uniform_real_distribution<float> distribution;

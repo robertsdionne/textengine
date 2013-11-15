@@ -44,14 +44,14 @@ float BBox::surfaceArea() const {
 #define muxhps(low,high)	_mm_movehl_ps((low),(high))	// low{a,b,c,d}|high{e,f,g,h} = {c,d,g,h}
 static const float flt_plus_inf = -logf(0);	// let's keep C and C++ compilers happy.
 static const float __attribute__((aligned(16)))
-	ps_cst_plus_inf[4]	= {  flt_plus_inf,  flt_plus_inf,  flt_plus_inf,  flt_plus_inf },
-		ps_cst_minus_inf[4]	= { -flt_plus_inf, -flt_plus_inf, -flt_plus_inf, -flt_plus_inf };
+ps_cst_plus_inf[4]	= {  flt_plus_inf,  flt_plus_inf,  flt_plus_inf,  flt_plus_inf };
+static const float __attribute__((aligned(16)))
+ps_cst_minus_inf[4]	= { -flt_plus_inf, -flt_plus_inf, -flt_plus_inf, -flt_plus_inf };
 bool BBox::intersect(const Ray& ray, float *tnear, float *tfar) const {
 
 	// you may already have those values hanging around somewhere
-	const __m128
-		plus_inf	= loadps(ps_cst_plus_inf),
-		minus_inf	= loadps(ps_cst_minus_inf);
+	const __m128 plus_inf	= loadps(ps_cst_plus_inf);
+  const __m128 minus_inf	= loadps(ps_cst_minus_inf);
 
 	// use whatever's apropriate to load.
 	const __m128

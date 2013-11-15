@@ -27,6 +27,7 @@ class BVH {
  BVHFlatNode *flatTree;
 
 public:
+ BVH();
  BVH(std::vector<Object*>* objects, uint32_t leafSize=4);
  bool getIntersection(const Ray& ray, IntersectionInfo *intersection, bool occlusion) const ;
 
