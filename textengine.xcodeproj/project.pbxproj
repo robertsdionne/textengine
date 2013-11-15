@@ -817,6 +817,18 @@
 		46B25F4718333D83003584B6 /* libfreetype2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B25A3618333782003584B6 /* libfreetype2.a */; };
 		46B4C5A41836628D00FDB0CA /* libopenmesh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46076B4F18365DF60007FD46 /* libopenmesh.a */; };
 		46B4C5A7183670E600FDB0CA /* libopenmesh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46076B4F18365DF60007FD46 /* libopenmesh.a */; };
+		46B4C5C01836883800FDB0CA /* BBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B4C5B11836883800FDB0CA /* BBox.cpp */; };
+		46B4C5C11836883800FDB0CA /* BBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B4C5B21836883800FDB0CA /* BBox.h */; };
+		46B4C5C21836883800FDB0CA /* BVH.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B4C5B31836883800FDB0CA /* BVH.cpp */; };
+		46B4C5C31836883800FDB0CA /* BVH.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B4C5B41836883800FDB0CA /* BVH.h */; };
+		46B4C5C41836883800FDB0CA /* IntersectionInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B4C5B51836883800FDB0CA /* IntersectionInfo.h */; };
+		46B4C5C51836883800FDB0CA /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B4C5B71836883800FDB0CA /* Log.h */; };
+		46B4C5C71836883800FDB0CA /* Object.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B4C5B91836883800FDB0CA /* Object.h */; };
+		46B4C5C81836883800FDB0CA /* Ray.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B4C5BA1836883800FDB0CA /* Ray.h */; };
+		46B4C5CA1836883800FDB0CA /* Sphere.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B4C5BD1836883800FDB0CA /* Sphere.h */; };
+		46B4C5CB1836883800FDB0CA /* Stopwatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B4C5BE1836883800FDB0CA /* Stopwatch.h */; };
+		46B4C5CC1836883800FDB0CA /* Vector3.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B4C5BF1836883800FDB0CA /* Vector3.h */; };
+		46B4C5CF183688A200FDB0CA /* libfastbvh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B4C5AC1836882800FDB0CA /* libfastbvh.a */; };
 		46B9842E17E69ED300B59145 /* libglfw.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B9824C17E69E9C00B59145 /* libglfw.a */; };
 		46B9875917E6A62500B59145 /* glfwapplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9875517E6A62500B59145 /* glfwapplication.cpp */; };
 		46B9A60A1771F0F800E43B24 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9A6091771F0F800E43B24 /* main.cpp */; };
@@ -997,6 +1009,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 46076B4E18365DF60007FD46;
 			remoteInfo = openmesh;
+		};
+		46B4C5CD1836889A00FDB0CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 463E3D5B1767FB9000A4466B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 46B4C5AB1836882800FDB0CA;
+			remoteInfo = fastbvh;
 		};
 		46B9842C17E69EC300B59145 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3287,6 +3306,22 @@
 		46B25D5818333793003584B6 /* winfnt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = winfnt.h; sourceTree = "<group>"; };
 		46B25D5918333793003584B6 /* version.sed */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = version.sed; sourceTree = "<group>"; };
 		46B25D5A18333793003584B6 /* vms_make.com */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vms_make.com; sourceTree = "<group>"; };
+		46B4C5AC1836882800FDB0CA /* libfastbvh.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libfastbvh.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		46B4C5B11836883800FDB0CA /* BBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BBox.cpp; sourceTree = "<group>"; };
+		46B4C5B21836883800FDB0CA /* BBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBox.h; sourceTree = "<group>"; };
+		46B4C5B31836883800FDB0CA /* BVH.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BVH.cpp; sourceTree = "<group>"; };
+		46B4C5B41836883800FDB0CA /* BVH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BVH.h; sourceTree = "<group>"; };
+		46B4C5B51836883800FDB0CA /* IntersectionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntersectionInfo.h; sourceTree = "<group>"; };
+		46B4C5B61836883800FDB0CA /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = "<group>"; };
+		46B4C5B71836883800FDB0CA /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
+		46B4C5B81836883800FDB0CA /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		46B4C5B91836883800FDB0CA /* Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Object.h; sourceTree = "<group>"; };
+		46B4C5BA1836883800FDB0CA /* Ray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ray.h; sourceTree = "<group>"; };
+		46B4C5BB1836883800FDB0CA /* RayTracerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RayTracerTest.cpp; sourceTree = "<group>"; };
+		46B4C5BC1836883800FDB0CA /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		46B4C5BD1836883800FDB0CA /* Sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sphere.h; sourceTree = "<group>"; };
+		46B4C5BE1836883800FDB0CA /* Stopwatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stopwatch.h; sourceTree = "<group>"; };
+		46B4C5BF1836883800FDB0CA /* Vector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3.h; sourceTree = "<group>"; };
 		46B9824C17E69E9C00B59145 /* libglfw.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libglfw.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		46B9875117E6A37700B59145 /* checks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = checks.h; sourceTree = "<group>"; };
 		46B9875517E6A62500B59145 /* glfwapplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = glfwapplication.cpp; sourceTree = "<group>"; };
@@ -3802,6 +3837,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46B4C5CF183688A200FDB0CA /* libfastbvh.a in Frameworks */,
 				46B4C5A41836628D00FDB0CA /* libopenmesh.a in Frameworks */,
 				46E297AC18340E430065D56E /* Cocoa.framework in Frameworks */,
 				46E297AB18340E3D0065D56E /* OpenGL.framework in Frameworks */,
@@ -3854,6 +3890,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4687E30B1833C0DC00128A85 /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		46B4C5A91836882800FDB0CA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5606,6 +5649,7 @@
 				468EF71B1783DC1B00301C1C /* libraries */,
 				46FBD338180F335C00F7C5F8 /* resource */,
 				46B9A6081771F0F800E43B24 /* source */,
+				46B4C5AC1836882800FDB0CA /* libfastbvh.a */,
 			);
 			sourceTree = "<group>";
 		};
@@ -5784,6 +5828,7 @@
 				468E01441783DF9200301C1C /* OpenGL.framework */,
 				46076B5318365E120007FD46 /* OpenMesh-2.4 */,
 				46D0FCB7180F1D5200B00F93 /* SystemConfiguration.framework */,
+				46B4C5B01836883800FDB0CA /* fastbvh */,
 				46B25A3A18333792003584B6 /* freetype-2.5.0.1 */,
 				460FF85418103B300053F813 /* glfw-3.0.3 */,
 				460FF56F18103B250053F813 /* glm-0.9.4.6 */,
@@ -7148,6 +7193,28 @@
 				46B25D5818333793003584B6 /* winfnt.h */,
 			);
 			path = winfonts;
+			sourceTree = "<group>";
+		};
+		46B4C5B01836883800FDB0CA /* fastbvh */ = {
+			isa = PBXGroup;
+			children = (
+				46B4C5B11836883800FDB0CA /* BBox.cpp */,
+				46B4C5B21836883800FDB0CA /* BBox.h */,
+				46B4C5B31836883800FDB0CA /* BVH.cpp */,
+				46B4C5B41836883800FDB0CA /* BVH.h */,
+				46B4C5B51836883800FDB0CA /* IntersectionInfo.h */,
+				46B4C5B61836883800FDB0CA /* License.txt */,
+				46B4C5B71836883800FDB0CA /* Log.h */,
+				46B4C5B81836883800FDB0CA /* Makefile */,
+				46B4C5B91836883800FDB0CA /* Object.h */,
+				46B4C5BA1836883800FDB0CA /* Ray.h */,
+				46B4C5BB1836883800FDB0CA /* RayTracerTest.cpp */,
+				46B4C5BC1836883800FDB0CA /* README */,
+				46B4C5BD1836883800FDB0CA /* Sphere.h */,
+				46B4C5BE1836883800FDB0CA /* Stopwatch.h */,
+				46B4C5BF1836883800FDB0CA /* Vector3.h */,
+			);
+			path = fastbvh;
 			sourceTree = "<group>";
 		};
 		46B9A6081771F0F800E43B24 /* source */ = {
@@ -8656,6 +8723,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		46B4C5AA1836882800FDB0CA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46B4C5C11836883800FDB0CA /* BBox.h in Headers */,
+				46B4C5C51836883800FDB0CA /* Log.h in Headers */,
+				46B4C5CC1836883800FDB0CA /* Vector3.h in Headers */,
+				46B4C5C41836883800FDB0CA /* IntersectionInfo.h in Headers */,
+				46B4C5C81836883800FDB0CA /* Ray.h in Headers */,
+				46B4C5C71836883800FDB0CA /* Object.h in Headers */,
+				46B4C5CA1836883800FDB0CA /* Sphere.h in Headers */,
+				46B4C5CB1836883800FDB0CA /* Stopwatch.h in Headers */,
+				46B4C5C31836883800FDB0CA /* BVH.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		46B9824A17E69E9C00B59145 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -8807,6 +8890,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				46B4C5CE1836889A00FDB0CA /* PBXTargetDependency */,
 				46B4C5A31836628500FDB0CA /* PBXTargetDependency */,
 				46A1F26718333F36002C21FE /* PBXTargetDependency */,
 				46D0FCB3180F1B5C00B00F93 /* PBXTargetDependency */,
@@ -8905,6 +8989,23 @@
 			productReference = 46B25A3618333782003584B6 /* libfreetype2.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		46B4C5AB1836882800FDB0CA /* fastbvh */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 46B4C5AF1836882800FDB0CA /* Build configuration list for PBXNativeTarget "fastbvh" */;
+			buildPhases = (
+				46B4C5A81836882800FDB0CA /* Sources */,
+				46B4C5A91836882800FDB0CA /* Frameworks */,
+				46B4C5AA1836882800FDB0CA /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = fastbvh;
+			productName = fastbvh;
+			productReference = 46B4C5AC1836882800FDB0CA /* libfastbvh.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		46B9824B17E69E9C00B59145 /* glfw */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 46B9824D17E69E9C00B59145 /* Build configuration list for PBXNativeTarget "glfw" */;
@@ -8988,6 +9089,7 @@
 				46B25A3518333782003584B6 /* freetype2 */,
 				46E2955E18340A030065D56E /* graphite2 */,
 				46076B4E18365DF60007FD46 /* openmesh */,
+				46B4C5AB1836882800FDB0CA /* fastbvh */,
 			);
 		};
 /* End PBXProject section */
@@ -9393,6 +9495,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		46B4C5A81836882800FDB0CA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				46B4C5C21836883800FDB0CA /* BVH.cpp in Sources */,
+				46B4C5C01836883800FDB0CA /* BBox.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		46B9824817E69E9C00B59145 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -9520,6 +9631,11 @@
 			isa = PBXTargetDependency;
 			target = 46076B4E18365DF60007FD46 /* openmesh */;
 			targetProxy = 46B4C5A5183670E200FDB0CA /* PBXContainerItemProxy */;
+		};
+		46B4C5CE1836889A00FDB0CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 46B4C5AB1836882800FDB0CA /* fastbvh */;
+			targetProxy = 46B4C5CD1836889A00FDB0CA /* PBXContainerItemProxy */;
 		};
 		46B9842D17E69EC300B59145 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9653,6 +9769,7 @@
 					"libraries/graphite2-1.2.3/include",
 					libraries/libkdtree,
 					"libraries/OpenMesh-2.4/src",
+					libraries/fastbvh,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
@@ -9696,6 +9813,7 @@
 					"libraries/graphite2-1.2.3/include",
 					libraries/libkdtree,
 					"libraries/OpenMesh-2.4/src",
+					libraries/fastbvh,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
@@ -9898,6 +10016,47 @@
 			};
 			name = Release;
 		};
+		46B4C5AD1836882800FDB0CA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		46B4C5AE1836882800FDB0CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				ENABLE_NS_ASSERTIONS = NO;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		46B9824E17E69E9C00B59145 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -10083,6 +10242,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		46B4C5AF1836882800FDB0CA /* Build configuration list for PBXNativeTarget "fastbvh" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				46B4C5AD1836882800FDB0CA /* Debug */,
+				46B4C5AE1836882800FDB0CA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		46B9824D17E69E9C00B59145 /* Build configuration list for PBXNativeTarget "glfw" */ = {
 			isa = XCConfigurationList;
