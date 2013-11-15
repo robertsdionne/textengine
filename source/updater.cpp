@@ -147,21 +147,23 @@ namespace textengine {
         });
       }
       auto position = current_state.player.position;
-      auto current_face = FindFaceThatContainsPoint(position);
+      auto current_face = mesh.FindFaceThatContainsPoint(position);
       float maximum = -std::numeric_limits<float>::infinity();
       glm::vec2 target;
       Mesh::Face *argmax = nullptr;
-      current_face->ForEachHalfEdge([&] (Mesh::HalfEdge *edge) {
-        if (edge->opposite && !edge->obstacle) {
-          const auto centroid = edge->opposite->face->centroid();
-          const float dot_product = glm::dot(glm::normalize(centroid - position), SquareToRound(offset));
-          if (dot_product > 0 && dot_product > maximum) {
-            maximum = dot_product;
-            argmax = edge->opposite->face;
-            target = centroid;
+      if (current_face) {
+        current_face->ForEachHalfEdge([&] (Mesh::HalfEdge *edge) {
+          if (edge->opposite && !edge->obstacle) {
+            const auto centroid = edge->opposite->face->centroid();
+            const float dot_product = glm::dot(glm::normalize(centroid - position), SquareToRound(offset));
+            if (dot_product > 0 && dot_product > maximum) {
+              maximum = dot_product;
+              argmax = edge->opposite->face;
+              target = centroid;
+            }
           }
-        }
-      });
+        });
+      }
       if (argmax) {
         current_state.player.direction_target = glm::normalize(target - position);
         current_state.player.position_target = target;
@@ -226,7 +228,7 @@ namespace textengine {
   CharacterInfo Updater::UpdateCharacter(CharacterInfo current_character, float dt, float dt2) {
     CharacterInfo next_character = current_character;
     if (next_character.room_target) {
-      auto current_face = FindFaceThatContainsPoint(next_character.position);
+      auto current_face = mesh.FindFaceThatContainsPoint(next_character.position);
       if (current_face && next_character.room_target == current_face->room_info) {
         next_character.room_target = nullptr;
       } else if (current_face && next_character.room_target) {
@@ -294,28 +296,6 @@ namespace textengine {
       vector /= glm::length(supremum_normalized);
     }
     return vector;
-  }
-
-  bool Updater::FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const {
-    const auto h01 = face->face_edge;
-    const auto h12 = h01->next;
-    const auto h20 = h12->next;
-    CHECK_STATE(h01 == h20->next);
-    const auto v0 = h01->start, v1 = h12->start, v2 = h20->start;
-    const auto p0 = glm::vec3(v0->position, 0.0f), p1 = glm::vec3(v1->position, 0.0f), p2 = glm::vec3(v2->position, 0.0f);
-    const auto p = glm::vec3(point, 0.0f);
-    const float u = (glm::cross(p, p2-p0).z - glm::cross(p0, p2-p0).z) / glm::cross(p1-p0, p2-p0).z;
-    const float v = (glm::cross(p0, p1-p0).z - glm::cross(p, p1-p0).z) / glm::cross(p1-p0, p2-p0).z;
-    return 0 <= u && 0 <= v && (u + v) <= 1;
-  }
-
-  Mesh::Face *Updater::FindFaceThatContainsPoint(glm::vec2 point) const {
-    for (auto &face : mesh.get_faces()) {
-      if (FaceContainsPoint(face.get(), point)) {
-        return face.get();
-      }
-    }
-    return nullptr;
   }
 
 }  // namespace textengine

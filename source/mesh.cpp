@@ -67,12 +67,22 @@ namespace textengine {
     } while (face_edge != half_edge);
   }
 
+  float Mesh::VertexValue::access(textengine::Mesh::VertexValue value, size_t k) {
+    return value.vertex->position[k];
+  }
+
   Mesh::Mesh(std::vector<std::unique_ptr<Face>> &&faces,
              std::vector<std::unique_ptr<HalfEdge>> &&half_edges,
              std::vector<std::unique_ptr<Vertex>> &&vertices,
              std::vector<std::unique_ptr<RoomInfo>> &&room_infos)
   : faces(std::move(faces)), half_edges(std::move(half_edges)), vertices(std::move(vertices)),
-  room_infos(std::move(room_infos)) {}
+  room_infos(std::move(room_infos)), vertex_tree(VertexValue::access) {
+    std::vector<VertexValue> vertex_values;
+    for (const auto &vertex : vertices) {
+      vertex_values.emplace_back(vertex.get());
+    }
+    vertex_tree.efficient_replace_and_optimise(vertex_values);
+  }
 
   std::vector<std::unique_ptr<Mesh::Face>> &Mesh::get_faces() {
     return faces;
@@ -564,6 +574,36 @@ namespace textengine {
   }
 
   Mesh::Face *Mesh::FindFaceThatContainsPoint(glm::vec2 point) const {
+//    Vertex vertex;
+//    vertex.position = point;
+//    VertexValue vertex_value{&vertex};
+//    auto nearest = vertex_tree.find_nearest(vertex_value).first->vertex;
+//    if (nearest) {
+//      std::unordered_set<Face *> faces;
+//      auto next = nearest->vertex_edge;
+//      do {
+//        faces.insert(next->face);
+//        if (next->opposite) {
+//          next = next->opposite->next;
+//        } else {
+//          break;
+//        }
+//      } while (nearest->vertex_edge != next);
+//      auto previous = nearest->vertex_edge->previous;
+//      do {
+//        faces.insert(previous->face);
+//        if (previous && previous->opposite) {
+//          previous = previous->opposite->previous;
+//        } else {
+//          break;
+//        }
+//      } while (nearest->vertex_edge != previous);
+//      for (auto face : faces) {
+//        if (FaceContainsPoint(face, point)) {
+//          return face;
+//        }
+//      }
+//    }
     for (auto &face : faces) {
       if (FaceContainsPoint(face.get(), point)) {
         return face.get();

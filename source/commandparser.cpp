@@ -51,36 +51,14 @@ namespace textengine {
     }
   }
 
-  bool CommandParser::FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const {
-    const auto h01 = face->face_edge;
-    const auto h12 = h01->next;
-    const auto h20 = h12->next;
-    CHECK_STATE(h01 == h20->next);
-    const auto v0 = h01->start, v1 = h12->start, v2 = h20->start;
-    const auto p0 = glm::vec3(v0->position, 0.0f), p1 = glm::vec3(v1->position, 0.0f), p2 = glm::vec3(v2->position, 0.0f);
-    const auto p = glm::vec3(point, 0.0f);
-    const float u = (glm::cross(p, p2-p0).z - glm::cross(p0, p2-p0).z) / glm::cross(p1-p0, p2-p0).z;
-    const float v = (glm::cross(p0, p1-p0).z - glm::cross(p, p1-p0).z) / glm::cross(p1-p0, p2-p0).z;
-    return 0 <= u && 0 <= v && (u + v) <= 1;
-  }
-
-  Mesh::Face *CommandParser::FindFaceThatContainsPoint(glm::vec2 point) const {
-    for (auto &face : mesh.get_faces()) {
-      if (FaceContainsPoint(face.get(), point)) {
-        return face.get();
-      }
-    }
-    return nullptr;
-  }
-
   void CommandParser::Look(const GameState &current_state) {
     std::ostringstream out;
     out << "You see ";
-    Mesh::Face *current_face = FindFaceThatContainsPoint(current_state.player.position);
+    Mesh::Face *current_face = mesh.FindFaceThatContainsPoint(current_state.player.position);
     if (current_face && current_face->room_info) {
       std::string description = "nothing";
       for (auto &item : current_state.items) {
-        Mesh::Face *item_face = FindFaceThatContainsPoint(item.position);
+        Mesh::Face *item_face = mesh.FindFaceThatContainsPoint(item.position);
         if (item_face && item_face->room_info == current_face->room_info) {
           description = "a " + item.name;
           break;
@@ -251,8 +229,8 @@ namespace textengine {
         }
       }
       if (found_item) {
-        Mesh::Face *current_face = FindFaceThatContainsPoint(current_state.player.position);
-        Mesh::Face *item_face = FindFaceThatContainsPoint(found_item->position);
+        Mesh::Face *current_face = mesh.FindFaceThatContainsPoint(current_state.player.position);
+        Mesh::Face *item_face = mesh.FindFaceThatContainsPoint(found_item->position);
         if (current_face && item_face && current_face->room_info == item_face->room_info) {
           current_state.inventory.push_back(*found_item);
           current_state.items.erase(std::find(current_state.items.begin(), current_state.items.end(),

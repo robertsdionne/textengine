@@ -2016,6 +2016,46 @@
 		461879D117FB5E2E000B32F6 /* picojson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = picojson.h; sourceTree = "<group>"; };
 		461879D517FB5F0D000B32F6 /* meshserializer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = meshserializer.cpp; sourceTree = "<group>"; };
 		461879D617FB5F0D000B32F6 /* meshserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = meshserializer.h; sourceTree = "<group>"; };
+		461B03891835D8DB00B21F7E /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		461B038A1835D8DB00B21F7E /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
+		461B038B1835D8DB00B21F7E /* autogen.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = autogen.sh; sourceTree = "<group>"; };
+		461B038C1835D8DB00B21F7E /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
+		461B038D1835D8DB00B21F7E /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		461B038E1835D8DB00B21F7E /* config.h.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.h.in; sourceTree = "<group>"; };
+		461B038F1835D8DB00B21F7E /* configure */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = configure; sourceTree = "<group>"; };
+		461B03901835D8DB00B21F7E /* configure.ac */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; };
+		461B03911835D8DB00B21F7E /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		461B03931835D8DB00B21F7E /* Doxyfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Doxyfile; sourceTree = "<group>"; };
+		461B03941835D8DB00B21F7E /* index.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = index.txt; sourceTree = "<group>"; };
+		461B03961835D8DB00B21F7E /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		461B03971835D8DB00B21F7E /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		461B03981835D8DB00B21F7E /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		461B03991835D8DB00B21F7E /* test_find_within_range.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test_find_within_range.cpp; sourceTree = "<group>"; };
+		461B039A1835D8DB00B21F7E /* test_hayne.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test_hayne.cpp; sourceTree = "<group>"; };
+		461B039B1835D8DB00B21F7E /* test_kdtree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = test_kdtree.cpp; sourceTree = "<group>"; };
+		461B039C1835D8DB00B21F7E /* INSTALL */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = INSTALL; sourceTree = "<group>"; };
+		461B039D1835D8DB00B21F7E /* install-sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "install-sh"; sourceTree = "<group>"; };
+		461B039F1835D8DB00B21F7E /* allocator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = allocator.hpp; sourceTree = "<group>"; };
+		461B03A01835D8DB00B21F7E /* function.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = function.hpp; sourceTree = "<group>"; };
+		461B03A11835D8DB00B21F7E /* iterator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = iterator.hpp; sourceTree = "<group>"; };
+		461B03A21835D8DB00B21F7E /* kdtree.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = kdtree.hpp; sourceTree = "<group>"; };
+		461B03A31835D8DB00B21F7E /* node.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = node.hpp; sourceTree = "<group>"; };
+		461B03A41835D8DB00B21F7E /* region.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = region.hpp; sourceTree = "<group>"; };
+		461B03A51835D8DB00B21F7E /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		461B03A61835D8DB00B21F7E /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
+		461B03A71835D8DB00B21F7E /* missing */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = missing; sourceTree = "<group>"; };
+		461B03A81835D8DB00B21F7E /* NEWS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NEWS; sourceTree = "<group>"; };
+		461B03AA1835D8DB00B21F7E /* libkdtree++.pc.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "libkdtree++.pc.in"; sourceTree = "<group>"; };
+		461B03AC1835D8DB00B21F7E /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		461B03AD1835D8DB00B21F7E /* gen-swig-hpp.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = "gen-swig-hpp.py"; sourceTree = "<group>"; };
+		461B03AE1835D8DB00B21F7E /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		461B03AF1835D8DB00B21F7E /* py-kdtree.hpp.tmpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "py-kdtree.hpp.tmpl"; sourceTree = "<group>"; };
+		461B03B01835D8DB00B21F7E /* py-kdtree.i.tmpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "py-kdtree.i.tmpl"; sourceTree = "<group>"; };
+		461B03B11835D8DB00B21F7E /* py-kdtree_test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "py-kdtree_test.cpp"; sourceTree = "<group>"; };
+		461B03B21835D8DB00B21F7E /* py-kdtree_test.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = "py-kdtree_test.py"; sourceTree = "<group>"; };
+		461B03B31835D8DB00B21F7E /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		461B03B41835D8DB00B21F7E /* README.Python */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.Python; sourceTree = "<group>"; };
+		461B03B51835D8DB00B21F7E /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		462B4A5C17EA43AA006FE9BB /* vertexarray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vertexarray.h; sourceTree = "<group>"; };
 		462B4A5D17EA43AA006FE9BB /* vertexarray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vertexarray.cpp; sourceTree = "<group>"; };
 		462B4A5E17EA43AA006FE9BB /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
@@ -4874,6 +4914,93 @@
 			path = picojson;
 			sourceTree = "<group>";
 		};
+		461B03881835D8DB00B21F7E /* libkdtree */ = {
+			isa = PBXGroup;
+			children = (
+				461B03891835D8DB00B21F7E /* .gitignore */,
+				461B038A1835D8DB00B21F7E /* AUTHORS */,
+				461B038B1835D8DB00B21F7E /* autogen.sh */,
+				461B038C1835D8DB00B21F7E /* ChangeLog */,
+				461B038D1835D8DB00B21F7E /* CMakeLists.txt */,
+				461B038E1835D8DB00B21F7E /* config.h.in */,
+				461B038F1835D8DB00B21F7E /* configure */,
+				461B03901835D8DB00B21F7E /* configure.ac */,
+				461B03911835D8DB00B21F7E /* COPYING */,
+				461B03921835D8DB00B21F7E /* doc */,
+				461B03951835D8DB00B21F7E /* examples */,
+				461B039C1835D8DB00B21F7E /* INSTALL */,
+				461B039D1835D8DB00B21F7E /* install-sh */,
+				461B039E1835D8DB00B21F7E /* kdtree++ */,
+				461B03A51835D8DB00B21F7E /* Makefile.am */,
+				461B03A61835D8DB00B21F7E /* Makefile.in */,
+				461B03A71835D8DB00B21F7E /* missing */,
+				461B03A81835D8DB00B21F7E /* NEWS */,
+				461B03A91835D8DB00B21F7E /* pkgconfig */,
+				461B03AB1835D8DB00B21F7E /* python-bindings */,
+				461B03B31835D8DB00B21F7E /* README */,
+				461B03B41835D8DB00B21F7E /* README.Python */,
+				461B03B51835D8DB00B21F7E /* TODO */,
+			);
+			path = libkdtree;
+			sourceTree = "<group>";
+		};
+		461B03921835D8DB00B21F7E /* doc */ = {
+			isa = PBXGroup;
+			children = (
+				461B03931835D8DB00B21F7E /* Doxyfile */,
+				461B03941835D8DB00B21F7E /* index.txt */,
+			);
+			path = doc;
+			sourceTree = "<group>";
+		};
+		461B03951835D8DB00B21F7E /* examples */ = {
+			isa = PBXGroup;
+			children = (
+				461B03961835D8DB00B21F7E /* .gitignore */,
+				461B03971835D8DB00B21F7E /* CMakeLists.txt */,
+				461B03981835D8DB00B21F7E /* Makefile */,
+				461B03991835D8DB00B21F7E /* test_find_within_range.cpp */,
+				461B039A1835D8DB00B21F7E /* test_hayne.cpp */,
+				461B039B1835D8DB00B21F7E /* test_kdtree.cpp */,
+			);
+			path = examples;
+			sourceTree = "<group>";
+		};
+		461B039E1835D8DB00B21F7E /* kdtree++ */ = {
+			isa = PBXGroup;
+			children = (
+				461B039F1835D8DB00B21F7E /* allocator.hpp */,
+				461B03A01835D8DB00B21F7E /* function.hpp */,
+				461B03A11835D8DB00B21F7E /* iterator.hpp */,
+				461B03A21835D8DB00B21F7E /* kdtree.hpp */,
+				461B03A31835D8DB00B21F7E /* node.hpp */,
+				461B03A41835D8DB00B21F7E /* region.hpp */,
+			);
+			path = "kdtree++";
+			sourceTree = "<group>";
+		};
+		461B03A91835D8DB00B21F7E /* pkgconfig */ = {
+			isa = PBXGroup;
+			children = (
+				461B03AA1835D8DB00B21F7E /* libkdtree++.pc.in */,
+			);
+			path = pkgconfig;
+			sourceTree = "<group>";
+		};
+		461B03AB1835D8DB00B21F7E /* python-bindings */ = {
+			isa = PBXGroup;
+			children = (
+				461B03AC1835D8DB00B21F7E /* CMakeLists.txt */,
+				461B03AD1835D8DB00B21F7E /* gen-swig-hpp.py */,
+				461B03AE1835D8DB00B21F7E /* Makefile */,
+				461B03AF1835D8DB00B21F7E /* py-kdtree.hpp.tmpl */,
+				461B03B01835D8DB00B21F7E /* py-kdtree.i.tmpl */,
+				461B03B11835D8DB00B21F7E /* py-kdtree_test.cpp */,
+				461B03B21835D8DB00B21F7E /* py-kdtree_test.py */,
+			);
+			path = "python-bindings";
+			sourceTree = "<group>";
+		};
 		463E3D5A1767FB9000A4466B = {
 			isa = PBXGroup;
 			children = (
@@ -5064,6 +5191,7 @@
 				46B2599B18333411003584B6 /* gltext */,
 				46E2956318340A130065D56E /* graphite2-1.2.3 */,
 				46C47CCD180F3139002DD37E /* libcrypto.dylib */,
+				461B03881835D8DB00B21F7E /* libkdtree */,
 				46AB32C7180F1EA0003DDECF /* libssl.dylib */,
 				46D0FBFF180F1A9500B00F93 /* libwebsockets */,
 				46074B02180F316700823E55 /* libz.dylib */,
@@ -8728,6 +8856,7 @@
 					"libraries/freetype-2.5.0.1/include",
 					libraries/gltext,
 					"libraries/graphite2-1.2.3/include",
+					libraries/libkdtree,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
@@ -8769,6 +8898,7 @@
 					"libraries/freetype-2.5.0.1/include",
 					libraries/gltext,
 					"libraries/graphite2-1.2.3/include",
+					libraries/libkdtree,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
@@ -9173,6 +9303,7 @@
 				46E2956118340A030065D56E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

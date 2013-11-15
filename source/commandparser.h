@@ -26,10 +26,6 @@ namespace textengine {
     using Tokens = std::vector<std::string>;
     using TokenIterator = std::vector<std::string>::const_iterator;
 
-    bool FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const;
-
-    Mesh::Face *FindFaceThatContainsPoint(glm::vec2 point) const;
-
     void Help();
 
     void Inventory(const GameState &current_state);

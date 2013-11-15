@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <glm/glm.hpp>
+#include <kdtree++/kdtree.hpp>
 #include <memory>
 #include <random>
 #include <vector>
@@ -41,6 +42,16 @@ namespace textengine {
 
       HalfEdge *vertex_edge;
       glm::vec2 position;
+    };
+
+    struct VertexValue {
+      using value_type = float;
+
+      VertexValue(Vertex *vertex) : vertex(vertex) {}
+
+      static float access(VertexValue value, size_t k);
+
+      Vertex *vertex;
     };
 
     struct HalfEdge {
@@ -106,12 +117,12 @@ namespace textengine {
 
     Drawable WireframeExterior() const;
 
-  private:
-    static constexpr auto kMaxDepth = 12;
-
     bool FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const;
 
     Mesh::Face *FindFaceThatContainsPoint(glm::vec2 point) const;
+
+  private:
+    static constexpr auto kMaxDepth = 12;
 
     void FindVisibleFaces(glm::vec2 perspective, int max_depth,
                           std::vector<Face *> &visible_faces,
@@ -123,11 +134,15 @@ namespace textengine {
 
     void ExtrudeGenerativeEdge(HalfEdge *edge);
 
+    using VertexTree = KDTree::KDTree<2, VertexValue, std::function<float(VertexValue, size_t)>>;
+
   private:
     std::vector<std::unique_ptr<Face>> faces;
     std::vector<std::unique_ptr<HalfEdge>> half_edges;
     std::vector<std::unique_ptr<Vertex>> vertices;
     std::vector<std::unique_ptr<RoomInfo>> room_infos;
+
+    VertexTree vertex_tree;
 
     static std::default_random_engine generator;
     static std::uniform_real_distribution<float> distribution;

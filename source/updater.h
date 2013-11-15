@@ -41,10 +41,6 @@ namespace textengine {
 
     NonPlayerCharacterInfo UpdateNonPlayerCharacter(NonPlayerCharacterInfo current_character);
 
-    bool FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const;
-
-    Mesh::Face *FindFaceThatContainsPoint(glm::vec2 point) const;
-
     glm::vec2 SupremumNormalize(glm::vec2 vector);
 
     glm::vec2 SquareToRound(glm::vec2 vector);
