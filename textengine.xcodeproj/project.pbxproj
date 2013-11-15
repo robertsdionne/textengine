@@ -180,7 +180,6 @@
 		461717ED1826A59D0070ABED /* joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464E367E1825B4BC00AC0AC0 /* joystick.cpp */; };
 		461717EE1826A59D0070ABED /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A6017EA43AA006FE9BB /* program.cpp */; };
 		461717EF1826A59D0070ABED /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A5E17EA43AA006FE9BB /* shader.cpp */; };
-		461717F31826A5B40070ABED /* libbox2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 464E36851825D1B400AC0AC0 /* libbox2d.a */; };
 		461717FA1826A9700070ABED /* meshrenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461717F81826A9700070ABED /* meshrenderer.cpp */; };
 		461717FB1826A9700070ABED /* meshrenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461717F81826A9700070ABED /* meshrenderer.cpp */; };
 		461717FE1826A97C0070ABED /* editorrenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461717FC1826A97C0070ABED /* editorrenderer.cpp */; };
@@ -816,6 +815,8 @@
 		46B25F4318333794003584B6 /* winfnt.c in Sources */ = {isa = PBXBuildFile; fileRef = 46B25D5718333793003584B6 /* winfnt.c */; };
 		46B25F4418333794003584B6 /* winfnt.h in Headers */ = {isa = PBXBuildFile; fileRef = 46B25D5818333793003584B6 /* winfnt.h */; };
 		46B25F4718333D83003584B6 /* libfreetype2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B25A3618333782003584B6 /* libfreetype2.a */; };
+		46B4C5A41836628D00FDB0CA /* libopenmesh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46076B4F18365DF60007FD46 /* libopenmesh.a */; };
+		46B4C5A7183670E600FDB0CA /* libopenmesh.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46076B4F18365DF60007FD46 /* libopenmesh.a */; };
 		46B9842E17E69ED300B59145 /* libglfw.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B9824C17E69E9C00B59145 /* libglfw.a */; };
 		46B9875917E6A62500B59145 /* glfwapplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9875517E6A62500B59145 /* glfwapplication.cpp */; };
 		46B9A60A1771F0F800E43B24 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46B9A6091771F0F800E43B24 /* main.cpp */; };
@@ -955,13 +956,6 @@
 			remoteGlobalIDString = 46B9824B17E69E9C00B59145;
 			remoteInfo = glfw;
 		};
-		461717F11826A5AE0070ABED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 463E3D5B1767FB9000A4466B /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 464E36841825D1B400AC0AC0;
-			remoteInfo = box2d;
-		};
 		46401B16182C732200A73BDC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 463E3D5B1767FB9000A4466B /* Project object */;
@@ -989,6 +983,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 46B25A3518333782003584B6;
 			remoteInfo = freetype2;
+		};
+		46B4C5A21836628500FDB0CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 463E3D5B1767FB9000A4466B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 46076B4E18365DF60007FD46;
+			remoteInfo = openmesh;
+		};
+		46B4C5A5183670E200FDB0CA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 463E3D5B1767FB9000A4466B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 46076B4E18365DF60007FD46;
+			remoteInfo = openmesh;
 		};
 		46B9842C17E69EC300B59145 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3781,8 +3789,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46B4C5A7183670E600FDB0CA /* libopenmesh.a in Frameworks */,
 				46401B18182C732700A73BDC /* libsimplexnoise1234.a in Frameworks */,
-				461717F31826A5B40070ABED /* libbox2d.a in Frameworks */,
 				461717E41826A34E0070ABED /* IOKit.framework in Frameworks */,
 				461717E31826A3490070ABED /* Cocoa.framework in Frameworks */,
 				461717E21826A3010070ABED /* OpenGL.framework in Frameworks */,
@@ -3794,6 +3802,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46B4C5A41836628D00FDB0CA /* libopenmesh.a in Frameworks */,
 				46E297AC18340E430065D56E /* Cocoa.framework in Frameworks */,
 				46E297AB18340E3D0065D56E /* OpenGL.framework in Frameworks */,
 				46E297AA18340E370065D56E /* CoreFoundation.framework in Frameworks */,
@@ -8778,8 +8787,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				46B4C5A6183670E200FDB0CA /* PBXTargetDependency */,
 				46401B17182C732200A73BDC /* PBXTargetDependency */,
-				461717F21826A5AE0070ABED /* PBXTargetDependency */,
 				461717D818269EDE0070ABED /* PBXTargetDependency */,
 			);
 			name = editor;
@@ -8798,6 +8807,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				46B4C5A31836628500FDB0CA /* PBXTargetDependency */,
 				46A1F26718333F36002C21FE /* PBXTargetDependency */,
 				46D0FCB3180F1B5C00B00F93 /* PBXTargetDependency */,
 				46B9842D17E69EC300B59145 /* PBXTargetDependency */,
@@ -9481,11 +9491,6 @@
 			target = 46B9824B17E69E9C00B59145 /* glfw */;
 			targetProxy = 461717D718269EDE0070ABED /* PBXContainerItemProxy */;
 		};
-		461717F21826A5AE0070ABED /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 464E36841825D1B400AC0AC0 /* box2d */;
-			targetProxy = 461717F11826A5AE0070ABED /* PBXContainerItemProxy */;
-		};
 		46401B17182C732200A73BDC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 468E01551783F02800301C1C /* simplexnoise1234 */;
@@ -9505,6 +9510,16 @@
 			isa = PBXTargetDependency;
 			target = 46B25A3518333782003584B6 /* freetype2 */;
 			targetProxy = 46B25F4518333D7B003584B6 /* PBXContainerItemProxy */;
+		};
+		46B4C5A31836628500FDB0CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 46076B4E18365DF60007FD46 /* openmesh */;
+			targetProxy = 46B4C5A21836628500FDB0CA /* PBXContainerItemProxy */;
+		};
+		46B4C5A6183670E200FDB0CA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 46076B4E18365DF60007FD46 /* openmesh */;
+			targetProxy = 46B4C5A5183670E200FDB0CA /* PBXContainerItemProxy */;
 		};
 		46B9842D17E69EC300B59145 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
