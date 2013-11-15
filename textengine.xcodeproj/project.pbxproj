@@ -72,6 +72,7 @@
 		461717FB1826A9700070ABED /* meshrenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461717F81826A9700070ABED /* meshrenderer.cpp */; };
 		461717FE1826A97C0070ABED /* editorrenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461717FC1826A97C0070ABED /* editorrenderer.cpp */; };
 		461879D717FB5F0D000B32F6 /* meshserializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461879D517FB5F0D000B32F6 /* meshserializer.cpp */; };
+		461B03C41835EC9900B21F7E /* halfedgemesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 461B03C21835EC9900B21F7E /* halfedgemesh.cpp */; };
 		462B4A6417EA43AA006FE9BB /* vertexarray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A5D17EA43AA006FE9BB /* vertexarray.cpp */; };
 		462B4A6517EA43AA006FE9BB /* shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A5E17EA43AA006FE9BB /* shader.cpp */; };
 		462B4A6617EA43AA006FE9BB /* program.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462B4A6017EA43AA006FE9BB /* program.cpp */; };
@@ -2056,6 +2057,8 @@
 		461B03B31835D8DB00B21F7E /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		461B03B41835D8DB00B21F7E /* README.Python */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.Python; sourceTree = "<group>"; };
 		461B03B51835D8DB00B21F7E /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
+		461B03C21835EC9900B21F7E /* halfedgemesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = halfedgemesh.cpp; sourceTree = "<group>"; };
+		461B03C31835EC9900B21F7E /* halfedgemesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = halfedgemesh.h; sourceTree = "<group>"; };
 		462B4A5C17EA43AA006FE9BB /* vertexarray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vertexarray.h; sourceTree = "<group>"; };
 		462B4A5D17EA43AA006FE9BB /* vertexarray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vertexarray.cpp; sourceTree = "<group>"; };
 		462B4A5E17EA43AA006FE9BB /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
@@ -6578,6 +6581,8 @@
 				466E70F917EB92F900CD9E9D /* gamestate.h */,
 				46B9875517E6A62500B59145 /* glfwapplication.cpp */,
 				46B9875617E6A62500B59145 /* glfwapplication.h */,
+				461B03C21835EC9900B21F7E /* halfedgemesh.cpp */,
+				461B03C31835EC9900B21F7E /* halfedgemesh.h */,
 				463F38AD18316A39001326C3 /* input.cpp */,
 				463F38AE18316A39001326C3 /* input.h */,
 				464E367E1825B4BC00AC0AC0 /* joystick.cpp */,
@@ -8338,6 +8343,7 @@
 				4600EB9117EBC8F9003BA3C3 /* commandtokenizer.cpp in Sources */,
 				460B492A17F47E24006B4828 /* mesh.cpp in Sources */,
 				464E36801825B4BC00AC0AC0 /* joystick.cpp in Sources */,
+				461B03C41835EC9900B21F7E /* halfedgemesh.cpp in Sources */,
 				460B493017F4B48F006B4828 /* mouse.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
