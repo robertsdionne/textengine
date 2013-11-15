@@ -71,7 +71,7 @@ namespace textengine {
     object["previous"] = picojson::value(half_edge_indices.at(half_edge->previous));
     object["start"] = picojson::value(vertex_indices.at(half_edge->start));
     object["generative"] = picojson::value(half_edge->generative);
-    object["transparent"] = picojson::value(half_edge->transparent);
+    object["obstacle"] = picojson::value(half_edge->obstacle);
     return picojson::value(object);
   }
 

@@ -406,6 +406,17 @@ namespace textengine {
     return drawable;
   }
 
+  void MeshEditor::Setup() {
+    for (auto &half_edge : mesh.get_half_edges()) {
+      if (half_edge->opposite) {
+        CHECK_STATE(half_edge.get() == half_edge->opposite->opposite);
+        if (half_edge->opposite->obstacle) {
+          half_edge->obstacle = true;
+        }
+      }
+    }
+  }
+
   void MeshEditor::Update() {
     const bool ready = !(add_selecting || (MoveMode::kFalse != moving) || rotating ||
                          (ScaleMode::kFalse != scaling) || selecting);
@@ -694,7 +705,7 @@ namespace textengine {
     }
     if (ready && !selected_half_edges().empty() && keyboard.GetKeyVelocity(GLFW_KEY_T) > 0) {
       for (auto half_edge : selected_half_edges()) {
-        half_edge->transparent = !half_edge->transparent;
+        half_edge->obstacle = !half_edge->obstacle;
       }
     }
     if (ready && !selected_half_edges().empty() && keyboard.GetKeyVelocity(GLFW_KEY_Y) > 0) {

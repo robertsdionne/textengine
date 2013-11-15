@@ -85,6 +85,7 @@ namespace textengine {
     int framebuffer_width, framebuffer_height;
     glfwGetFramebufferSize(window, &framebuffer_width, &framebuffer_height);
     HandleReshape(window, framebuffer_width, framebuffer_height);
+    controller.Setup();
     while (!glfwWindowShouldClose(window)) {
       if (keyboard.GetKeyVelocity(GLFW_KEY_TAB) > 0) {
         if (minimized) {

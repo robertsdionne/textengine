@@ -16,26 +16,29 @@ namespace textengine {
   : joystick(joystick), keyboard(keyboard), mouse(mouse) {}
 
   glm::vec2 Input::GetPrimaryAxes() const {
-    return ArgMax({
+    const auto result = ArgMax({
       joystick_primary_axes,
       keyboard_primary_smoothed_axes,
       mouse_primary_smoothed_axes
     });
+    return glm::length(result) > 0.1f ? result : glm::vec2();
   }
 
   glm::vec2 Input::GetSecondaryAxes() const {
-    return ArgMax({
+    const auto result = ArgMax({
       joystick_secondary_axes,
       keyboard_secondary_smoothed_axes
     });
+    return glm::length(result) > 0.1f ? result : glm::vec2();
   }
 
   float Input::GetXButton() const {
-    return ArgMax({
+    const auto result = ArgMax({
       joystick.GetButtonPressure(Joystick::PressureButton::kX),
       keyboard.GetKeyVelocity(GLFW_KEY_SPACE),
       mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1)
     });
+    return glm::abs(result) > 0.1f ? result : 0.0f;
   }
 
   void Input::Update() {

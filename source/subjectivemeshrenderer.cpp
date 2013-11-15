@@ -13,9 +13,9 @@
 
 namespace textengine {
 
-  SubjectiveMeshRenderer::SubjectiveMeshRenderer(Mesh &mesh)
+  SubjectiveMeshRenderer::SubjectiveMeshRenderer(Mesh &mesh, Updater &updater)
   : mesh(mesh), model_view(glm::mat4()),
-    projection(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)), perspective() {}
+    projection(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)), perspective(), updater(updater) {}
 
   void SubjectiveMeshRenderer::Change(int width, int height) {
     inverse_aspect_ratio = static_cast<float>(height) / static_cast<float>(width);
@@ -55,7 +55,7 @@ namespace textengine {
   }
 
   void SubjectiveMeshRenderer::Render() {
-    Drawable face_data = mesh.Triangulate(perspective);
+    Drawable face_data = mesh.Triangulate(perspective, updater);
     mesh_buffer.Data(face_data.data_size(), face_data.data.data(), GL_STREAM_DRAW);
     CHECK_STATE(!glGetError());
 
@@ -105,7 +105,7 @@ namespace textengine {
 
   void SubjectiveMeshRenderer::SetPerspective(glm::vec2 perspective, glm::vec2 camera_position) {
     this->perspective = perspective;
-    model_view = glm::scale(glm::mat4(), glm::vec3(2.0f)) * glm::translate(glm::mat4(), glm::vec3(-camera_position, 0.0f));
+    model_view = glm::scale(glm::mat4(), glm::vec3(1.0f)) * glm::translate(glm::mat4(), glm::vec3(-camera_position, 0.0f));
   }
 
 }  // namespace textengine

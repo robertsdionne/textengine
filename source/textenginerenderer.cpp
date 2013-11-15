@@ -44,31 +44,41 @@ namespace textengine {
     point_program.CompileAndLink();
 
     float player_data[] = {
-      2.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-      0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-      0.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f
+      2.0f, -2.0f, 0.0f, 0.0f, 0.7f, 1.0f,
+      0.0f, 2.0f, 0.0f, 0.0f, 0.7f, 1.0f,
+      0.0f, -2.0f, 0.0f, 0.0f, 0.7f, 1.0f,
+      2.0f, -2.0f, 0.0f, 0.0f, 0.7f, 1.0f,
+      2.0f, 2.0f, 0.0f, 0.0f, 0.7f, 1.0f,
+      0.0f, 2.0f, 0.0f, 0.0f, 0.7f, 1.0f
     };
     float player_edge_data[] = {
-      2.0f, 0.0f, 0.25f, 0.25f, 0.25f, 1.0f,
-      0.0f, 1.0f, 0.25f, 0.25f, 0.25f, 1.0f,
-      2.0f, 0.0f, 0.25f, 0.25f, 0.25f, 1.0f,
-      0.0f, -1.0f, 0.25f, 0.25f, 0.25f, 1.0f,
-      0.0f, 1.0f, 0.25f, 0.25f, 0.25f, 1.0f,
-      0.0f, -1.0f, 0.25f, 0.25f, 0.25f, 1.0f
+      2.0f, -2.0f, 1.0f, 1.0f, 1.5f, 1.0f,
+      2.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+      2.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+      0.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+      0.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+      0.0f, -2.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+      0.0f, -2.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+      2.0f, -2.0f, 1.0f, 1.0f, 1.0f, 1.0f
     };
 
     float npc_data[] = {
-      2.0f, 0.0f, 0.25f, 0.25f, 0.25f, 1.0f,
-      0.0f, 2.0f, 0.25f, 0.25f, 0.25f, 1.0f,
-      0.0f, -2.0f, 0.25f, 0.25f, 0.25f, 1.0f
+      1.5f, -1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
+      0.0f, 1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
+      0.0f, -1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
+      1.5f, -1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
+      1.5f, 1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
+      0.0f, 1.5f, 0.7f, 0.7f, 0.7f, 1.0f
     };
     float npc_edge_data[] = {
-      2.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-      0.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-      2.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-      0.0f, -2.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-      0.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-      0.0f, -2.0f, 1.0f, 1.0f, 1.0f, 1.0f
+      1.5f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
+      1.5f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
+      1.5f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.0f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.0f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.0f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.0f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
+      1.5f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f
     };
 
     float player_view_data[] = {
@@ -146,7 +156,7 @@ namespace textengine {
     mesh_renderer.SetPerspective(position, current_state.camera_position);
     mesh_renderer.Render();
 
-    model_view = glm::scale(glm::mat4(), glm::vec3(2.0f)) * glm::translate(glm::mat4(), glm::vec3(-current_state.camera_position, 0.0f));
+    model_view = glm::scale(glm::mat4(), glm::vec3(1.0f)) * glm::translate(glm::mat4(), glm::vec3(-current_state.camera_position, 0.0f));
 
     const float angle = glm::atan(current_state.player.direction.y, current_state.player.direction.x);
     const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(position, 0.0f)) *
@@ -159,7 +169,7 @@ namespace textengine {
       {u8"model_view", &player_model_view}
     });
     player_array.Bind();
-    glDrawArrays(GL_TRIANGLES, 0, 1*3);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
     CHECK_STATE(!glGetError());
 
     edge_program.Use();
@@ -172,7 +182,7 @@ namespace textengine {
       {u8"inverse_aspect_ratio", inverse_aspect_ratio}
     });
     player_edge_array.Bind();
-    glDrawArrays(GL_LINES, 0, 6);
+    glDrawArrays(GL_LINES, 0, 8);
     CHECK_STATE(!glGetError());
 
     face_program.Use();
@@ -209,7 +219,7 @@ namespace textengine {
         {u8"model_view", &player_model_view}
       });
       npc_array.Bind();
-      glDrawArrays(GL_TRIANGLES, 0, 1*3);
+      glDrawArrays(GL_TRIANGLES, 0, 6);
       CHECK_STATE(!glGetError());
 
       edge_program.Use();
@@ -222,7 +232,7 @@ namespace textengine {
         {u8"inverse_aspect_ratio", inverse_aspect_ratio}
       });
       npc_edge_array.Bind();
-      glDrawArrays(GL_LINES, 0, 6);
+      glDrawArrays(GL_LINES, 0, 8);
       CHECK_STATE(!glGetError());
     }
 

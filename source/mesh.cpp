@@ -14,6 +14,7 @@
 #include "checks.h"
 #include "drawable.h"
 #include "mesh.h"
+#include "updater.h"
 
 namespace textengine {
 
@@ -34,6 +35,16 @@ namespace textengine {
     auto half_edge = face_edge;
     do {
       if (half_edge->opposite) {
+        body(half_edge->opposite->face);
+      }
+      half_edge = half_edge->next;
+    } while (face_edge != half_edge);
+  }
+
+  void Mesh::Face::ForEachConnectedFace(std::function<void(Face *)> body) const {
+    auto half_edge = face_edge;
+    do {
+      if (half_edge->opposite && !half_edge->obstacle) {
         body(half_edge->opposite->face);
       }
       half_edge = half_edge->next;
@@ -190,6 +201,7 @@ namespace textengine {
 
     if (half_edge10) {
       half_edge10->opposite = half_edge01;
+      half_edge01->obstacle = half_edge12->obstacle;
     }
 
     half_edge12->face = face;
@@ -201,6 +213,7 @@ namespace textengine {
 
     if (half_edge21) {
       half_edge21->opposite = half_edge12;
+      half_edge12->obstacle = half_edge21->obstacle;
     }
 
     half_edge20->face = face;
@@ -212,6 +225,7 @@ namespace textengine {
 
     if (half_edge02) {
       half_edge02->opposite = half_edge20;
+      half_edge20->obstacle = half_edge02->obstacle;
     }
 
     face->face_edge = half_edge01;
@@ -251,6 +265,7 @@ namespace textengine {
       half_edge01->previous = half_edge20;
       half_edge01->start = vertex0;
       half_edge01->generative = false;
+      half_edge01->obstacle = edge->obstacle;
 
       half_edge12->face = face;
       half_edge12->next = half_edge20;
@@ -344,49 +359,47 @@ namespace textengine {
     constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
     drawable.data.reserve(kEdgeSize * exterior_half_edges.size());
     for (auto i = 0; i < exterior_half_edges.size(); ++i) {
-      if (!exterior_half_edges[i]->transparent) {
-        const glm::vec4 color = glm::vec4(glm::vec3(), 1.0f);
-        const auto v0 = exterior_half_edges[i]->start->position;
-        const auto v1 = exterior_half_edges[i]->next->start->position;
-        const auto dir2 = glm::normalize(v0 - perspective);
-        const auto dir3 = glm::normalize(v1 - perspective);
-        const auto theta = 1.0f / (glm::length(v0 - perspective) + glm::length(v1 - perspective)) * M_PI / 180.0f;
-        const auto rotate = glm::mat2(cos(theta), -sin(theta), sin(theta), cos(theta));
-        const auto dir2_prime = rotate * dir2;
-        const auto dir3_prime = glm::transpose(rotate) * dir3;
-        const auto length = 10.0f;
-        const auto v2 = length * dir2 + v0;
-        const auto v3 = length * dir3 + v1;
-        const auto v2_prime = 0.2f * dir2_prime + v0;
-        const auto v3_prime = 0.2f * dir3_prime + v1;
-        drawable.data.insert(drawable.data.cend(), {
-          v2.x, v2.y,
-          color.r, color.g, color.b, color.a,
-          v1.x, v1.y,
-          color.r, color.g, color.b, color.a,
-          v0.x, v0.y,
-          color.r, color.g, color.b, color.a,
-          v2.x, v2.y,
-          color.r, color.g, color.b, color.a,
-          v3.x, v3.y,
-          color.r, color.g, color.b, color.a,
-          v1.x, v1.y,
-          color.r, color.g, color.b, color.a,
+      const glm::vec4 color = glm::vec4(glm::vec3(), 1.0f);
+      const auto v0 = exterior_half_edges[i]->start->position;
+      const auto v1 = exterior_half_edges[i]->next->start->position;
+      const auto dir2 = glm::normalize(v0 - perspective);
+      const auto dir3 = glm::normalize(v1 - perspective);
+      const auto theta = 1.0f / (glm::length(v0 - perspective) + glm::length(v1 - perspective)) * M_PI / 180.0f;
+      const auto rotate = glm::mat2(cos(theta), -sin(theta), sin(theta), cos(theta));
+      const auto dir2_prime = rotate * dir2;
+      const auto dir3_prime = glm::transpose(rotate) * dir3;
+      const auto length = 10.0f;
+      const auto v2 = length * dir2 + v0;
+      const auto v3 = length * dir3 + v1;
+      const auto v2_prime = 0.2f * dir2_prime + v0;
+      const auto v3_prime = 0.2f * dir3_prime + v1;
+      drawable.data.insert(drawable.data.cend(), {
+        v2.x, v2.y,
+        color.r, color.g, color.b, color.a,
+        v1.x, v1.y,
+        color.r, color.g, color.b, color.a,
+        v0.x, v0.y,
+        color.r, color.g, color.b, color.a,
+        v2.x, v2.y,
+        color.r, color.g, color.b, color.a,
+        v3.x, v3.y,
+        color.r, color.g, color.b, color.a,
+        v1.x, v1.y,
+        color.r, color.g, color.b, color.a,
 
-          v2_prime.x, v2_prime.y,
-          color.r, color.g, color.b, 0.0f,
-          v2.x, v2.y,
-          color.r, color.g, color.b, color.a,
-          v0.x, v0.y,
-          color.r, color.g, color.b, 0.75f,
-          v3.x, v3.y,
-          color.r, color.g, color.b, color.a,
-          v3_prime.x, v3_prime.y,
-          color.r, color.g, color.b, 0.0f,
-          v1.x, v1.y,
-          color.r, color.g, color.b, 0.75f
-        });
-      }
+        v2_prime.x, v2_prime.y,
+        color.r, color.g, color.b, 0.0f,
+        v2.x, v2.y,
+        color.r, color.g, color.b, color.a,
+        v0.x, v0.y,
+        color.r, color.g, color.b, 0.75f,
+        v3.x, v3.y,
+        color.r, color.g, color.b, color.a,
+        v3_prime.x, v3_prime.y,
+        color.r, color.g, color.b, 0.0f,
+        v1.x, v1.y,
+        color.r, color.g, color.b, 0.75f
+      });
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * exterior_half_edges.size());
     drawable.element_type = GL_TRIANGLES;
@@ -421,7 +434,7 @@ namespace textengine {
     return drawable;
   }
 
-  Drawable Mesh::Triangulate(glm::vec2 perspective) const {
+  Drawable Mesh::Triangulate(glm::vec2 perspective, Updater &updater) const {
     auto visible_faces = std::vector<Face *>();
     auto depths = std::unordered_map<Face *, float>();
     FindVisibleFaces(perspective, kMaxDepth, visible_faces, depths);
@@ -433,6 +446,8 @@ namespace textengine {
     drawable.data.reserve(kFaceSize * faces.size());
     for (auto i = 0; i < faces.size(); ++i) {
       const float brightness = 1.0f - pow(2.0f * glm::length(faces[i]->centroid() - perspective), 2.0f);
+//      const float distance = updater.distances_to_staircase[faces[i].get()] + updater.displacement[faces[i].get()];
+//      const float brightness = glm::clamp(distance / 1.0f, 0.0f, 1.0f);
       const glm::vec4 color = brightness * (faces[i]->room_info ? faces[i]->room_info->color : glm::vec4(glm::vec3(0.64f), 1.0f));
       const auto h01 = faces[i]->face_edge;
       const auto h12 = h01->next;
@@ -464,6 +479,9 @@ namespace textengine {
       glm::vec4 color = half_edges[i]->face->room_info ? half_edges[i]->face->room_info->color / 2.0f : glm::vec4(glm::vec3(0.32f), 1.0f);
       if (half_edges[i]->generative) {
         color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+      }
+      if (half_edges[i]->obstacle) {
+        color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
       }
       drawable.data.insert(drawable.data.cend(), {
         half_edges[i]->start->position.x, half_edges[i]->start->position.y,
@@ -577,7 +595,7 @@ namespace textengine {
         queue.pop_front();
         visible_faces.push_back(face);
         visited.insert(face);
-        face->ForEachFace([&] (Face *neighbor) {
+        face->ForEachConnectedFace([&] (Face *neighbor) {
           if (visited.end() == visited.find(neighbor) && depth < max_depth) {
             depths.insert({neighbor, depth + 1});
             queue.push_back(neighbor);

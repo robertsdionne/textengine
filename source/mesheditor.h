@@ -53,6 +53,8 @@ namespace textengine {
 
     Drawable SelectionBox() const;
 
+    virtual void Setup() override;
+
     virtual void Update() override;
 
   private:

@@ -9,6 +9,8 @@ namespace textengine {
     DECLARE_INTERFACE(Controller);
 
   public:
+    virtual void Setup() = 0;
+
     virtual void Update() = 0;
   };
 

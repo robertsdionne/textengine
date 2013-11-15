@@ -24,7 +24,7 @@ constexpr int kWindowWidth = 1280;
 constexpr const char *kWindowTitle = u8"textengine";
 
 int main(int argument_count, char *arguments[]) {
-  const std::string filename = argument_count > 1 ? arguments[1] : "../resource/cave.json";
+  const std::string filename = argument_count > 1 ? arguments[1] : "../resource/subway.json";
   textengine::Joystick joystick(GLFW_JOYSTICK_1);
   textengine::Keyboard keyboard;
   textengine::Mouse mouse;
@@ -43,7 +43,7 @@ int main(int argument_count, char *arguments[]) {
     command_queue, reply_queue,
     playtest_log, parser, input, mesh, initial_state
   };
-  textengine::SubjectiveMeshRenderer mesh_renderer{mesh};
+  textengine::SubjectiveMeshRenderer mesh_renderer{mesh, updater};
   textengine::TextEngineRenderer renderer{updater, mesh_renderer};
   textengine::GlfwApplication application{
     argument_count, arguments, kWindowWidth, kWindowHeight,

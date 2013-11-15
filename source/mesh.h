@@ -10,6 +10,8 @@
 #include "drawable.h"
 
 namespace textengine {
+  
+  class Updater;
 
   class Mesh {
   public:
@@ -18,6 +20,8 @@ namespace textengine {
     struct Vertex;
 
     struct Face {
+      Face() : face_edge(), room_info() {}
+
       HalfEdge *face_edge;
       RoomInfo *room_info;
 
@@ -25,29 +29,31 @@ namespace textengine {
 
       void ForEachFace(std::function<void(Face *)> body) const;
 
+      void ForEachConnectedFace(std::function<void(Face *)> body) const;
+
       void ForEachHalfEdge(std::function<void(HalfEdge *)> body) const;
 
       void ForEachVertex(std::function<void(Vertex *)> body) const;
     };
 
     struct Vertex {
-      Vertex() = default;
+      Vertex() : vertex_edge(), position() {}
 
       HalfEdge *vertex_edge;
       glm::vec2 position;
     };
 
     struct HalfEdge {
-      HalfEdge() = default;
+      HalfEdge() : face(), next(), opposite(), previous(), start(), seen(), generative(), obstacle() {}
 
       Face *face;
       HalfEdge *next, *opposite, *previous;
       Vertex *start;
-      bool seen, generative, transparent;
+      bool seen, generative, obstacle;
     };
 
     struct RoomInfo {
-      RoomInfo() = default;
+      RoomInfo() : name(), color() {}
 
       std::string name;
       glm::vec4 color;
@@ -92,7 +98,7 @@ namespace textengine {
 
     Drawable Triangulate() const;
 
-    Drawable Triangulate(glm::vec2 perspective) const;
+    Drawable Triangulate(glm::vec2 perspective, Updater &updater) const;
 
     Drawable Wireframe() const;
 

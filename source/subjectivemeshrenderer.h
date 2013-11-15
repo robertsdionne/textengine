@@ -8,6 +8,7 @@
 #include "program.h"
 #include "renderer.h"
 #include "shader.h"
+#include "updater.h"
 #include "vertexarray.h"
 #include "vertexformat.h"
 
@@ -19,7 +20,7 @@ namespace textengine {
 
   class SubjectiveMeshRenderer : public Renderer {
   public:
-    SubjectiveMeshRenderer(Mesh &mesh);
+    SubjectiveMeshRenderer(Mesh &mesh, Updater &updater);
 
     virtual ~SubjectiveMeshRenderer() = default;
 
@@ -47,6 +48,7 @@ namespace textengine {
 
     glm::mat4 model_view, projection;
     glm::vec2 perspective;
+    Updater &updater;
   };
 
 }  // namespace textengine
