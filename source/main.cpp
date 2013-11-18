@@ -1,6 +1,5 @@
 #include <string>
 
-#include "commandparser.h"
 #include "commandtokenizer.h"
 #include "gamestate.h"
 #include "glfwapplication.h"
@@ -15,7 +14,6 @@
 #include "synchronizedqueue.h"
 #include "textenginerenderer.h"
 #include "updater.h"
-#include "websocketprompt.h"
 
 constexpr const char *kPlaytestLog = u8"playtest.log";
 constexpr const char *kPrompt = u8"> ";
@@ -30,18 +28,15 @@ int main(int argument_count, char *arguments[]) {
   textengine::Mouse mouse;
   textengine::Input input{joystick, keyboard, mouse};
   textengine::SynchronizedQueue command_queue, reply_queue;
-  textengine::WebSocketPrompt prompt{command_queue, reply_queue, kPrompt};
-//  prompt.Run();
   textengine::Mesh mesh;
   textengine::MeshLoader loader;
   mesh = loader.ReadMesh(filename);
   textengine::CommandTokenizer tokenizer;
-  textengine::CommandParser parser{tokenizer, mesh, reply_queue};
-  textengine::GameState initial_state;
+  textengine::GameState initial_state{mesh.Boundaries()};
   textengine::Log playtest_log{kPlaytestLog};
   textengine::Updater updater{
     command_queue, reply_queue,
-    playtest_log, parser, input, mesh, initial_state
+    playtest_log, input, mesh, initial_state
   };
   textengine::SubjectiveMeshRenderer mesh_renderer{mesh, updater};
   textengine::TextEngineRenderer renderer{updater, mesh_renderer};

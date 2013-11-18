@@ -62,25 +62,6 @@ namespace textengine {
       2.0f, -2.0f, 1.0f, 1.0f, 1.0f, 1.0f
     };
 
-    float npc_data[] = {
-      1.5f, -1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
-      0.0f, 1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
-      0.0f, -1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
-      1.5f, -1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
-      1.5f, 1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
-      0.0f, 1.5f, 0.7f, 0.7f, 0.7f, 1.0f
-    };
-    float npc_edge_data[] = {
-      1.5f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
-      1.5f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
-      1.5f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
-      0.0f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
-      0.0f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
-      0.0f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
-      0.0f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
-      1.5f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f
-    };
-
     float player_view_data[] = {
       0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.2f,
       1.0f, -2.0f, 1.0f, 1.0f, 1.0f, 0.0f,
@@ -112,28 +93,6 @@ namespace textengine {
     vertex_format.Apply(player_edge_array, edge_program);
     CHECK_STATE(!glGetError());
 
-    npc_buffer.Create(GL_ARRAY_BUFFER);
-    npc_buffer.Data(sizeof(npc_data), npc_data, GL_STATIC_DRAW);
-    npc_array.Create();
-    vertex_format.Apply(npc_array, face_program);
-    CHECK_STATE(!glGetError());
-
-    npc_edge_buffer.Create(GL_ARRAY_BUFFER);
-    npc_edge_buffer.Data(sizeof(npc_edge_data), npc_edge_data, GL_STATIC_DRAW);
-    npc_edge_array.Create();
-    vertex_format.Apply(npc_edge_array, edge_program);
-    CHECK_STATE(!glGetError());
-
-    item_buffer.Create(GL_ARRAY_BUFFER);
-    item_array.Create();
-    vertex_format.Apply(item_array, face_program);
-    CHECK_STATE(!glGetError());
-
-    item_edge_buffer.Create(GL_ARRAY_BUFFER);
-    item_edge_array.Create();
-    vertex_format.Apply(item_edge_array, edge_program);
-    CHECK_STATE(!glGetError());
-
     font = gltext::Font("../resource/ubuntu-font-family-0.80/Ubuntu-R.ttf", 32, 1024, 1024);
     font.cacheCharacters("1234567890!@#$%^&*()abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;'[]\\<>?:\"{}|-=_+");
   }
@@ -141,24 +100,17 @@ namespace textengine {
   void TextEngineRenderer::Render() {
     GameState &current_state = updater.GetCurrentState();
 
-    Drawable item_data = current_state.TriangulateItems();
-    item_buffer.Data(item_data.data_size(), item_data.data.data(), GL_STREAM_DRAW);
-    CHECK_STATE(!glGetError());
-
-    Drawable item_edge_data = current_state.WireframeItems();
-    item_edge_buffer.Data(item_edge_data.data_size(), item_edge_data.data.data(), GL_STREAM_DRAW);
-    CHECK_STATE(!glGetError());
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    const glm::vec2 position = current_state.player.position;
+    const glm::vec2 position = glm::vec2(current_state.player_body->GetPosition().x,
+                                         current_state.player_body->GetPosition().y);
 
     mesh_renderer.SetPerspective(position, current_state.camera_position);
     mesh_renderer.Render();
 
     model_view = glm::scale(glm::mat4(), glm::vec3(1.0f)) * glm::translate(glm::mat4(), glm::vec3(-current_state.camera_position, 0.0f));
 
-    const float angle = glm::atan(current_state.player.direction.y, current_state.player.direction.x);
+    const float angle = current_state.player_body->GetAngle();
     const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(position, 0.0f)) *
                                                       glm::rotate(glm::mat4(), glm::degrees(angle), glm::vec3(0, 0, 1)) *
                                                       glm::scale(glm::mat4(), glm::vec3(0.01f)));
@@ -184,57 +136,6 @@ namespace textengine {
     player_edge_array.Bind();
     glDrawArrays(GL_LINES, 0, 8);
     CHECK_STATE(!glGetError());
-
-    face_program.Use();
-    face_program.Uniforms({
-      {u8"projection", &projection},
-      {u8"model_view", &model_view}
-    });
-    item_array.Bind();
-    glDrawArrays(item_data.element_type, 0, item_data.element_count);
-    CHECK_STATE(!glGetError());
-
-    edge_program.Use();
-    edge_program.Uniforms({
-      {u8"projection", &projection},
-      {u8"model_view", &model_view}
-    });
-    edge_program.Uniforms({
-      {u8"line_width", 0.00125},
-      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
-    });
-    item_edge_array.Bind();
-    glDrawArrays(item_edge_data.element_type, 0, item_edge_data.element_count);
-    CHECK_STATE(!glGetError());
-
-    for (auto &character : current_state.non_player_characters) {
-      const float angle = glm::atan(character.character.direction.y, character.character.direction.x);
-      const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(character.character.position, 0.0)) *
-                                                        glm::rotate(glm::mat4(), glm::degrees(angle), glm::vec3(0, 0, 1)) *
-                                                        glm::scale(glm::mat4(), glm::vec3(0.01)));
-
-      face_program.Use();
-      face_program.Uniforms({
-        {u8"projection", &projection},
-        {u8"model_view", &player_model_view}
-      });
-      npc_array.Bind();
-      glDrawArrays(GL_TRIANGLES, 0, 6);
-      CHECK_STATE(!glGetError());
-
-      edge_program.Use();
-      edge_program.Uniforms({
-        {u8"projection", &projection},
-        {u8"model_view", &player_model_view}
-      });
-      edge_program.Uniforms({
-        {u8"line_width", 0.00125},
-        {u8"inverse_aspect_ratio", inverse_aspect_ratio}
-      });
-      npc_edge_array.Bind();
-      glDrawArrays(GL_LINES, 0, 8);
-      CHECK_STATE(!glGetError());
-    }
 
     mesh_renderer.RenderShadows();
   }

@@ -128,7 +128,6 @@
 		464E36801825B4BC00AC0AC0 /* joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464E367E1825B4BC00AC0AC0 /* joystick.cpp */; };
 		46544499182AD3B400A531CD /* subjectivemeshrenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46544497182AD3B400A531CD /* subjectivemeshrenderer.cpp */; };
 		466E70FA17EB92F900CD9E9D /* gamestate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70F817EB92F900CD9E9D /* gamestate.cpp */; };
-		466E70FD17EB944400CD9E9D /* commandparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70FB17EB944400CD9E9D /* commandparser.cpp */; };
 		466E710017EB96D600CD9E9D /* updater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70FE17EB96D500CD9E9D /* updater.cpp */; };
 		4687E30B1833C0DC00128A85 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46074B02180F316700823E55 /* libz.dylib */; };
 		468E01471783DFA100301C1C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01461783DFA100301C1C /* IOKit.framework */; };
@@ -3135,8 +3134,6 @@
 		46544498182AD3B400A531CD /* subjectivemeshrenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = subjectivemeshrenderer.h; sourceTree = "<group>"; };
 		466E70F817EB92F900CD9E9D /* gamestate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gamestate.cpp; sourceTree = "<group>"; };
 		466E70F917EB92F900CD9E9D /* gamestate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gamestate.h; sourceTree = "<group>"; };
-		466E70FB17EB944400CD9E9D /* commandparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commandparser.cpp; sourceTree = "<group>"; };
-		466E70FC17EB944400CD9E9D /* commandparser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commandparser.h; sourceTree = "<group>"; };
 		466E70FE17EB96D500CD9E9D /* updater.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = updater.cpp; sourceTree = "<group>"; };
 		466E70FF17EB96D500CD9E9D /* updater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = updater.h; sourceTree = "<group>"; };
 		468E01421783DF4C00301C1C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -8962,8 +8959,6 @@
 				46B9875117E6A37700B59145 /* checks.h */,
 				46FBD33B180F4C7F00F7C5F8 /* commandlineprompt.cpp */,
 				46FBD33C180F4C7F00F7C5F8 /* commandlineprompt.h */,
-				466E70FB17EB944400CD9E9D /* commandparser.cpp */,
-				466E70FC17EB944400CD9E9D /* commandparser.h */,
 				4600EB8F17EBC8F9003BA3C3 /* commandtokenizer.cpp */,
 				4600EB9017EBC8F9003BA3C3 /* commandtokenizer.h */,
 				46FBD347180F76BE00F7C5F8 /* console.cpp */,
@@ -10722,7 +10717,6 @@
 				462B4A6717EA43AA006FE9BB /* buffer.cpp in Sources */,
 				463F38AF18316A39001326C3 /* input.cpp in Sources */,
 				466E70FA17EB92F900CD9E9D /* gamestate.cpp in Sources */,
-				466E70FD17EB944400CD9E9D /* commandparser.cpp in Sources */,
 				466E710017EB96D600CD9E9D /* updater.cpp in Sources */,
 				461879D717FB5F0D000B32F6 /* meshserializer.cpp in Sources */,
 				461229DC17FBA08C00F04521 /* meshloader.cpp in Sources */,

@@ -10,7 +10,6 @@
 
 namespace textengine {
 
-  class CommandParser;
   class Input;
   class Log;
   class Mesh;
@@ -19,7 +18,7 @@ namespace textengine {
   class Updater : public Controller {
   public:
     Updater(SynchronizedQueue &command_queue,
-            SynchronizedQueue &reply_queue, Log &playtest_log, CommandParser &parser,
+            SynchronizedQueue &reply_queue, Log &playtest_log,
             Input &input, Mesh &mesh, GameState &initial_state);
 
     virtual ~Updater() = default;
@@ -37,10 +36,6 @@ namespace textengine {
 
     glm::vec2 SpawnPosition(const std::string &room);
 
-    CharacterInfo UpdateCharacter(CharacterInfo current_character, float dt, float dt2);
-
-    NonPlayerCharacterInfo UpdateNonPlayerCharacter(NonPlayerCharacterInfo current_character);
-
     glm::vec2 SupremumNormalize(glm::vec2 vector);
 
     glm::vec2 SquareToRound(glm::vec2 vector);
@@ -50,7 +45,6 @@ namespace textengine {
   private:
     SynchronizedQueue &command_queue, &reply_queue;
     Log &playtest_log;
-    CommandParser &parser;
     Input &input;
     Mesh &mesh;
     GameState &current_state;
