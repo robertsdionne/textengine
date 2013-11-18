@@ -67,47 +67,14 @@ namespace textengine {
     } while (face_edge != half_edge);
   }
 
-  bool Mesh::HalfEdge::getIntersection(const Ray& ray, IntersectionInfo* intersection) const {
-    const auto p = glm::vec2(ray.o.x, ray.o.y), r = glm::vec2(ray.d.x, ray.d.y);
-    const auto q = start->position, s = next->start->position - start->position;
-    const auto t = glm::cross(glm::vec3(q - p, 0.0f), glm::vec3(s, 0.0f)).z /
-        glm::cross(glm::vec3(r, 0.0f), glm::vec3(s, 0.0f)).z;
-    const auto u = glm::cross(glm::vec3(q - p, 0.0f), glm::vec3(r, 0.0f)).z /
-        glm::cross(glm::vec3(r, 0.0f), glm::vec3(s, 0.0f)).z;
-    const auto n = glm::normalize(glm::vec2(-s.y, s.x));
-    if (0.0f <= u && u <= 1.0f && 0.0f < t && t < intersection->t && glm::dot(n, r) < 0.0f ) {
-      intersection->object = this;
-      intersection->t = t;
-      return true;
-    }
-    return false;
-  }
-
-  Vector3 Mesh::HalfEdge::getNormal(const IntersectionInfo& I) const {
-    const auto s = next->start->position - start->position;
-    const auto n = glm::normalize(glm::vec2(-s.y, s.x));
-    return Vector3(n.x, n.y, 0.0f);
-  }
-
-  BBox Mesh::HalfEdge::getBBox() const {
-    const auto min = glm::min(start->position, next->start->position);
-    const auto max = glm::max(start->position, next->start->position);
-    return BBox(Vector3(min.x, min.y, -1.0f), Vector3(max.x, max.y, 1.0f));
-  }
-
-  Vector3 Mesh::HalfEdge::getCentroid() const {
-    const auto centroid = glm::mix(start->position, next->start->position, 0.5f);
-    return Vector3(centroid.x, centroid.y, 0.0f);
-  }
-
-  Mesh::Mesh() : faces(), half_edges(), vertices(), room_infos(), bvh() {}
+  Mesh::Mesh() : faces(), half_edges(), vertices(), room_infos() {}
 
   Mesh::Mesh(std::vector<std::unique_ptr<Face>> &&faces,
              std::vector<std::unique_ptr<HalfEdge>> &&half_edges,
              std::vector<std::unique_ptr<Vertex>> &&vertices,
              std::vector<std::unique_ptr<RoomInfo>> &&room_infos)
   : faces(std::move(faces)), half_edges(std::move(half_edges)), vertices(std::move(vertices)),
-  room_infos(std::move(room_infos)), bvh() {
+  room_infos(std::move(room_infos)) {
   }
 
   std::vector<std::unique_ptr<Mesh::Face>> &Mesh::get_faces() {
@@ -587,13 +554,24 @@ namespace textengine {
     return drawable;
   }
 
+  bool Mesh::FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const {
+    const auto h01 = face->face_edge;
+    const auto h12 = h01->next;
+    const auto h20 = h12->next;
+    CHECK_STATE(h01 == h20->next);
+    const auto v0 = h01->start, v1 = h12->start, v2 = h20->start;
+    const auto p0 = glm::vec3(v0->position, 0.0f), p1 = glm::vec3(v1->position, 0.0f), p2 = glm::vec3(v2->position, 0.0f);
+    const auto p = glm::vec3(point, 0.0f);
+    const float u = (glm::cross(p, p2-p0).z - glm::cross(p0, p2-p0).z) / glm::cross(p1-p0, p2-p0).z;
+    const float v = (glm::cross(p0, p1-p0).z - glm::cross(p, p1-p0).z) / glm::cross(p1-p0, p2-p0).z;
+    return 0 <= u && 0 <= v && (u + v) <= 1;
+  }
+
   Mesh::Face *Mesh::FindFaceThatContainsPoint(glm::vec2 point) const {
-    auto ray = Ray(Vector3(point.x, point.y, 0.0f), Vector3(1.0f, 0.0f, 0.0f));
-    auto intersection = IntersectionInfo();
-    auto hit = bvh.getIntersection(ray, &intersection, false);
-    if (hit && intersection.object) {
-      auto half_edge = dynamic_cast<const HalfEdge *>(intersection.object);
-      return half_edge->face;
+    for (auto &face : faces) {
+      if (FaceContainsPoint(face.get(), point)) {
+        return face.get();
+      }
     }
     return nullptr;
   }
@@ -687,15 +665,6 @@ namespace textengine {
         vertex->vertex_edge->generative = true;
       }
     }
-  }
-
-  void Mesh::UpdateBvh() {
-    auto objects = new std::vector<Object *>();
-    objects->reserve(half_edges.size());
-    for (auto &half_edge : half_edges) {
-      objects->push_back(half_edge.get());
-    }
-    bvh = BVH(objects);
   }
 
 }  // namespace textengine

@@ -1,7 +1,6 @@
 #ifndef TEXTENGINE_MESH_H_
 #define TEXTENGINE_MESH_H_
 
-#include <BVH.h>
 #include <functional>
 #include <glm/glm.hpp>
 #include <memory>
@@ -37,16 +36,8 @@ namespace textengine {
       void ForEachVertex(std::function<void(Vertex *)> body) const;
     };
 
-    struct HalfEdge : public Object {
+    struct HalfEdge {
       HalfEdge() : face(), next(), opposite(), previous(), start(), seen(), generative(), obstacle() {}
-
-      virtual bool getIntersection(const Ray& ray, IntersectionInfo* intersection) const override;
-
-      virtual Vector3 getNormal(const IntersectionInfo& I) const override;
-
-      virtual BBox getBBox() const override;
-
-      virtual Vector3 getCentroid() const override;
 
       Face *face;
       HalfEdge *next, *opposite, *previous;
@@ -115,9 +106,9 @@ namespace textengine {
 
     Drawable WireframeExterior() const;
 
-    Mesh::Face *FindFaceThatContainsPoint(glm::vec2 point) const;
+    bool FaceContainsPoint(Mesh::Face *face, glm::vec2 point) const;
 
-    void UpdateBvh();
+    Mesh::Face *FindFaceThatContainsPoint(glm::vec2 point) const;
 
   private:
     static constexpr auto kMaxDepth = 12;
@@ -137,8 +128,6 @@ namespace textengine {
     std::vector<std::unique_ptr<HalfEdge>> half_edges;
     std::vector<std::unique_ptr<Vertex>> vertices;
     std::vector<std::unique_ptr<RoomInfo>> room_infos;
-
-    BVH bvh;
 
     static std::default_random_engine generator;
     static std::uniform_real_distribution<float> distribution;
