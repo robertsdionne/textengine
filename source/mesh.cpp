@@ -5,7 +5,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <memory>
-#include <simplexnoise1234.h>
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
@@ -637,34 +636,34 @@ namespace textengine {
   }
 
   void Mesh::ExtrudeGenerativeEdge(HalfEdge *edge) {
-    auto centroid = (edge->next->start->position + edge->start->position) / 2.0f;
-    auto perpendicular = glm::normalize(edge->start->position -
-                                        edge->next->start->position).yx() * glm::vec2(-1.0f, 1.0f) * glm::clamp(0.2f * std::abs(SimplexNoise1234::noise(centroid.x + centroid.y)), 0.05f, 0.2f);
-    auto vertex = ExtrudeEdge(edge);
-    edge->generative = false;
-    if (vertex) {
-      vertex->position = centroid + perpendicular;
-      auto chance0 = distribution(generator);
-      if (chance0 < 0.9f) {
-        edge = vertex->vertex_edge->previous;
-        centroid = (edge->next->start->position + edge->start->position) / 2.0f;
-        perpendicular = (edge->start->position -
-                         edge->next->start->position).yx() * glm::vec2(-1.0f, 1.0f) * (sqrtf(3.0f) / 2.0f);
-        vertex = ExtrudeEdge(edge);
-        if (vertex) {
-          vertex->position = centroid + perpendicular;
-          vertex->vertex_edge->generative = true;
-          auto chance1 = distribution(generator);
-          std::cout << chance1 << std::endl;
-          if (chance1 < 0.2f) {
-            std::cout << "double split" << std::endl;
-            vertex->vertex_edge->previous->generative = true;
-          }
-        }
-      } else {
-        vertex->vertex_edge->generative = true;
-      }
-    }
+//    auto centroid = (edge->next->start->position + edge->start->position) / 2.0f;
+//    auto perpendicular = glm::normalize(edge->start->position -
+//                                        edge->next->start->position).yx() * glm::vec2(-1.0f, 1.0f) * glm::clamp(0.2f * std::abs(SimplexNoise1234::noise(centroid.x + centroid.y)), 0.05f, 0.2f);
+//    auto vertex = ExtrudeEdge(edge);
+//    edge->generative = false;
+//    if (vertex) {
+//      vertex->position = centroid + perpendicular;
+//      auto chance0 = distribution(generator);
+//      if (chance0 < 0.9f) {
+//        edge = vertex->vertex_edge->previous;
+//        centroid = (edge->next->start->position + edge->start->position) / 2.0f;
+//        perpendicular = (edge->start->position -
+//                         edge->next->start->position).yx() * glm::vec2(-1.0f, 1.0f) * (sqrtf(3.0f) / 2.0f);
+//        vertex = ExtrudeEdge(edge);
+//        if (vertex) {
+//          vertex->position = centroid + perpendicular;
+//          vertex->vertex_edge->generative = true;
+//          auto chance1 = distribution(generator);
+//          std::cout << chance1 << std::endl;
+//          if (chance1 < 0.2f) {
+//            std::cout << "double split" << std::endl;
+//            vertex->vertex_edge->previous->generative = true;
+//          }
+//        }
+//      } else {
+//        vertex->vertex_edge->generative = true;
+//      }
+//    }
   }
 
 }  // namespace textengine
