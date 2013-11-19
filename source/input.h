@@ -26,7 +26,7 @@ namespace textengine {
     void Update();
 
   private:
-    static constexpr auto kSmoothRate = 0.1f;
+    static constexpr auto kSmoothRate = 0.25f;
 
     static glm::vec2 ArgMax(std::initializer_list<glm::vec2> &&vectors);
 
