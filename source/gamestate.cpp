@@ -8,7 +8,7 @@
 namespace textengine {
 
   GameState::GameState(std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries)
-  : camera_position(), world(b2Vec2(0.0f, 0.0f)) {
+  : camera_position(), world(b2Vec2(0.0f, 0.0f)), boundary(), player_body(), target_angle() {
     b2BodyDef boundary_body_definition;
     boundary_body_definition.position.Set(0, 0);
     boundary = world.CreateBody(&boundary_body_definition);
@@ -21,6 +21,7 @@ namespace textengine {
       boundary_shape.CreateLoop(vertices.get(), static_cast<int>(boundary->size()));
       b2FixtureDef boundary_fixture_definition;
       boundary_fixture_definition.shape = &boundary_shape;
+      boundary_fixture_definition.friction = 1.0f;
       GameState::boundary->CreateFixture(&boundary_fixture_definition);
     }
     b2BodyDef player_body_definition;
@@ -38,7 +39,7 @@ namespace textengine {
     player_fixture_definition.shape = &player_shape;
     player_fixture_definition.density = 0.1;
     player_fixture_definition.restitution = 0.1;
-    player_fixture_definition.friction = 0.1;
+    player_fixture_definition.friction = 1.0f;
     player_body->CreateFixture(&player_fixture_definition);
   }
 

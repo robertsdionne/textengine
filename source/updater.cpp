@@ -123,12 +123,19 @@ namespace textengine {
     constexpr auto kMaxVelocity = 0.25f;
     current_state.player_body->ApplyForceToCenter(force * b2Vec2(offset.x, offset.y), true);
     if (glm::length(offset2) > 0.1f) {
-      const auto angle = glm::atan(offset2.y, offset2.x);
-      current_state.player_body->SetTransform(current_state.player_body->GetPosition(), angle);
+      current_state.target_angle = glm::atan(offset2.y, offset2.x);
     } else if (glm::length(offset) > 0.1f) {
-      const auto angle = glm::atan(offset.y, offset.x);
-      current_state.player_body->SetTransform(current_state.player_body->GetPosition(), angle);
+      current_state.target_angle = glm::atan(offset.y, offset.x);
     }
+    auto angle = current_state.player_body->GetAngle();
+    while (current_state.target_angle - angle > M_PI) {
+      current_state.target_angle -= 2.0f * M_PI;
+    }
+    while (current_state.target_angle - angle < -M_PI) {
+      current_state.target_angle += 2.0f * M_PI;
+    }
+    angle = glm::mix(angle, current_state.target_angle, 0.25f);
+    current_state.player_body->SetTransform(current_state.player_body->GetPosition(), angle);
     if (velocity.Length() > kMaxVelocity) {
       velocity.Normalize();
       velocity *= kMaxVelocity;

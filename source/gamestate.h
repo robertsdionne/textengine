@@ -26,6 +26,7 @@ namespace textengine {
     glm::vec2 camera_position;
     b2World world;
     b2Body *boundary, *player_body;
+    float target_angle;
   };
 
 }  // namespace textengine
