@@ -1,4 +1,5 @@
 #include <GLFW/glfw3.h>
+#include <chrono>
 #include <glm/glm.hpp>
 #include <memory>
 
@@ -52,6 +53,23 @@ namespace textengine {
     }
     world.DestroyBody(boundary);
     boundary = nullptr;
+  }
+
+  Drawable GameState::Shots() const {
+    Drawable drawable;
+    drawable.data.reserve(2 * shots.size());
+    for (auto &shot : shots) {
+      const auto amount =   std::chrono::duration_cast<std::chrono::duration<float>>(shot.death - std::chrono::high_resolution_clock::now()).count();
+      drawable.data.insert(drawable.data.cend(), {
+        shot.start.x, shot.start.y,
+        1.0f, 1.0f, 1.0f, amount,
+        shot.end.x, shot.end.y,
+        1.0f, 1.0f, 1.0f, amount
+      });
+    }
+    drawable.element_count = static_cast<GLsizei>(2 * shots.size());
+    drawable.element_type = GL_LINES;
+    return drawable;
   }
 
 }  // namespace textengine

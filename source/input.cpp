@@ -41,6 +41,10 @@ namespace textengine {
     return glm::abs(result) > 0.1f ? result : 0.0f;
   }
 
+  float Input::GetTriggerVelocity() const {
+    return joystick.GetButtonVelocity(Joystick::Button::kR1);
+  }
+
   void Input::Update() {
     joystick_primary_axes = glm::vec2(joystick.GetAxis(Joystick::Axis::kLeftX),
                                       -joystick.GetAxis(Joystick::Axis::kLeftY));

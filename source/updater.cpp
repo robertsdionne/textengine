@@ -1,4 +1,5 @@
 #include <Box2D/Box2D.h>
+#include <algorithm>
 #include <cmath>
 #include <glm/glm.hpp>
 #include <glm/gtc/noise.hpp>
@@ -13,6 +14,7 @@
 #include "keyboard.h"
 #include "log.h"
 #include "mesh.h"
+#include "raycast.h"
 #include "synchronizedqueue.h"
 #include "updater.h"
 
@@ -141,10 +143,33 @@ namespace textengine {
       velocity *= kMaxVelocity;
       current_state.player_body->SetLinearVelocity(velocity);
     }
+
+    const auto now = std::chrono::high_resolution_clock::now();
+    auto remove = [now] (GameState::Shot &shot) {
+      return now > shot.death;
+    };
+    current_state.shots.erase(std::remove_if(current_state.shots.begin(),
+                                             current_state.shots.end(), remove),
+                              current_state.shots.end());
+
+    if (input.GetTriggerVelocity() > 0.0f) {
+      const auto start = b2Vec2(position.x, position.y);
+      const auto error = 0.1f * (distribution(generator) + distribution(generator) - 1.0f);
+      const auto direction = b2Vec2(glm::cos(angle + error), glm::sin(angle + error));
+      const auto end = start + direction;
+      RayCast raycast;
+      current_state.world.RayCast(&raycast, start, end);
+      current_state.shots.push_back({
+        glm::vec2(start.x, start.y),
+        raycast.point,
+        now + std::chrono::seconds(1)
+      });
+    }
+
     current_state.world.Step(dt, 8, 3);
     current_state.camera_position = glm::mix(current_state.camera_position, position, 2e-2f / 0.016f * dt);
   }
-  
+
   glm::vec2 Updater::SupremumNormalize(glm::vec2 vector) {
     return vector / std::max(glm::abs(vector.x), glm::abs(vector.y));
   }

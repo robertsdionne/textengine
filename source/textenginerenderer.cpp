@@ -93,6 +93,11 @@ namespace textengine {
     vertex_format.Apply(player_edge_array, edge_program);
     CHECK_STATE(!glGetError());
 
+    shots_buffer.Create(GL_ARRAY_BUFFER);
+    shots_array.Create();
+    vertex_format.Apply(shots_array, edge_program);
+    CHECK_STATE(!glGetError());
+
     font = gltext::Font("../resource/ubuntu-font-family-0.80/Ubuntu-R.ttf", 32, 1024, 1024);
     font.cacheCharacters("1234567890!@#$%^&*()abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;'[]\\<>?:\"{}|-=_+");
   }
@@ -107,6 +112,9 @@ namespace textengine {
 
     mesh_renderer.SetPerspective(position, current_state.camera_position);
     mesh_renderer.Render();
+
+    Drawable shots_data = current_state.Shots();
+    shots_buffer.Data(shots_data.data_size(), shots_data.data.data(), GL_STREAM_DRAW);
 
     model_view = glm::scale(glm::mat4(), glm::vec3(1.0f)) * glm::translate(glm::mat4(), glm::vec3(-current_state.camera_position, 0.0f));
 
@@ -137,7 +145,20 @@ namespace textengine {
     glDrawArrays(GL_LINES, 0, 8);
     CHECK_STATE(!glGetError());
 
-    mesh_renderer.RenderShadows();
+    edge_program.Use();
+    edge_program.Uniforms({
+      {u8"projection", &projection},
+      {u8"model_view", &model_view}
+    });
+    edge_program.Uniforms({
+      {u8"line_width", 0.005},
+      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+    });
+    shots_array.Bind();
+    glDrawArrays(GL_LINES, 0, shots_data.element_count);
+    CHECK_STATE(!glGetError());
+
+//    mesh_renderer.RenderShadows();
   }
 
 }  // namespace textengine
