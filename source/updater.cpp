@@ -3,6 +3,7 @@
 #include <OpenAL/alc.h>
 #include <algorithm>
 #include <cmath>
+#include <fftw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/noise.hpp>
 #include <limits>
@@ -44,6 +45,7 @@ namespace textengine {
     alGenBuffers(1, &buffer);
     alGenSources(1, &source);
     CHECK_STATE(!alGetError());
+    
 //    const auto kAmount = 3000 + index_distribution(generator) % 10000;
 //    const auto index = index_distribution(generator) % 90000;
 //    std::cout << "etext: " << reinterpret_cast<void *>(get_etext()) << std::endl;
