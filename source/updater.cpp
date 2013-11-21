@@ -1,9 +1,12 @@
 #include <Box2D/Box2D.h>
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
 #include <algorithm>
 #include <cmath>
 #include <glm/glm.hpp>
 #include <glm/gtc/noise.hpp>
 #include <limits>
+#include <mach-o/getsect.h>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -25,13 +28,49 @@ namespace textengine {
                    Mesh &mesh, GameState &initial_state)
   : command_queue(command_queue), reply_queue(reply_queue), playtest_log(playtest_log),
     input(input), mesh(mesh), current_state(initial_state), clock(),
-    last_approach_times(), phrase_index() {}
+    last_approach_times(), phrase_index(), device(), context() {}
 
   GameState &Updater::GetCurrentState() {
     return current_state;
   }
 
   void Updater::Setup() {
+    device = alcOpenDevice(nullptr);
+    CHECK_STATE(device);
+    context = alcCreateContext(device, nullptr);
+    CHECK_STATE(context);
+    alcMakeContextCurrent(context);
+    CHECK_STATE(!alGetError());
+    alGenBuffers(1, &buffer);
+    alGenSources(1, &source);
+    CHECK_STATE(!alGetError());
+//    const auto kAmount = 3000 + index_distribution(generator) % 10000;
+//    const auto index = index_distribution(generator) % 90000;
+//    std::cout << "etext: " << reinterpret_cast<void *>(get_etext()) << std::endl;
+//    std::cout << "edata: " << reinterpret_cast<void *>(get_edata()) << std::endl;
+//    std::cout << "end: " << reinterpret_cast<void *>(get_end()) << std::endl;
+//    short *amplitudes = reinterpret_cast<short *>(get_etext() - kAmount + index);
+    auto data = std::vector<short>();
+//    for (auto i = 0; i < 44100; ++i) {
+//      auto sample = 0;
+//      for (auto j = 0; j < kAmount; ++j) {
+//        sample += (amplitudes[j] / (kAmount / 2)) * glm::sin((j + 1) * i / 44100.0f);
+//      }
+//      data.push_back(sample);
+//    }
+    for (auto i = 0; i < 44100; ++i) {
+      auto sample = std::numeric_limits<short>::max() * sgn(glm::sin(1200.0f * i / 44100.0f));
+      data.push_back(sample);
+    }
+    alBufferData(buffer, AL_FORMAT_MONO16, data.data(), static_cast<ALsizei>(data.size()), 44100);
+    alSourcei(source, AL_BUFFER, buffer);
+    alSource3f(source, AL_POSITION, 0.0f, 5.0f, 0.0f);
+    alSourcei(source, AL_LOOPING, AL_TRUE);
+    alSourcef(source, AL_REFERENCE_DISTANCE, 0.1f);
+    alSourcePlay(source);
+    alDistanceModel(AL_EXPONENT_DISTANCE);
+    CHECK_STATE(!alGetError());
+
     CalculateDistanceTo("Staircase", distances_to_staircase);
     CalculateDistanceTo("East Platform Edge", distances_to_east_platform_edge);
     CalculateDistanceTo("West Platform Edge", distances_to_west_platform_edge);
@@ -153,10 +192,10 @@ namespace textengine {
                               current_state.shots.end());
 
     if (input.GetTriggerVelocity() > 0.0f) {
-      const auto start = b2Vec2(position.x, position.y);
-      const auto error = 0.1f * (distribution(generator) + distribution(generator) - 1.0f);
-      const auto direction = b2Vec2(glm::cos(angle + error), glm::sin(angle + error));
-      const auto end = start + direction;
+      auto start = b2Vec2(position.x, position.y);
+      auto error = 0.1f * (distribution(generator) + distribution(generator) - 1.0f);
+      auto direction = b2Vec2(glm::cos(angle + error), glm::sin(angle + error));
+      auto end = start + direction;
       RayCast raycast;
       current_state.world.RayCast(&raycast, start, end);
       current_state.shots.push_back({
@@ -164,10 +203,38 @@ namespace textengine {
         raycast.point,
         now + std::chrono::seconds(1)
       });
+      auto n = 0;
+      while (glm::abs(direction.x * raycast.normal.x + direction.y * raycast.normal.y) < 0.2f && n < 3) {
+        const auto dir = glm::reflect(glm::vec2(direction.x, direction.y), raycast.normal);
+        auto error = 0.1f * (distribution(generator) + distribution(generator) - 1.0f);
+        const auto st = raycast.point + dir * 1e-5f;
+        const auto ang = glm::atan(dir.y, dir.x) + error;
+        start = b2Vec2(st.x, st.y);
+        direction = b2Vec2(glm::cos(ang + error), glm::sin(ang + error));
+        end = start + direction;
+        current_state.world.RayCast(&raycast, start, end);
+        current_state.shots.push_back({
+          glm::vec2(start.x, start.y),
+          raycast.point,
+          now + std::chrono::seconds(1)
+        });
+        ++n;
+      }
     }
 
+    float orientation[] = {
+      glm::cos(angle), glm::sin(angle), 0.0f,
+      0.0f, 0.0f, 1.0f
+    };
+    alListener3f(AL_POSITION, 10.0f * position.x, 10.0f * position.y, 1.5f);
+    alListener3f(AL_VELOCITY, 10.0f * velocity.x, 10.0f * velocity.y, 0.0f);
+    alListenerfv(AL_ORIENTATION, orientation);
+    CHECK_STATE(!alGetError());
+
+
+
     current_state.world.Step(dt, 8, 3);
-    current_state.camera_position = glm::mix(current_state.camera_position, position, 2e-2f / 0.016f * dt);
+    current_state.camera_position = glm::mix(current_state.camera_position, position + 0.25f * offset2, 2e-2f / 0.016f * dt);
   }
 
   glm::vec2 Updater::SupremumNormalize(glm::vec2 vector) {

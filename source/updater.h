@@ -1,6 +1,8 @@
 #ifndef TEXTENGINE_UPDATER_H_
 #define TEXTENGINE_UPDATER_H_
 
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
 #include <chrono>
 #include <random>
 #include <unordered_map>
@@ -32,6 +34,10 @@ namespace textengine {
   private:
     void Update(GameState &current_state);
 
+    template <typename T> int sgn(T val) {
+      return (T(0) < val) - (val < T(0));
+    }
+
     Mesh::RoomInfo *FindRoomInfo(const std::string &room) const;
 
     glm::vec2 SpawnPosition(const std::string &room);
@@ -56,6 +62,9 @@ namespace textengine {
     std::uniform_int_distribution<> index_distribution;
     std::unordered_map<Mesh::Face *, float> distances_to_east_platform_edge,
         distances_to_west_platform_edge, distances_to_staircase;
+    ALCdevice *device;
+    ALCcontext *context;
+    ALuint buffer, source;
   };
 
 }  // namespace textengine

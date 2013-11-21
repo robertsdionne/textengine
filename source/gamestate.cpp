@@ -59,7 +59,7 @@ namespace textengine {
     Drawable drawable;
     drawable.data.reserve(2 * shots.size());
     for (auto &shot : shots) {
-      const auto amount =   std::chrono::duration_cast<std::chrono::duration<float>>(shot.death - std::chrono::high_resolution_clock::now()).count();
+      const auto amount = std::chrono::duration_cast<std::chrono::duration<float>>(shot.death - std::chrono::high_resolution_clock::now()).count();
       drawable.data.insert(drawable.data.cend(), {
         shot.start.x, shot.start.y,
         1.0f, 1.0f, 1.0f, amount,

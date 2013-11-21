@@ -158,7 +158,7 @@ namespace textengine {
     glDrawArrays(GL_LINES, 0, shots_data.element_count);
     CHECK_STATE(!glGetError());
 
-//    mesh_renderer.RenderShadows();
+    mesh_renderer.RenderShadows();
   }
 
 }  // namespace textengine
