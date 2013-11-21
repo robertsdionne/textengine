@@ -15006,6 +15006,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					libraries/Box2D_v2.3.0/Box2D,
+					"libraries/glfw-3.0.3/include",
+					"libraries/glm-0.9.4.6",
+					libraries/picojson,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -15014,6 +15022,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					libraries/Box2D_v2.3.0/Box2D,
+					"libraries/glfw-3.0.3/include",
+					"libraries/glm-0.9.4.6",
+					libraries/picojson,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -15021,6 +15037,7 @@
 		463E3D6A1767FB9000A4466B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/binary";
@@ -15032,23 +15049,13 @@
 					"GLFW_INCLUDE_GLCOREARB=1",
 					"GL_GLEXT_PROTOTYPES=1",
 				);
-				HEADER_SEARCH_PATHS = (
-					"libraries/glfw-3.0.3/include",
-					"libraries/glm-0.9.4.6",
-					libraries/picojson,
-					libraries/libwebsockets/lib,
-					libraries/Box2D_v2.3.0/Box2D,
-					"libraries/freetype-2.5.0.1/include",
-					libraries/gltext,
-					"libraries/graphite2-1.2.3/include",
-					"libraries/OpenMesh-2.4/src",
-				);
 			};
 			name = Debug;
 		};
 		463E3D6B1767FB9000A4466B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/binary";
@@ -15058,17 +15065,6 @@
 					"GL_GLEXT_PROTOTYPES=1",
 					"GLFW_INCLUDE_GLCOREARB=1",
 				);
-				HEADER_SEARCH_PATHS = (
-					"libraries/glfw-3.0.3/include",
-					"libraries/glm-0.9.4.6",
-					libraries/picojson,
-					libraries/libwebsockets/lib,
-					libraries/Box2D_v2.3.0/Box2D,
-					"libraries/freetype-2.5.0.1/include",
-					libraries/gltext,
-					"libraries/graphite2-1.2.3/include",
-					"libraries/OpenMesh-2.4/src",
-				);
 			};
 			name = Release;
 		};
@@ -15077,6 +15073,16 @@
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/binary";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					libraries/Box2D_v2.3.0/Box2D,
+					"libraries/glfw-3.0.3/include",
+					"libraries/glm-0.9.4.6",
+					libraries/gltext,
+					libraries/libwebsockets/lib,
+					libraries/picojson,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -15086,6 +15092,16 @@
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/binary";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					libraries/Box2D_v2.3.0/Box2D,
+					"libraries/glfw-3.0.3/include",
+					"libraries/glm-0.9.4.6",
+					libraries/gltext,
+					libraries/libwebsockets/lib,
+					libraries/picojson,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -15094,6 +15110,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					libraries/picojson,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -15102,6 +15123,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					libraries/picojson,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -15111,6 +15137,11 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					libraries/Box2D_v2.3.0/Box2D,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -15120,6 +15151,11 @@
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					libraries/Box2D_v2.3.0/Box2D,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -15133,6 +15169,13 @@
 					"$(inherited)",
 				);
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"libraries/graphite2-1.2.3/include",
+					"libraries/freetype-2.5.0.1/include",
+					"libraries/glfw-3.0.3/include",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -15143,6 +15186,13 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				EXECUTABLE_PREFIX = lib;
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"libraries/graphite2-1.2.3/include",
+					"libraries/freetype-2.5.0.1/include",
+					"libraries/glfw-3.0.3/include",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -15158,6 +15208,11 @@
 					"FT_OPTION_AUTOFIT2=1",
 				);
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"libraries/freetype-2.5.0.1/include",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -15174,6 +15229,11 @@
 					"FT_OPTION_AUTOFIT2=1",
 				);
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"libraries/freetype-2.5.0.1/include",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
