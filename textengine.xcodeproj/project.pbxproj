@@ -3073,6 +3073,7 @@
 		466E70F917EB92F900CD9E9D /* gamestate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gamestate.h; sourceTree = "<group>"; };
 		466E70FE17EB96D500CD9E9D /* updater.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = updater.cpp; sourceTree = "<group>"; };
 		466E70FF17EB96D500CD9E9D /* updater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = updater.h; sourceTree = "<group>"; };
+		46842197183EAAF10037B268 /* libfftw.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libfftw.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		468E01421783DF4C00301C1C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		468E01441783DF9200301C1C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		468E01461783DFA100301C1C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -4429,6 +4430,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		464E36821825D1B400AC0AC0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		46842194183EAAF10037B268 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -7358,7 +7366,6 @@
 		463E3D5A1767FB9000A4466B = {
 			isa = PBXGroup;
 			children = (
-				4600B2AE183D6A9E008404CA /* OpenAL.framework */,
 				46D21C0E1771F2A600C896A4 /* binary */,
 				468EF71B1783DC1B00301C1C /* libraries */,
 				46FBD338180F335C00F7C5F8 /* resource */,
@@ -7374,6 +7381,7 @@
 				468E01421783DF4C00301C1C /* Cocoa.framework */,
 				46E297A818340DFD0065D56E /* CoreFoundation.framework */,
 				468E01461783DFA100301C1C /* IOKit.framework */,
+				4600B2AE183D6A9E008404CA /* OpenAL.framework */,
 				468E01441783DF9200301C1C /* OpenGL.framework */,
 				46076B5318365E120007FD46 /* OpenMesh-2.4 */,
 				46D0FCB7180F1D5200B00F93 /* SystemConfiguration.framework */,
@@ -8915,6 +8923,7 @@
 				461717CB18269E200070ABED /* editor */,
 				464A57EC181B0D4600FAF563 /* exporter */,
 				464E36851825D1B400AC0AC0 /* libbox2d.a */,
+				46842197183EAAF10037B268 /* libfftw.dylib */,
 				46B25A3618333782003584B6 /* libfreetype2.a */,
 				46B9824C17E69E9C00B59145 /* libglfw.a */,
 				46B25900183333B9003584B6 /* libgltext.a */,
@@ -9784,6 +9793,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		46842195183EAAF10037B268 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		46B258FE183333B9003584B6 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -10270,6 +10286,23 @@
 			productReference = 464E36851825D1B400AC0AC0 /* libbox2d.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		46842196183EAAF10037B268 /* fftw */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4684219A183EAAF10037B268 /* Build configuration list for PBXNativeTarget "fftw" */;
+			buildPhases = (
+				46842193183EAAF10037B268 /* Sources */,
+				46842194183EAAF10037B268 /* Frameworks */,
+				46842195183EAAF10037B268 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = fftw;
+			productName = fftw;
+			productReference = 46842197183EAAF10037B268 /* libfftw.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
 		46B258FF183333B9003584B6 /* gltext */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 46B25903183333B9003584B6 /* Build configuration list for PBXNativeTarget "gltext" */;
@@ -10387,6 +10420,7 @@
 				46B258FF183333B9003584B6 /* gltext */,
 				46B25A3518333782003584B6 /* freetype2 */,
 				46E2955E18340A030065D56E /* graphite2 */,
+				46842196183EAAF10037B268 /* fftw */,
 			);
 		};
 /* End PBXProject section */
@@ -10510,6 +10544,13 @@
 				462C2B1A1839C212001EE26F /* b2WeldJoint.cpp in Sources */,
 				462C2B1C1839C212001EE26F /* b2WheelJoint.cpp in Sources */,
 				462C2B1E1839C212001EE26F /* b2Rope.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		46842193183EAAF10037B268 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11084,6 +11125,45 @@
 			};
 			name = Release;
 		};
+		46842198183EAAF10037B268 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		46842199183EAAF10037B268 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				ENABLE_NS_ASSERTIONS = NO;
+				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		46B25901183333B9003584B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -11317,6 +11397,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		4684219A183EAAF10037B268 /* Build configuration list for PBXNativeTarget "fftw" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				46842198183EAAF10037B268 /* Debug */,
+				46842199183EAAF10037B268 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		46B25903183333B9003584B6 /* Build configuration list for PBXNativeTarget "gltext" */ = {
 			isa = XCConfigurationList;
