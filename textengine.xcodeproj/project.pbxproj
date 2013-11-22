@@ -124,6 +124,9 @@
 		462C2B1A1839C212001EE26F /* b2WeldJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462C274B1839C19F001EE26F /* b2WeldJoint.cpp */; };
 		462C2B1C1839C212001EE26F /* b2WheelJoint.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462C274D1839C19F001EE26F /* b2WheelJoint.cpp */; };
 		462C2B1E1839C212001EE26F /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 462C27501839C19F001EE26F /* b2Rope.cpp */; };
+		4630C62A183ED664000071AA /* stb_vorbis.c in Sources */ = {isa = PBXBuildFile; fileRef = 4630C628183ED664000071AA /* stb_vorbis.c */; };
+		4630C62B183ED664000071AA /* stb_vorbis.h in Headers */ = {isa = PBXBuildFile; fileRef = 4630C629183ED664000071AA /* stb_vorbis.h */; };
+		4630C62E183ED6AC000071AA /* libstb_vorbis.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4630C623183ED5F1000071AA /* libstb_vorbis.a */; };
 		463F38AF18316A39001326C3 /* input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 463F38AD18316A39001326C3 /* input.cpp */; };
 		464A57F6181B0D8300FAF563 /* exporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464A57F5181B0D8300FAF563 /* exporter.cpp */; };
 		464E36801825B4BC00AC0AC0 /* joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464E367E1825B4BC00AC0AC0 /* joystick.cpp */; };
@@ -1611,6 +1614,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 46B9824B17E69E9C00B59145;
 			remoteInfo = glfw;
+		};
+		4630C62C183ED6A6000071AA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 463E3D5B1767FB9000A4466B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4630C622183ED5F1000071AA;
+			remoteInfo = stb_vorbis;
 		};
 		468429A7183EB4F50037B268 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3723,6 +3733,42 @@
 		462C2AB21839C1A3001EE26F /* b2Polygon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = b2Polygon.h; sourceTree = "<group>"; };
 		462C2AB31839C1A3001EE26F /* b2Triangle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = b2Triangle.cpp; sourceTree = "<group>"; };
 		462C2AB41839C1A3001EE26F /* b2Triangle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = b2Triangle.h; sourceTree = "<group>"; };
+		4630C5FD183EC90E000071AA /* shoot00.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot00.wav; sourceTree = "<group>"; };
+		4630C5FE183EC90E000071AA /* shoot01.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot01.wav; sourceTree = "<group>"; };
+		4630C5FF183EC90E000071AA /* shoot02.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot02.wav; sourceTree = "<group>"; };
+		4630C600183EC90E000071AA /* shoot03.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot03.wav; sourceTree = "<group>"; };
+		4630C601183EC90E000071AA /* shoot04.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot04.wav; sourceTree = "<group>"; };
+		4630C602183EC90E000071AA /* shoot05.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot05.wav; sourceTree = "<group>"; };
+		4630C603183EC90E000071AA /* shoot06.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot06.wav; sourceTree = "<group>"; };
+		4630C604183EC90E000071AA /* shoot07.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot07.wav; sourceTree = "<group>"; };
+		4630C605183EC90E000071AA /* shoot08.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot08.wav; sourceTree = "<group>"; };
+		4630C606183EC90E000071AA /* shoot09.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot09.wav; sourceTree = "<group>"; };
+		4630C607183EC90E000071AA /* shoot10.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot10.wav; sourceTree = "<group>"; };
+		4630C608183EC90E000071AA /* subway.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = subway.json; sourceTree = "<group>"; };
+		4630C609183EC90E000071AA /* cave.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cave.json; sourceTree = "<group>"; };
+		4630C60B183EC90E000071AA /* CONTRIBUTING.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CONTRIBUTING.txt; sourceTree = "<group>"; };
+		4630C60C183EC90E000071AA /* copyright.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = copyright.txt; sourceTree = "<group>"; };
+		4630C60D183EC90E000071AA /* FONTLOG.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = FONTLOG.txt; sourceTree = "<group>"; };
+		4630C60E183EC90E000071AA /* LICENCE-FAQ.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "LICENCE-FAQ.txt"; sourceTree = "<group>"; };
+		4630C60F183EC90E000071AA /* LICENCE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENCE.txt; sourceTree = "<group>"; };
+		4630C610183EC90E000071AA /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		4630C611183EC90E000071AA /* TRADEMARKS.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TRADEMARKS.txt; sourceTree = "<group>"; };
+		4630C612183EC90E000071AA /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
+		4630C613183EC90E000071AA /* Ubuntu-BI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-BI.ttf"; sourceTree = "<group>"; };
+		4630C614183EC90E000071AA /* Ubuntu-C.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-C.ttf"; sourceTree = "<group>"; };
+		4630C615183EC90E000071AA /* Ubuntu-L.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-L.ttf"; sourceTree = "<group>"; };
+		4630C616183EC90E000071AA /* Ubuntu-LI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-LI.ttf"; sourceTree = "<group>"; };
+		4630C617183EC90E000071AA /* Ubuntu-M.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-M.ttf"; sourceTree = "<group>"; };
+		4630C618183EC90E000071AA /* Ubuntu-MI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-MI.ttf"; sourceTree = "<group>"; };
+		4630C619183EC90E000071AA /* Ubuntu-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-R.ttf"; sourceTree = "<group>"; };
+		4630C61A183EC90E000071AA /* Ubuntu-RI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-RI.ttf"; sourceTree = "<group>"; };
+		4630C61B183EC90E000071AA /* UbuntuMono-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UbuntuMono-B.ttf"; sourceTree = "<group>"; };
+		4630C61C183EC90E000071AA /* UbuntuMono-BI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UbuntuMono-BI.ttf"; sourceTree = "<group>"; };
+		4630C61D183EC90E000071AA /* UbuntuMono-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UbuntuMono-R.ttf"; sourceTree = "<group>"; };
+		4630C61E183EC90E000071AA /* UbuntuMono-RI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UbuntuMono-RI.ttf"; sourceTree = "<group>"; };
+		4630C623183ED5F1000071AA /* libstb_vorbis.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libstb_vorbis.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4630C628183ED664000071AA /* stb_vorbis.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stb_vorbis.c; sourceTree = "<group>"; };
+		4630C629183ED664000071AA /* stb_vorbis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_vorbis.h; sourceTree = "<group>"; };
 		463F38AD18316A39001326C3 /* input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = input.cpp; sourceTree = "<group>"; };
 		463F38AE18316A39001326C3 /* input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = input.h; sourceTree = "<group>"; };
 		464A57EC181B0D4600FAF563 /* exporter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = exporter; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -6979,10 +7025,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4630C620183ED5F1000071AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		463E3D601767FB9000A4466B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4630C62E183ED6AC000071AA /* libstb_vorbis.a in Frameworks */,
 				468429A9183EB4FB0037B268 /* libfftw.a in Frameworks */,
 				4600B2AF183D6A9E008404CA /* OpenAL.framework in Frameworks */,
 				46DEE4C41839C29B004A5A7A /* libbox2d.a in Frameworks */,
@@ -9638,6 +9692,60 @@
 			path = ConvexDecomposition;
 			sourceTree = "<group>";
 		};
+		4630C5FC183EC90E000071AA /* sound */ = {
+			isa = PBXGroup;
+			children = (
+				4630C5FD183EC90E000071AA /* shoot00.wav */,
+				4630C5FE183EC90E000071AA /* shoot01.wav */,
+				4630C5FF183EC90E000071AA /* shoot02.wav */,
+				4630C600183EC90E000071AA /* shoot03.wav */,
+				4630C601183EC90E000071AA /* shoot04.wav */,
+				4630C602183EC90E000071AA /* shoot05.wav */,
+				4630C603183EC90E000071AA /* shoot06.wav */,
+				4630C604183EC90E000071AA /* shoot07.wav */,
+				4630C605183EC90E000071AA /* shoot08.wav */,
+				4630C606183EC90E000071AA /* shoot09.wav */,
+				4630C607183EC90E000071AA /* shoot10.wav */,
+			);
+			path = sound;
+			sourceTree = "<group>";
+		};
+		4630C60A183EC90E000071AA /* ubuntu-font-family-0.80 */ = {
+			isa = PBXGroup;
+			children = (
+				4630C60B183EC90E000071AA /* CONTRIBUTING.txt */,
+				4630C60C183EC90E000071AA /* copyright.txt */,
+				4630C60D183EC90E000071AA /* FONTLOG.txt */,
+				4630C60E183EC90E000071AA /* LICENCE-FAQ.txt */,
+				4630C60F183EC90E000071AA /* LICENCE.txt */,
+				4630C610183EC90E000071AA /* README.txt */,
+				4630C611183EC90E000071AA /* TRADEMARKS.txt */,
+				4630C612183EC90E000071AA /* Ubuntu-B.ttf */,
+				4630C613183EC90E000071AA /* Ubuntu-BI.ttf */,
+				4630C614183EC90E000071AA /* Ubuntu-C.ttf */,
+				4630C615183EC90E000071AA /* Ubuntu-L.ttf */,
+				4630C616183EC90E000071AA /* Ubuntu-LI.ttf */,
+				4630C617183EC90E000071AA /* Ubuntu-M.ttf */,
+				4630C618183EC90E000071AA /* Ubuntu-MI.ttf */,
+				4630C619183EC90E000071AA /* Ubuntu-R.ttf */,
+				4630C61A183EC90E000071AA /* Ubuntu-RI.ttf */,
+				4630C61B183EC90E000071AA /* UbuntuMono-B.ttf */,
+				4630C61C183EC90E000071AA /* UbuntuMono-BI.ttf */,
+				4630C61D183EC90E000071AA /* UbuntuMono-R.ttf */,
+				4630C61E183EC90E000071AA /* UbuntuMono-RI.ttf */,
+			);
+			path = "ubuntu-font-family-0.80";
+			sourceTree = "<group>";
+		};
+		4630C627183ED664000071AA /* stb_vorbis */ = {
+			isa = PBXGroup;
+			children = (
+				4630C628183ED664000071AA /* stb_vorbis.c */,
+				4630C629183ED664000071AA /* stb_vorbis.h */,
+			);
+			path = stb_vorbis;
+			sourceTree = "<group>";
+		};
 		463E3D5A1767FB9000A4466B = {
 			isa = PBXGroup;
 			children = (
@@ -11881,6 +11989,7 @@
 				46D0FBFF180F1A9500B00F93 /* libwebsockets */,
 				46074B02180F316700823E55 /* libz.dylib */,
 				461879D017FB5E2E000B32F6 /* picojson */,
+				4630C627183ED664000071AA /* stb_vorbis */,
 			);
 			path = libraries;
 			sourceTree = "<group>";
@@ -13414,6 +13523,7 @@
 				46B9824C17E69E9C00B59145 /* libglfw.a */,
 				46B25900183333B9003584B6 /* libgltext.a */,
 				46E2955F18340A030065D56E /* libgraphite2.a */,
+				4630C623183ED5F1000071AA /* libstb_vorbis.a */,
 				46D0FBFB180F1A7C00B00F93 /* libwebsockets.a */,
 				46D21C101771F2B900C896A4 /* textengine */,
 			);
@@ -14261,10 +14371,14 @@
 		46FBD338180F335C00F7C5F8 /* resource */ = {
 			isa = PBXGroup;
 			children = (
+				4630C609183EC90E000071AA /* cave.json */,
 				46FBD33A180F339400F7C5F8 /* client.js */,
 				46FBD339180F338300F7C5F8 /* index.html */,
 				46FBD34A180F897100F7C5F8 /* output.json */,
 				46FBD34B180F897100F7C5F8 /* output2.json */,
+				4630C5FC183EC90E000071AA /* sound */,
+				4630C608183EC90E000071AA /* subway.json */,
+				4630C60A183EC90E000071AA /* ubuntu-font-family-0.80 */,
 			);
 			path = resource;
 			sourceTree = "<group>";
@@ -14272,6 +14386,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		4630C621183ED5F1000071AA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4630C62B183ED664000071AA /* stb_vorbis.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		464E36831825D1B400AC0AC0 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -14717,6 +14839,23 @@
 			productReference = 461717CB18269E200070ABED /* editor */;
 			productType = "com.apple.product-type.tool";
 		};
+		4630C622183ED5F1000071AA /* stb_vorbis */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4630C624183ED5F1000071AA /* Build configuration list for PBXNativeTarget "stb_vorbis" */;
+			buildPhases = (
+				4630C61F183ED5F1000071AA /* Sources */,
+				4630C620183ED5F1000071AA /* Frameworks */,
+				4630C621183ED5F1000071AA /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = stb_vorbis;
+			productName = stb_vorbis;
+			productReference = 4630C623183ED5F1000071AA /* libstb_vorbis.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		463E3D621767FB9000A4466B /* textengine */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 463E3D6C1767FB9000A4466B /* Build configuration list for PBXNativeTarget "textengine" */;
@@ -14728,6 +14867,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4630C62D183ED6A6000071AA /* PBXTargetDependency */,
 				468429A8183EB4F50037B268 /* PBXTargetDependency */,
 				46DEE4C31839C292004A5A7A /* PBXTargetDependency */,
 				46A1F26718333F36002C21FE /* PBXTargetDependency */,
@@ -14908,6 +15048,7 @@
 				46B25A3518333782003584B6 /* freetype2 */,
 				46E2955E18340A030065D56E /* graphite2 */,
 				4684294D183EB27A0037B268 /* fftw */,
+				4630C622183ED5F1000071AA /* stb_vorbis */,
 			);
 		};
 /* End PBXProject section */
@@ -14935,6 +15076,14 @@
 				461717DA1826A0000070ABED /* mesh.cpp in Sources */,
 				461717DB1826A0000070ABED /* mesheditor.cpp in Sources */,
 				461717D618269E970070ABED /* editor.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4630C61F183ED5F1000071AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4630C62A183ED664000071AA /* stb_vorbis.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16189,6 +16338,11 @@
 			target = 46B9824B17E69E9C00B59145 /* glfw */;
 			targetProxy = 461717D718269EDE0070ABED /* PBXContainerItemProxy */;
 		};
+		4630C62D183ED6A6000071AA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4630C622183ED5F1000071AA /* stb_vorbis */;
+			targetProxy = 4630C62C183ED6A6000071AA /* PBXContainerItemProxy */;
+		};
 		468429A8183EB4F50037B268 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4684294D183EB27A0037B268 /* fftw */;
@@ -16259,6 +16413,24 @@
 			};
 			name = Release;
 		};
+		4630C625183ED5F1000071AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4630C626183ED5F1000071AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		463E3D6A1767FB9000A4466B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -16296,6 +16468,7 @@
 		463E3D6D1767FB9000A4466B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/binary";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				HEADER_SEARCH_PATHS = (
@@ -16308,6 +16481,7 @@
 					libraries/gltext,
 					libraries/libwebsockets/lib,
 					libraries/picojson,
+					libraries/stb_vorbis,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -16316,6 +16490,7 @@
 		463E3D6E1767FB9000A4466B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/binary";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				HEADER_SEARCH_PATHS = (
@@ -16328,6 +16503,7 @@
 					libraries/gltext,
 					libraries/libwebsockets/lib,
 					libraries/picojson,
+					libraries/stb_vorbis,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -16575,6 +16751,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		4630C624183ED5F1000071AA /* Build configuration list for PBXNativeTarget "stb_vorbis" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4630C625183ED5F1000071AA /* Debug */,
+				4630C626183ED5F1000071AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		463E3D5E1767FB9000A4466B /* Build configuration list for PBXProject "textengine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -16618,6 +16802,7 @@
 				46842951183EB27B0037B268 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		46B25903183333B9003584B6 /* Build configuration list for PBXNativeTarget "gltext" */ = {
 			isa = XCConfigurationList;

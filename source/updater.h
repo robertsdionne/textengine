@@ -47,6 +47,8 @@ namespace textengine {
     glm::vec2 SquareToRound(glm::vec2 vector);
 
     void CalculateDistanceTo(const std::string &room, std::unordered_map<Mesh::Face *, float> &distances);
+    
+    ALuint ReadSoundFile(const std::string &filename);
 
   private:
     SynchronizedQueue &command_queue, &reply_queue;
@@ -64,6 +66,7 @@ namespace textengine {
         distances_to_west_platform_edge, distances_to_staircase;
     ALCdevice *device;
     ALCcontext *context;
+    ALuint shoot[11];
     ALuint buffer, source;
   };
 

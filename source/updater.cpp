@@ -34,8 +34,18 @@ namespace textengine {
   GameState &Updater::GetCurrentState() {
     return current_state;
   }
+  
+  ALuint Updater::ReadSoundFile(const std::string &filename) {
+    auto data = std::vector<short>();
+    ALuint buffer;
+    alGenBuffers(1, &buffer);
+    alBufferData(buffer, AL_FORMAT_MONO16, data.data(), data.size() * sizeof(short), 44100);
+    return 0;
+  }
 
   void Updater::Setup() {
+    shoot[0] = ReadSoundFile("../resource/sound/shoot00.wav");
+    
     device = alcOpenDevice(nullptr);
     CHECK_STATE(device);
     context = alcCreateContext(device, nullptr);
@@ -46,22 +56,29 @@ namespace textengine {
     alGenSources(1, &source);
     CHECK_STATE(!alGetError());
     
-//    const auto kAmount = 3000 + index_distribution(generator) % 10000;
-//    const auto index = index_distribution(generator) % 90000;
-//    std::cout << "etext: " << reinterpret_cast<void *>(get_etext()) << std::endl;
-//    std::cout << "edata: " << reinterpret_cast<void *>(get_edata()) << std::endl;
-//    std::cout << "end: " << reinterpret_cast<void *>(get_end()) << std::endl;
-//    short *amplitudes = reinterpret_cast<short *>(get_etext() - kAmount + index);
+    const auto kAmount = 44100/2;
+    const auto index = index_distribution(generator) % 90000;
+    short *amplitudes = reinterpret_cast<short *>(get_etext() - index);
+    
+    fftw_complex *in, *out;
+    fftw_plan p;
+    const auto kN = kAmount;
+    in = reinterpret_cast<fftw_complex *>(fftw_malloc(sizeof(fftw_complex) * kN));
+    out = reinterpret_cast<fftw_complex *>(fftw_malloc(sizeof(fftw_complex) * kN));
+    p = fftw_plan_dft_1d(kN, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
+    for (auto i = 0; i < kN; ++i) {
+      in[i][0] = static_cast<double>(amplitudes[i]) / std::numeric_limits<short>::max();
+      in[i][1] = 0.0;
+    }
+    fftw_execute(p);
+    fftw_destroy_plan(p);
+    fftw_free(in);
+    fftw_free(out);
+    
     auto data = std::vector<short>();
-//    for (auto i = 0; i < 44100; ++i) {
-//      auto sample = 0;
-//      for (auto j = 0; j < kAmount; ++j) {
-//        sample += (amplitudes[j] / (kAmount / 2)) * glm::sin((j + 1) * i / 44100.0f);
-//      }
-//      data.push_back(sample);
-//    }
-    for (auto i = 0; i < 44100; ++i) {
-      auto sample = std::numeric_limits<short>::max() * sgn(glm::sin(1200.0f * i / 44100.0f));
+    data.reserve(kAmount);
+    for (auto i = 0; i < kAmount; ++i) {
+      short sample = std::numeric_limits<short>::max() * out[i][1] / 100.0;
       data.push_back(sample);
     }
     alBufferData(buffer, AL_FORMAT_MONO16, data.data(), static_cast<ALsizei>(data.size()), 44100);

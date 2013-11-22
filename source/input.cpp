@@ -35,14 +35,17 @@ namespace textengine {
   float Input::GetXButton() const {
     const auto result = ArgMax({
       joystick.GetButtonPressure(Joystick::PressureButton::kX),
-      keyboard.GetKeyVelocity(GLFW_KEY_SPACE),
-      mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1)
     });
     return glm::abs(result) > 0.1f ? result : 0.0f;
   }
 
   float Input::GetTriggerVelocity() const {
-    return joystick.GetButtonVelocity(Joystick::Button::kR1);
+    const auto result = ArgMax({
+      joystick.GetButtonVelocity(Joystick::Button::kR1),
+      keyboard.GetKeyVelocity(GLFW_KEY_SPACE),
+      mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1)
+    });
+    return result;
   }
 
   void Input::Update() {
@@ -50,18 +53,18 @@ namespace textengine {
                                       -joystick.GetAxis(Joystick::Axis::kLeftY));
     joystick_secondary_axes = glm::vec2(joystick.GetAxis(Joystick::Axis::kRightX),
                                         -joystick.GetAxis(Joystick::Axis::kRightY));
-    auto keyboard_primary_axes = (glm::vec2(keyboard.IsKeyDown(GLFW_KEY_RIGHT),
-                                                  keyboard.IsKeyDown(GLFW_KEY_UP)) -
-                                        glm::vec2(keyboard.IsKeyDown(GLFW_KEY_LEFT),
-                                                  keyboard.IsKeyDown(GLFW_KEY_DOWN)));
+    auto keyboard_primary_axes = (glm::vec2(keyboard.IsKeyDown(GLFW_KEY_D),
+                                                  keyboard.IsKeyDown(GLFW_KEY_W)) -
+                                        glm::vec2(keyboard.IsKeyDown(GLFW_KEY_A),
+                                                  keyboard.IsKeyDown(GLFW_KEY_S)));
     keyboard_primary_axes = (glm::length(keyboard_primary_axes) > 0.0f ?
                              glm::normalize(keyboard_primary_axes) : glm::vec2());
     keyboard_primary_smoothed_axes = glm::mix(keyboard_primary_smoothed_axes,
                                               keyboard_primary_axes, kSmoothRate);
-    auto keyboard_secondary_axes = (glm::vec2(keyboard.IsKeyDown(GLFW_KEY_D),
-                                                    keyboard.IsKeyDown(GLFW_KEY_W)) -
-                                          glm::vec2(keyboard.IsKeyDown(GLFW_KEY_A),
-                                                    keyboard.IsKeyDown(GLFW_KEY_S)));
+    auto keyboard_secondary_axes = (glm::vec2(keyboard.IsKeyDown(GLFW_KEY_RIGHT),
+                                                    keyboard.IsKeyDown(GLFW_KEY_UP)) -
+                                          glm::vec2(keyboard.IsKeyDown(GLFW_KEY_LEFT),
+                                                    keyboard.IsKeyDown(GLFW_KEY_DOWN)));
     keyboard_secondary_axes = (glm::length(keyboard_secondary_axes) > 0.0f ?
                              glm::normalize(keyboard_secondary_axes) : glm::vec2());
     keyboard_secondary_smoothed_axes = glm::mix(keyboard_secondary_smoothed_axes,
