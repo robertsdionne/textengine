@@ -8,6 +8,7 @@
 #include <glm/gtc/noise.hpp>
 #include <limits>
 #include <mach-o/getsect.h>
+#include <stb_vorbis.h>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -36,15 +37,40 @@ namespace textengine {
   }
   
   ALuint Updater::ReadSoundFile(const std::string &filename) {
-    auto data = std::vector<short>();
+    short *decoded;
+    int channels;
+    auto length = stb_vorbis_decode_filename(const_cast<char *>(filename.c_str()), &channels, &decoded);
+    CHECK_STATE(1 == channels);
     ALuint buffer;
     alGenBuffers(1, &buffer);
-    alBufferData(buffer, AL_FORMAT_MONO16, data.data(), data.size() * sizeof(short), 44100);
-    return 0;
+    alBufferData(buffer, AL_FORMAT_MONO16, decoded, length * sizeof(short), 44100);
+    return buffer;
   }
 
   void Updater::Setup() {
-    shoot[0] = ReadSoundFile("../resource/sound/shoot00.wav");
+    shoot[0] = ReadSoundFile("../resource/sound/shoot00.ogg");
+    shoot[1] = ReadSoundFile("../resource/sound/shoot01.ogg");
+    shoot[2] = ReadSoundFile("../resource/sound/shoot02.ogg");
+    shoot[3] = ReadSoundFile("../resource/sound/shoot03.ogg");
+    shoot[4] = ReadSoundFile("../resource/sound/shoot04.ogg");
+    shoot[5] = ReadSoundFile("../resource/sound/shoot05.ogg");
+    shoot[6] = ReadSoundFile("../resource/sound/shoot06.ogg");
+    shoot[7] = ReadSoundFile("../resource/sound/shoot07.ogg");
+    shoot[8] = ReadSoundFile("../resource/sound/shoot08.ogg");
+    shoot[9] = ReadSoundFile("../resource/sound/shoot09.ogg");
+    shoot[10] = ReadSoundFile("../resource/sound/shoot10.ogg");
+    
+    ricochet[0] = ReadSoundFile("../resource/sound/ricochet00.ogg");
+    ricochet[1] = ReadSoundFile("../resource/sound/ricochet01.ogg");
+    ricochet[2] = ReadSoundFile("../resource/sound/ricochet02.ogg");
+    ricochet[3] = ReadSoundFile("../resource/sound/ricochet03.ogg");
+    ricochet[4] = ReadSoundFile("../resource/sound/ricochet04.ogg");
+    ricochet[5] = ReadSoundFile("../resource/sound/ricochet05.ogg");
+    ricochet[6] = ReadSoundFile("../resource/sound/ricochet06.ogg");
+    ricochet[7] = ReadSoundFile("../resource/sound/ricochet07.ogg");
+    ricochet[8] = ReadSoundFile("../resource/sound/ricochet08.ogg");
+    ricochet[9] = ReadSoundFile("../resource/sound/ricochet09.ogg");
+    ricochet[10] = ReadSoundFile("../resource/sound/ricochet10.ogg");
     
     device = alcOpenDevice(nullptr);
     CHECK_STATE(device);
@@ -52,41 +78,41 @@ namespace textengine {
     CHECK_STATE(context);
     alcMakeContextCurrent(context);
     CHECK_STATE(!alGetError());
-    alGenBuffers(1, &buffer);
-    alGenSources(1, &source);
+    alGenSources(1, &shoot_source);
+    alGenSources(1, &ricochet_source);
     CHECK_STATE(!alGetError());
     
-    const auto kAmount = 44100/2;
-    const auto index = index_distribution(generator) % 90000;
-    short *amplitudes = reinterpret_cast<short *>(get_etext() - index);
+//    const auto kAmount = 44100/2;
+//    const auto index = index_distribution(generator) % 90000;
+//    short *amplitudes = reinterpret_cast<short *>(get_etext() - index);
+//    
+//    fftw_complex *in, *out;
+//    fftw_plan p;
+//    const auto kN = kAmount;
+//    in = reinterpret_cast<fftw_complex *>(fftw_malloc(sizeof(fftw_complex) * kN));
+//    out = reinterpret_cast<fftw_complex *>(fftw_malloc(sizeof(fftw_complex) * kN));
+//    p = fftw_plan_dft_1d(kN, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
+//    for (auto i = 0; i < kN; ++i) {
+//      in[i][0] = static_cast<double>(amplitudes[i]) / std::numeric_limits<short>::max();
+//      in[i][1] = 0.0;
+//    }
+//    fftw_execute(p);
+//    fftw_destroy_plan(p);
+//    fftw_free(in);
+//    fftw_free(out);
     
-    fftw_complex *in, *out;
-    fftw_plan p;
-    const auto kN = kAmount;
-    in = reinterpret_cast<fftw_complex *>(fftw_malloc(sizeof(fftw_complex) * kN));
-    out = reinterpret_cast<fftw_complex *>(fftw_malloc(sizeof(fftw_complex) * kN));
-    p = fftw_plan_dft_1d(kN, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
-    for (auto i = 0; i < kN; ++i) {
-      in[i][0] = static_cast<double>(amplitudes[i]) / std::numeric_limits<short>::max();
-      in[i][1] = 0.0;
-    }
-    fftw_execute(p);
-    fftw_destroy_plan(p);
-    fftw_free(in);
-    fftw_free(out);
-    
-    auto data = std::vector<short>();
-    data.reserve(kAmount);
-    for (auto i = 0; i < kAmount; ++i) {
-      short sample = std::numeric_limits<short>::max() * out[i][1] / 100.0;
-      data.push_back(sample);
-    }
-    alBufferData(buffer, AL_FORMAT_MONO16, data.data(), static_cast<ALsizei>(data.size()), 44100);
-    alSourcei(source, AL_BUFFER, buffer);
-    alSource3f(source, AL_POSITION, 0.0f, 5.0f, 0.0f);
-    alSourcei(source, AL_LOOPING, AL_TRUE);
-    alSourcef(source, AL_REFERENCE_DISTANCE, 0.1f);
-    alSourcePlay(source);
+//    auto data = std::vector<short>();
+//    data.reserve(kAmount);
+//    for (auto i = 0; i < kAmount; ++i) {
+//      short sample = std::numeric_limits<short>::max() * out[i][1] / 100.0;
+//      data.push_back(sample);
+//    }
+//    alBufferData(buffer, AL_FORMAT_MONO16, data.data(), static_cast<ALsizei>(data.size()), 44100);
+    shoot_index = ricochet_index = 0;
+    alSourcei(shoot_source, AL_LOOPING, AL_FALSE);
+    alSourcef(shoot_source, AL_REFERENCE_DISTANCE, 0.25f);
+    alSourcei(ricochet_source, AL_LOOPING, AL_FALSE);
+    alSourcef(ricochet_source, AL_REFERENCE_DISTANCE, 0.25f);
     alDistanceModel(AL_EXPONENT_DISTANCE);
     CHECK_STATE(!alGetError());
 
@@ -211,6 +237,13 @@ namespace textengine {
                               current_state.shots.end());
 
     if (input.GetTriggerVelocity() > 0.0f) {
+      
+//      alSourceStop(shoot_source);
+//      alSourcei(shoot_source, AL_BUFFER, shoot[shoot_index++ % 11]);
+//      CHECK_STATE(!alGetError());
+//      alSource3f(shoot_source, AL_POSITION, 10.0f * position.x, 10.0f * position.y , 0.0f);
+//      alSourcePlay(shoot_source);
+
       auto start = b2Vec2(position.x, position.y);
       auto error = 0.1f * (distribution(generator) + distribution(generator) - 1.0f);
       auto direction = b2Vec2(glm::cos(angle + error), glm::sin(angle + error));
@@ -238,11 +271,21 @@ namespace textengine {
           now + std::chrono::seconds(1)
         });
         ++n;
+        alSourceStop(ricochet_source);
+        alSourcei(ricochet_source, AL_BUFFER, ricochet[ricochet_index++ % 11]);
+        CHECK_STATE(!alGetError());
+        alSource3f(ricochet_source, AL_POSITION, 10.0f * raycast.point.x, 10.0f * raycast.point.y , 0.0f);
+        alSourcePlay(ricochet_source);
       }
+      alSourceStop(shoot_source);
+      alSourcei(shoot_source, AL_BUFFER, shoot[shoot_index++ % 11]);
+      CHECK_STATE(!alGetError());
+      alSource3f(shoot_source, AL_POSITION, 10.0f * raycast.point.x, 10.0f * raycast.point.y , 0.0f);
+      alSourcePlay(shoot_source);
     }
 
     float orientation[] = {
-      glm::cos(angle), glm::sin(angle), 0.0f,
+      0.0f, 1.0f, 0.0f,
       0.0f, 0.0f, 1.0f
     };
     alListener3f(AL_POSITION, 10.0f * position.x, 10.0f * position.y, 1.5f);

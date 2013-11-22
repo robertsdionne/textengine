@@ -66,8 +66,9 @@ namespace textengine {
         distances_to_west_platform_edge, distances_to_staircase;
     ALCdevice *device;
     ALCcontext *context;
-    ALuint shoot[11];
-    ALuint buffer, source;
+    ALuint shoot[11], ricochet[11];
+    int shoot_index, ricochet_index;
+    ALuint shoot_source, ricochet_source;
   };
 
 }  // namespace textengine
