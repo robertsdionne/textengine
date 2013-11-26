@@ -9,7 +9,8 @@
 namespace textengine {
 
   GameState::GameState(std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries)
-  : camera_position(), world(b2Vec2(0.0f, 0.0f)), boundary(), player_body(), target_angle() {
+  : camera_position(), world(b2Vec2(0.0f, 0.0f)), boundary(), player_body(), target_angle(),
+  flashlight_on() {
     b2BodyDef boundary_body_definition;
     boundary_body_definition.position.Set(0, 0);
     boundary = world.CreateBody(&boundary_body_definition);
@@ -57,18 +58,18 @@ namespace textengine {
 
   Drawable GameState::Shots() const {
     Drawable drawable;
-    drawable.data.reserve(2 * shots.size());
+    drawable.data.reserve(shots.size());
     for (auto &shot : shots) {
-      const auto amount = std::chrono::duration_cast<std::chrono::duration<float>>(shot.death - std::chrono::high_resolution_clock::now()).count();
+      const auto amount = 0.25f * shot.intensity;
       drawable.data.insert(drawable.data.cend(), {
-        shot.start.x, shot.start.y,
-        1.0f, 1.0f, 1.0f, amount,
+//        shot.start.x, shot.start.y,
+//        1.0f, 1.0f, 1.0f, amount,
         shot.end.x, shot.end.y,
         1.0f, 1.0f, 1.0f, amount
       });
     }
-    drawable.element_count = static_cast<GLsizei>(2 * shots.size());
-    drawable.element_type = GL_LINES;
+    drawable.element_count = static_cast<GLsizei>(shots.size());
+    drawable.element_type = GL_POINTS;
     return drawable;
   }
 

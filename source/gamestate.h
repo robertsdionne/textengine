@@ -26,6 +26,7 @@ namespace textengine {
       glm::vec2 start;
       glm::vec2 end;
       std::chrono::high_resolution_clock::time_point death;
+      float intensity;
     };
 
     glm::vec2 camera_position;
@@ -33,6 +34,7 @@ namespace textengine {
     b2Body *boundary, *player_body;
     float target_angle;
     std::deque<Shot> shots;
+    bool flashlight_on;
   };
 
 }  // namespace textengine

@@ -228,15 +228,20 @@ namespace textengine {
       current_state.player_body->SetLinearVelocity(velocity);
     }
 
+    current_state.shots.clear();
     const auto now = std::chrono::high_resolution_clock::now();
-    auto remove = [now] (GameState::Shot &shot) {
-      return now > shot.death;
-    };
-    current_state.shots.erase(std::remove_if(current_state.shots.begin(),
-                                             current_state.shots.end(), remove),
-                              current_state.shots.end());
+//    auto remove = [now] (GameState::Shot &shot) {
+//      return now > shot.death;
+//    };
+//    current_state.shots.erase(std::remove_if(current_state.shots.begin(),
+//                                             current_state.shots.end(), remove),
+//                              current_state.shots.end());
 
     if (input.GetTriggerVelocity() > 0.0f) {
+      current_state.flashlight_on = !current_state.flashlight_on;
+    }
+    if (current_state.flashlight_on) {
+      for (auto i = 0; i < 50; ++i) {
       
 //      alSourceStop(shoot_source);
 //      alSourcei(shoot_source, AL_BUFFER, shoot[shoot_index++ % 11]);
@@ -244,44 +249,49 @@ namespace textengine {
 //      alSource3f(shoot_source, AL_POSITION, 10.0f * position.x, 10.0f * position.y , 0.0f);
 //      alSourcePlay(shoot_source);
 
-      auto start = b2Vec2(position.x, position.y);
-      auto error = 0.1f * (distribution(generator) + distribution(generator) - 1.0f);
-      auto direction = b2Vec2(glm::cos(angle + error), glm::sin(angle + error));
-      auto end = start + direction;
-      RayCast raycast;
-      current_state.world.RayCast(&raycast, start, end);
-      current_state.shots.push_back({
-        glm::vec2(start.x, start.y),
-        raycast.point,
-        now + std::chrono::seconds(1)
-      });
-      auto n = 0;
-      while (glm::abs(direction.x * raycast.normal.x + direction.y * raycast.normal.y) < 0.2f && n < 3) {
-        const auto dir = glm::reflect(glm::vec2(direction.x, direction.y), raycast.normal);
-        auto error = 0.1f * (distribution(generator) + distribution(generator) - 1.0f);
-        const auto st = raycast.point + dir * 1e-5f;
-        const auto ang = glm::atan(dir.y, dir.x) + error;
-        start = b2Vec2(st.x, st.y);
-        direction = b2Vec2(glm::cos(ang + error), glm::sin(ang + error));
-        end = start + direction;
+        auto start = b2Vec2(position.x, position.y);
+        auto error = 0.25f * (distribution(generator) + distribution(generator) - 1.0f);
+        auto direction = b2Vec2(glm::cos(angle + error), glm::sin(angle + error));
+        auto end = start + direction;
+        auto intensity = 1.0f;
+        RayCast raycast;
         current_state.world.RayCast(&raycast, start, end);
         current_state.shots.push_back({
           glm::vec2(start.x, start.y),
           raycast.point,
-          now + std::chrono::seconds(1)
+          now + std::chrono::seconds(1),
+          intensity
         });
-        ++n;
-        alSourceStop(ricochet_source);
-        alSourcei(ricochet_source, AL_BUFFER, ricochet[ricochet_index++ % 11]);
-        CHECK_STATE(!alGetError());
-        alSource3f(ricochet_source, AL_POSITION, 10.0f * raycast.point.x, 10.0f * raycast.point.y , 0.0f);
-        alSourcePlay(ricochet_source);
+        auto n = 0;
+        while (glm::abs(direction.x * raycast.normal.x + direction.y * raycast.normal.y) < 1.0f && n < 3) {
+          intensity *= 0.5f;
+          const auto dir = glm::reflect(glm::vec2(direction.x, direction.y), raycast.normal);
+          auto error = 0.25f * (distribution(generator) + distribution(generator) - 1.0f);
+          const auto st = raycast.point + dir * 1e-5f;
+          const auto ang = glm::atan(dir.y, dir.x) + error;
+          start = b2Vec2(st.x, st.y);
+          direction = b2Vec2(glm::cos(ang + error), glm::sin(ang + error));
+          end = start + direction;
+          current_state.world.RayCast(&raycast, start, end);
+          current_state.shots.push_back({
+            glm::vec2(start.x, start.y),
+            raycast.point,
+            now + std::chrono::seconds(1),
+            intensity
+          });
+          ++n;
+//          alSourceStop(ricochet_source);
+//          alSourcei(ricochet_source, AL_BUFFER, ricochet[ricochet_index++ % 11]);
+//          CHECK_STATE(!alGetError());
+//          alSource3f(ricochet_source, AL_POSITION, 10.0f * raycast.point.x, 10.0f * raycast.point.y , 0.0f);
+//          alSourcePlay(ricochet_source);
+        }
+//        alSourceStop(shoot_source);
+//        alSourcei(shoot_source, AL_BUFFER, shoot[shoot_index++ % 11]);
+//        CHECK_STATE(!alGetError());
+//        alSource3f(shoot_source, AL_POSITION, 10.0f * raycast.point.x, 10.0f * raycast.point.y , 0.0f);
+//        alSourcePlay(shoot_source);
       }
-      alSourceStop(shoot_source);
-      alSourcei(shoot_source, AL_BUFFER, shoot[shoot_index++ % 11]);
-      CHECK_STATE(!alGetError());
-      alSource3f(shoot_source, AL_POSITION, 10.0f * raycast.point.x, 10.0f * raycast.point.y , 0.0f);
-      alSourcePlay(shoot_source);
     }
 
     float orientation[] = {

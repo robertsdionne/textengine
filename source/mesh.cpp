@@ -355,7 +355,7 @@ namespace textengine {
   Drawable Mesh::Shadows(glm::vec2 perspective) const {
     auto exterior_half_edges = Exterior();
     Drawable drawable;
-    constexpr size_t kVerticesPerEdge = 12;
+    constexpr size_t kVerticesPerEdge = 6;
     constexpr size_t kCoordinatesPerVertex = 2;
     constexpr size_t kColorComponentsPerVertex = 4;
     constexpr size_t kEdgeSize = kVerticesPerEdge * (kCoordinatesPerVertex + kColorComponentsPerVertex);
@@ -389,18 +389,18 @@ namespace textengine {
         v1.x, v1.y,
         color.r, color.g, color.b, color.a,
 
-        v2_prime.x, v2_prime.y,
-        color.r, color.g, color.b, 0.0f,
-        v2.x, v2.y,
-        color.r, color.g, color.b, color.a,
-        v0.x, v0.y,
-        color.r, color.g, color.b, 0.75f,
-        v3.x, v3.y,
-        color.r, color.g, color.b, color.a,
-        v3_prime.x, v3_prime.y,
-        color.r, color.g, color.b, 0.0f,
-        v1.x, v1.y,
-        color.r, color.g, color.b, 0.75f
+//        v2_prime.x, v2_prime.y,
+//        color.r, color.g, color.b, 0.0f,
+//        v2.x, v2.y,
+//        color.r, color.g, color.b, color.a,
+//        v0.x, v0.y,
+//        color.r, color.g, color.b, 0.75f,
+//        v3.x, v3.y,
+//        color.r, color.g, color.b, color.a,
+//        v3_prime.x, v3_prime.y,
+//        color.r, color.g, color.b, 0.0f,
+//        v1.x, v1.y,
+//        color.r, color.g, color.b, 0.75f
       });
     }
     drawable.element_count = static_cast<GLsizei>(kVerticesPerEdge * exterior_half_edges.size());
