@@ -33,16 +33,29 @@ namespace textengine {
     player_body_definition.linearVelocity.Set(0, 0);
     player_body_definition.linearDamping = 8;
     player_body_definition.angularVelocity = 0;
-    player_body_definition.angularDamping = 0.1;
+    player_body_definition.angularDamping = 1;
     player_body = world.CreateBody(&player_body_definition);
     b2CircleShape player_shape;
-    player_shape.m_radius = 0.001;
+    player_shape.m_radius = 0.01;
     b2FixtureDef player_fixture_definition;
     player_fixture_definition.shape = &player_shape;
     player_fixture_definition.density = 0.1;
     player_fixture_definition.restitution = 0.1;
     player_fixture_definition.friction = 1.0f;
     player_body->CreateFixture(&player_fixture_definition);
+
+    b2BodyDef rat_body_definition;
+    rat_body_definition.type = b2_dynamicBody;
+    rat_body_definition.position.Set(0.0f, 0.0f);
+    rat_body_definition.linearVelocity.Set(0, 0);
+    rat_body_definition.linearDamping = 8;
+    rat_body_definition.angularVelocity = 0;
+    rat_body_definition.angularDamping = 1;
+    for (auto i = 0; i < 50; ++i) {
+      rat_body_definition.position.Set(0, i * 0.001);
+      rats.push_back(world.CreateBody(&rat_body_definition));
+      rats.back()->CreateFixture(&player_fixture_definition);
+    }
   }
 
   GameState::~GameState() {

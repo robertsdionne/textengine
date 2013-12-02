@@ -32,6 +32,7 @@ namespace textengine {
     glm::vec2 camera_position;
     b2World world;
     b2Body *boundary, *player_body;
+    std::vector<b2Body *> rats;
     float target_angle;
     std::deque<Shot> shots;
     bool flashlight_on;

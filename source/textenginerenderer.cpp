@@ -68,6 +68,25 @@ namespace textengine {
       1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 0.0f
     };
 
+    float npc_data[] = {
+      0.75f, -1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
+      -0.75f, 1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
+      -0.75f, -1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
+      0.75f, -1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
+      0.75f, 1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
+      -0.75f, 1.5f, 0.7f, 0.7f, 0.7f, 1.0f
+    };
+    float npc_edge_data[] = {
+      0.75f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.75f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.75f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
+      -0.75f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
+      -0.75f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
+      -0.75f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
+      -0.75f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.75f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f
+    };
+
     vertex_format.Create({
       {u8"vertex_position", GL_FLOAT, 2},
       {u8"vertex_color", GL_FLOAT, 4}
@@ -93,6 +112,18 @@ namespace textengine {
     vertex_format.Apply(player_edge_array, edge_program);
     CHECK_STATE(!glGetError());
 
+    npc_buffer.Create(GL_ARRAY_BUFFER);
+    npc_buffer.Data(sizeof(npc_data), npc_data, GL_STATIC_DRAW);
+    npc_array.Create();
+    vertex_format.Apply(npc_array, face_program);
+    CHECK_STATE(!glGetError());
+
+    npc_edge_buffer.Create(GL_ARRAY_BUFFER);
+    npc_edge_buffer.Data(sizeof(npc_edge_data), npc_edge_data, GL_STATIC_DRAW);
+    npc_edge_array.Create();
+    vertex_format.Apply(npc_edge_array, edge_program);
+    CHECK_STATE(!glGetError());
+
     shots_buffer.Create(GL_ARRAY_BUFFER);
     shots_array.Create();
     vertex_format.Apply(shots_array, point_program);
@@ -111,7 +142,7 @@ namespace textengine {
                                          current_state.player_body->GetPosition().y);
 
     mesh_renderer.SetPerspective(position, current_state.camera_position);
-//    mesh_renderer.Render();
+    mesh_renderer.Render();
 
     Drawable shots_data = current_state.Shots();
     shots_buffer.Data(shots_data.data_size(), shots_data.data.data(), GL_STREAM_DRAW);
@@ -136,14 +167,14 @@ namespace textengine {
     glDrawArrays(shots_data.element_type, 0, shots_data.element_count);
     CHECK_STATE(!glGetError());
 
-//    face_program.Use();
-//    face_program.Uniforms({
-//      {u8"projection", &projection},
-//      {u8"model_view", &player_model_view}
-//    });
-//    player_array.Bind();
-//    glDrawArrays(GL_TRIANGLES, 0, 6);
-//    CHECK_STATE(!glGetError());
+    face_program.Use();
+    face_program.Uniforms({
+      {u8"projection", &projection},
+      {u8"model_view", &player_model_view}
+    });
+    player_array.Bind();
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    CHECK_STATE(!glGetError());
 
     edge_program.Use();
     edge_program.Uniforms({
@@ -157,6 +188,35 @@ namespace textengine {
     player_edge_array.Bind();
     glDrawArrays(GL_LINES, 0, 8);
     CHECK_STATE(!glGetError());
+
+    for(auto rat : current_state.rats) {
+      const glm::vec2 position = glm::vec2(rat->GetPosition().x, rat->GetPosition().y);
+      const float angle = rat->GetAngle();
+      const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(position, 0.0f)) *
+                                                        glm::rotate(glm::mat4(), glm::degrees(angle), glm::vec3(0, 0, 1)) *
+                                                        glm::scale(glm::mat4(), glm::vec3(0.01f)));
+      face_program.Use();
+      face_program.Uniforms({
+        {u8"projection", &projection},
+        {u8"model_view", &player_model_view}
+      });
+      npc_array.Bind();
+      glDrawArrays(GL_TRIANGLES, 0, 6);
+      CHECK_STATE(!glGetError());
+
+      edge_program.Use();
+      edge_program.Uniforms({
+        {u8"projection", &projection},
+        {u8"model_view", &player_model_view}
+      });
+      edge_program.Uniforms({
+        {u8"line_width", 0.00125},
+        {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+      });
+      npc_edge_array.Bind();
+      glDrawArrays(GL_LINES, 0, 8);
+      CHECK_STATE(!glGetError());
+    }
 
     mesh_renderer.RenderShadows();
   }

@@ -38,8 +38,8 @@ namespace textengine {
     Shader edge_geometry_shader, fragment_shader, point_geometry_shader, vertex_shader;
     Program edge_program, face_program, point_program;
     VertexFormat vertex_format;
-    VertexArray player_array, player_edge_array, player_view_array, shots_array;
-    Buffer player_buffer, player_edge_buffer, player_view_buffer, shots_buffer;
+    VertexArray player_array, player_edge_array, player_view_array, shots_array, npc_array, npc_edge_array;
+    Buffer player_buffer, player_edge_buffer, player_view_buffer, shots_buffer, npc_buffer, npc_edge_buffer;
 
     glm::mat4 model_view, projection;
     gltext::Font font;
