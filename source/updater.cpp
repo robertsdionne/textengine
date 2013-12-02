@@ -166,7 +166,7 @@ namespace textengine {
               const auto h20 = h12->next;
               CHECK_STATE(h01 == h20->next);
               const auto v0 = h01->start->position, v1 = h12->start->position, v2 = h20->start->position;
-              distances.at(face.get()) = minimum + glm::length(target - face->centroid());
+              distances.at(face.get()) = minimum + 1;//glm::length(target - face->centroid());
               updates = true;
             }
           }
@@ -233,77 +233,114 @@ namespace textengine {
 
     const auto now = std::chrono::high_resolution_clock::now();
 
+    for (auto rat : current_state.rats) {
+      auto current_face = mesh.FindFaceThatContainsPoint(glm::vec2(rat->GetPosition().x, rat->GetPosition().y));
+      if (current_face && current_face->room_info && (current_face->room_info->name == "Staircase" ||
+                                                      current_face->room_info->name == "Tracks")) {
+        Mesh::Face *face = nullptr;
+        while (!face || face->room_info) {
+           face = mesh.get_faces()[index_distribution(generator) % mesh.get_faces().size()].get();
+        }
+        auto centroid = face->centroid();
+        rat->SetTransform(b2Vec2(centroid.x, centroid.y), rat->GetAngle());
+        rat->SetLinearVelocity(b2Vec2(0, 0));
+      }
+    }
+
     auto index = 0;
     for (auto rat : current_state.rats) {
+      auto current_face = mesh.FindFaceThatContainsPoint(glm::vec2(rat->GetPosition().x, rat->GetPosition().y));
+      float minimum = std::numeric_limits<float>::max();
+      Mesh::Face *argmin = nullptr;
+      if (current_face) {
+        current_face->ForEachConnectedFace([&] (Mesh::Face *face) {
+          if (distances_to_staircase[face] < minimum) {
+            minimum = distances_to_staircase[face];
+            argmin = face;
+          }
+        });
+      }
+      auto steer = b2Vec2(0, 0);
+      if (argmin) {
+        auto position = glm::vec2(rat->GetPosition().x, rat->GetPosition().y);
+        auto direction = glm::normalize(argmin->centroid() - position);
+        auto desired_velocity = 0.5f * b2Vec2(direction.x, direction.y);
+        steer = rat->GetMass() * (desired_velocity - rat->GetLinearVelocity());
+      }
+      rat->ApplyForceToCenter(steer, true);
+
       auto average_velocity = b2Vec2(0, 0);
       auto average_position = b2Vec2(0, 0);
       auto average_avoid = b2Vec2(0, 0);
       auto count = 0.0f;
       auto avoid_count = 0.0f;
-//      for (auto other : current_state.rats) {
 
-
-//        if (other != rat && (other->GetPosition() - rat->GetPosition()).Length() < 0.05) {
-//          average_velocity += other->GetLinearVelocity();
-//          average_position += other->GetPosition();
-//          ++count;
-//        }
-//        if (other != rat && (other->GetPosition() - rat->GetPosition()).Length() < 0.0125) {
-//          auto avoid = rat->GetPosition() - other->GetPosition();
-//          avoid.Normalize();
-//          average_avoid += avoid;
-//          ++avoid_count;
-//        }
-//      }
-//      auto steer1 = b2Vec2(0, 0);
-//      auto steer2 = b2Vec2(0, 0);
-//      auto steer3 = b2Vec2(0, 0);
-//      auto steer4 = b2Vec2(0, 0);
-//      auto velocity = rat->GetLinearVelocity();
-//      if (count > 0) {
-//        average_velocity = 1.0f / count * average_velocity;
-//        average_position = 1.0f / count * average_position;
-//        average_velocity.Normalize();
-//        average_velocity *= 0.25f;
-//        steer1 = rat->GetMass() * (average_velocity - velocity);
-//        auto desired = average_position - rat->GetPosition();
-//        desired.Normalize();
-//        desired *= 0.25f;
-//        auto steer2 = rat->GetMass() * (desired - velocity);
-//      }
-//      if (avoid_count > 0) {
-//        average_avoid = 1.0f / avoid_count * average_avoid;
-//        average_avoid.Normalize();
-//        average_avoid *= 0.25f;
-//        steer3 = rat->GetMass() * (average_avoid - velocity);
-//      }
-//      float t = std::chrono::duration_cast<std::chrono::duration<float>>(now.time_since_epoch()).count();
-//      if (count == 0) {
-//        auto direction = glm::vec2(glm::simplex(glm::vec3(t, index, 0)), glm::simplex(glm::vec3(t, index, 1)));
-//        if (glm::length(direction) > 0) {
-//          direction = 0.5f * glm::normalize(direction);
-//        }
-//        steer4 = rat->GetMass() * (b2Vec2(direction.x, direction.y) - velocity);
-//      } else {
-//        auto direction = glm::vec2(glm::simplex(glm::vec3(t, index, 0)), glm::simplex(glm::vec3(t, index, 1)));
-//        if (glm::length(direction) > 0) {
-//          direction = 0.5f * glm::normalize(direction);
-//        }
-//        steer4 = 0.25f * rat->GetMass() * (b2Vec2(direction.x, direction.y) - velocity);
-//      }
-//      auto angle = glm::atan(velocity.y, velocity.x);
-//      auto desired_angular_velocity = angle - rat->GetAngle();
-//      rat->SetTransform(rat->GetPosition(), glm::mix(rat->GetAngle(), angle, 0.1f));
-////      while (angle - rat->GetAngle() > M_PI) {
-////        angle -= 2.0f * M_PI;
-////      }
-////      while (angle - rat->GetAngle() < -M_PI) {
-////        angle += 2.0f * M_PI;
-////      }
-////      auto point = rat->GetInertia() * (10.0f * desired_angular_velocity - rat->GetAngularVelocity());
-//      rat->ApplyForceToCenter(2.0f * steer1 + steer2 + steer3 + steer4, true);
-////      rat->ApplyTorque(point, true);
-//      ++index;
+      for (auto other : current_state.rats) {
+        if (other != rat && (other->GetPosition() - rat->GetPosition()).Length() < 0.05) {
+          average_velocity += other->GetLinearVelocity();
+          average_position += other->GetPosition();
+          ++count;
+        }
+        if (other != rat && (other->GetPosition() - rat->GetPosition()).Length() < 0.025) {
+          auto avoid = rat->GetPosition() - other->GetPosition();
+          avoid.Normalize();
+          average_avoid += avoid;
+          ++avoid_count;
+        }
+      }
+      auto steer1 = b2Vec2(0, 0);
+      auto steer2 = b2Vec2(0, 0);
+      auto steer3 = b2Vec2(0, 0);
+      auto steer4 = b2Vec2(0, 0);
+      auto steer5 = b2Vec2(0, 0);
+      if ((current_state.player_body->GetPosition() - rat->GetPosition()).Length() < 0.025) {
+        auto avoid = rat->GetPosition() - current_state.player_body->GetPosition();
+        avoid.Normalize();
+        steer5 = rat->GetMass() * (avoid - velocity);
+      }
+      auto velocity = rat->GetLinearVelocity();
+      if (count > 0) {
+        average_velocity = 1.0f / count * average_velocity;
+        average_position = 1.0f / count * average_position;
+        average_velocity.Normalize();
+        average_velocity *= 0.25f;
+        steer1 = rat->GetMass() * (average_velocity - velocity);
+        auto desired = average_position - rat->GetPosition();
+        desired.Normalize();
+        desired *= 0.25f;
+        auto steer2 = rat->GetMass() * (desired - velocity);
+      }
+      if (avoid_count > 0) {
+        average_avoid = 1.0f / avoid_count * average_avoid;
+        average_avoid.Normalize();
+        average_avoid *= 0.25f;
+        steer3 = rat->GetMass() * (average_avoid - velocity);
+      }
+      float t = std::chrono::duration_cast<std::chrono::duration<float>>(now.time_since_epoch()).count();
+      if (count == 0) {
+        auto direction = glm::vec2(glm::simplex(glm::vec3(t, index, 0)), glm::simplex(glm::vec3(t, index, 1)));
+        if (glm::length(direction) > 0) {
+          direction = 0.5f * glm::normalize(direction);
+        }
+        steer4 = rat->GetMass() * (b2Vec2(direction.x, direction.y) - velocity);
+      } else {
+        auto direction = glm::vec2(glm::simplex(glm::vec3(t, index, 0)), glm::simplex(glm::vec3(t, index, 1)));
+        if (glm::length(direction) > 0) {
+          direction = 0.5f * glm::normalize(direction);
+        }
+        steer4 = 0.25f * rat->GetMass() * (b2Vec2(direction.x, direction.y) - velocity);
+      }
+      auto angle = glm::atan((steer + 2.0f * steer1 + steer2 + steer3 + steer4 + 5.0f * steer5).y, (steer + 2.0f * steer1 + steer2 + steer3 + steer4 + 5.0f * steer5).x);
+      auto desired_angular_velocity = angle - rat->GetAngle();
+      while (angle - rat->GetAngle() > M_PI) {
+        angle -= 2.0f * M_PI;
+      }
+      while (angle - rat->GetAngle() < -M_PI) {
+        angle += 2.0f * M_PI;
+      }
+      rat->SetTransform(rat->GetPosition(), glm::mix(rat->GetAngle(), angle, 0.05f));
+      rat->ApplyForceToCenter(2.0f * steer1 + steer2 + steer3 + steer4 + 5.0f * steer5, true);
+      ++index;
     }
 
     current_state.shots.clear();

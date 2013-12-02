@@ -25,7 +25,7 @@ namespace textengine {
       boundary_shape.CreateLoop(vertices.get(), static_cast<int>(boundary->size()));
       b2FixtureDef boundary_fixture_definition;
       boundary_fixture_definition.shape = &boundary_shape;
-      boundary_fixture_definition.friction = 1.0f;
+      boundary_fixture_definition.friction = 0.0f;
       GameState::boundary->CreateFixture(&boundary_fixture_definition);
     }
     b2BodyDef player_body_definition;
@@ -43,7 +43,7 @@ namespace textengine {
     player_fixture_definition.shape = &player_shape;
     player_fixture_definition.density = 0.1;
     player_fixture_definition.restitution = 0.1;
-    player_fixture_definition.friction = 1.0f;
+    player_fixture_definition.friction = 0.0f;
     player_body->CreateFixture(&player_fixture_definition);
 
     b2BodyDef rat_body_definition;
@@ -51,12 +51,12 @@ namespace textengine {
     rat_body_definition.position.Set(0.0f, 0.0f);
     rat_body_definition.fixedRotation = true;
     rat_body_definition.linearVelocity.Set(0, 0.1);
-    rat_body_definition.linearDamping = 0.1;
+    rat_body_definition.linearDamping = 1;
     rat_body_definition.angularVelocity = 0;
     rat_body_definition.angularDamping = 1;
     std::random_device generator;
     std::uniform_int_distribution<> distribution;
-    for (auto i = 0; i < 500; ++i) {
+    for (auto i = 0; i < 100; ++i) {
       auto index = distribution(generator);
       auto centroid = mesh.get_faces()[index % mesh.get_faces().size()]->centroid();
       rat_body_definition.position.Set(centroid.x, centroid.y);

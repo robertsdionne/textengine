@@ -7,6 +7,7 @@
 #include <unordered_set>
 
 #include "controller.h"
+#include "mesh.h"
 
 namespace textengine {
 
