@@ -9,6 +9,7 @@
 
 #include "controller.h"
 #include "gamestate.h"
+#include "mesh.h"
 
 namespace textengine {
 

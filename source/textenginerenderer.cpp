@@ -160,21 +160,21 @@ namespace textengine {
       {u8"model_view", &model_view}
     });
     point_program.Uniforms({
-      {u8"point_size", 0.01},
+      {u8"point_size", 0.005},
       {u8"inverse_aspect_ratio", inverse_aspect_ratio}
     });
     shots_array.Bind();
     glDrawArrays(shots_data.element_type, 0, shots_data.element_count);
     CHECK_STATE(!glGetError());
 
-    face_program.Use();
-    face_program.Uniforms({
-      {u8"projection", &projection},
-      {u8"model_view", &player_model_view}
-    });
-    player_array.Bind();
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    CHECK_STATE(!glGetError());
+//    face_program.Use();
+//    face_program.Uniforms({
+//      {u8"projection", &projection},
+//      {u8"model_view", &player_model_view}
+//    });
+//    player_array.Bind();
+//    glDrawArrays(GL_TRIANGLES, 0, 6);
+//    CHECK_STATE(!glGetError());
 
     edge_program.Use();
     edge_program.Uniforms({

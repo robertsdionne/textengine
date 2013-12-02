@@ -32,7 +32,7 @@ int main(int argument_count, char *arguments[]) {
   textengine::MeshLoader loader;
   mesh = loader.ReadMesh(filename);
   textengine::CommandTokenizer tokenizer;
-  textengine::GameState initial_state{mesh.Boundaries()};
+  textengine::GameState initial_state{mesh.Boundaries(), mesh};
   textengine::Log playtest_log{kPlaytestLog};
   textengine::Updater updater{
     command_queue, reply_queue,
