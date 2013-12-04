@@ -1,6 +1,0 @@
-find_path(UNISCRIBE_INCLUDE_DIR usp10.h)
-find_library(UNISCRIBE_LIBRARY usp10)
-
-include(FindPackageHandleStandardArgs)
-
-find_package_handle_standard_args(UNISCRIBE UNISCRIBE_INCLUDE_DIR UNISCRIBE_LIBRARY)

@@ -2,7 +2,6 @@
 #define TEXTENGINE_TEXTENGINERENDERER_H_
 
 #include <glm/glm.hpp>
-#include <gltext.hpp>
 #include <iostream>
 
 #include "buffer.h"
@@ -17,12 +16,13 @@
 
 namespace textengine {
 
+  class Mouse;
   class Scene;
   class Updater;
 
   class TextEngineRenderer : public Renderer {
   public:
-    TextEngineRenderer(Updater &updater, Scene &scene);
+    TextEngineRenderer(Mouse &mouse, Updater &updater, Scene &scene);
 
     virtual ~TextEngineRenderer() = default;
 
@@ -49,6 +49,7 @@ namespace textengine {
     void PushMatrix();
     
   private:
+    Mouse &mouse;
     Updater &updater;
     Scene &scene;
     float inverse_aspect_ratio;
@@ -62,7 +63,6 @@ namespace textengine {
     Buffer line_buffer;
 
     glm::mat4 model_view, projection;
-    gltext::Font font;
 
     glm::vec4 fill, stroke;
     float stroke_width;
@@ -70,6 +70,8 @@ namespace textengine {
     std::vector<glm::mat4> matrix_stack;
 
     Drawable unit_circle, unit_circle_border, unit_square, unit_square_border, lines;
+
+    int width, height, scroll0;
   };
 
 }  // namespace textengine

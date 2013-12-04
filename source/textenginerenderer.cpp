@@ -1,26 +1,31 @@
 #include <GLFW/glfw3.h>
+#include <imgui.h>
+#include <imguiRenderGL3.h>
+#define GLM_SWIZZLE
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include <gltext.hpp>
+#include <glm/gtx/string_cast.hpp>
 #include <memory>
 
 #include "checks.h"
 #include "gamestate.h"
+#include "mouse.h"
 #include "subjectivemeshrenderer.h"
 #include "textenginerenderer.h"
 #include "updater.h"
 
 namespace textengine {
 
-  TextEngineRenderer::TextEngineRenderer(Updater &updater, Scene &scene)
-  : updater(updater), scene(scene), model_view(glm::mat4()),
+  TextEngineRenderer::TextEngineRenderer(Mouse &mouse, Updater &updater, Scene &scene)
+  : mouse(mouse), updater(updater), scene(scene), model_view(glm::mat4()),
     projection(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)), matrix_stack{glm::mat4(1)} {}
 
   void TextEngineRenderer::Change(int width, int height) {
+    this->width = width;
+    this->height = height;
     glViewport(0, 0, width, height);
     inverse_aspect_ratio = static_cast<float>(height) / static_cast<float>(width);
     projection = glm::ortho(-1.0f, 1.0f, -inverse_aspect_ratio, inverse_aspect_ratio, -1.0f, 1.0f);
-    font.setDisplaySize(width, height);
   }
 
   void TextEngineRenderer::Create() {
@@ -113,14 +118,13 @@ namespace textengine {
     vertex_format.Apply(line_array, edge_program);
     CHECK_STATE(!glGetError());
 
-    font = gltext::Font("../resource/ubuntu-font-family-0.80/Ubuntu-R.ttf", 32, 1024, 1024);
-    font.cacheCharacters("1234567890!@#$%^&*()abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;'[]\\<>?:\"{}|-=_+");
-
     stroke_width = 0.0025f;
     stroke = glm::vec4(0, 0, 0, 1);
     fill = glm::vec4(0.5, 0.5, 0.5, 1);
 
     lines.element_type = GL_LINES;
+
+    CHECK_STATE(imguiRenderGLInit("../resource/ubuntu-font-family-0.80/Ubuntu-R.ttf"));
   }
 
   void TextEngineRenderer::Render() {
@@ -144,6 +148,18 @@ namespace textengine {
       DrawCircle(object->position, 0.5f);
     }
 
+
+    const glm::mat4 normalized_to_reversed = glm::scale(glm::mat4(), glm::vec3(1.0f, -1.0f, 1.0f));
+    const glm::mat4 reversed_to_offset = glm::translate(glm::mat4(), glm::vec3(glm::vec2(1.0f), 0.0f));
+    const glm::mat4 offset_to_screen = glm::scale(glm::mat4(), glm::vec3(glm::vec2(0.5f), 1.0f));
+    const glm::mat4 screen_to_window = glm::scale(glm::mat4(), glm::vec3(width, height, 1.0f));
+
+    const glm::mat4 transform = (screen_to_window * offset_to_screen *
+                                 reversed_to_offset * normalized_to_reversed *
+                                 model_view * projection * matrix_stack.back());
+    const glm::vec4 homogeneous = transform * glm::vec4(position, 0.0f, 1.0f);
+    const glm::vec2 transformed = homogeneous.xy() / homogeneous.w;
+
     fill = glm::vec4(0.5f, 0.5f, 0.6f, 1.0f);
     PushMatrix();
     matrix_stack.back() *= glm::translate(glm::mat4(1), glm::vec3(position, 0));
@@ -155,6 +171,33 @@ namespace textengine {
 
     DrawLines();
     PopMatrix();
+
+    const auto mouse_position = 2.0f * mouse.get_cursor_position();
+    unsigned char mouse_buttons = 0;
+    if (mouse.IsButtonDown(GLFW_MOUSE_BUTTON_1)) {
+      mouse_buttons |= IMGUI_MBUT_LEFT;
+    }
+    if (mouse.IsButtonDown(GLFW_MOUSE_BUTTON_2)) {
+      mouse_buttons |= IMGUI_MBUT_RIGHT;
+    }
+
+    imguiBeginFrame(mouse_position.x, height - mouse_position.y, mouse_buttons, 0);
+
+    for (auto &area : scene.areas) {
+      const glm::vec4 homogeneous = transform * glm::vec4(area->aabb.minimum.x, area->aabb.maximum.y, 0.0f, 1.0f);
+      const glm::vec2 transformed = homogeneous.xy() / homogeneous.w;
+      imguiDrawText(transformed.x, height - transformed.y, IMGUI_ALIGN_LEFT, area->name.c_str(), imguiRGBA(0, 0, 0));
+    }
+
+    for (auto &object : scene.objects) {
+      const glm::vec4 homogeneous = transform * glm::vec4(object->position, 0.0f, 1.0f);
+      const glm::vec2 transformed = homogeneous.xy() / homogeneous.w;
+      imguiDrawText(transformed.x, height - transformed.y, IMGUI_ALIGN_LEFT, object->name.c_str(), imguiRGBA(0, 0, 0));
+    }
+
+    imguiEndFrame();
+
+    imguiRenderGLDraw(width, height);
   }
 
   void TextEngineRenderer::DrawAxisAlignedBoundingBox(AxisAlignedBoundingBox aabb) {
@@ -165,8 +208,8 @@ namespace textengine {
 
   void TextEngineRenderer::DrawCircle(glm::vec2 center, float radius) {
     PushMatrix();
-    matrix_stack.back() *= glm::translate(glm::scale(glm::mat4(1), glm::vec3(radius)),
-                                          glm::vec3(center, 0.0f));
+    matrix_stack.back() *= glm::scale(glm::translate(glm::mat4(1), glm::vec3(center, 0.0f)),
+                                      glm::vec3(glm::vec2(radius), 1));
 
     face_program.Use();
     face_program.Uniforms({

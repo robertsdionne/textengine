@@ -14,6 +14,32 @@
           "You exited the field."
         ]
       }
+    },
+    "mud patch": {
+      "aabb": {
+        "minimum": {"x": 7.0, "y": 7.0},
+        "maximum": {"x": 10.0, "y": 10.0}
+      },
+      "description": "You stepped in a patch of mud.",
+      "messages": {
+        "enter": [
+        ],
+        "exit": [
+        ]
+      }
+    },
+    "mud patch 2": {
+      "aabb": {
+        "minimum": {"x": -4.0, "y": -3.0},
+        "maximum": {"x": -1.0, "y": -1.0}
+      },
+      "description": "You stepped in a patch of mud.",
+      "messages": {
+        "enter": [
+        ],
+        "exit": [
+        ]
+      }
     }
   },
   "objects": {
@@ -24,7 +50,7 @@
           "You touch the red tree."
         ]
       },
-      "position": {"x": 10.0, "y": 5.0}
+      "position": {"x": 5.0, "y": 2.5}
     }
   }
 }

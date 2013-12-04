@@ -40,7 +40,7 @@ int main(int argument_count, char *arguments[]) {
     command_queue, reply_queue,
     playtest_log, input, initial_state
   };
-  textengine::TextEngineRenderer renderer{updater, scene};
+  textengine::TextEngineRenderer renderer{mouse, updater, scene};
   textengine::GlfwApplication application{
     argument_count, arguments, kWindowWidth, kWindowHeight,
     kWindowTitle, updater, renderer, input, joystick,
