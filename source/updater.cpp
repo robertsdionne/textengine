@@ -136,7 +136,7 @@ namespace textengine {
       current_state.world.ClearForces();
       auto velocity = current_state.player_body->GetLinearVelocity();
       const auto force = 200.0f * current_state.player_body->GetMass();
-      constexpr auto kMaxVelocity = 10.0f;
+      const auto max_velocity = glm::mix(1.38f, 5.81f, input.GetTriggerPressure());
       current_state.player_body->ApplyForceToCenter(force * b2Vec2(offset.x, offset.y), true);
       if (glm::length(offset2) > 0.1f) {
         current_state.target_angle = glm::atan(offset2.y, offset2.x);
@@ -152,14 +152,14 @@ namespace textengine {
       }
       angle = glm::mix(angle, current_state.target_angle, 0.25f);
       current_state.player_body->SetTransform(current_state.player_body->GetPosition(), angle);
-      if (velocity.Length() > kMaxVelocity) {
+      if (velocity.Length() > max_velocity) {
         velocity.Normalize();
-        velocity *= kMaxVelocity;
+        velocity *= max_velocity;
         current_state.player_body->SetLinearVelocity(velocity);
       }
       current_state.world.Step(dt, 8, 3);
     }
-    current_state.camera_position = glm::mix(current_state.camera_position, position + 25.0f * offset2, 2e-2f / 0.016f * dt);
+    current_state.camera_position = glm::mix(current_state.camera_position, position + 2.5f * offset2, 2e-2f / 0.016f * dt);
   }
 
   glm::vec2 Updater::SupremumNormalize(glm::vec2 vector) {

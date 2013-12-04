@@ -34,24 +34,9 @@ namespace textengine {
     BUILD_MAP_ENTRY(Joystick::Button::kPs)
   };
 
-  std::map<Joystick::PressureButton, std::string> Joystick::pressure_button_names{
-    BUILD_MAP_ENTRY(Joystick::PressureButton::kDpadUp),
-    BUILD_MAP_ENTRY(Joystick::PressureButton::kDpadRight),
-    BUILD_MAP_ENTRY(Joystick::PressureButton::kDpadDown),
-    BUILD_MAP_ENTRY(Joystick::PressureButton::kDpadLeft),
-    BUILD_MAP_ENTRY(Joystick::PressureButton::kL2),
-    BUILD_MAP_ENTRY(Joystick::PressureButton::kR2),
-    BUILD_MAP_ENTRY(Joystick::PressureButton::kL1),
-    BUILD_MAP_ENTRY(Joystick::PressureButton::kR1),
-    BUILD_MAP_ENTRY(Joystick::PressureButton::kTriangle),
-    BUILD_MAP_ENTRY(Joystick::PressureButton::kCircle),
-    BUILD_MAP_ENTRY(Joystick::PressureButton::kX),
-    BUILD_MAP_ENTRY(Joystick::PressureButton::kSquare)
-  };
-
   Joystick::Joystick(int joystick_id)
   : joystick_id(joystick_id), axes(), previous_axes(), buttons(), previous_buttons(),
-  pressure_buttons(), previous_pressure_buttons(), last_update_time(), dt() {}
+  last_update_time(), dt() {}
 
   float Joystick::GetAxis(Axis axis) {
     return std::abs(axes[axis]) > kDeadZone ? axes[axis] : 0.0f;
@@ -59,14 +44,6 @@ namespace textengine {
 
   float Joystick::GetAxisVelocity(Axis axis) {
     return (axes[axis] - previous_axes[axis]) * dt;
-  }
-
-  float Joystick::GetButtonPressure(PressureButton pressure_button) {
-    return pressure_buttons[pressure_button];
-  }
-
-  float Joystick::GetButtonPressureVelocity(PressureButton pressure_button) {
-    return (pressure_buttons[pressure_button] - previous_pressure_buttons[pressure_button]) * dt;
   }
 
   int Joystick::GetButtonVelocity(Button button) {
@@ -80,7 +57,6 @@ namespace textengine {
   void Joystick::Update() {
     previous_axes = axes;
     previous_buttons = buttons;
-    previous_pressure_buttons = pressure_buttons;
     if (glfwJoystickPresent(joystick_id)) {
       int axis_count = 0;
       const float *axis_data = glfwGetJoystickAxes(joystick_id, &axis_count);
@@ -95,9 +71,6 @@ namespace textengine {
       CHECK_STATE(button_data);
       for (auto i = static_cast<int>(Button::kBegin); i < static_cast<int>(Button::kEnd); ++i) {
         buttons[static_cast<Button>(i)] = button_data[i];
-      }
-      for (auto i = static_cast<int>(PressureButton::kBegin); i < static_cast<int>(PressureButton::kEnd); ++i) {
-        pressure_buttons[static_cast<PressureButton>(i)] = button_data[i] / 255.0f;
       }
     }
     auto now = std::chrono::high_resolution_clock::now();

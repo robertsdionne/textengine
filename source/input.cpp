@@ -33,9 +33,17 @@ namespace textengine {
 
   float Input::GetXButton() const {
     const auto result = ArgMax({
-      joystick.GetButtonPressure(Joystick::PressureButton::kX),
+      joystick.IsButtonDown(Joystick::Button::kX),
     });
     return glm::abs(result) > 0.1f ? result : 0.0f;
+  }
+
+  float Input::GetTriggerPressure() const {
+    const auto result = ArgMax({
+      joystick.IsButtonDown(Joystick::Button::kR1),
+      keyboard.IsKeyDown(GLFW_KEY_SPACE)
+    });
+    return result;
   }
 
   float Input::GetTriggerVelocity() const {

@@ -23,6 +23,8 @@ namespace textengine {
 
     float GetXButton() const;
 
+    float GetTriggerPressure() const;
+
     float GetTriggerVelocity() const;
 
     void Update();

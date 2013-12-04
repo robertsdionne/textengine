@@ -42,24 +42,6 @@ namespace textengine {
     };
     static std::map<Button, std::string> button_names;
 
-    enum class PressureButton {
-      kDpadUp = 4 + 21,
-      kDpadRight = 5 + 21,
-      kDpadDown = 6 + 21,
-      kDpadLeft = 7 + 21,
-      kL2 = 8 + 21,
-      kR2 = 9 + 21,
-      kL1 = 10 + 21,
-      kR1 = 11 + 21,
-      kTriangle = 12 + 21,
-      kCircle = 13 + 21,
-      kX = 14 + 21,
-      kSquare = 15 + 21,
-      kEnd,
-      kBegin = kDpadUp
-    };
-    static std::map<PressureButton, std::string> pressure_button_names;
-
     static constexpr float kDeadZone = 0.1f;
 
     Joystick(int joystick_id);
@@ -69,10 +51,6 @@ namespace textengine {
     float GetAxis(Axis axis);
 
     float GetAxisVelocity(Axis axis);
-
-    float GetButtonPressure(PressureButton pressure_button);
-
-    float GetButtonPressureVelocity(PressureButton pressure_button);
 
     int GetButtonVelocity(Button button);
 
@@ -84,7 +62,6 @@ namespace textengine {
     int joystick_id;
     std::map<Axis, float> axes, previous_axes;
     std::map<Button, bool> buttons, previous_buttons;
-    std::map<PressureButton, float> pressure_buttons, previous_pressure_buttons;
     std::chrono::high_resolution_clock::time_point last_update_time;
     float dt;
   };

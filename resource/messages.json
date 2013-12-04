@@ -3,7 +3,7 @@
     "field": {
       "aabb": {
         "minimum": {"x": -5.0, "y": -5.0},
-        "maximum": {"x": 5.0, "y": 5.0}
+        "maximum": {"x": 20.0, "y": 20.0}
       },
       "description": "You are standing in a field.",
       "messages": {
@@ -24,7 +24,7 @@
           "You touch the red tree."
         ]
       },
-      "position": {"x": 0.0, "y": 0.0}
+      "position": {"x": 10.0, "y": 5.0}
     }
   }
 }

@@ -129,7 +129,7 @@ namespace textengine {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     PushMatrix();
-    matrix_stack.back() *= glm::scale(glm::mat4(1), glm::vec3(glm::vec2(0.01f), 1.0f));
+    matrix_stack.back() *= glm::scale(glm::mat4(1), glm::vec3(glm::vec2(0.1f), 1.0f));
     matrix_stack.back() *= glm::translate(glm::mat4(1), glm::vec3(-current_state.camera_position, 0));
 
     const glm::vec2 position = glm::vec2(current_state.player_body->GetPosition().x,
@@ -150,7 +150,7 @@ namespace textengine {
     matrix_stack.back() *= glm::rotate(glm::mat4(1),
                                        glm::degrees(current_state.player_body->GetAngle()),
                                        glm::vec3(0, 0, 1));
-    DrawRectangle(glm::vec2(0), glm::vec2(1, 2));
+    DrawRectangle(glm::vec2(0), glm::vec2(0.25f, 0.5f));
     PopMatrix();
 
     DrawLines();
@@ -214,8 +214,8 @@ namespace textengine {
 
   void TextEngineRenderer::DrawRectangle(glm::vec2 center, glm::vec2 dimensions) {
     PushMatrix();
-    matrix_stack.back() *= glm::translate(glm::scale(glm::mat4(1), glm::vec3(dimensions, 1)),
-                                          glm::vec3(center, 0.0f));
+    matrix_stack.back() *= glm::scale(glm::translate(glm::mat4(1), glm::vec3(center, 0.0f)),
+                                      glm::vec3(dimensions, 1));
 
     face_program.Use();
     face_program.Uniforms({
