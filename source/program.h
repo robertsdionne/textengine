@@ -28,6 +28,8 @@ namespace textengine {
 
     void Uniforms(const std::unordered_map<std::string, float> &&uniforms);
 
+    void Uniforms(const std::unordered_map<std::string, glm::vec4> &&uniforms);
+
     void Uniforms(const std::unordered_map<std::string, const glm::mat4 *> &&uniforms);
 
     void Use();

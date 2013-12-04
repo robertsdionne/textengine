@@ -12,20 +12,19 @@
 
 namespace textengine {
 
-  TextEngineRenderer::TextEngineRenderer(Updater &updater, SubjectiveMeshRenderer &mesh_renderer)
-  : updater(updater), mesh_renderer(mesh_renderer), model_view(glm::mat4()),
-    projection(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)) {}
+  TextEngineRenderer::TextEngineRenderer(Updater &updater)
+  : updater(updater), model_view(glm::mat4()),
+    projection(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)), matrix_stack{glm::mat4(1)} {}
 
   void TextEngineRenderer::Change(int width, int height) {
     glViewport(0, 0, width, height);
     inverse_aspect_ratio = static_cast<float>(height) / static_cast<float>(width);
     projection = glm::ortho(-1.0f, 1.0f, -inverse_aspect_ratio, inverse_aspect_ratio, -1.0f, 1.0f);
-    mesh_renderer.Change(width, height);
     font.setDisplaySize(width, height);
   }
 
   void TextEngineRenderer::Create() {
-    glClearColor(0.0, 0.0, 0.0, 1.0);
+    glClearColor(1.0, 1.0, 1.0, 1.0);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -43,94 +42,78 @@ namespace textengine {
     point_program.Create({&vertex_shader, &point_geometry_shader, &fragment_shader});
     point_program.CompileAndLink();
 
-    float player_data[] = {
-      1.0f, -2.0f, 0.0f, 0.0f, 0.7f, 1.0f,
-      -1.0f, 2.0f, 0.0f, 0.0f, 0.7f, 1.0f,
-      -1.0f, -2.0f, 0.0f, 0.0f, 0.7f, 1.0f,
-      1.0f, -2.0f, 0.0f, 0.0f, 0.7f, 1.0f,
-      1.0f, 2.0f, 0.0f, 0.0f, 0.7f, 1.0f,
-      -1.0f, 2.0f, 0.0f, 0.0f, 0.7f, 1.0f
-    };
-    float player_edge_data[] = {
-      1.0f, -2.0f, 1.0f, 1.0f, 1.5f, 1.0f,
-      1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-      1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-      -1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-      -1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-      -1.0f, -2.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-      -1.0f, -2.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-      1.0f, -2.0f, 1.0f, 1.0f, 1.0f, 1.0f
-    };
-
-    float player_view_data[] = {
-      0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.2f,
-      1.0f, -2.0f, 1.0f, 1.0f, 1.0f, 0.0f,
-      1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 0.0f
-    };
-
-    float npc_data[] = {
-      0.75f, -1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
-      -0.75f, 1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
-      -0.75f, -1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
-      0.75f, -1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
-      0.75f, 1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
-      -0.75f, 1.5f, 0.7f, 0.7f, 0.7f, 1.0f
-    };
-    float npc_edge_data[] = {
-      0.75f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
-      0.75f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
-      0.75f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
-      -0.75f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
-      -0.75f, 1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
-      -0.75f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
-      -0.75f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
-      0.75f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f
-    };
-
     vertex_format.Create({
-      {u8"vertex_position", GL_FLOAT, 2},
-      {u8"vertex_color", GL_FLOAT, 4}
+      {u8"vertex_position", GL_FLOAT, 2}
     });
 
-    mesh_renderer.Create();
+    unit_circle.data.insert(unit_circle.data.cend(), {
+      0.0f, 0.0f
+    });
+    for (auto i = 0.0f; i < 101.0f; ++i) {
+      const auto theta = 2.0f * i / 100.0f * M_PI;
+      const auto point = glm::vec2(glm::cos(theta), glm::sin(theta));
+      unit_circle.data.insert(unit_circle.data.cend(), {
+        point.x, point.y
+      });
+      unit_circle_border.data.insert(unit_circle_border.data.cend(), {
+        point.x, point.y
+      });
+    }
+    unit_circle.element_count = 102;
+    unit_circle.element_type = GL_TRIANGLE_FAN;
+    unit_circle_border.element_count = 100;
+    unit_circle_border.element_type = GL_LINE_LOOP;
 
-    player_view_buffer.Create(GL_ARRAY_BUFFER);
-    player_view_buffer.Data(sizeof(player_view_data), player_view_data, GL_STATIC_DRAW);
-    player_view_array.Create();
-    vertex_format.Apply(player_view_array, face_program);
+    unit_square.data.insert(unit_square.data.cend(), {
+      0.5f, -0.5f,
+      0.5f, 0.5f,
+      -0.5f, -0.5f,
+      -0.5f, 0.5f
+    });
+    unit_square.element_count = 4;
+    unit_square.element_type = GL_TRIANGLE_STRIP;
+
+    unit_square_border.data.insert(unit_square_border.data.cend(), {
+      0.5f, -0.5f,
+      0.5f, 0.5f,
+      -0.5f, 0.5f,
+      -0.5f, -0.5f
+    });
+    unit_square_border.element_count = 4;
+    unit_square_border.element_type = GL_LINE_LOOP;
+
+    circle_buffer.Create(GL_ARRAY_BUFFER);
+    circle_buffer.Data(unit_circle.data_size(), unit_circle.data.data(), GL_STATIC_DRAW);
+    circle_array.Create();
+    vertex_format.Apply(circle_array, face_program);
     CHECK_STATE(!glGetError());
 
-    player_buffer.Create(GL_ARRAY_BUFFER);
-    player_buffer.Data(sizeof(player_data), player_data, GL_STATIC_DRAW);
-    player_array.Create();
-    vertex_format.Apply(player_array, face_program);
+    circle_edge_buffer.Create(GL_ARRAY_BUFFER);
+    circle_edge_buffer.Data(unit_circle_border.data_size(),
+                            unit_circle_border.data.data(), GL_STATIC_DRAW);
+    circle_edge_array.Create();
+    vertex_format.Apply(circle_edge_array, edge_program);
     CHECK_STATE(!glGetError());
 
-    player_edge_buffer.Create(GL_ARRAY_BUFFER);
-    player_edge_buffer.Data(sizeof(player_edge_data), player_edge_data, GL_STATIC_DRAW);
-    player_edge_array.Create();
-    vertex_format.Apply(player_edge_array, edge_program);
+    rectangle_buffer.Create(GL_ARRAY_BUFFER);
+    rectangle_buffer.Data(unit_square.data_size(), unit_square.data.data(), GL_STATIC_DRAW);
+    rectangle_array.Create();
+    vertex_format.Apply(rectangle_array, face_program);
     CHECK_STATE(!glGetError());
 
-    npc_buffer.Create(GL_ARRAY_BUFFER);
-    npc_buffer.Data(sizeof(npc_data), npc_data, GL_STATIC_DRAW);
-    npc_array.Create();
-    vertex_format.Apply(npc_array, face_program);
-    CHECK_STATE(!glGetError());
-
-    npc_edge_buffer.Create(GL_ARRAY_BUFFER);
-    npc_edge_buffer.Data(sizeof(npc_edge_data), npc_edge_data, GL_STATIC_DRAW);
-    npc_edge_array.Create();
-    vertex_format.Apply(npc_edge_array, edge_program);
-    CHECK_STATE(!glGetError());
-
-    shots_buffer.Create(GL_ARRAY_BUFFER);
-    shots_array.Create();
-    vertex_format.Apply(shots_array, point_program);
+    rectangle_edge_buffer.Create(GL_ARRAY_BUFFER);
+    rectangle_edge_buffer.Data(unit_square_border.data_size(),
+                               unit_square_border.data.data(), GL_STATIC_DRAW);
+    rectangle_edge_array.Create();
+    vertex_format.Apply(rectangle_edge_array, edge_program);
     CHECK_STATE(!glGetError());
 
     font = gltext::Font("../resource/ubuntu-font-family-0.80/Ubuntu-R.ttf", 32, 1024, 1024);
     font.cacheCharacters("1234567890!@#$%^&*()abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;'[]\\<>?:\"{}|-=_+");
+
+    stroke_width = 0.005f;
+    stroke = glm::vec4(0, 0, 0, 1);
+    fill = glm::vec4(0.5, 0.5, 0.5, 1);
   }
 
   void TextEngineRenderer::Render() {
@@ -138,87 +121,112 @@ namespace textengine {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    PushMatrix();
+    matrix_stack.back() *= glm::scale(glm::mat4(1), glm::vec3(0.1f, 0.1f, 1.0f));
+
     const glm::vec2 position = glm::vec2(current_state.player_body->GetPosition().x,
                                          current_state.player_body->GetPosition().y);
 
-    mesh_renderer.SetPerspective(position, current_state.camera_position);
-    mesh_renderer.Render();
+    DrawCircle(position, 1);
+    DrawRectangle(glm::vec2(1, 0), glm::vec2(1));
+    PopMatrix();
 
-    Drawable shots_data = current_state.Shots();
-    shots_buffer.Data(shots_data.data_size(), shots_data.data.data(), GL_STREAM_DRAW);
+//    const glm::vec2 position = glm::vec2(current_state.player_body->GetPosition().x,
+//                                         current_state.player_body->GetPosition().y);
+//
+//    model_view = glm::scale(glm::mat4(), glm::vec3(1.0f)) * glm::translate(glm::mat4(), glm::vec3(-current_state.camera_position, 0.0f));
+//
+//    const float angle = current_state.player_body->GetAngle();
+//    const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(position, 0.0f)) *
+//                                                      glm::rotate(glm::mat4(), glm::degrees(angle), glm::vec3(0, 0, 1)) *
+//                                                      glm::scale(glm::mat4(), glm::vec3(0.01f)));
+  }
 
-    model_view = glm::scale(glm::mat4(), glm::vec3(1.0f)) * glm::translate(glm::mat4(), glm::vec3(-current_state.camera_position, 0.0f));
+  void TextEngineRenderer::DrawAxisAlignedBoundingBox(AxisAlignedBoundingBox aabb) {
+    const auto center = (aabb.maximum + aabb.minimum) / 2.0f;
+    const auto dimensions = aabb.maximum - aabb.minimum;
+    DrawRectangle(center, dimensions);
+  }
 
-    const float angle = current_state.player_body->GetAngle();
-    const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(position, 0.0f)) *
-                                                      glm::rotate(glm::mat4(), glm::degrees(angle), glm::vec3(0, 0, 1)) *
-                                                      glm::scale(glm::mat4(), glm::vec3(0.01f)));
+  void TextEngineRenderer::DrawCircle(glm::vec2 center, float radius) {
+    PushMatrix();
+    matrix_stack.back() *= glm::translate(glm::mat4(1), glm::vec3(center, 0.0f));
 
-    point_program.Use();
-    point_program.Uniforms({
+    face_program.Use();
+    face_program.Uniforms({
       {u8"projection", &projection},
-      {u8"model_view", &model_view}
+      {u8"model_view", &matrix_stack.back()}
     });
-    point_program.Uniforms({
-      {u8"point_size", 0.005},
-      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+    face_program.Uniforms({
+      {u8"color", fill}
     });
-    shots_array.Bind();
-    glDrawArrays(shots_data.element_type, 0, shots_data.element_count);
+    circle_array.Bind();
+    glDrawArrays(unit_circle.element_type, 0, unit_circle.element_count);
     CHECK_STATE(!glGetError());
-
-//    face_program.Use();
-//    face_program.Uniforms({
-//      {u8"projection", &projection},
-//      {u8"model_view", &player_model_view}
-//    });
-//    player_array.Bind();
-//    glDrawArrays(GL_TRIANGLES, 0, 6);
-//    CHECK_STATE(!glGetError());
 
     edge_program.Use();
     edge_program.Uniforms({
       {u8"projection", &projection},
-      {u8"model_view", &player_model_view}
+      {u8"model_view", &matrix_stack.back()}
     });
     edge_program.Uniforms({
-      {u8"line_width", 0.00125},
-      {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+      {u8"color", stroke}
     });
-    player_edge_array.Bind();
-    glDrawArrays(GL_LINES, 0, 8);
+    edge_program.Uniforms({
+      {u8"inverse_aspect_ratio", inverse_aspect_ratio},
+      {u8"line_width", stroke_width}
+    });
+    circle_edge_array.Bind();
+    glDrawArrays(unit_circle_border.element_type, 0, unit_circle_border.element_count);
+    CHECK_STATE(!glGetError());
+    
+    PopMatrix();
+  }
+
+  void TextEngineRenderer::DrawRectangle(glm::vec2 center, glm::vec2 dimensions) {
+    PushMatrix();
+    matrix_stack.back() *= glm::translate(glm::scale(glm::mat4(1), glm::vec3(dimensions, 1)),
+                                          glm::vec3(center, 0.0f));
+
+    face_program.Use();
+    face_program.Uniforms({
+      {u8"projection", &projection},
+      {u8"model_view", &matrix_stack.back()}
+    });
+    face_program.Uniforms({
+      {u8"color", fill}
+    });
+    rectangle_array.Bind();
+    glDrawArrays(unit_square.element_type, 0, unit_square.element_count);
     CHECK_STATE(!glGetError());
 
-    for(auto rat : current_state.rats) {
-      const glm::vec2 position = glm::vec2(rat->GetPosition().x, rat->GetPosition().y);
-      const float angle = rat->GetAngle();
-      const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(position, 0.0f)) *
-                                                        glm::rotate(glm::mat4(), glm::degrees(angle), glm::vec3(0, 0, 1)) *
-                                                        glm::scale(glm::mat4(), glm::vec3(0.01f)));
-      face_program.Use();
-      face_program.Uniforms({
-        {u8"projection", &projection},
-        {u8"model_view", &player_model_view}
-      });
-      npc_array.Bind();
-      glDrawArrays(GL_TRIANGLES, 0, 6);
-      CHECK_STATE(!glGetError());
+    edge_program.Use();
+    edge_program.Uniforms({
+      {u8"projection", &projection},
+      {u8"model_view", &matrix_stack.back()}
+    });
+    edge_program.Uniforms({
+      {u8"color", stroke}
+    });
+    edge_program.Uniforms({
+      {u8"inverse_aspect_ratio", inverse_aspect_ratio},
+      {u8"line_width", stroke_width}
+    });
+    rectangle_edge_array.Bind();
+    glDrawArrays(unit_square_border.element_type, 0, unit_square_border.element_count);
+    CHECK_STATE(!glGetError());
 
-      edge_program.Use();
-      edge_program.Uniforms({
-        {u8"projection", &projection},
-        {u8"model_view", &player_model_view}
-      });
-      edge_program.Uniforms({
-        {u8"line_width", 0.00125},
-        {u8"inverse_aspect_ratio", inverse_aspect_ratio}
-      });
-      npc_edge_array.Bind();
-      glDrawArrays(GL_LINES, 0, 8);
-      CHECK_STATE(!glGetError());
+    PopMatrix();
+  }
+
+  void TextEngineRenderer::PopMatrix() {
+    if (matrix_stack.size() > 1) {
+      matrix_stack.pop_back();
     }
+  }
 
-    mesh_renderer.RenderShadows();
+  void TextEngineRenderer::PushMatrix() {
+    matrix_stack.push_back(matrix_stack.back());
   }
 
 }  // namespace textengine

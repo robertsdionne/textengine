@@ -33,24 +33,18 @@ int main(int argument_count, char *arguments[]) {
   textengine::Scene scene;
   textengine::SceneLoader scene_loader;
   scene = scene_loader.ReadScene("../resource/messages.json");
-  for (auto &area : scene.areas) {
-    std::cout << area->name << std::endl;
-  }
-  for (auto &object : scene.objects) {
-    std::cout << object->name << std::endl;
-  }
   textengine::Mesh mesh;
   textengine::MeshLoader loader;
   mesh = loader.ReadMesh(filename);
   textengine::CommandTokenizer tokenizer;
-  textengine::GameState initial_state{mesh.Boundaries(), mesh};
+  textengine::GameState initial_state{std::vector<std::unique_ptr<std::vector<glm::vec2>>>(), mesh};
   textengine::Log playtest_log{kPlaytestLog};
   textengine::Updater updater{
     command_queue, reply_queue,
     playtest_log, input, mesh, initial_state
   };
   textengine::SubjectiveMeshRenderer mesh_renderer{mesh, updater};
-  textengine::TextEngineRenderer renderer{updater, mesh_renderer};
+  textengine::TextEngineRenderer renderer{updater};
   textengine::GlfwApplication application{
     argument_count, arguments, kWindowWidth, kWindowHeight,
     kWindowTitle, updater, renderer, input, joystick,

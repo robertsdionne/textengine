@@ -16468,6 +16468,7 @@
 					"GLFW_INCLUDE_GLCOREARB=1",
 					"GL_GLEXT_PROTOTYPES=1",
 				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 			};
 			name = Debug;
 		};
@@ -16484,6 +16485,7 @@
 					"GL_GLEXT_PROTOTYPES=1",
 					"GLFW_INCLUDE_GLCOREARB=1",
 				);
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 			};
 			name = Release;
 		};
