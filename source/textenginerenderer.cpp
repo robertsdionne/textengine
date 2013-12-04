@@ -12,8 +12,8 @@
 
 namespace textengine {
 
-  TextEngineRenderer::TextEngineRenderer(Updater &updater)
-  : updater(updater), model_view(glm::mat4()),
+  TextEngineRenderer::TextEngineRenderer(Updater &updater, Scene &scene)
+  : updater(updater), scene(scene), model_view(glm::mat4()),
     projection(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)), matrix_stack{glm::mat4(1)} {}
 
   void TextEngineRenderer::Change(int width, int height) {
@@ -108,12 +108,19 @@ namespace textengine {
     vertex_format.Apply(rectangle_edge_array, edge_program);
     CHECK_STATE(!glGetError());
 
+    line_buffer.Create(GL_ARRAY_BUFFER);
+    line_array.Create();
+    vertex_format.Apply(line_array, edge_program);
+    CHECK_STATE(!glGetError());
+
     font = gltext::Font("../resource/ubuntu-font-family-0.80/Ubuntu-R.ttf", 32, 1024, 1024);
     font.cacheCharacters("1234567890!@#$%^&*()abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;'[]\\<>?:\"{}|-=_+");
 
     stroke_width = 0.0025f;
     stroke = glm::vec4(0, 0, 0, 1);
     fill = glm::vec4(0.5, 0.5, 0.5, 1);
+
+    lines.element_type = GL_LINES;
   }
 
   void TextEngineRenderer::Render() {
@@ -123,23 +130,31 @@ namespace textengine {
 
     PushMatrix();
     matrix_stack.back() *= glm::scale(glm::mat4(1), glm::vec3(glm::vec2(0.01f), 1.0f));
+    matrix_stack.back() *= glm::translate(glm::mat4(1), glm::vec3(-current_state.camera_position, 0));
 
     const glm::vec2 position = glm::vec2(current_state.player_body->GetPosition().x,
                                          current_state.player_body->GetPosition().y);
 
-    DrawCircle(position, 1);
-    DrawRectangle(glm::vec2(1, 0), glm::vec2(10));
+    fill = glm::vec4(0.0f, 0.5f, 0.3f, 0.5f);
+    for (auto &area : scene.areas) {
+      DrawAxisAlignedBoundingBox(area->aabb);
+    }
+    fill = glm::vec4(1.0f, 0.0f, 0.0f, 0.5f);
+    for (auto &object : scene.objects) {
+      DrawCircle(object->position, 0.5f);
+    }
+
+    fill = glm::vec4(0.5f, 0.5f, 0.6f, 1.0f);
+    PushMatrix();
+    matrix_stack.back() *= glm::translate(glm::mat4(1), glm::vec3(position, 0));
+    matrix_stack.back() *= glm::rotate(glm::mat4(1),
+                                       glm::degrees(current_state.player_body->GetAngle()),
+                                       glm::vec3(0, 0, 1));
+    DrawRectangle(glm::vec2(0), glm::vec2(1, 2));
     PopMatrix();
 
-//    const glm::vec2 position = glm::vec2(current_state.player_body->GetPosition().x,
-//                                         current_state.player_body->GetPosition().y);
-//
-//    model_view = glm::scale(glm::mat4(), glm::vec3(1.0f)) * glm::translate(glm::mat4(), glm::vec3(-current_state.camera_position, 0.0f));
-//
-//    const float angle = current_state.player_body->GetAngle();
-//    const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(position, 0.0f)) *
-//                                                      glm::rotate(glm::mat4(), glm::degrees(angle), glm::vec3(0, 0, 1)) *
-//                                                      glm::scale(glm::mat4(), glm::vec3(0.01f)));
+    DrawLines();
+    PopMatrix();
   }
 
   void TextEngineRenderer::DrawAxisAlignedBoundingBox(AxisAlignedBoundingBox aabb) {
@@ -165,6 +180,19 @@ namespace textengine {
     glDrawArrays(unit_circle.element_type, 0, unit_circle.element_count);
     CHECK_STATE(!glGetError());
 
+    PopMatrix();
+  }
+
+  void TextEngineRenderer::DrawLine(glm::vec2 begin, glm::vec2 end) {
+    lines.data.insert(lines.data.cend(), {
+      begin.x, begin.y,
+      end.x, end.y
+    });
+    lines.element_count += 2;
+  }
+
+  void TextEngineRenderer::DrawLines() {
+    line_buffer.Data(lines.data_size(), lines.data.data(), GL_STREAM_DRAW);
     edge_program.Use();
     edge_program.Uniforms({
       {u8"projection", &projection},
@@ -177,11 +205,11 @@ namespace textengine {
       {u8"inverse_aspect_ratio", inverse_aspect_ratio},
       {u8"line_width", stroke_width}
     });
-    circle_edge_array.Bind();
-    glDrawArrays(unit_circle_border.element_type, 0, unit_circle_border.element_count);
-    CHECK_STATE(!glGetError());
-    
-    PopMatrix();
+    line_array.Bind();
+    glDrawArrays(lines.element_type, 0, lines.element_count);
+
+    lines.data.clear();
+    lines.element_count = 0;
   }
 
   void TextEngineRenderer::DrawRectangle(glm::vec2 center, glm::vec2 dimensions) {
@@ -199,22 +227,6 @@ namespace textengine {
     });
     rectangle_array.Bind();
     glDrawArrays(unit_square.element_type, 0, unit_square.element_count);
-    CHECK_STATE(!glGetError());
-
-    edge_program.Use();
-    edge_program.Uniforms({
-      {u8"projection", &projection},
-      {u8"model_view", &matrix_stack.back()}
-    });
-    edge_program.Uniforms({
-      {u8"color", stroke}
-    });
-    edge_program.Uniforms({
-      {u8"inverse_aspect_ratio", inverse_aspect_ratio},
-      {u8"line_width", stroke_width}
-    });
-    rectangle_edge_array.Bind();
-    glDrawArrays(unit_square_border.element_type, 0, unit_square_border.element_count);
     CHECK_STATE(!glGetError());
 
     PopMatrix();
