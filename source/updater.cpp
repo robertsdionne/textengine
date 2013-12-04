@@ -3,7 +3,6 @@
 #include <OpenAL/alc.h>
 #include <algorithm>
 #include <cmath>
-#include <fftw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/noise.hpp>
 #include <limits>
