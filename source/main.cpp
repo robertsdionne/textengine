@@ -10,6 +10,8 @@
 #include "mesh.h"
 #include "meshloader.h"
 #include "mouse.h"
+#include "scene.h"
+#include "sceneloader.h"
 #include "subjectivemeshrenderer.h"
 #include "synchronizedqueue.h"
 #include "textenginerenderer.h"
@@ -28,6 +30,15 @@ int main(int argument_count, char *arguments[]) {
   textengine::Mouse mouse;
   textengine::Input input{joystick, keyboard, mouse};
   textengine::SynchronizedQueue command_queue, reply_queue;
+  textengine::Scene scene;
+  textengine::SceneLoader scene_loader;
+  scene = scene_loader.ReadScene("../resource/messages.json");
+  for (auto &area : scene.areas) {
+    std::cout << area->name << std::endl;
+  }
+  for (auto &object : scene.objects) {
+    std::cout << object->name << std::endl;
+  }
   textengine::Mesh mesh;
   textengine::MeshLoader loader;
   mesh = loader.ReadMesh(filename);

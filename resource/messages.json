@@ -19,12 +19,12 @@
   "objects": {
     "red tree": {
       "description": "You see a big red tree.",
-      "position": {"x": 0.0, "y": 0.0},
       "messages": {
         "touch": [
           "You touch the red tree."
         ]
-      }
+      },
+      "position": {"x": 0.0, "y": 0.0}
     }
   }
 }

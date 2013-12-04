@@ -952,6 +952,10 @@
 		4684307F183EBF110037B268 /* vrank-geq1-rdft2.c in Sources */ = {isa = PBXBuildFile; fileRef = 46842930183EAB540037B268 /* vrank-geq1-rdft2.c */; };
 		4687E30B1833C0DC00128A85 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 46074B02180F316700823E55 /* libz.dylib */; };
 		468E01471783DFA100301C1C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01461783DFA100301C1C /* IOKit.framework */; };
+		469FFA88184EF3300074DA75 /* sceneserializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469FFA86184EF3300074DA75 /* sceneserializer.cpp */; };
+		469FFA8B184EF3620074DA75 /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469FFA89184EF3620074DA75 /* scene.cpp */; };
+		469FFA8C184EF3620074DA75 /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469FFA89184EF3620074DA75 /* scene.cpp */; };
+		469FFA8D184EF8370074DA75 /* sceneloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469FFA83184EF3270074DA75 /* sceneloader.cpp */; };
 		46A11D39181964B700105526 /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A11D37181964B600105526 /* log.cpp */; };
 		46A1F26818333F40002C21FE /* libgltext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46B25900183333B9003584B6 /* libgltext.a */; };
 		46A73D3E183137CC009F8B77 /* drawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A73D3D183137CC009F8B77 /* drawable.cpp */; };
@@ -5703,6 +5707,12 @@
 		468E01461783DFA100301C1C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		468E014E1783E9BD00301C1C /* base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base.h; sourceTree = "<group>"; };
 		469FFA82184EEE900074DA75 /* messages.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = messages.json; sourceTree = "<group>"; };
+		469FFA83184EF3270074DA75 /* sceneloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sceneloader.cpp; sourceTree = "<group>"; };
+		469FFA84184EF3270074DA75 /* sceneloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sceneloader.h; sourceTree = "<group>"; };
+		469FFA86184EF3300074DA75 /* sceneserializer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sceneserializer.cpp; sourceTree = "<group>"; };
+		469FFA87184EF3300074DA75 /* sceneserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sceneserializer.h; sourceTree = "<group>"; };
+		469FFA89184EF3620074DA75 /* scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = scene.cpp; sourceTree = "<group>"; };
+		469FFA8A184EF3620074DA75 /* scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scene.h; sourceTree = "<group>"; };
 		46A11D37181964B600105526 /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = log.cpp; sourceTree = "<group>"; };
 		46A11D38181964B700105526 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
 		46A73D3D183137CC009F8B77 /* drawable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawable.cpp; sourceTree = "<group>"; };
@@ -13390,6 +13400,12 @@
 				4600B2AB183D5349008404CA /* raycast.cpp */,
 				4600B2AC183D5349008404CA /* raycast.h */,
 				46B9875817E6A62500B59145 /* renderer.h */,
+				469FFA89184EF3620074DA75 /* scene.cpp */,
+				469FFA8A184EF3620074DA75 /* scene.h */,
+				469FFA83184EF3270074DA75 /* sceneloader.cpp */,
+				469FFA84184EF3270074DA75 /* sceneloader.h */,
+				469FFA86184EF3300074DA75 /* sceneserializer.cpp */,
+				469FFA87184EF3300074DA75 /* sceneserializer.h */,
 				462B4A5E17EA43AA006FE9BB /* shader.cpp */,
 				462B4A5F17EA43AA006FE9BB /* shader.h */,
 				461717FF1826A9D20070ABED /* shaders.h */,
@@ -15103,8 +15119,10 @@
 				460F81B317EA1C3B00D765F5 /* keyboard.cpp in Sources */,
 				462B4A6417EA43AA006FE9BB /* vertexarray.cpp in Sources */,
 				46FBD343180F572400F7C5F8 /* websocketprompt.cpp in Sources */,
+				469FFA8B184EF3620074DA75 /* scene.cpp in Sources */,
 				462B4A6517EA43AA006FE9BB /* shader.cpp in Sources */,
 				462B4A6617EA43AA006FE9BB /* program.cpp in Sources */,
+				469FFA8D184EF8370074DA75 /* sceneloader.cpp in Sources */,
 				46FBD346180F6F7600F7C5F8 /* synchronizedqueue.cpp in Sources */,
 				46FBD349180F76BE00F7C5F8 /* console.cpp in Sources */,
 				460FFA321810634C0053F813 /* vertexformat.cpp in Sources */,
@@ -15128,6 +15146,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				469FFA88184EF3300074DA75 /* sceneserializer.cpp in Sources */,
+				469FFA8C184EF3620074DA75 /* scene.cpp in Sources */,
 				464A57F6181B0D8300FAF563 /* exporter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
