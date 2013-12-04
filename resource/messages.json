@@ -1,0 +1,30 @@
+{
+  "areas": {
+    "field": {
+      "aabb": {
+        "minimum": {"x": -5.0, "y": -5.0},
+        "maximum": {"x": 5.0, "y": 5.0}
+      },
+      "description": "You are standing in a field.",
+      "messages": {
+        "enter": [
+          "You entered the field."
+        ],
+        "exit": [
+          "You exited the field."
+        ]
+      }
+    }
+  },
+  "objects": {
+    "red tree": {
+      "description": "You see a big red tree.",
+      "position": {"x": 0.0, "y": 0.0},
+      "messages": {
+        "touch": [
+          "You touch the red tree."
+        ]
+      }
+    }
+  }
+}

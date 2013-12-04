@@ -5702,6 +5702,7 @@
 		468E01441783DF9200301C1C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		468E01461783DFA100301C1C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		468E014E1783E9BD00301C1C /* base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base.h; sourceTree = "<group>"; };
+		469FFA82184EEE900074DA75 /* messages.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = messages.json; sourceTree = "<group>"; };
 		46A11D37181964B600105526 /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = log.cpp; sourceTree = "<group>"; };
 		46A11D38181964B700105526 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
 		46A73D3D183137CC009F8B77 /* drawable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawable.cpp; sourceTree = "<group>"; };
@@ -14374,6 +14375,7 @@
 				4630C609183EC90E000071AA /* cave.json */,
 				46FBD33A180F339400F7C5F8 /* client.js */,
 				46FBD339180F338300F7C5F8 /* index.html */,
+				469FFA82184EEE900074DA75 /* messages.json */,
 				46FBD34A180F897100F7C5F8 /* output.json */,
 				46FBD34B180F897100F7C5F8 /* output2.json */,
 				4630C5FC183EC90E000071AA /* sound */,
@@ -16758,6 +16760,7 @@
 				4630C626183ED5F1000071AA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		463E3D5E1767FB9000A4466B /* Build configuration list for PBXProject "textengine" */ = {
 			isa = XCConfigurationList;
