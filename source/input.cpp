@@ -50,9 +50,9 @@ namespace textengine {
 
   void Input::Update() {
     joystick_primary_axes = glm::vec2(joystick.GetAxis(Joystick::Axis::kLeftX),
-                                      -joystick.GetAxis(Joystick::Axis::kLeftY));
+                                      joystick.GetAxis(Joystick::Axis::kLeftY));
     joystick_secondary_axes = glm::vec2(joystick.GetAxis(Joystick::Axis::kRightX),
-                                        -joystick.GetAxis(Joystick::Axis::kRightY));
+                                        joystick.GetAxis(Joystick::Axis::kRightY));
     auto keyboard_primary_axes = (glm::vec2(keyboard.IsKeyDown(GLFW_KEY_D),
                                                   keyboard.IsKeyDown(GLFW_KEY_W)) -
                                         glm::vec2(keyboard.IsKeyDown(GLFW_KEY_A),
