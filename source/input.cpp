@@ -18,8 +18,7 @@ namespace textengine {
   glm::vec2 Input::GetPrimaryAxes() const {
     const auto result = ArgMax({
       joystick_primary_axes,
-      keyboard_primary_smoothed_axes,
-      mouse_primary_smoothed_axes
+      keyboard_primary_smoothed_axes
     });
     return glm::length(result) > 0.1f ? result : glm::vec2();
   }
@@ -42,8 +41,7 @@ namespace textengine {
   float Input::GetTriggerVelocity() const {
     const auto result = ArgMax({
       joystick.GetButtonVelocity(Joystick::Button::kR1),
-      keyboard.GetKeyVelocity(GLFW_KEY_SPACE),
-      mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1)
+      keyboard.GetKeyVelocity(GLFW_KEY_SPACE)
     });
     return result;
   }
