@@ -39,7 +39,9 @@ namespace textengine {
     Program edge_program, face_program, point_program;
     VertexFormat vertex_format;
     VertexArray player_array, player_edge_array, player_view_array, shots_array, npc_array, npc_edge_array;
+    VertexArray criminal_array, criminal_edge_array;
     Buffer player_buffer, player_edge_buffer, player_view_buffer, shots_buffer, npc_buffer, npc_edge_buffer;
+    Buffer criminal_buffer, criminal_edge_buffer;
 
     glm::mat4 model_view, projection;
     gltext::Font font;

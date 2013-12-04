@@ -47,6 +47,33 @@ namespace textengine {
     return buffer;
   }
 
+  void Updater::BeginContact(b2Contact* contact) {
+    if (contact->GetFixtureA()->GetBody() == current_state.player_body) {
+      if (contact->GetFixtureB()->GetBody() != current_state.boundary) {
+        bool criminal = *reinterpret_cast<bool *>(contact->GetFixtureB()->GetBody()->GetUserData());
+        if (criminal) {
+          std::cout << "Player hit criminal." << std::endl;
+        } else {
+          std::cout << "Player hit pedestrian." << std::endl;
+        }
+      }
+    }
+    if (contact->GetFixtureB()->GetBody() == current_state.player_body) {
+      if (contact->GetFixtureA()->GetBody() != current_state.boundary) {
+        bool criminal = *reinterpret_cast<bool *>(contact->GetFixtureA()->GetBody()->GetUserData());
+        if (criminal) {
+          std::cout << "Player hit criminal." << std::endl;
+        } else {
+          std::cout << "Player hit pedestrian." << std::endl;
+        }
+      }
+    }
+  }
+
+  void Updater::EndContact(b2Contact* contact) {
+
+  }
+
   void Updater::Setup() {
     shoot[0] = ReadSoundFile("../resource/sound/shoot00.ogg");
     shoot[1] = ReadSoundFile("../resource/sound/shoot01.ogg");
@@ -115,6 +142,8 @@ namespace textengine {
     alSourcef(ricochet_source, AL_REFERENCE_DISTANCE, 0.25f);
     alDistanceModel(AL_EXPONENT_DISTANCE);
     CHECK_STATE(!alGetError());
+
+    current_state.world.SetContactListener(this);
 
     CalculateDistanceTo("Staircase", distances_to_staircase);
     CalculateDistanceTo("East Platform Edge", distances_to_east_platform_edge);
@@ -204,188 +233,176 @@ namespace textengine {
     auto position = glm::vec2(current_state.player_body->GetPosition().x,
                               current_state.player_body->GetPosition().y);
 
-//    if (glm::length(offset) > 0.0 || input.GetTriggerVelocity() > 0.0) {
+    if (glm::length(offset) > 0.0 || input.GetTriggerVelocity() > 0.0) {
 
-    current_state.world.ClearForces();
-    auto velocity = current_state.player_body->GetLinearVelocity();
-    const auto force = 10.0f * current_state.player_body->GetMass();
-    constexpr auto kMaxVelocity = 0.25f;
-    current_state.player_body->ApplyForceToCenter(force * b2Vec2(offset.x, offset.y), true);
-    if (glm::length(offset2) > 0.1f) {
-      current_state.target_angle = glm::atan(offset2.y, offset2.x);
-    } else if (glm::length(offset) > 0.1f) {
-      current_state.target_angle = glm::atan(offset.y, offset.x);
-    }
-    auto angle = current_state.player_body->GetAngle();
-    while (current_state.target_angle - angle > M_PI) {
-      current_state.target_angle -= 2.0f * M_PI;
-    }
-    while (current_state.target_angle - angle < -M_PI) {
-      current_state.target_angle += 2.0f * M_PI;
-    }
-    angle = glm::mix(angle, current_state.target_angle, 0.25f);
-    current_state.player_body->SetTransform(current_state.player_body->GetPosition(), angle);
-    if (velocity.Length() > kMaxVelocity) {
-      velocity.Normalize();
-      velocity *= kMaxVelocity;
-      current_state.player_body->SetLinearVelocity(velocity);
-    }
-
-    const auto now = std::chrono::high_resolution_clock::now();
-
-    for (auto rat : current_state.rats) {
-      auto current_face = mesh.FindFaceThatContainsPoint(glm::vec2(rat->GetPosition().x, rat->GetPosition().y));
-      if (current_face && current_face->room_info && (current_face->room_info->name == "Staircase" ||
-                                                      current_face->room_info->name == "Tracks")) {
-        Mesh::Face *face = nullptr;
-        while (!face || face->room_info) {
-           face = mesh.get_faces()[index_distribution(generator) % mesh.get_faces().size()].get();
-        }
-        auto centroid = face->centroid();
-        rat->SetTransform(b2Vec2(centroid.x, centroid.y), rat->GetAngle());
-        rat->SetLinearVelocity(b2Vec2(0, 0));
+      current_state.world.ClearForces();
+      auto velocity = current_state.player_body->GetLinearVelocity();
+      const auto force = 10.0f * current_state.player_body->GetMass();
+      constexpr auto kMaxVelocity = 0.25f;
+      current_state.player_body->ApplyForceToCenter(force * b2Vec2(offset.x, offset.y), true);
+      if (glm::length(offset2) > 0.1f) {
+        current_state.target_angle = glm::atan(offset2.y, offset2.x);
+      } else if (glm::length(offset) > 0.1f) {
+        current_state.target_angle = glm::atan(offset.y, offset.x);
       }
-    }
+      auto angle = current_state.player_body->GetAngle();
+      while (current_state.target_angle - angle > M_PI) {
+        current_state.target_angle -= 2.0f * M_PI;
+      }
+      while (current_state.target_angle - angle < -M_PI) {
+        current_state.target_angle += 2.0f * M_PI;
+      }
+      angle = glm::mix(angle, current_state.target_angle, 0.25f);
+      current_state.player_body->SetTransform(current_state.player_body->GetPosition(), angle);
+      if (velocity.Length() > kMaxVelocity) {
+        velocity.Normalize();
+        velocity *= kMaxVelocity;
+        current_state.player_body->SetLinearVelocity(velocity);
+      }
 
-    auto index = 0;
-    for (auto rat : current_state.rats) {
-      auto current_face = mesh.FindFaceThatContainsPoint(glm::vec2(rat->GetPosition().x, rat->GetPosition().y));
-      float minimum = std::numeric_limits<float>::max();
-      Mesh::Face *argmin = nullptr;
-      if (current_face) {
-        current_face->ForEachConnectedFace([&] (Mesh::Face *face) {
-          if (distances_to_staircase[face] < minimum) {
-            minimum = distances_to_staircase[face];
-            argmin = face;
+      const auto now = std::chrono::high_resolution_clock::now();
+
+      for (auto rat : current_state.rats) {
+        auto current_face = mesh.FindFaceThatContainsPoint(glm::vec2(rat->GetPosition().x, rat->GetPosition().y));
+        if (current_face && current_face->room_info && (current_face->room_info->name == "Staircase" ||
+                                                        current_face->room_info->name == "Tracks")) {
+          Mesh::Face *face = nullptr;
+          while (!face || face->room_info) {
+            face = mesh.get_faces()[index_distribution(generator) % mesh.get_faces().size()].get();
           }
-        });
-      }
-      auto steer = b2Vec2(0, 0);
-      if (argmin) {
-        auto position = glm::vec2(rat->GetPosition().x, rat->GetPosition().y);
-        auto direction = glm::normalize(argmin->centroid() - position);
-        auto desired_velocity = 0.5f * b2Vec2(direction.x, direction.y);
-        steer = rat->GetMass() * (desired_velocity - rat->GetLinearVelocity());
-      }
-      rat->ApplyForceToCenter(steer, true);
-
-      auto average_velocity = b2Vec2(0, 0);
-      auto average_position = b2Vec2(0, 0);
-      auto average_avoid = b2Vec2(0, 0);
-      auto count = 0.0f;
-      auto avoid_count = 0.0f;
-
-      for (auto other : current_state.rats) {
-        if (other != rat && (other->GetPosition() - rat->GetPosition()).Length() < 0.05) {
-          average_velocity += other->GetLinearVelocity();
-          average_position += other->GetPosition();
-          ++count;
+          auto centroid = face->centroid();
+          rat->SetTransform(b2Vec2(centroid.x, centroid.y), rat->GetAngle());
+          rat->SetLinearVelocity(b2Vec2(0, 0));
+          if (distribution(generator) < 0.02f) {
+            *reinterpret_cast<bool *>(rat->GetUserData()) = true;
+          } else {
+            *reinterpret_cast<bool *>(rat->GetUserData()) = false;
+          }
         }
-        if (other != rat && (other->GetPosition() - rat->GetPosition()).Length() < 0.025) {
-          auto avoid = rat->GetPosition() - other->GetPosition();
+      }
+
+      auto index = 0;
+      for (auto rat : current_state.rats) {
+        auto current_face = mesh.FindFaceThatContainsPoint(glm::vec2(rat->GetPosition().x, rat->GetPosition().y));
+        float minimum = std::numeric_limits<float>::max();
+        Mesh::Face *argmin = nullptr;
+        if (current_face) {
+          current_face->ForEachConnectedFace([&] (Mesh::Face *face) {
+            if (distances_to_staircase[face] < minimum) {
+              minimum = distances_to_staircase[face];
+              argmin = face;
+            }
+          });
+        }
+        auto steer = b2Vec2(0, 0);
+        if (argmin) {
+          auto position = glm::vec2(rat->GetPosition().x, rat->GetPosition().y);
+          auto direction = glm::normalize(argmin->centroid() - position);
+          auto desired_velocity = 0.5f * b2Vec2(direction.x, direction.y);
+          steer = rat->GetMass() * (desired_velocity - rat->GetLinearVelocity());
+        }
+        rat->ApplyForceToCenter(steer, true);
+
+        auto average_velocity = b2Vec2(0, 0);
+        auto average_position = b2Vec2(0, 0);
+        auto average_avoid = b2Vec2(0, 0);
+        auto count = 0.0f;
+        auto avoid_count = 0.0f;
+
+        for (auto other : current_state.rats) {
+          if (other != rat && (other->GetPosition() - rat->GetPosition()).Length() < 0.05) {
+            average_velocity += other->GetLinearVelocity();
+            average_position += other->GetPosition();
+            ++count;
+          }
+          if (other != rat && (other->GetPosition() - rat->GetPosition()).Length() < 0.025) {
+            auto avoid = rat->GetPosition() - other->GetPosition();
+            avoid.Normalize();
+            average_avoid += avoid;
+            ++avoid_count;
+          }
+        }
+        auto steer1 = b2Vec2(0, 0);
+        auto steer2 = b2Vec2(0, 0);
+        auto steer3 = b2Vec2(0, 0);
+        auto steer4 = b2Vec2(0, 0);
+        auto steer5 = b2Vec2(0, 0);
+        if ((current_state.player_body->GetPosition() - rat->GetPosition()).Length() < 0.025) {
+          auto avoid = rat->GetPosition() - current_state.player_body->GetPosition();
           avoid.Normalize();
-          average_avoid += avoid;
-          ++avoid_count;
+          steer5 = rat->GetMass() * (avoid - velocity);
         }
-      }
-      auto steer1 = b2Vec2(0, 0);
-      auto steer2 = b2Vec2(0, 0);
-      auto steer3 = b2Vec2(0, 0);
-      auto steer4 = b2Vec2(0, 0);
-      auto steer5 = b2Vec2(0, 0);
-      if ((current_state.player_body->GetPosition() - rat->GetPosition()).Length() < 0.025) {
-        auto avoid = rat->GetPosition() - current_state.player_body->GetPosition();
-        avoid.Normalize();
-        steer5 = rat->GetMass() * (avoid - velocity);
-      }
-      auto velocity = rat->GetLinearVelocity();
-      if (count > 0) {
-        average_velocity = 1.0f / count * average_velocity;
-        average_position = 1.0f / count * average_position;
-        average_velocity.Normalize();
-        average_velocity *= 0.25f;
-        steer1 = rat->GetMass() * (average_velocity - velocity);
-        auto desired = average_position - rat->GetPosition();
-        desired.Normalize();
-        desired *= 0.25f;
-        auto steer2 = rat->GetMass() * (desired - velocity);
-      }
-      if (avoid_count > 0) {
-        average_avoid = 1.0f / avoid_count * average_avoid;
-        average_avoid.Normalize();
-        average_avoid *= 0.25f;
-        steer3 = rat->GetMass() * (average_avoid - velocity);
-      }
-      float t = std::chrono::duration_cast<std::chrono::duration<float>>(now.time_since_epoch()).count();
-      if (count == 0) {
-        auto direction = glm::vec2(glm::simplex(glm::vec3(t, index, 0)), glm::simplex(glm::vec3(t, index, 1)));
-        if (glm::length(direction) > 0) {
-          direction = 0.5f * glm::normalize(direction);
+        auto velocity = rat->GetLinearVelocity();
+        if (count > 0) {
+          average_velocity = 1.0f / count * average_velocity;
+          average_position = 1.0f / count * average_position;
+          average_velocity.Normalize();
+          average_velocity *= 0.25f;
+          steer1 = rat->GetMass() * (average_velocity - velocity);
+          auto desired = average_position - rat->GetPosition();
+          desired.Normalize();
+          desired *= 0.25f;
+          auto steer2 = rat->GetMass() * (desired - velocity);
         }
-        steer4 = rat->GetMass() * (b2Vec2(direction.x, direction.y) - velocity);
-      } else {
-        auto direction = glm::vec2(glm::simplex(glm::vec3(t, index, 0)), glm::simplex(glm::vec3(t, index, 1)));
-        if (glm::length(direction) > 0) {
-          direction = 0.5f * glm::normalize(direction);
+        if (avoid_count > 0) {
+          average_avoid = 1.0f / avoid_count * average_avoid;
+          average_avoid.Normalize();
+          average_avoid *= 0.25f;
+          steer3 = rat->GetMass() * (average_avoid - velocity);
         }
-        steer4 = 0.25f * rat->GetMass() * (b2Vec2(direction.x, direction.y) - velocity);
+        float t = std::chrono::duration_cast<std::chrono::duration<float>>(now.time_since_epoch()).count();
+        if (count == 0) {
+          auto direction = glm::vec2(glm::simplex(glm::vec3(t, index, 0)), glm::simplex(glm::vec3(t, index, 1)));
+          if (glm::length(direction) > 0) {
+            direction = 0.5f * glm::normalize(direction);
+          }
+          steer4 = rat->GetMass() * (b2Vec2(direction.x, direction.y) - velocity);
+        } else {
+          auto direction = glm::vec2(glm::simplex(glm::vec3(t, index, 0)), glm::simplex(glm::vec3(t, index, 1)));
+          if (glm::length(direction) > 0) {
+            direction = 0.5f * glm::normalize(direction);
+          }
+          steer4 = 0.25f * rat->GetMass() * (b2Vec2(direction.x, direction.y) - velocity);
+        }
+        auto angle = glm::atan((steer + 2.0f * steer1 + steer2 + steer3 + steer4 + 5.0f * steer5).y, (steer + 2.0f * steer1 + steer2 + steer3 + steer4 + 5.0f * steer5).x);
+        auto desired_angular_velocity = angle - rat->GetAngle();
+        while (angle - rat->GetAngle() > M_PI) {
+          angle -= 2.0f * M_PI;
+        }
+        while (angle - rat->GetAngle() < -M_PI) {
+          angle += 2.0f * M_PI;
+        }
+        rat->SetTransform(rat->GetPosition(), glm::mix(rat->GetAngle(), angle, 0.05f));
+        rat->ApplyForceToCenter(2.0f * steer1 + steer2 + steer3 + steer4 + 5.0f * steer5, true);
+        ++index;
       }
-      auto angle = glm::atan((steer + 2.0f * steer1 + steer2 + steer3 + steer4 + 5.0f * steer5).y, (steer + 2.0f * steer1 + steer2 + steer3 + steer4 + 5.0f * steer5).x);
-      auto desired_angular_velocity = angle - rat->GetAngle();
-      while (angle - rat->GetAngle() > M_PI) {
-        angle -= 2.0f * M_PI;
+
+      current_state.shots.clear();
+      //    auto remove = [now] (GameState::Shot &shot) {
+      //      return now > shot.death;
+      //    };
+      //    current_state.shots.erase(std::remove_if(current_state.shots.begin(),
+      //                                             current_state.shots.end(), remove),
+      //                              current_state.shots.end());
+
+      if (input.GetTriggerVelocity() > 0.0f) {
+        current_state.flashlight_on = !current_state.flashlight_on;
       }
-      while (angle - rat->GetAngle() < -M_PI) {
-        angle += 2.0f * M_PI;
-      }
-      rat->SetTransform(rat->GetPosition(), glm::mix(rat->GetAngle(), angle, 0.05f));
-      rat->ApplyForceToCenter(2.0f * steer1 + steer2 + steer3 + steer4 + 5.0f * steer5, true);
-      ++index;
-    }
+      if (current_state.flashlight_on) {
+        for (auto i = 0; i < 200; ++i) {
 
-    current_state.shots.clear();
-    //    auto remove = [now] (GameState::Shot &shot) {
-    //      return now > shot.death;
-    //    };
-    //    current_state.shots.erase(std::remove_if(current_state.shots.begin(),
-    //                                             current_state.shots.end(), remove),
-    //                              current_state.shots.end());
+          //      alSourceStop(shoot_source);
+          //      alSourcei(shoot_source, AL_BUFFER, shoot[shoot_index++ % 11]);
+          //      CHECK_STATE(!alGetError());
+          //      alSource3f(shoot_source, AL_POSITION, 10.0f * position.x, 10.0f * position.y , 0.0f);
+          //      alSourcePlay(shoot_source);
 
-    if (input.GetTriggerVelocity() > 0.0f) {
-      current_state.flashlight_on = !current_state.flashlight_on;
-    }
-    if (current_state.flashlight_on) {
-      for (auto i = 0; i < 200; ++i) {
-
-        //      alSourceStop(shoot_source);
-        //      alSourcei(shoot_source, AL_BUFFER, shoot[shoot_index++ % 11]);
-        //      CHECK_STATE(!alGetError());
-        //      alSource3f(shoot_source, AL_POSITION, 10.0f * position.x, 10.0f * position.y , 0.0f);
-        //      alSourcePlay(shoot_source);
-
-        auto start = b2Vec2(position.x, position.y);
-        auto error = 0.25f * (distribution(generator) + distribution(generator) - 1.0f);
-        auto direction = b2Vec2(glm::cos(angle + error), glm::sin(angle + error));
-        auto end = start + direction;
-        auto intensity = 1.0f;
-        RayCast raycast;
-        current_state.world.RayCast(&raycast, start, end);
-        current_state.shots.push_back({
-          glm::vec2(start.x, start.y),
-          raycast.point,
-          now + std::chrono::seconds(1),
-          intensity
-        });
-        auto n = 0;
-        while (glm::abs(direction.x * raycast.normal.x + direction.y * raycast.normal.y) < 1.0f && n < 3) {
-          intensity *= 0.5f;
-          const auto dir = glm::reflect(glm::vec2(direction.x, direction.y), raycast.normal);
+          auto start = b2Vec2(position.x, position.y);
           auto error = 0.25f * (distribution(generator) + distribution(generator) - 1.0f);
-          const auto st = raycast.point + dir * 1e-5f;
-          const auto ang = glm::atan(dir.y, dir.x) + error;
-          start = b2Vec2(st.x, st.y);
-          direction = b2Vec2(glm::cos(ang + error), glm::sin(ang + error));
-          end = start + direction;
+          auto direction = b2Vec2(glm::cos(angle + error), glm::sin(angle + error));
+          auto end = start + direction;
+          auto intensity = 1.0f;
+          RayCast raycast;
           current_state.world.RayCast(&raycast, start, end);
           current_state.shots.push_back({
             glm::vec2(start.x, start.y),
@@ -393,34 +410,49 @@ namespace textengine {
             now + std::chrono::seconds(1),
             intensity
           });
-          ++n;
-          //          alSourceStop(ricochet_source);
-          //          alSourcei(ricochet_source, AL_BUFFER, ricochet[ricochet_index++ % 11]);
-          //          CHECK_STATE(!alGetError());
-          //          alSource3f(ricochet_source, AL_POSITION, 10.0f * raycast.point.x, 10.0f * raycast.point.y , 0.0f);
-          //          alSourcePlay(ricochet_source);
+          auto n = 0;
+          while (glm::abs(direction.x * raycast.normal.x + direction.y * raycast.normal.y) < 1.0f && n < 3) {
+            intensity *= 0.5f;
+            const auto dir = glm::reflect(glm::vec2(direction.x, direction.y), raycast.normal);
+            auto error = 0.25f * (distribution(generator) + distribution(generator) - 1.0f);
+            const auto st = raycast.point + dir * 1e-5f;
+            const auto ang = glm::atan(dir.y, dir.x) + error;
+            start = b2Vec2(st.x, st.y);
+            direction = b2Vec2(glm::cos(ang + error), glm::sin(ang + error));
+            end = start + direction;
+            current_state.world.RayCast(&raycast, start, end);
+            current_state.shots.push_back({
+              glm::vec2(start.x, start.y),
+              raycast.point,
+              now + std::chrono::seconds(1),
+              intensity
+            });
+            ++n;
+            //          alSourceStop(ricochet_source);
+            //          alSourcei(ricochet_source, AL_BUFFER, ricochet[ricochet_index++ % 11]);
+            //          CHECK_STATE(!alGetError());
+            //          alSource3f(ricochet_source, AL_POSITION, 10.0f * raycast.point.x, 10.0f * raycast.point.y , 0.0f);
+            //          alSourcePlay(ricochet_source);
+          }
+          //        alSourceStop(shoot_source);
+          //        alSourcei(shoot_source, AL_BUFFER, shoot[shoot_index++ % 11]);
+          //        CHECK_STATE(!alGetError());
+          //        alSource3f(shoot_source, AL_POSITION, 10.0f * raycast.point.x, 10.0f * raycast.point.y , 0.0f);
+          //        alSourcePlay(shoot_source);
         }
-        //        alSourceStop(shoot_source);
-        //        alSourcei(shoot_source, AL_BUFFER, shoot[shoot_index++ % 11]);
-        //        CHECK_STATE(!alGetError());
-        //        alSource3f(shoot_source, AL_POSITION, 10.0f * raycast.point.x, 10.0f * raycast.point.y , 0.0f);
-        //        alSourcePlay(shoot_source);
       }
+      
+      float orientation[] = {
+        0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f
+      };
+      alListener3f(AL_POSITION, 10.0f * position.x, 10.0f * position.y, 1.5f);
+      alListener3f(AL_VELOCITY, 10.0f * velocity.x, 10.0f * velocity.y, 0.0f);
+      alListenerfv(AL_ORIENTATION, orientation);
+      CHECK_STATE(!alGetError());
+      
+      current_state.world.Step(dt, 8, 3);
     }
-
-    float orientation[] = {
-      0.0f, 1.0f, 0.0f,
-      0.0f, 0.0f, 1.0f
-    };
-    alListener3f(AL_POSITION, 10.0f * position.x, 10.0f * position.y, 1.5f);
-    alListener3f(AL_VELOCITY, 10.0f * velocity.x, 10.0f * velocity.y, 0.0f);
-    alListenerfv(AL_ORIENTATION, orientation);
-    CHECK_STATE(!alGetError());
-
-
-
-    current_state.world.Step(dt, 8, 3);
-//    }
     current_state.camera_position = glm::mix(current_state.camera_position, position + 0.25f * offset2, 2e-2f / 0.016f * dt);
   }
 

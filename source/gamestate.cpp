@@ -62,6 +62,9 @@ namespace textengine {
       rat_body_definition.position.Set(centroid.x, centroid.y);
       rats.push_back(world.CreateBody(&rat_body_definition));
       rats.back()->CreateFixture(&player_fixture_definition);
+      bool *data = new bool;
+      *data = false;
+      rats.back()->SetUserData(data);
     }
   }
 

@@ -1,6 +1,7 @@
 #ifndef TEXTENGINE_UPDATER_H_
 #define TEXTENGINE_UPDATER_H_
 
+#include <Box2D/Box2D.h>
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 #include <chrono>
@@ -18,7 +19,7 @@ namespace textengine {
   class Mesh;
   class SynchronizedQueue;
 
-  class Updater : public Controller {
+  class Updater : public Controller, public b2ContactListener {
   public:
     Updater(SynchronizedQueue &command_queue,
             SynchronizedQueue &reply_queue, Log &playtest_log,
@@ -27,6 +28,10 @@ namespace textengine {
     virtual ~Updater() = default;
 
     GameState &GetCurrentState();
+
+	virtual void BeginContact(b2Contact* contact);
+
+	virtual void EndContact(b2Contact* contact);
 
     virtual void Setup() override;
 

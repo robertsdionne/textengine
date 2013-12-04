@@ -43,13 +43,16 @@ namespace textengine {
     point_program.Create({&vertex_shader, &point_geometry_shader, &fragment_shader});
     point_program.CompileAndLink();
 
+    auto player_r = 0.0f;
+    auto player_g = 0.0f;
+    auto player_b = 0.7f;
     float player_data[] = {
-      1.0f, -2.0f, 0.0f, 0.0f, 0.7f, 1.0f,
-      -1.0f, 2.0f, 0.0f, 0.0f, 0.7f, 1.0f,
-      -1.0f, -2.0f, 0.0f, 0.0f, 0.7f, 1.0f,
-      1.0f, -2.0f, 0.0f, 0.0f, 0.7f, 1.0f,
-      1.0f, 2.0f, 0.0f, 0.0f, 0.7f, 1.0f,
-      -1.0f, 2.0f, 0.0f, 0.0f, 0.7f, 1.0f
+      1.0f, -2.0f, player_r, player_g, player_b, 1.0f,
+      -1.0f, 2.0f, player_r, player_g, player_b, 1.0f,
+      -1.0f, -2.0f, player_r, player_g, player_b, 1.0f,
+      1.0f, -2.0f, player_r, player_g, player_b, 1.0f,
+      1.0f, 2.0f, player_r, player_g, player_b, 1.0f,
+      -1.0f, 2.0f, player_r, player_g, player_b, 1.0f
     };
     float player_edge_data[] = {
       1.0f, -2.0f, 1.0f, 1.0f, 1.5f, 1.0f,
@@ -68,13 +71,14 @@ namespace textengine {
       1.0f, 2.0f, 1.0f, 1.0f, 1.0f, 0.0f
     };
 
+    auto npc_grey = 0.7f;
     float npc_data[] = {
-      0.75f, -1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
-      -0.75f, 1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
-      -0.75f, -1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
-      0.75f, -1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
-      0.75f, 1.5f, 0.7f, 0.7f, 0.7f, 1.0f,
-      -0.75f, 1.5f, 0.7f, 0.7f, 0.7f, 1.0f
+      0.75f, -1.5f, npc_grey, npc_grey, npc_grey, 1.0f,
+      -0.75f, 1.5f, npc_grey, npc_grey, npc_grey, 1.0f,
+      -0.75f, -1.5f, npc_grey, npc_grey, npc_grey, 1.0f,
+      0.75f, -1.5f, npc_grey, npc_grey, npc_grey, 1.0f,
+      0.75f, 1.5f, npc_grey, npc_grey, npc_grey, 1.0f,
+      -0.75f, 1.5f, npc_grey, npc_grey, npc_grey, 1.0f
     };
     float npc_edge_data[] = {
       0.75f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
@@ -85,6 +89,26 @@ namespace textengine {
       -0.75f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
       -0.75f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f,
       0.75f, -1.5f, 0.25f, 0.25f, 0.25f, 1.0f
+    };
+
+    auto criminal_grey = 0.4f;
+    float criminal_data[] = {
+      0.8f, -1.6f, criminal_grey, criminal_grey, criminal_grey, 1.0f,
+      -0.8f, 1.6f, criminal_grey, criminal_grey, criminal_grey, 1.0f,
+      -0.8f, -1.6f, criminal_grey, criminal_grey, criminal_grey, 1.0f,
+      0.8f, -1.6f, criminal_grey, criminal_grey, criminal_grey, 1.0f,
+      0.8f, 1.6f, criminal_grey, criminal_grey, criminal_grey, 1.0f,
+      -0.8f, 1.6f, criminal_grey, criminal_grey, criminal_grey, 1.0f
+    };
+    float criminal_edge_data[] = {
+      0.8f, -1.6f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.8f, 1.6f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.8f, 1.6f, 0.25f, 0.25f, 0.25f, 1.0f,
+      -0.8f, 1.6f, 0.25f, 0.25f, 0.25f, 1.0f,
+      -0.8f, 1.6f, 0.25f, 0.25f, 0.25f, 1.0f,
+      -0.8f, -1.6f, 0.25f, 0.25f, 0.25f, 1.0f,
+      -0.8f, -1.6f, 0.25f, 0.25f, 0.25f, 1.0f,
+      0.8f, -1.6f, 0.25f, 0.25f, 0.25f, 1.0f
     };
 
     vertex_format.Create({
@@ -116,6 +140,18 @@ namespace textengine {
     npc_buffer.Data(sizeof(npc_data), npc_data, GL_STATIC_DRAW);
     npc_array.Create();
     vertex_format.Apply(npc_array, face_program);
+    CHECK_STATE(!glGetError());
+
+    criminal_edge_buffer.Create(GL_ARRAY_BUFFER);
+    criminal_edge_buffer.Data(sizeof(criminal_edge_data), criminal_edge_data, GL_STATIC_DRAW);
+    criminal_edge_array.Create();
+    vertex_format.Apply(criminal_edge_array, edge_program);
+    CHECK_STATE(!glGetError());
+
+    criminal_buffer.Create(GL_ARRAY_BUFFER);
+    criminal_buffer.Data(sizeof(criminal_data), criminal_data, GL_STATIC_DRAW);
+    criminal_array.Create();
+    vertex_format.Apply(criminal_array, face_program);
     CHECK_STATE(!glGetError());
 
     npc_edge_buffer.Create(GL_ARRAY_BUFFER);
@@ -167,14 +203,14 @@ namespace textengine {
     glDrawArrays(shots_data.element_type, 0, shots_data.element_count);
     CHECK_STATE(!glGetError());
 
-//    face_program.Use();
-//    face_program.Uniforms({
-//      {u8"projection", &projection},
-//      {u8"model_view", &player_model_view}
-//    });
-//    player_array.Bind();
-//    glDrawArrays(GL_TRIANGLES, 0, 6);
-//    CHECK_STATE(!glGetError());
+    face_program.Use();
+    face_program.Uniforms({
+      {u8"projection", &projection},
+      {u8"model_view", &player_model_view}
+    });
+    player_array.Bind();
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    CHECK_STATE(!glGetError());
 
     edge_program.Use();
     edge_program.Uniforms({
@@ -195,27 +231,54 @@ namespace textengine {
       const glm::mat4 player_model_view = model_view * (glm::translate(glm::mat4(), glm::vec3(position, 0.0f)) *
                                                         glm::rotate(glm::mat4(), glm::degrees(angle), glm::vec3(0, 0, 1)) *
                                                         glm::scale(glm::mat4(), glm::vec3(0.01f)));
-      face_program.Use();
-      face_program.Uniforms({
-        {u8"projection", &projection},
-        {u8"model_view", &player_model_view}
-      });
-      npc_array.Bind();
-      glDrawArrays(GL_TRIANGLES, 0, 6);
-      CHECK_STATE(!glGetError());
 
-      edge_program.Use();
-      edge_program.Uniforms({
-        {u8"projection", &projection},
-        {u8"model_view", &player_model_view}
-      });
-      edge_program.Uniforms({
-        {u8"line_width", 0.00125},
-        {u8"inverse_aspect_ratio", inverse_aspect_ratio}
-      });
-      npc_edge_array.Bind();
-      glDrawArrays(GL_LINES, 0, 8);
-      CHECK_STATE(!glGetError());
+      bool criminal = *reinterpret_cast<bool *>(rat->GetUserData());
+
+      if (criminal) {
+        face_program.Use();
+        face_program.Uniforms({
+          {u8"projection", &projection},
+          {u8"model_view", &player_model_view}
+        });
+        criminal_array.Bind();
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        CHECK_STATE(!glGetError());
+
+        edge_program.Use();
+        edge_program.Uniforms({
+          {u8"projection", &projection},
+          {u8"model_view", &player_model_view}
+        });
+        edge_program.Uniforms({
+          {u8"line_width", 0.00125},
+          {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+        });
+        criminal_edge_array.Bind();
+        glDrawArrays(GL_LINES, 0, 8);
+        CHECK_STATE(!glGetError());
+      } else {
+        face_program.Use();
+        face_program.Uniforms({
+          {u8"projection", &projection},
+          {u8"model_view", &player_model_view}
+        });
+        npc_array.Bind();
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        CHECK_STATE(!glGetError());
+
+        edge_program.Use();
+        edge_program.Uniforms({
+          {u8"projection", &projection},
+          {u8"model_view", &player_model_view}
+        });
+        edge_program.Uniforms({
+          {u8"line_width", 0.00125},
+          {u8"inverse_aspect_ratio", inverse_aspect_ratio}
+        });
+        npc_edge_array.Bind();
+        glDrawArrays(GL_LINES, 0, 8);
+        CHECK_STATE(!glGetError());
+      }
     }
 
     mesh_renderer.RenderShadows();
