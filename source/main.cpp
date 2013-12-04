@@ -33,17 +33,13 @@ int main(int argument_count, char *arguments[]) {
   textengine::Scene scene;
   textengine::SceneLoader scene_loader;
   scene = scene_loader.ReadScene("../resource/messages.json");
-  textengine::Mesh mesh;
-  textengine::MeshLoader loader;
-  mesh = loader.ReadMesh(filename);
   textengine::CommandTokenizer tokenizer;
-  textengine::GameState initial_state{std::vector<std::unique_ptr<std::vector<glm::vec2>>>(), mesh};
+  textengine::GameState initial_state{std::vector<std::unique_ptr<std::vector<glm::vec2>>>()};
   textengine::Log playtest_log{kPlaytestLog};
   textengine::Updater updater{
     command_queue, reply_queue,
-    playtest_log, input, mesh, initial_state
+    playtest_log, input, initial_state
   };
-  textengine::SubjectiveMeshRenderer mesh_renderer{mesh, updater};
   textengine::TextEngineRenderer renderer{updater};
   textengine::GlfwApplication application{
     argument_count, arguments, kWindowWidth, kWindowHeight,

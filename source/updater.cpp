@@ -26,10 +26,9 @@
 namespace textengine {
 
   Updater::Updater(SynchronizedQueue &command_queue, SynchronizedQueue &reply_queue,
-                   Log &playtest_log, Input &input,
-                   Mesh &mesh, GameState &initial_state)
+                   Log &playtest_log, Input &input, GameState &initial_state)
   : command_queue(command_queue), reply_queue(reply_queue), playtest_log(playtest_log),
-    input(input), mesh(mesh), current_state(initial_state), clock(),
+    input(input), current_state(initial_state), clock(),
     last_approach_times(), phrase_index(), device(), context() {}
 
   GameState &Updater::GetCurrentState() {
@@ -51,58 +50,58 @@ namespace textengine {
   }
 
   Mesh::RoomInfo *Updater::FindRoomInfo(const std::string &room) const {
-    for (auto &room_info : mesh.get_room_infos()) {
-      if (room == room_info->name) {
-        return room_info.get();
-      }
-    }
+//    for (auto &room_info : mesh.get_room_infos()) {
+//      if (room == room_info->name) {
+//        return room_info.get();
+//      }
+//    }
     return nullptr;
   }
 
   void Updater::CalculateDistanceTo(const std::string &room, std::unordered_map<Mesh::Face *, float> &distances) {
-    auto target_room = FindRoomInfo(room);
-    if (target_room) {
-      for (auto &face : mesh.get_faces()) {
-        if (target_room == face->room_info) {
-          distances.insert({face.get(), 0.0f});
-        } else {
-          distances.insert({face.get(), std::numeric_limits<float>::infinity()});
-        }
-      }
-      auto updates = true;
-//      std::cout << "start " << room << std::endl;
-      while (updates) {
-        updates = false;
-        for (auto &face : mesh.get_faces()) {
-          if (distances.at(face.get()) == std::numeric_limits<float>::infinity()) {
-            float minimum = std::numeric_limits<float>::infinity();
-            glm::vec2 target;
-            Mesh::Face *argmin = nullptr;
-            face->ForEachHalfEdge([&] (Mesh::HalfEdge *edge) {
-              if (edge->opposite && !edge->obstacle) {
-                const float distance = distances.at(edge->opposite->face);
-                if (distance < minimum) {
-                  minimum = distance;
-                  argmin = edge->opposite->face;
-                  target = edge->opposite->face->centroid();
-                }
-              }
-            });
-            if (argmin) {
-              //              std::cout << "updated " << face.get() << " " << minimum << std::endl;
-              const auto h01 = face->face_edge;
-              const auto h12 = h01->next;
-              const auto h20 = h12->next;
-              CHECK_STATE(h01 == h20->next);
-              const auto v0 = h01->start->position, v1 = h12->start->position, v2 = h20->start->position;
-              distances.at(face.get()) = minimum + 1;//glm::length(target - face->centroid());
-              updates = true;
-            }
-          }
-        }
-      }
-//      std::cout << "stop" << std::endl;
-    }
+//    auto target_room = FindRoomInfo(room);
+//    if (target_room) {
+//      for (auto &face : mesh.get_faces()) {
+//        if (target_room == face->room_info) {
+//          distances.insert({face.get(), 0.0f});
+//        } else {
+//          distances.insert({face.get(), std::numeric_limits<float>::infinity()});
+//        }
+//      }
+//      auto updates = true;
+////      std::cout << "start " << room << std::endl;
+//      while (updates) {
+//        updates = false;
+//        for (auto &face : mesh.get_faces()) {
+//          if (distances.at(face.get()) == std::numeric_limits<float>::infinity()) {
+//            float minimum = std::numeric_limits<float>::infinity();
+//            glm::vec2 target;
+//            Mesh::Face *argmin = nullptr;
+//            face->ForEachHalfEdge([&] (Mesh::HalfEdge *edge) {
+//              if (edge->opposite && !edge->obstacle) {
+//                const float distance = distances.at(edge->opposite->face);
+//                if (distance < minimum) {
+//                  minimum = distance;
+//                  argmin = edge->opposite->face;
+//                  target = edge->opposite->face->centroid();
+//                }
+//              }
+//            });
+//            if (argmin) {
+//              //              std::cout << "updated " << face.get() << " " << minimum << std::endl;
+//              const auto h01 = face->face_edge;
+//              const auto h12 = h01->next;
+//              const auto h20 = h12->next;
+//              CHECK_STATE(h01 == h20->next);
+//              const auto v0 = h01->start->position, v1 = h12->start->position, v2 = h20->start->position;
+//              distances.at(face.get()) = minimum + 1;//glm::length(target - face->centroid());
+//              updates = true;
+//            }
+//          }
+//        }
+//      }
+////      std::cout << "stop" << std::endl;
+//    }
   }
 
   void Updater::Update() {
@@ -112,11 +111,11 @@ namespace textengine {
   glm::vec2 Updater::SpawnPosition(const std::string &room) {
     auto room_info = FindRoomInfo(room);
     std::vector<Mesh::Face *> room_faces;
-    for (auto &face : mesh.get_faces()) {
-      if (room_info == face->room_info) {
-        room_faces.push_back(face.get());
-      }
-    }
+//    for (auto &face : mesh.get_faces()) {
+//      if (room_info == face->room_info) {
+//        room_faces.push_back(face.get());
+//      }
+//    }
     if (room_faces.size()) {
       auto index = index_distribution(generator) % room_faces.size();
       return room_faces[index]->centroid();
@@ -136,8 +135,8 @@ namespace textengine {
     if (glm::length(offset) > 0.0 || input.GetTriggerVelocity() > 0.0) {
       current_state.world.ClearForces();
       auto velocity = current_state.player_body->GetLinearVelocity();
-      const auto force = 10.0f * current_state.player_body->GetMass();
-      constexpr auto kMaxVelocity = 0.25f;
+      const auto force = 1000.0f * current_state.player_body->GetMass();
+      constexpr auto kMaxVelocity = 10.0f;
       current_state.player_body->ApplyForceToCenter(force * b2Vec2(offset.x, offset.y), true);
       if (glm::length(offset2) > 0.1f) {
         current_state.target_angle = glm::atan(offset2.y, offset2.x);

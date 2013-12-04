@@ -13,11 +13,9 @@
 
 namespace textengine {
 
-  class Mesh;
-
   class GameState {
   public:
-    GameState(std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries, Mesh &mesh);
+    GameState(std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries);
 
     virtual ~GameState();
 

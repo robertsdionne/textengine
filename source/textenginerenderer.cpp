@@ -111,7 +111,7 @@ namespace textengine {
     font = gltext::Font("../resource/ubuntu-font-family-0.80/Ubuntu-R.ttf", 32, 1024, 1024);
     font.cacheCharacters("1234567890!@#$%^&*()abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;'[]\\<>?:\"{}|-=_+");
 
-    stroke_width = 0.005f;
+    stroke_width = 0.0025f;
     stroke = glm::vec4(0, 0, 0, 1);
     fill = glm::vec4(0.5, 0.5, 0.5, 1);
   }
@@ -122,13 +122,13 @@ namespace textengine {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     PushMatrix();
-    matrix_stack.back() *= glm::scale(glm::mat4(1), glm::vec3(0.1f, 0.1f, 1.0f));
+    matrix_stack.back() *= glm::scale(glm::mat4(1), glm::vec3(glm::vec2(0.01f), 1.0f));
 
     const glm::vec2 position = glm::vec2(current_state.player_body->GetPosition().x,
                                          current_state.player_body->GetPosition().y);
 
     DrawCircle(position, 1);
-    DrawRectangle(glm::vec2(1, 0), glm::vec2(1));
+    DrawRectangle(glm::vec2(1, 0), glm::vec2(10));
     PopMatrix();
 
 //    const glm::vec2 position = glm::vec2(current_state.player_body->GetPosition().x,
@@ -150,7 +150,8 @@ namespace textengine {
 
   void TextEngineRenderer::DrawCircle(glm::vec2 center, float radius) {
     PushMatrix();
-    matrix_stack.back() *= glm::translate(glm::mat4(1), glm::vec3(center, 0.0f));
+    matrix_stack.back() *= glm::translate(glm::scale(glm::mat4(1), glm::vec3(radius)),
+                                          glm::vec3(center, 0.0f));
 
     face_program.Use();
     face_program.Uniforms({

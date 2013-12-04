@@ -10,7 +10,7 @@
 
 namespace textengine {
 
-  GameState::GameState(std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries, Mesh &mesh)
+  GameState::GameState(std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries)
   : camera_position(), world(b2Vec2(0.0f, 0.0f)), boundary(), player_body(), target_angle(),
   flashlight_on() {
     b2BodyDef boundary_body_definition;
@@ -45,24 +45,6 @@ namespace textengine {
     player_fixture_definition.restitution = 0.1;
     player_fixture_definition.friction = 0.0f;
     player_body->CreateFixture(&player_fixture_definition);
-
-    b2BodyDef rat_body_definition;
-    rat_body_definition.type = b2_dynamicBody;
-    rat_body_definition.position.Set(0.0f, 0.0f);
-    rat_body_definition.fixedRotation = true;
-    rat_body_definition.linearVelocity.Set(0, 0.1);
-    rat_body_definition.linearDamping = 1;
-    rat_body_definition.angularVelocity = 0;
-    rat_body_definition.angularDamping = 1;
-    std::random_device generator;
-    std::uniform_int_distribution<> distribution;
-    for (auto i = 0; i < 100; ++i) {
-      auto index = distribution(generator);
-      auto centroid = mesh.get_faces()[index % mesh.get_faces().size()]->centroid();
-      rat_body_definition.position.Set(centroid.x, centroid.y);
-      rats.push_back(world.CreateBody(&rat_body_definition));
-      rats.back()->CreateFixture(&player_fixture_definition);
-    }
   }
 
   GameState::~GameState() {

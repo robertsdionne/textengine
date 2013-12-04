@@ -15,14 +15,13 @@ namespace textengine {
 
   class Input;
   class Log;
-  class Mesh;
   class SynchronizedQueue;
 
   class Updater : public Controller {
   public:
     Updater(SynchronizedQueue &command_queue,
             SynchronizedQueue &reply_queue, Log &playtest_log,
-            Input &input, Mesh &mesh, GameState &initial_state);
+            Input &input, GameState &initial_state);
 
     virtual ~Updater() = default;
 
@@ -55,7 +54,6 @@ namespace textengine {
     SynchronizedQueue &command_queue, &reply_queue;
     Log &playtest_log;
     Input &input;
-    Mesh &mesh;
     GameState &current_state;
     std::chrono::high_resolution_clock clock;
     std::unordered_map<int, std::chrono::high_resolution_clock::time_point> last_approach_times;
