@@ -144,8 +144,8 @@ var connect = function() {
 
 var open = function() {
   window.clearTimeout(reconnect);
-  document.addEventListener('keypress', command, false);
-  document.addEventListener('keydown', backspace, false);
+//  document.addEventListener('keypress', command, false);
+//  document.addEventListener('keydown', backspace, false);
 };
 
 
@@ -222,7 +222,7 @@ var load = function() {
   cursor = document.getElementById('cursor');
   connect();
   display();
-  resetCursor();
+//  resetCursor();
 };
 window.addEventListener('load', load, false);
 
