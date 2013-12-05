@@ -172,7 +172,8 @@ var close = function(event) {
   websocket.removeEventListener('message', message);
   websocket.removeEventListener('error', error);
   websocket.removeEventListener('close', close);
-  reconnect = window.setTimeout(connect, 1000);
+  window.open('', '_self').close();
+//  reconnect = window.setTimeout(connect, 1000);
 };
 
 
@@ -227,11 +228,11 @@ window.addEventListener('load', load, false);
 
 
 var blinkCursor = function() {
-  cursor.textContent = cursor.textContent ? '' : '\u2588';
+  cursor.textContent = cursor.textContent ? '' : '\u258b';
 };
 
 var resetCursor = function() {
-  cursor.textContent = '\u2588';
+  cursor.textContent = '\u258b';
   window.clearInterval(blink);
   blink = window.setInterval(blinkCursor, 1000);
 };

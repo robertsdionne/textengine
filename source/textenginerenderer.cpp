@@ -124,7 +124,7 @@ namespace textengine {
 
     lines.element_type = GL_LINES;
 
-    CHECK_STATE(imguiRenderGLInit("../resource/ubuntu-font-family-0.80/Ubuntu-R.ttf"));
+    CHECK_STATE(imguiRenderGLInit("../resource/fonts/ubuntu-font-family-0.80/Ubuntu-R.ttf"));
   }
 
   void TextEngineRenderer::Render() {

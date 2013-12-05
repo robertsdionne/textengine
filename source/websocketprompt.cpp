@@ -55,6 +55,18 @@ namespace textengine {
         } else if ("/client.js" == url_path) {
           resource_path = "../resource/client.js";
           content_type = "application/javascript";
+        } else if ("/Stela_UT.otf" == url_path) {
+          resource_path = "../resource/fonts/Stela_UT.otf";
+          content_type = "application/vnd.ms-opentype";
+        } else if ("/Ubuntu-M.ttf" == url_path) {
+          resource_path = "../resource/fonts/ubuntu-font-family-0.80/Ubuntu-M.ttf";
+          content_type = "application/x-font-ttf";
+        } else if ("/Ubuntu-R.ttf" == url_path) {
+          resource_path = "../resource/fonts/ubuntu-font-family-0.80/Ubuntu-R.ttf";
+          content_type = "application/x-font-ttf";
+        } else if ("/Vetka.otf" == url_path) {
+          resource_path = "../resource/fonts/Vetka.otf";
+          content_type = "application/vnd.ms-opentype";
         } else {
           return -1;
         }

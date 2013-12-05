@@ -34,7 +34,7 @@ int main(int argument_count, char *arguments[]) {
   textengine::SynchronizedQueue command_queue, reply_queue;
   textengine::Updater updater{
     command_queue, reply_queue,
-    playtest_log, input, initial_state
+    playtest_log, input, initial_state, scene
   };
   textengine::WebSocketPrompt prompt{command_queue, reply_queue, kPrompt};
   prompt.Run();

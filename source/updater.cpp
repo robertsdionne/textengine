@@ -17,18 +17,18 @@
 #include "input.h"
 #include "keyboard.h"
 #include "log.h"
-#include "mesh.h"
 #include "raycast.h"
+#include "scene.h"
 #include "synchronizedqueue.h"
 #include "updater.h"
 
 namespace textengine {
 
   Updater::Updater(SynchronizedQueue &command_queue, SynchronizedQueue &reply_queue,
-                   Log &playtest_log, Input &input, GameState &initial_state)
+                   Log &playtest_log, Input &input, GameState &initial_state, Scene &scene)
   : command_queue(command_queue), reply_queue(reply_queue), playtest_log(playtest_log),
     input(input), current_state(initial_state), clock(),
-    last_approach_times(), phrase_index(), device(), context() {}
+    last_approach_times(), phrase_index(), device(), context(), scene(scene) {}
 
   GameState &Updater::GetCurrentState() {
     return current_state;

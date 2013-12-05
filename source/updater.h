@@ -15,13 +15,14 @@ namespace textengine {
 
   class Input;
   class Log;
+  class Scene;
   class SynchronizedQueue;
 
   class Updater : public Controller {
   public:
     Updater(SynchronizedQueue &command_queue,
             SynchronizedQueue &reply_queue, Log &playtest_log,
-            Input &input, GameState &initial_state);
+            Input &input, GameState &initial_state, Scene &scene);
 
     virtual ~Updater() = default;
 
@@ -68,6 +69,7 @@ namespace textengine {
     ALuint shoot[11], ricochet[11];
     int shoot_index, ricochet_index;
     ALuint shoot_source, ricochet_source;
+    Scene &scene;
   };
 
 }  // namespace textengine
