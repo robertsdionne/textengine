@@ -135,6 +135,11 @@ namespace textengine {
       current_state.world.ClearForces();
       auto velocity = current_state.player_body->GetLinearVelocity();
       const auto force = 200.0f * current_state.player_body->GetMass();
+      if (input.GetTriggerVelocity() > 0) {
+        reply_queue.PushMessage("You are running.");
+      } else if (input.GetTriggerVelocity() < 0) {
+        reply_queue.PushMessage("You are walking.");
+      }
       const auto max_velocity = glm::mix(1.38f, 5.81f, input.GetTriggerPressure());
       current_state.player_body->ApplyForceToCenter(force * b2Vec2(offset.x, offset.y), true);
       if (glm::length(offset2) > 0.1f) {

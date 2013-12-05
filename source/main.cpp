@@ -1,21 +1,18 @@
 #include <string>
 
-#include "commandtokenizer.h"
 #include "gamestate.h"
 #include "glfwapplication.h"
 #include "input.h"
 #include "joystick.h"
 #include "keyboard.h"
 #include "log.h"
-#include "mesh.h"
-#include "meshloader.h"
 #include "mouse.h"
 #include "scene.h"
 #include "sceneloader.h"
-#include "subjectivemeshrenderer.h"
 #include "synchronizedqueue.h"
 #include "textenginerenderer.h"
 #include "updater.h"
+#include "websocketprompt.h"
 
 constexpr const char *kPlaytestLog = u8"playtest.log";
 constexpr const char *kPrompt = u8"> ";
@@ -29,17 +26,18 @@ int main(int argument_count, char *arguments[]) {
   textengine::Keyboard keyboard;
   textengine::Mouse mouse;
   textengine::Input input{joystick, keyboard, mouse};
-  textengine::SynchronizedQueue command_queue, reply_queue;
   textengine::Scene scene;
   textengine::SceneLoader scene_loader;
   scene = scene_loader.ReadScene(filename);
-  textengine::CommandTokenizer tokenizer;
   textengine::GameState initial_state{std::vector<std::unique_ptr<std::vector<glm::vec2>>>()};
   textengine::Log playtest_log{kPlaytestLog};
+  textengine::SynchronizedQueue command_queue, reply_queue;
   textengine::Updater updater{
     command_queue, reply_queue,
     playtest_log, input, initial_state
   };
+  textengine::WebSocketPrompt prompt{command_queue, reply_queue, kPrompt};
+  prompt.Run();
   textengine::TextEngineRenderer renderer{mouse, updater, scene};
   textengine::GlfwApplication application{
     argument_count, arguments, kWindowWidth, kWindowHeight,
