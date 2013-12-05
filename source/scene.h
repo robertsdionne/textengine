@@ -2,6 +2,7 @@
 #define __textengine__scene__
 
 #include <glm/glm.hpp>
+#include <glm/gtx/component_wise.hpp>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -18,6 +19,11 @@ namespace textengine {
 
     glm::vec2 extent() {
       return maximum - minimum;
+    }
+
+    bool Contains(glm::vec2 position) {
+      return glm::all(glm::lessThanEqual(minimum, position))
+          && glm::all(glm::lessThanEqual(position, maximum));
     }
   };
 

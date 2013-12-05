@@ -13,14 +13,14 @@ namespace textengine {
   constexpr float Input::kSmoothRate;
 
   Input::Input(Joystick &joystick, Keyboard &keyboard, Mouse &mouse)
-  : joystick(joystick), keyboard(keyboard), mouse(mouse) {}
+  : joystick(joystick), keyboard(keyboard), mouse(mouse), looking() {}
 
   glm::vec2 Input::GetPrimaryAxes() const {
     const auto result = ArgMax({
       joystick_primary_axes,
       keyboard_primary_smoothed_axes
     });
-    return glm::length(result) > 0.1f ? result : glm::vec2();
+    return glm::length(result) > Joystick::kDeadZone ? result : glm::vec2();
   }
 
   glm::vec2 Input::GetSecondaryAxes() const {
@@ -28,14 +28,18 @@ namespace textengine {
       joystick_secondary_axes,
       keyboard_secondary_smoothed_axes
     });
-    return glm::length(result) > 0.1f ? result : glm::vec2();
+    return glm::length(result) > Joystick::kDeadZone ? result : glm::vec2();
   }
 
   float Input::GetXButton() const {
     const auto result = ArgMax({
       joystick.IsButtonDown(Joystick::Button::kX),
     });
-    return glm::abs(result) > 0.1f ? result : 0.0f;
+    return glm::abs(result) > Joystick::kDeadZone ? result : 0.0f;
+  }
+
+  float Input::GetLookVelocity() const {
+    return looking - previous_looking;
   }
 
   float Input::GetTriggerPressure() const {
@@ -55,6 +59,7 @@ namespace textengine {
   }
 
   void Input::Update() {
+    previous_looking = looking;
     joystick_primary_axes = glm::vec2(joystick.GetAxis(Joystick::Axis::kLeftX),
                                       joystick.GetAxis(Joystick::Axis::kLeftY));
     joystick_secondary_axes = glm::vec2(joystick.GetAxis(Joystick::Axis::kRightX),
@@ -79,6 +84,7 @@ namespace textengine {
                                      glm::normalize(mouse.GetCursorVelocity() * glm::vec2(1, -1)) : glm::vec2());
     mouse_primary_smoothed_axes = glm::mix(mouse_primary_smoothed_axes,
                                            mouse_primary_axes, kSmoothRate);
+    looking = glm::length(joystick_secondary_axes) > Joystick::kDeadZone;
   }
 
   glm::vec2 Input::ArgMax(std::initializer_list<glm::vec2> &&vectors) {

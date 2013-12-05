@@ -8,10 +8,10 @@
       "description": "You are standing in a field.",
       "messages": {
         "enter": [
-          "You entered the field."
+          "You enter the grassy field."
         ],
         "exit": [
-          "You exited the field."
+          "You exit the field."
         ]
       }
     },
@@ -20,10 +20,10 @@
         "minimum": {"x": 7.0, "y": 7.0},
         "maximum": {"x": 10.0, "y": 10.0}
       },
-      "description": "You stepped in a patch of mud.",
+      "description": "You stand in a patch of mud.",
       "messages": {
         "enter": [
-          "You stepped in a puddle of mud."
+          "You step in a puddle of mud."
         ],
         "exit": [
           "You leave muddy footprints behind."
@@ -35,10 +35,10 @@
         "minimum": {"x": -4.0, "y": -3.0},
         "maximum": {"x": -1.0, "y": -1.0}
       },
-      "description": "You stepped in a patch of mud.",
+      "description": "You stand in a patch of mud.",
       "messages": {
         "enter": [
-          "You stepped in a large muddy puddle."
+          "You step in a large muddy puddle."
         ],
         "exit": [
           "You leave muddy footprints behind."
@@ -47,11 +47,47 @@
     }
   },
   "messages": {
+    "east": [
+      "You head to the east.",
+      "You move easterly.",
+      "You go eastward."
+    ],
+    "look": [
+      "You look around.",
+      "You observe your surroundings.",
+      "You inspect your environment."
+    ],
+    "north": [
+      "You head to the north.",
+      "You march northerly.",
+      "You move northward."
+    ],
     "run": [
-      "You start to run."
+      "You start to run.",
+      "You begin running.",
+      "You run.",
+      "You move briskly."
+    ],
+    "south": [
+      "You head south.",
+      "You change to a southerly course.",
+      "You turn southward."
+    ],
+    "stop_look": [
+      "You return to your thoughts.",
+      "You are done observing.",
+      "You conclude your inspection."
     ],
     "walk": [
-      "You start to walk."
+      "You walk.",
+      "You start to walk.",
+      "You stop running.",
+      "You slow yourself."
+    ],
+    "west": [
+      "You go to the west.",
+      "You choose a westerly course.",
+      "You head westward."
     ]
   },
   "objects": {
@@ -59,7 +95,10 @@
       "description": "You see a big red tree.",
       "messages": {
         "touch": [
-          "You touch the red tree."
+          "You touch the red tree.",
+          "You press against the red bark of the tree.",
+          "You push against the trunk of the red tree.",
+          "You approach the red tree, touching it."
         ]
       },
       "position": {"x": 5.0, "y": 2.5}

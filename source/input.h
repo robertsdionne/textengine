@@ -21,6 +21,8 @@ namespace textengine {
 
     glm::vec2 GetSecondaryAxes() const;
 
+    float GetLookVelocity() const;
+
     float GetXButton() const;
 
     float GetTriggerPressure() const;
@@ -43,6 +45,7 @@ namespace textengine {
     glm::vec2 joystick_primary_axes, joystick_secondary_axes;
     glm::vec2 keyboard_primary_smoothed_axes, keyboard_secondary_smoothed_axes;
     glm::vec2 mouse_primary_smoothed_axes;
+    bool looking, previous_looking;
   };
 
 }  // namespace textengine

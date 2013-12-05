@@ -61,6 +61,13 @@ namespace textengine {
     
     ALuint ReadSoundFile(const std::string &filename);
 
+    enum class Direction {
+      kNorth,
+      kSouth,
+      kEast,
+      kWest
+    };
+
   private:
     SynchronizedQueue &command_queue, &reply_queue;
     Log &playtest_log;
@@ -80,6 +87,9 @@ namespace textengine {
     int shoot_index, ricochet_index;
     ALuint shoot_source, ricochet_source;
     Scene &scene;
+
+    Direction last_direction;
+    std::unordered_map<Object *, std::chrono::high_resolution_clock::time_point> last_touch_time;
   };
 
 }  // namespace textengine
