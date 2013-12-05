@@ -24,7 +24,9 @@ namespace textengine {
 
   void SynchronizedQueue::PushMessage(const std::string &message) {
     std::lock_guard<std::mutex> lock(mutex);
-    queue.push({message, false});
+    if (!message.empty()) {
+      queue.push({message, false});
+    }
   }
 
   void SynchronizedQueue::PushReport(const std::string &report) {

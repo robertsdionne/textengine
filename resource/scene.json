@@ -89,6 +89,24 @@
         ]
       }
     },
+    "stream": {
+      "aabb": {
+        "minimum": {"x": -5.0, "y": 10.0},
+        "maximum": {"x": 20.0, "y": 11.0}
+      },
+      "messages": {
+        "describe": [
+          "You are standing in a stream that runs from east to west.",
+          "The water of the stream trickles through your toes to the west."
+        ],
+        "enter": [
+          "You step into the stream."
+        ],
+        "exit": [
+          "You step out of the stream."
+        ]
+      }
+    },
     "mud patch": {
       "aabb": {
         "minimum": {"x": 7.0, "y": 7.0},

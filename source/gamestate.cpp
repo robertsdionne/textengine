@@ -44,7 +44,7 @@ namespace textengine {
     player_fixture_definition.shape = &player_shape;
     player_fixture_definition.density = 0.1;
     player_fixture_definition.restitution = 0.1;
-    player_fixture_definition.friction = 0.0f;
+    player_fixture_definition.friction = 0.5f;
     player_body->CreateFixture(&player_fixture_definition);
 
     for (auto &area : scene.areas) {
@@ -70,6 +70,7 @@ namespace textengine {
       object_shape.m_radius = 0.5f;
       b2FixtureDef object_fixture_definition;
       object_fixture_definition.shape = &object_shape;
+      object_fixture_definition.friction = 0.5f;
       areas.back()->CreateFixture(&object_fixture_definition);
     }
   }

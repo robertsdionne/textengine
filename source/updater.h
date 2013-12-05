@@ -47,7 +47,7 @@ namespace textengine {
 
     std::tuple<Area *, Object *, b2Body *> ResolveContact(b2Contact *contact) const;
 
-    const std::string &ChooseMessage(const MessageMap &messages, const std::string &name);
+    std::string ChooseMessage(const MessageMap &messages, const std::string &name);
 
     Mesh::RoomInfo *FindRoomInfo(const std::string &room) const;
 

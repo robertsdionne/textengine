@@ -82,9 +82,13 @@ namespace textengine {
     return std::make_tuple(area, object, player);
   }
 
-  const std::string &Updater::ChooseMessage(const MessageMap &messages, const std::string &name) {
-    const auto index = index_distribution(generator) % messages.at(name)->size();
-    return *messages.at(name)->at(index);
+  std::string Updater::ChooseMessage(const MessageMap &messages, const std::string &name) {
+    if (messages.at(name)->size()) {
+      const auto index = index_distribution(generator) % messages.at(name)->size();
+      return *messages.at(name)->at(index);
+    } else {
+      return "";
+    }
   }
 
   GameState &Updater::GetCurrentState() {
@@ -206,29 +210,19 @@ namespace textengine {
       current_state.world.ClearForces();
       auto velocity = current_state.player_body->GetLinearVelocity();
 
-      Direction direction;
-      if (Direction::kEast != last_direction && offset.x > glm::abs(offset.y)) {
-        last_direction = Direction::kEast;
-        if (now - last_direction_time > std::chrono::seconds(1)) {
-          last_direction_time = now;
+      if (now - last_direction_time > std::chrono::seconds(2)) {
+        last_direction_time = now;
+        if (Direction::kEast != last_direction && offset.x > glm::abs(offset.y)) {
+          last_direction = Direction::kEast;
           reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "east"));
-        }
-      } else if (Direction::kWest != last_direction && offset.x < -glm::abs(offset.y)) {
-        last_direction = Direction::kWest;
-        if (now - last_direction_time > std::chrono::seconds(1)) {
-          last_direction_time = now;
+        } else if (Direction::kWest != last_direction && offset.x < -glm::abs(offset.y)) {
+          last_direction = Direction::kWest;
           reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "west"));
-        }
-      } else if (Direction::kNorth != last_direction && offset.y > glm::abs(offset.x)) {
-        last_direction = Direction::kNorth;
-        if (now - last_direction_time > std::chrono::seconds(1)) {
-          last_direction_time = now;
+        } else if (Direction::kNorth != last_direction && offset.y > glm::abs(offset.x)) {
+          last_direction = Direction::kNorth;
           reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "north"));
-        }
-      } else if (Direction::kSouth != last_direction && offset.y < -glm::abs(offset.x)) {
-        last_direction = Direction::kSouth;
-        if (now - last_direction_time > std::chrono::seconds(1)) {
-          last_direction_time = now;
+        } else if (Direction::kSouth != last_direction && offset.y < -glm::abs(offset.x)) {
+          last_direction = Direction::kSouth;
           reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "south"));
         }
       }
@@ -239,7 +233,7 @@ namespace textengine {
       } else if (input.GetTriggerVelocity() < 0) {
         reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "walk"));
       }
-      const auto max_velocity = glm::mix(1.38f, 5.81f, input.GetTriggerPressure());
+      const auto max_velocity = glm::mix(1.38f, 5.81f, input.GetTriggerPressure()) / 2.0f;
       current_state.player_body->ApplyForceToCenter(force * b2Vec2(offset.x, offset.y), true);
       if (glm::length(offset2) > 0.1f) {
         current_state.target_angle = glm::atan(offset2.y, offset2.x);
