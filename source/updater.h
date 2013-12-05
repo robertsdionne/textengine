@@ -89,6 +89,7 @@ namespace textengine {
     Scene &scene;
 
     Direction last_direction;
+    std::chrono::high_resolution_clock::time_point last_direction_time;
     std::unordered_map<Object *, std::chrono::high_resolution_clock::time_point> last_touch_time;
   };
 

@@ -56,12 +56,10 @@ namespace textengine {
     CHECK_STATE(area.is<picojson::object>());
     auto json_object = area.get<picojson::object>();
     CHECK_STATE(json_object["aabb"].is<picojson::object>());
-    CHECK_STATE(json_object["description"].is<std::string>());
     CHECK_STATE(json_object["messages"].is<picojson::object>());
     return new Area{
       name,
       ReadAxisAlignedBoundingBox(json_object["aabb"]),
-      json_object["description"].get<std::string>(),
       ReadMessageMap(json_object["messages"])
     };
   }
@@ -102,12 +100,10 @@ namespace textengine {
   Object *SceneLoader::ReadObject(const std::string &name, picojson::value object) const {
     CHECK_STATE(object.is<picojson::object>());
     auto json_object = object.get<picojson::object>();
-    CHECK_STATE(json_object["description"].is<std::string>());
     CHECK_STATE(json_object["messages"].is<picojson::object>());
     CHECK_STATE(json_object["position"].is<picojson::object>());
     return new Object{
       name,
-      json_object["description"].get<std::string>(),
       ReadMessageMap(json_object["messages"]),
       ReadVec2(json_object["position"])
     };

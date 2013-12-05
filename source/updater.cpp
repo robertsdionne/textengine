@@ -183,22 +183,23 @@ namespace textengine {
   }
 
   void Updater::Update(GameState &current_state) {
-    auto offset = input.GetPrimaryAxes();
-    auto offset2 = input.GetSecondaryAxes();
+    const auto now = std::chrono::high_resolution_clock::now();
+    const auto offset = input.GetPrimaryAxes();
+    const auto offset2 = input.GetSecondaryAxes();
 
     auto dt = 0.016f;
-    auto position = glm::vec2(current_state.player_body->GetPosition().x,
+    const auto position = glm::vec2(current_state.player_body->GetPosition().x,
                               current_state.player_body->GetPosition().y);
 
     if (input.GetLookVelocity() > 0) {
       reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "look"));
       for (auto &area : scene.areas) {
         if (area->aabb.Contains(position)) {
-          reply_queue.PushMessage(area->description);
+          reply_queue.PushMessage(ChooseMessage(area->messages, "describe"));
         }
       }
     } else if (input.GetLookVelocity() < 0) {
-      reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "stop_look"));
+      reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "stop looking"));
     }
 
     if (glm::length(offset) > 0.0 || input.GetTriggerVelocity() > 0.0) {
@@ -208,16 +209,28 @@ namespace textengine {
       Direction direction;
       if (Direction::kEast != last_direction && offset.x > glm::abs(offset.y)) {
         last_direction = Direction::kEast;
-        reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "east"));
+        if (now - last_direction_time > std::chrono::seconds(1)) {
+          last_direction_time = now;
+          reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "east"));
+        }
       } else if (Direction::kWest != last_direction && offset.x < -glm::abs(offset.y)) {
         last_direction = Direction::kWest;
-        reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "west"));
+        if (now - last_direction_time > std::chrono::seconds(1)) {
+          last_direction_time = now;
+          reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "west"));
+        }
       } else if (Direction::kNorth != last_direction && offset.y > glm::abs(offset.x)) {
         last_direction = Direction::kNorth;
-        reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "north"));
+        if (now - last_direction_time > std::chrono::seconds(1)) {
+          last_direction_time = now;
+          reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "north"));
+        }
       } else if (Direction::kSouth != last_direction && offset.y < -glm::abs(offset.x)) {
         last_direction = Direction::kSouth;
-        reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "south"));
+        if (now - last_direction_time > std::chrono::seconds(1)) {
+          last_direction_time = now;
+          reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "south"));
+        }
       }
 
       const auto force = 200.0f * current_state.player_body->GetMass();

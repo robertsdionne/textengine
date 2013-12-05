@@ -1,17 +1,91 @@
 {
   "areas": {
+    "border south": {
+      "aabb": {
+        "minimum": {"x": -100.0, "y": -1000.0},
+        "maximum": {"x": 100.0, "y": -10.0}
+      },
+      "messages": {
+        "describe": [
+          "You stand at the southern border of the valley and should return north."
+        ],
+        "enter": [
+          "Reverse your course and head north. To continue southerly is dangerous."
+        ],
+        "exit": [
+          "You head back to safety."
+        ]
+      }
+    },
+    "border north": {
+      "aabb": {
+        "minimum": {"x": -100.0, "y": 30.0},
+        "maximum": {"x": 100.0, "y": 1000.0}
+      },
+      "messages": {
+        "describe": [
+          "You stand at the northern border of the valley and should return south."
+        ],
+        "enter": [
+          "Reverse your course and head south. To continue northerly is dangerous."
+        ],
+        "exit": [
+          "You head back to safety."
+        ]
+      }
+    },
+    "border east": {
+      "aabb": {
+        "minimum": {"x": 30.0, "y": -100.0},
+        "maximum": {"x": 1000.0, "y": 100.0}
+      },
+      "messages": {
+        "describe": [
+          "You stand at the eastern border of the valley and should return west."
+        ],
+        "enter": [
+          "Reverse your course and head west. To continue easterly is dangerous."
+        ],
+        "exit": [
+          "You head back to safety."
+        ]
+      }
+    },
+    "border west": {
+      "aabb": {
+        "minimum": {"x": -1000.0, "y": -100.0},
+        "maximum": {"x": -10.0, "y": 100.0}
+      },
+      "messages": {
+        "describe": [
+          "You stand at the western border of the valley and should return east."
+        ],
+        "enter": [
+          "Reverse your course and head east. To continue westerly is dangerous."
+        ],
+        "exit": [
+          "You head back to safety."
+        ]
+      }
+    },
     "field": {
       "aabb": {
         "minimum": {"x": -5.0, "y": -5.0},
         "maximum": {"x": 20.0, "y": 20.0}
       },
-      "description": "You are standing in a field.",
       "messages": {
+        "describe": [
+          "You are standing in a field.",
+          "You stand in a grassy field.",
+          "You see before you a field full of vegetation."
+        ],
         "enter": [
-          "You enter the grassy field."
+          "You enter the grassy field.",
+          "You step into the field's vegetation."
         ],
         "exit": [
-          "You exit the field."
+          "You exit the field.",
+          "You leave the grassy field."
         ]
       }
     },
@@ -20,13 +94,20 @@
         "minimum": {"x": 7.0, "y": 7.0},
         "maximum": {"x": 10.0, "y": 10.0}
       },
-      "description": "You stand in a patch of mud.",
       "messages": {
+        "describe": [
+          "You stand in a patch of mud.",
+          "You stand in a mud patch.",
+          "You stand in a muddy puddle."
+        ],
         "enter": [
-          "You step in a puddle of mud."
+          "You step in a puddle of mud.",
+          "You splash your feet through a mud puddle.",
+          "A mud puddle wets your shoes."
         ],
         "exit": [
-          "You leave muddy footprints behind."
+          "You leave muddy footprints behind.",
+          "You are glad you stepped out of the mud."
         ]
       }
     },
@@ -35,13 +116,42 @@
         "minimum": {"x": -4.0, "y": -3.0},
         "maximum": {"x": -1.0, "y": -1.0}
       },
-      "description": "You stand in a patch of mud.",
       "messages": {
+        "describe": [
+          "You stand in a patch of mud.",
+          "You stand in a mud patch.",
+          "You stand in a muddy puddle."
+        ],
         "enter": [
-          "You step in a large muddy puddle."
+          "You step in a puddle of mud.",
+          "You splash your feet through a mud puddle.",
+          "A mud puddle wets your shoes."
         ],
         "exit": [
-          "You leave muddy footprints behind."
+          "You leave muddy footprints behind.",
+          "You are glad you stepped out of the mud."
+        ]
+      }
+    },
+    "ramada": {
+      "aabb": {
+        "minimum": {"x": 0.0, "y": 2.5},
+        "maximum": {"x": 4.5, "y": 5.0}
+      },
+      "messages": {
+        "describe": [
+          "You stand in the shade of the ramada.",
+          "The orange roof of the ramada shields you from the sun's rays."
+        ],
+        "enter": [
+          "You move under the ramada's shade.",
+          "You duck into the ramada.",
+          "You take shelter beneath the ramada."
+        ],
+        "exit": [
+          "You venture out from beneath the ramada.",
+          "You leave the ramada, stepping into its vicinity.",
+          "You exit the ramada."
         ]
       }
     }
@@ -70,10 +180,10 @@
     ],
     "south": [
       "You head south.",
-      "You change to a southerly course.",
+      "You go southerly.",
       "You turn southward."
     ],
-    "stop_look": [
+    "stop looking": [
       "You return to your thoughts.",
       "You are done observing.",
       "You conclude your inspection."
@@ -86,14 +196,16 @@
     ],
     "west": [
       "You go to the west.",
-      "You choose a westerly course.",
+      "You move westerly.",
       "You head westward."
     ]
   },
   "objects": {
     "red tree": {
-      "description": "You see a big red tree.",
       "messages": {
+        "describe": [
+          "You see a big red tree."
+        ],
         "touch": [
           "You touch the red tree.",
           "You press against the red bark of the tree.",

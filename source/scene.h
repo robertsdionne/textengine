@@ -33,12 +33,11 @@ namespace textengine {
   struct Area {
     std::string name;
     AxisAlignedBoundingBox aabb;
-    std::string description;
     MessageMap messages;
   };
 
   struct Object {
-    std::string name, description;
+    std::string name;
     MessageMap messages;
     glm::vec2 position;
   };
