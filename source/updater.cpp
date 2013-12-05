@@ -9,6 +9,7 @@
 #include <mach-o/getsect.h>
 #include <stb_vorbis.h>
 #include <string>
+#include <tuple>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -28,7 +29,59 @@ namespace textengine {
                    Log &playtest_log, Input &input, GameState &initial_state, Scene &scene)
   : command_queue(command_queue), reply_queue(reply_queue), playtest_log(playtest_log),
     input(input), current_state(initial_state), clock(),
-    last_approach_times(), phrase_index(), device(), context(), scene(scene) {}
+  last_approach_times(), phrase_index(), device(), context(), scene(scene) {}
+
+  void Updater::BeginContact(b2Contact *contact) {
+    Area *area;
+    Object *object;
+    b2Body *player;
+    std::tie(area, object, player) = ResolveContact(contact);
+    if (player && area) {
+      const auto index = index_distribution(generator) % area->messages.at("enter")->size();
+      reply_queue.PushMessage(*area->messages.at("enter")->at(index));
+    }
+    if (player && object) {
+      const auto index = index_distribution(generator) % object->messages.at("touch")->size();
+      reply_queue.PushMessage(*object->messages.at("touch")->at(index));
+    }
+  }
+
+  void Updater::EndContact(b2Contact *contact) {
+    Area *area;
+    Object *object;
+    b2Body *player;
+    std::tie(area, object, player) = ResolveContact(contact);
+    if (player && area) {
+      const auto index = index_distribution(generator) % area->messages.at("exit")->size();
+      reply_queue.PushMessage(*area->messages.at("exit")->at(index));
+    }
+    if (player && object) {
+      
+    }
+  }
+
+  std::tuple<Area *, Object *, b2Body *> Updater::ResolveContact(b2Contact *contact) const {
+    Area *area = nullptr;
+    Object *object = nullptr;
+    b2Body *player = nullptr;
+    if (current_state.player_body == contact->GetFixtureA()->GetBody()) {
+      player = contact->GetFixtureA()->GetBody();
+    }
+    if (current_state.player_body == contact->GetFixtureB()->GetBody()) {
+      player = contact->GetFixtureB()->GetBody();
+    }
+    if (contact->GetFixtureA()->IsSensor()) {
+      area = reinterpret_cast<Area *>(contact->GetFixtureA()->GetBody()->GetUserData());
+    } else {
+      object = reinterpret_cast<Object *>(contact->GetFixtureA()->GetBody()->GetUserData());
+    }
+    if (contact->GetFixtureB()->IsSensor()) {
+      area = reinterpret_cast<Area *>(contact->GetFixtureB()->GetBody()->GetUserData());
+    } else {
+      object = reinterpret_cast<Object *>(contact->GetFixtureB()->GetBody()->GetUserData());
+    }
+    return std::make_tuple(area, object, player);
+  }
 
   GameState &Updater::GetCurrentState() {
     return current_state;
@@ -46,6 +99,7 @@ namespace textengine {
   }
 
   void Updater::Setup() {
+    current_state.world.SetContactListener(this);
   }
 
   Mesh::RoomInfo *Updater::FindRoomInfo(const std::string &room) const {

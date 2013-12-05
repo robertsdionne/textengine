@@ -23,8 +23,10 @@
       "description": "You stepped in a patch of mud.",
       "messages": {
         "enter": [
+          "You stepped in a puddle of mud."
         ],
         "exit": [
+          "You leave muddy footprints behind."
         ]
       }
     },
@@ -36,8 +38,10 @@
       "description": "You stepped in a patch of mud.",
       "messages": {
         "enter": [
+          "You stepped in a large muddy puddle."
         ],
         "exit": [
+          "You leave muddy footprints behind."
         ]
       }
     }

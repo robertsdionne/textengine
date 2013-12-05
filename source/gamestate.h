@@ -13,9 +13,11 @@
 
 namespace textengine {
 
+  class Scene;
+
   class GameState {
   public:
-    GameState(std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries);
+    GameState(Scene &scene, std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries);
 
     virtual ~GameState();
 
@@ -35,6 +37,9 @@ namespace textengine {
     float target_angle;
     std::deque<Shot> shots;
     bool flashlight_on;
+
+    std::vector<b2Body *> areas;
+    std::vector<b2Body *> objects;
   };
 
 }  // namespace textengine

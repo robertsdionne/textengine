@@ -1,10 +1,12 @@
 #ifndef TEXTENGINE_UPDATER_H_
 #define TEXTENGINE_UPDATER_H_
 
+#include <Box2D/Box2D.h>
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 #include <chrono>
 #include <random>
+#include <tuple>
 #include <unordered_map>
 
 #include "controller.h"
@@ -13,18 +15,24 @@
 
 namespace textengine {
 
+  class Area;
   class Input;
   class Log;
+  class Object;
   class Scene;
   class SynchronizedQueue;
 
-  class Updater : public Controller {
+  class Updater : public Controller, public b2ContactListener {
   public:
     Updater(SynchronizedQueue &command_queue,
             SynchronizedQueue &reply_queue, Log &playtest_log,
             Input &input, GameState &initial_state, Scene &scene);
 
     virtual ~Updater() = default;
+
+	virtual void BeginContact(b2Contact* contact) override;
+
+	virtual void EndContact(b2Contact* contact) override;
 
     GameState &GetCurrentState();
 
@@ -38,6 +46,8 @@ namespace textengine {
     template <typename T> int sgn(T val) {
       return (T(0) < val) - (val < T(0));
     }
+
+    std::tuple<Area *, Object *, b2Body *> ResolveContact(b2Contact *contact) const;
 
     Mesh::RoomInfo *FindRoomInfo(const std::string &room) const;
 

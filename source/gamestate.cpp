@@ -6,11 +6,12 @@
 
 #include "drawable.h"
 #include "gamestate.h"
-#include "mesh.h"
+#include "scene.h"
 
 namespace textengine {
 
-  GameState::GameState(std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries)
+  GameState::GameState(Scene &scene,
+                       std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries)
   : camera_position(), world(b2Vec2(0.0f, 0.0f)), boundary(), player_body(), target_angle(),
   flashlight_on() {
     b2BodyDef boundary_body_definition;
@@ -38,13 +39,39 @@ namespace textengine {
     player_body_definition.angularDamping = 1;
     player_body = world.CreateBody(&player_body_definition);
     b2CircleShape player_shape;
-    player_shape.m_radius = 0.01;
+    player_shape.m_radius = 0.125f;
     b2FixtureDef player_fixture_definition;
     player_fixture_definition.shape = &player_shape;
     player_fixture_definition.density = 0.1;
     player_fixture_definition.restitution = 0.1;
     player_fixture_definition.friction = 0.0f;
     player_body->CreateFixture(&player_fixture_definition);
+
+    for (auto &area : scene.areas) {
+      b2BodyDef area_body_definition;
+      area_body_definition.position.Set(area->aabb.center().x, area->aabb.center().y);
+      area_body_definition.fixedRotation = true;
+      area_body_definition.userData = area.get();
+      areas.push_back(world.CreateBody(&area_body_definition));
+      b2PolygonShape area_shape;
+      area_shape.SetAsBox(area->aabb.extent().x / 2.0f, area->aabb.extent().y / 2.0f);
+      b2FixtureDef area_fixture_definition;
+      area_fixture_definition.shape = &area_shape;
+      area_fixture_definition.isSensor = true;
+      areas.back()->CreateFixture(&area_fixture_definition);
+    }
+    for (auto &object : scene.objects) {
+      b2BodyDef object_body_definition;
+      object_body_definition.position.Set(object->position.x, object->position.y);
+      object_body_definition.fixedRotation = true;
+      object_body_definition.userData = object.get();
+      areas.push_back(world.CreateBody(&object_body_definition));
+      b2CircleShape object_shape;
+      object_shape.m_radius = 0.5f;
+      b2FixtureDef object_fixture_definition;
+      object_fixture_definition.shape = &object_shape;
+      areas.back()->CreateFixture(&object_fixture_definition);
+    }
   }
 
   GameState::~GameState() {

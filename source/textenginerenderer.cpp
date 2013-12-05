@@ -201,9 +201,7 @@ namespace textengine {
   }
 
   void TextEngineRenderer::DrawAxisAlignedBoundingBox(AxisAlignedBoundingBox aabb) {
-    const auto center = (aabb.maximum + aabb.minimum) / 2.0f;
-    const auto dimensions = aabb.maximum - aabb.minimum;
-    DrawRectangle(center, dimensions);
+    DrawRectangle(aabb.center(), aabb.extent());
   }
 
   void TextEngineRenderer::DrawCircle(glm::vec2 center, float radius) {

@@ -12,6 +12,10 @@ namespace textengine {
   struct AxisAlignedBoundingBox {
     glm::vec2 minimum, maximum;
 
+    glm::vec2 center() {
+      return (minimum + maximum) / 2.0f;
+    }
+
     glm::vec2 extent() {
       return maximum - minimum;
     }

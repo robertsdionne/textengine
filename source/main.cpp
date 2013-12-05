@@ -29,7 +29,9 @@ int main(int argument_count, char *arguments[]) {
   textengine::Scene scene;
   textengine::SceneLoader scene_loader;
   scene = scene_loader.ReadScene(filename);
-  textengine::GameState initial_state{std::vector<std::unique_ptr<std::vector<glm::vec2>>>()};
+  textengine::GameState initial_state{
+    scene, std::vector<std::unique_ptr<std::vector<glm::vec2>>>()
+  };
   textengine::Log playtest_log{kPlaytestLog};
   textengine::SynchronizedQueue command_queue, reply_queue;
   textengine::Updater updater{
