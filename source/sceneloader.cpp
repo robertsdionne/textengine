@@ -36,10 +36,12 @@ namespace textengine {
     CHECK_STATE(value.is<picojson::object>());
     auto json_object = value.get<picojson::object>();
     CHECK_STATE(json_object["areas"].is<picojson::object>());
+    CHECK_STATE(json_object["messages"].is<picojson::object>());
     CHECK_STATE(json_object["objects"].is<picojson::object>());
     auto areas_in = json_object["areas"].get<picojson::object>();
     auto objects_in = json_object["objects"].get<picojson::object>();
     AreaList areas_out;
+    auto messages_out = ReadMessageMap(json_object["messages"]);
     ObjectList objects_out;
     for (auto &area : areas_in) {
       areas_out.emplace_back(ReadArea(area.first, area.second));
@@ -47,7 +49,7 @@ namespace textengine {
     for (auto &object : objects_in) {
       objects_out.emplace_back(ReadObject(object.first, object.second));
     }
-    return Scene(std::move(areas_out), std::move(objects_out));
+    return Scene(std::move(areas_out), std::move(messages_out), std::move(objects_out));
   }
 
   Area *SceneLoader::ReadArea(const std::string &name, picojson::value area) const {

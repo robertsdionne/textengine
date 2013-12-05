@@ -46,6 +46,14 @@
       }
     }
   },
+  "messages": {
+    "run": [
+      "You start to run."
+    ],
+    "walk": [
+      "You start to walk."
+    ]
+  },
   "objects": {
     "red tree": {
       "description": "You see a big red tree.",

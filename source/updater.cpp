@@ -37,12 +37,10 @@ namespace textengine {
     b2Body *player;
     std::tie(area, object, player) = ResolveContact(contact);
     if (player && area) {
-      const auto index = index_distribution(generator) % area->messages.at("enter")->size();
-      reply_queue.PushMessage(*area->messages.at("enter")->at(index));
+      reply_queue.PushMessage(ChooseMessage(area->messages, "enter"));
     }
     if (player && object) {
-      const auto index = index_distribution(generator) % object->messages.at("touch")->size();
-      reply_queue.PushMessage(*object->messages.at("touch")->at(index));
+      reply_queue.PushMessage(ChooseMessage(object->messages, "touch"));
     }
   }
 
@@ -52,8 +50,7 @@ namespace textengine {
     b2Body *player;
     std::tie(area, object, player) = ResolveContact(contact);
     if (player && area) {
-      const auto index = index_distribution(generator) % area->messages.at("exit")->size();
-      reply_queue.PushMessage(*area->messages.at("exit")->at(index));
+      reply_queue.PushMessage(ChooseMessage(area->messages, "exit"));
     }
     if (player && object) {
       
@@ -81,6 +78,11 @@ namespace textengine {
       object = reinterpret_cast<Object *>(contact->GetFixtureB()->GetBody()->GetUserData());
     }
     return std::make_tuple(area, object, player);
+  }
+
+  const std::string &Updater::ChooseMessage(const MessageMap &messages, const std::string &name) {
+    const auto index = index_distribution(generator) % messages.at(name)->size();
+    return *messages.at(name)->at(index);
   }
 
   GameState &Updater::GetCurrentState() {
@@ -190,9 +192,9 @@ namespace textengine {
       auto velocity = current_state.player_body->GetLinearVelocity();
       const auto force = 200.0f * current_state.player_body->GetMass();
       if (input.GetTriggerVelocity() > 0) {
-        reply_queue.PushMessage("You are running.");
+        reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "run"));
       } else if (input.GetTriggerVelocity() < 0) {
-        reply_queue.PushMessage("You are walking.");
+        reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "walk"));
       }
       const auto max_velocity = glm::mix(1.38f, 5.81f, input.GetTriggerPressure());
       current_state.player_body->ApplyForceToCenter(force * b2Vec2(offset.x, offset.y), true);

@@ -49,7 +49,7 @@ namespace textengine {
 
     Scene(Scene &&scene) = default;
 
-    Scene(AreaList &&areas, ObjectList &&objects);
+    Scene(AreaList &&areas, MessageMap &&messages_by_name, ObjectList &&objects);
     
     virtual ~Scene() = default;
 
@@ -57,6 +57,7 @@ namespace textengine {
 
     AreaList areas;
     AreaMap areas_by_name;
+    MessageMap messages_by_name;
     ObjectList objects;
     ObjectMap objects_by_name;
   };

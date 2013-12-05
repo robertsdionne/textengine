@@ -12,14 +12,12 @@
 #include "controller.h"
 #include "gamestate.h"
 #include "mesh.h"
+#include "scene.h"
 
 namespace textengine {
 
-  class Area;
   class Input;
   class Log;
-  class Object;
-  class Scene;
   class SynchronizedQueue;
 
   class Updater : public Controller, public b2ContactListener {
@@ -48,6 +46,8 @@ namespace textengine {
     }
 
     std::tuple<Area *, Object *, b2Body *> ResolveContact(b2Contact *contact) const;
+
+    const std::string &ChooseMessage(const MessageMap &messages, const std::string &name);
 
     Mesh::RoomInfo *FindRoomInfo(const std::string &room) const;
 
