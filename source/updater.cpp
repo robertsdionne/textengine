@@ -210,7 +210,7 @@ namespace textengine {
       current_state.world.ClearForces();
       auto velocity = current_state.player_body->GetLinearVelocity();
 
-      if (now - last_direction_time > std::chrono::seconds(2)) {
+//      if (now - last_direction_time > std::chrono::seconds(2)) {
         last_direction_time = now;
         if (Direction::kEast != last_direction && offset.x > glm::abs(offset.y)) {
           last_direction = Direction::kEast;
@@ -225,7 +225,7 @@ namespace textengine {
           last_direction = Direction::kSouth;
           reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "south"));
         }
-      }
+//      }
 
       const auto force = 200.0f * current_state.player_body->GetMass();
       if (input.GetTriggerVelocity() > 0) {
