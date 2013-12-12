@@ -23,7 +23,7 @@ namespace textengine {
   private:
     Scene ReadScene(std::ifstream &in) const;
 
-    Area *ReadArea(const std::string &name, picojson::value area) const;
+    Area *ReadArea(picojson::value area) const;
 
     AxisAlignedBoundingBox ReadAxisAlignedBoundingBox(picojson::value aabb) const;
 
@@ -31,7 +31,7 @@ namespace textengine {
 
     MessageMap ReadMessageMap(picojson::value messages) const;
 
-    Object *ReadObject(const std::string &name, picojson::value object) const;
+    Object *ReadObject(picojson::value object) const;
 
     glm::vec2 ReadVec2(const picojson::value &vector) const;
   };

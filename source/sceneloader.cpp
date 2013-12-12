@@ -35,30 +35,31 @@ namespace textengine {
     }
     CHECK_STATE(value.is<picojson::object>());
     auto json_object = value.get<picojson::object>();
-    CHECK_STATE(json_object["areas"].is<picojson::object>());
+    CHECK_STATE(json_object["areas"].is<picojson::array>());
     CHECK_STATE(json_object["messages"].is<picojson::object>());
-    CHECK_STATE(json_object["objects"].is<picojson::object>());
-    auto areas_in = json_object["areas"].get<picojson::object>();
-    auto objects_in = json_object["objects"].get<picojson::object>();
+    CHECK_STATE(json_object["objects"].is<picojson::array>());
+    auto areas_in = json_object["areas"].get<picojson::array>();
+    auto objects_in = json_object["objects"].get<picojson::array>();
     AreaList areas_out;
     auto messages_out = ReadMessageMap(json_object["messages"]);
     ObjectList objects_out;
     for (auto &area : areas_in) {
-      areas_out.emplace_back(ReadArea(area.first, area.second));
+      areas_out.emplace_back(ReadArea(area));
     }
     for (auto &object : objects_in) {
-      objects_out.emplace_back(ReadObject(object.first, object.second));
+      objects_out.emplace_back(ReadObject(object));
     }
     return Scene(std::move(areas_out), std::move(messages_out), std::move(objects_out));
   }
 
-  Area *SceneLoader::ReadArea(const std::string &name, picojson::value area) const {
+  Area *SceneLoader::ReadArea(picojson::value area) const {
     CHECK_STATE(area.is<picojson::object>());
     auto json_object = area.get<picojson::object>();
+    CHECK_STATE(json_object["name"].is<std::string>());
     CHECK_STATE(json_object["aabb"].is<picojson::object>());
     CHECK_STATE(json_object["messages"].is<picojson::object>());
     return new Area{
-      name,
+      json_object["name"].get<std::string>(),
       ReadAxisAlignedBoundingBox(json_object["aabb"]),
       ReadMessageMap(json_object["messages"])
     };
@@ -97,13 +98,14 @@ namespace textengine {
     return message_map;
   }
 
-  Object *SceneLoader::ReadObject(const std::string &name, picojson::value object) const {
+  Object *SceneLoader::ReadObject(picojson::value object) const {
     CHECK_STATE(object.is<picojson::object>());
     auto json_object = object.get<picojson::object>();
+    CHECK_STATE(json_object["name"].is<std::string>());
     CHECK_STATE(json_object["messages"].is<picojson::object>());
     CHECK_STATE(json_object["position"].is<picojson::object>());
     return new Object{
-      name,
+      json_object["name"].get<std::string>(),
       ReadMessageMap(json_object["messages"]),
       ReadVec2(json_object["position"])
     };
