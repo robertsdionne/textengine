@@ -105,14 +105,14 @@ namespace textengine {
     const auto offset = input.GetPrimaryAxes();
     const auto offset2 = input.GetSecondaryAxes();
 
-    auto dt = 0.016f;
+    const auto dt = 0.016f;
     const auto position = glm::vec2(current_state.player_body->GetPosition().x,
                                     current_state.player_body->GetPosition().y);
     current_state.accrued_distance += glm::distance(position,
                                                     current_state.previous_player_position);
     current_state.previous_player_position = position;
 
-    constexpr auto kStepSize = 0.5f;
+    constexpr auto kStepSize = 1.0f;
     if (current_state.accrued_distance > kStepSize) {
       current_state.accrued_distance -= kStepSize;
       reply_queue.PushStep();

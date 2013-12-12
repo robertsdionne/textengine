@@ -45,78 +45,6 @@
   },
   "areas": [
     {
-      "name": "border south",
-      "aabb": {
-        "minimum": {"x": -100.0, "y": -1000.0},
-        "maximum": {"x": 100.0, "y": -10.0}
-      },
-      "messages": {
-        "describe": [
-          "You stand at the southern border of the valley and should return north."
-        ],
-        "enter": [
-          "Reverse your course and head north. To continue southerly is dangerous."
-        ],
-        "exit": [
-          "You head back to safety."
-        ]
-      }
-    },
-    {
-      "name": "border north",
-      "aabb": {
-        "minimum": {"x": -100.0, "y": 30.0},
-        "maximum": {"x": 100.0, "y": 1000.0}
-      },
-      "messages": {
-        "describe": [
-          "You stand at the northern border of the valley and should return south."
-        ],
-        "enter": [
-          "Reverse your course and head south. To continue northerly is dangerous."
-        ],
-        "exit": [
-          "You head back to safety."
-        ]
-      }
-    },
-    {
-      "name": "border east",
-      "aabb": {
-        "minimum": {"x": 30.0, "y": -100.0},
-        "maximum": {"x": 1000.0, "y": 100.0}
-      },
-      "messages": {
-        "describe": [
-          "You stand at the eastern border of the valley and should return west."
-        ],
-        "enter": [
-          "Reverse your course and head west. To continue easterly is dangerous."
-        ],
-        "exit": [
-          "You head back to safety."
-        ]
-      }
-    },
-    {
-      "name": "border west",
-      "aabb": {
-        "minimum": {"x": -1000.0, "y": -100.0},
-        "maximum": {"x": -10.0, "y": 100.0}
-      },
-      "messages": {
-        "describe": [
-          "You stand at the western border of the valley and should return east."
-        ],
-        "enter": [
-          "Reverse your course and head east. To continue westerly is dangerous."
-        ],
-        "exit": [
-          "You head back to safety."
-        ]
-      }
-    },
-    {
       "name": "field",
       "aabb": {
         "minimum": {"x": -5.0, "y": -5.0},
@@ -155,6 +83,40 @@
         "exit": [
           "You step out of the stream."
         ]
+      }
+    },
+    {
+      "name": "stream noise north",
+      "aabb": {
+        "minimum": {"x": -5.0, "y": 11.0},
+        "maximum": {"x": 20.0, "y": 14.0}
+      },
+      "messages": {
+        "describe": [
+          "You hear the rushing water of a stream to the south.",
+          "You hear water to your south."
+        ],
+        "enter": [
+          "You hear rushing water to your south."
+        ],
+        "exit": []
+      }
+    },
+    {
+      "name": "stream noise south",
+      "aabb": {
+        "minimum": {"x": -5.0, "y": 7.0},
+        "maximum": {"x": 20.0, "y": 10.0}
+      },
+      "messages": {
+        "describe": [
+          "You hear the rushing water of a stream to the north.",
+          "You hear water to your north."
+        ],
+        "enter": [
+          "You hear rushing water to your north."
+        ],
+        "exit": []
       }
     },
     {
@@ -277,6 +239,66 @@
           "You press against the red bark of the tree.",
           "You push against the trunk of the red tree.",
           "You approach the red tree, touching it."
+        ]
+      }
+    },
+    {
+      "name": "border south",
+      "aabb": {
+        "minimum": {"x": -100.0, "y": -1000.0},
+        "maximum": {"x": 100.0, "y": -10.0}
+      },
+      "messages": {
+        "describe": [
+          "You stand at the southern border of the valley and should return north."
+        ],
+        "touch": [
+          "Reverse your course and head north. To continue southerly is dangerous."
+        ]
+      }
+    },
+    {
+      "name": "border north",
+      "aabb": {
+        "minimum": {"x": -100.0, "y": 30.0},
+        "maximum": {"x": 100.0, "y": 1000.0}
+      },
+      "messages": {
+        "describe": [
+          "You stand at the northern border of the valley and should return south."
+        ],
+        "touch": [
+          "Reverse your course and head south. To continue northerly is dangerous."
+        ]
+      }
+    },
+    {
+      "name": "border east",
+      "aabb": {
+        "minimum": {"x": 30.0, "y": -100.0},
+        "maximum": {"x": 1000.0, "y": 100.0}
+      },
+      "messages": {
+        "describe": [
+          "You stand at the eastern border of the valley and should return west."
+        ],
+        "touch": [
+          "Reverse your course and head west. To continue easterly is dangerous."
+        ]
+      }
+    },
+    {
+      "name": "border west",
+      "aabb": {
+        "minimum": {"x": -1000.0, "y": -100.0},
+        "maximum": {"x": -10.0, "y": 100.0}
+      },
+      "messages": {
+        "describe": [
+          "You stand at the western border of the valley and should return east."
+        ],
+        "touch": [
+          "Reverse your course and head east. To continue westerly is dangerous."
         ]
       }
     }

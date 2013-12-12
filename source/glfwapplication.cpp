@@ -21,7 +21,7 @@ namespace textengine {
                                    Keyboard &keyboard, Mouse &mouse)
   : window(nullptr), argument_count(argument_count), arguments(arguments), width(width),
   height(height), title(title), controller(controller), renderer(renderer), input(input),
-  joystick(joystick), keyboard(keyboard), mouse(mouse), minimized(false) {
+  joystick(joystick), keyboard(keyboard), mouse(mouse), minimized(true) {
     instance = this;
   }
 
@@ -73,7 +73,7 @@ namespace textengine {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+    window = glfwCreateWindow(kMinimizedWidth, kMinimizedHeight, title.c_str(), nullptr, nullptr);
     CHECK_STATE(window != nullptr);
     glfwSetKeyCallback(window, HandleKeyboard);
     glfwSetMouseButtonCallback(window, HandleMouseButton);
@@ -86,6 +86,7 @@ namespace textengine {
     glfwGetFramebufferSize(window, &framebuffer_width, &framebuffer_height);
     HandleReshape(window, framebuffer_width, framebuffer_height);
     controller.Setup();
+    glfwSwapInterval(1);
     while (!glfwWindowShouldClose(window)) {
       if (keyboard.GetKeyVelocity(GLFW_KEY_TAB) > 0) {
         if (minimized) {
@@ -96,9 +97,7 @@ namespace textengine {
           minimized = true;
         }
       }
-      if (!minimized) {
-        renderer.Render();
-      }
+      renderer.Render();
       controller.Update();
       keyboard.Update();
       mouse.Update();
