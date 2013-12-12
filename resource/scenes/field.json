@@ -248,6 +248,23 @@
   ],
   "objects": [
     {
+      "name": "picnic table",
+      "aabb": {
+        "minimum": {"x": 1.5, "y": 3.5},
+        "maximum": {"x": 3.0, "y": 4.0}
+      },
+      "messages": {
+        "describe": [
+          "You see a picnic table."
+        ],
+        "touch": [
+          "Your legs brush against the benches of the picnic table.",
+          "You run your hand along the rough surface of the picnic table..",
+          "You scrape gently against the edges of the table."
+        ]
+      }
+    },
+    {
       "name": "red tree",
       "position": {"x": 5.0, "y": 2.5},
       "radius": 0.5,

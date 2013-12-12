@@ -57,19 +57,19 @@ namespace textengine {
     b2Body *player = nullptr;
     if (current_state.player_body == contact->GetFixtureA()->GetBody()) {
       player = contact->GetFixtureA()->GetBody();
+      if (contact->GetFixtureB()->IsSensor()) {
+        area = reinterpret_cast<Object *>(contact->GetFixtureB()->GetBody()->GetUserData());
+      } else {
+        object = reinterpret_cast<Object *>(contact->GetFixtureB()->GetBody()->GetUserData());
+      }
     }
     if (current_state.player_body == contact->GetFixtureB()->GetBody()) {
       player = contact->GetFixtureB()->GetBody();
-    }
-    if (contact->GetFixtureA()->IsSensor()) {
-      area = reinterpret_cast<Object *>(contact->GetFixtureA()->GetBody()->GetUserData());
-    } else {
-      object = reinterpret_cast<Object *>(contact->GetFixtureA()->GetBody()->GetUserData());
-    }
-    if (contact->GetFixtureB()->IsSensor()) {
-      area = reinterpret_cast<Object *>(contact->GetFixtureB()->GetBody()->GetUserData());
-    } else {
-      object = reinterpret_cast<Object *>(contact->GetFixtureB()->GetBody()->GetUserData());
+      if (contact->GetFixtureA()->IsSensor()) {
+        area = reinterpret_cast<Object *>(contact->GetFixtureA()->GetBody()->GetUserData());
+      } else {
+        object = reinterpret_cast<Object *>(contact->GetFixtureA()->GetBody()->GetUserData());
+      }
     }
     return std::make_tuple(area, object, player);
   }
