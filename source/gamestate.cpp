@@ -12,7 +12,8 @@ namespace textengine {
 
   GameState::GameState(Scene &scene,
                        std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries)
-  : camera_position(), world(b2Vec2(0.0f, 0.0f)), boundary(), player_body() {
+  : camera_position(), previous_player_position(), accrued_distance(),
+    world(b2Vec2(0.0f, 0.0f)), boundary(), player_body() {
     b2BodyDef boundary_body_definition;
     boundary_body_definition.position.Set(0, 0);
     boundary = world.CreateBody(&boundary_body_definition);

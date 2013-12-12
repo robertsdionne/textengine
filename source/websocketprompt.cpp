@@ -121,6 +121,7 @@ namespace textengine {
       const SynchronizedQueue::Message message = reply_queue.PopMessage();
       response["message"] = picojson::value(message.message);
       response["is_report"] = picojson::value(message.is_report);
+      response["is_step"] = picojson::value(message.is_step);
       std::unique_ptr<picojson::value> result{new picojson::value(response)};
       return result;
     } else {

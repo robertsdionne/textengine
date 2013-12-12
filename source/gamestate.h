@@ -21,7 +21,8 @@ namespace textengine {
 
     virtual ~GameState();
 
-    glm::vec2 camera_position;
+    glm::vec2 camera_position, previous_player_position;
+    float accrued_distance;
     b2World world;
     b2Body *boundary, *player_body;
 

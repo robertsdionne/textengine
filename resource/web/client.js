@@ -144,15 +144,19 @@ var connect = function() {
 
 var open = function() {
   window.clearTimeout(reconnect);
-//  document.addEventListener('keypress', command, false);
-//  document.addEventListener('keydown', backspace, false);
 };
 
 
 var message = function(event) {
   var payload = JSON.parse(event.data);
-  lines.push(new Line([new GameState(t += 1.0, payload.message, false, false, payload.is_report)]));
-  lineCursor += 1;
+  if (payload.is_step) {
+    lines[lines.length - 1].gameStates.push(
+        new GameState(t += 1.0, payload.message, false, false, payload.is_report));
+  } else {
+    lines.push(new Line([
+      new GameState(t += 1.0, payload.message, false, false, payload.is_report)]));
+    lineCursor += 1;
+  }
   display();
 };
 

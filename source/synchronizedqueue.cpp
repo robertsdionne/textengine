@@ -31,7 +31,11 @@ namespace textengine {
 
   void SynchronizedQueue::PushReport(const std::string &report) {
     std::lock_guard<std::mutex> lock(mutex);
-    queue.push({report, true});
+    queue.push({report, true, false});
+  }
+
+  void SynchronizedQueue::PushStep() {
+    queue.push({".", false, true});
   }
 
 }  // namespace textengine

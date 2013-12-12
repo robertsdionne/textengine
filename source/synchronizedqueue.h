@@ -12,6 +12,7 @@ namespace textengine {
     struct Message {
       std::string message;
       bool is_report;
+      bool is_step;
     };
 
     SynchronizedQueue() = default;
@@ -27,6 +28,8 @@ namespace textengine {
     void PushMessage(const std::string &message);
 
     void PushReport(const std::string &report);
+
+    void PushStep();
 
   private:
     std::mutex mutex;
