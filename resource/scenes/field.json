@@ -158,6 +158,25 @@
       }
     },
     {
+      "name": "tree shade",
+      "position": {"x": 5.0, "y": 2.5},
+      "radius": 1.5,
+      "messages": {
+        "describe": [
+          "You stand beneath the shade of the red tree.",
+          "The tree shades you from the sun."
+        ],
+        "enter": [
+          "You step beneath the shade of the red tree.",
+          "The tree shades you from the sun."
+        ],
+        "exit": [
+          "You step back into the sunlight.",
+          "You step out from underneath the red tree's shade."
+        ]
+      }
+    },
+    {
       "name": "mud patch",
       "aabb": {
         "minimum": {"x": 7.0, "y": 7.0},

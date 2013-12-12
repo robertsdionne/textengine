@@ -6,6 +6,7 @@
 #include <random>
 #include <tuple>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "controller.h"
 #include "gamestate.h"
@@ -37,9 +38,11 @@ namespace textengine {
   private:
     void Update(GameState &current_state);
 
-    std::tuple<Area *, Object *, b2Body *> ResolveContact(b2Contact *contact) const;
+    std::tuple<Object *, Object *, b2Body *> ResolveContact(b2Contact *contact) const;
 
     std::string ChooseMessage(const MessageMap &messages, const std::string &name);
+
+    bool Inside(const std::unique_ptr<Object> &area) const;
 
     enum class Direction {
       kNorth,
@@ -62,6 +65,7 @@ namespace textengine {
     Direction last_direction;
     std::chrono::high_resolution_clock::time_point last_direction_time;
     std::unordered_map<Object *, std::chrono::high_resolution_clock::time_point> last_touch_time;
+    std::unordered_set<Object *> inside;
   };
 
 }  // namespace textengine

@@ -28,11 +28,11 @@ namespace textengine {
   phrase_index(), scene(scene) {}
 
   void Updater::BeginContact(b2Contact *contact) {
-    Area *area;
-    Object *object;
+    Object *area, *object;
     b2Body *player;
     std::tie(area, object, player) = ResolveContact(contact);
     if (player && area) {
+      inside.insert(area);
       reply_queue.PushMessage(ChooseMessage(area->messages, "enter"));
     }
     const auto now = std::chrono::high_resolution_clock::now();
@@ -43,18 +43,17 @@ namespace textengine {
   }
 
   void Updater::EndContact(b2Contact *contact) {
-    Area *area;
-    Object *object;
+    Object *area, *object;
     b2Body *player;
     std::tie(area, object, player) = ResolveContact(contact);
     if (player && area) {
       reply_queue.PushMessage(ChooseMessage(area->messages, "exit"));
+      inside.erase(area);
     }
   }
 
-  std::tuple<Area *, Object *, b2Body *> Updater::ResolveContact(b2Contact *contact) const {
-    Area *area = nullptr;
-    Object *object = nullptr;
+  std::tuple<Object *, Object *, b2Body *> Updater::ResolveContact(b2Contact *contact) const {
+    Object *area = nullptr, *object = nullptr;
     b2Body *player = nullptr;
     if (current_state.player_body == contact->GetFixtureA()->GetBody()) {
       player = contact->GetFixtureA()->GetBody();
@@ -63,12 +62,12 @@ namespace textengine {
       player = contact->GetFixtureB()->GetBody();
     }
     if (contact->GetFixtureA()->IsSensor()) {
-      area = reinterpret_cast<Area *>(contact->GetFixtureA()->GetBody()->GetUserData());
+      area = reinterpret_cast<Object *>(contact->GetFixtureA()->GetBody()->GetUserData());
     } else {
       object = reinterpret_cast<Object *>(contact->GetFixtureA()->GetBody()->GetUserData());
     }
     if (contact->GetFixtureB()->IsSensor()) {
-      area = reinterpret_cast<Area *>(contact->GetFixtureB()->GetBody()->GetUserData());
+      area = reinterpret_cast<Object *>(contact->GetFixtureB()->GetBody()->GetUserData());
     } else {
       object = reinterpret_cast<Object *>(contact->GetFixtureB()->GetBody()->GetUserData());
     }
@@ -82,6 +81,10 @@ namespace textengine {
     } else {
       return "";
     }
+  }
+
+  bool Updater::Inside(const std::unique_ptr<Object> &area) const {
+    return inside.cend() != inside.find(area.get());
   }
 
   GameState &Updater::GetCurrentState() {
@@ -109,7 +112,7 @@ namespace textengine {
     if (input.GetLookVelocity() > 0) {
       reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "look"));
       for (auto &area : scene.areas) {
-        if (area->aabb.Contains(position)) {
+        if (Inside(area)) {
           reply_queue.PushMessage(ChooseMessage(area->messages, "describe"));
         }
       }

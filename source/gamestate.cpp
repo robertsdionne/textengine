@@ -46,29 +46,41 @@ namespace textengine {
     player_fixture_definition.friction = 0.5f;
     player_body->CreateFixture(&player_fixture_definition);
 
-    for (auto &area : scene.areas) {
+    for (const auto &area : scene.areas) {
       b2BodyDef area_body_definition;
       area_body_definition.position.Set(area->aabb.center().x, area->aabb.center().y);
       area_body_definition.fixedRotation = true;
       area_body_definition.userData = area.get();
       areas.push_back(world.CreateBody(&area_body_definition));
-      b2PolygonShape area_shape;
-      area_shape.SetAsBox(area->aabb.extent().x / 2.0f, area->aabb.extent().y / 2.0f);
+      b2PolygonShape aabb_shape;
+      b2CircleShape circle_shape;
       b2FixtureDef area_fixture_definition;
-      area_fixture_definition.shape = &area_shape;
+      if (Shape::kAxisAlignedBoundingBox == area->shape) {
+        aabb_shape.SetAsBox(area->aabb.half_extent().x, area->aabb.half_extent().y);
+        area_fixture_definition.shape = &aabb_shape;
+      } else {
+        circle_shape.m_radius = area->aabb.radius();
+        area_fixture_definition.shape = &circle_shape;
+      }
       area_fixture_definition.isSensor = true;
       areas.back()->CreateFixture(&area_fixture_definition);
     }
-    for (auto &object : scene.objects) {
+    for (const auto &object : scene.objects) {
       b2BodyDef object_body_definition;
-      object_body_definition.position.Set(object->position.x, object->position.y);
+      object_body_definition.position.Set(object->aabb.center().x, object->aabb.center().y);
       object_body_definition.fixedRotation = true;
       object_body_definition.userData = object.get();
       objects.push_back(world.CreateBody(&object_body_definition));
-      b2CircleShape object_shape;
-      object_shape.m_radius = 0.5f;
+      b2PolygonShape aabb_shape;
+      b2CircleShape circle_shape;
       b2FixtureDef object_fixture_definition;
-      object_fixture_definition.shape = &object_shape;
+      if (Shape::kAxisAlignedBoundingBox == object->shape) {
+        aabb_shape.SetAsBox(object->aabb.half_extent().x, object->aabb.half_extent().y);
+        object_fixture_definition.shape = &aabb_shape;
+      } else {
+        circle_shape.m_radius = object->aabb.radius();
+        object_fixture_definition.shape = &circle_shape;
+      }
       object_fixture_definition.friction = 0.5f;
       objects.back()->CreateFixture(&object_fixture_definition);
     }

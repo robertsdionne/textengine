@@ -21,32 +21,31 @@ namespace textengine {
       return maximum - minimum;
     }
 
-    bool Contains(glm::vec2 position) {
-      return glm::all(glm::lessThanEqual(minimum, position))
-          && glm::all(glm::lessThanEqual(position, maximum));
+    glm::vec2 half_extent() {
+      return extent() / 2.0f;
+    }
+
+    float radius() {
+      return glm::max(half_extent().x, half_extent().y);
     }
   };
 
   using MessageList = std::vector<std::unique_ptr<std::string>>;
   using MessageMap = std::unordered_map<std::string, std::unique_ptr<MessageList>>;
 
-  struct Area {
-    std::string name;
-    AxisAlignedBoundingBox aabb;
-    MessageMap messages;
+  enum class Shape {
+    kAxisAlignedBoundingBox,
+    kCircle
   };
 
   struct Object {
     std::string name;
+    Shape shape;
+    AxisAlignedBoundingBox aabb;
     MessageMap messages;
-    glm::vec2 position;
   };
 
-  using AreaList = std::vector<std::unique_ptr<Area>>;
-  using AreaMap = std::unordered_map<std::string, Area *>;
-
   using ObjectList = std::vector<std::unique_ptr<Object>>;
-  using ObjectMap = std::unordered_map<std::string, Object *>;
 
   class Scene {
   public:
@@ -54,17 +53,15 @@ namespace textengine {
 
     Scene(Scene &&scene) = default;
 
-    Scene(AreaList &&areas, MessageMap &&messages_by_name, ObjectList &&objects);
+    Scene(MessageMap &&messages_by_name, ObjectList &&areas, ObjectList &&objects);
     
     virtual ~Scene() = default;
 
     Scene &operator =(Scene &&scene) = default;
 
-    AreaList areas;
-    AreaMap areas_by_name;
+    ObjectList areas;
     MessageMap messages_by_name;
     ObjectList objects;
-    ObjectMap objects_by_name;
   };
 
 }  // namespace textengine

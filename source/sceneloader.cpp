@@ -40,32 +40,19 @@ namespace textengine {
     CHECK_STATE(json_object["objects"].is<picojson::array>());
     auto areas_in = json_object["areas"].get<picojson::array>();
     auto objects_in = json_object["objects"].get<picojson::array>();
-    AreaList areas_out;
+    ObjectList areas_out;
     auto messages_out = ReadMessageMap(json_object["messages"]);
     ObjectList objects_out;
     for (auto &area : areas_in) {
-      areas_out.emplace_back(ReadArea(area));
+      areas_out.emplace_back(ReadObject(area));
     }
     for (auto &object : objects_in) {
       objects_out.emplace_back(ReadObject(object));
     }
-    return Scene(std::move(areas_out), std::move(messages_out), std::move(objects_out));
+    return Scene(std::move(messages_out), std::move(areas_out), std::move(objects_out));
   }
 
-  Area *SceneLoader::ReadArea(picojson::value area) const {
-    CHECK_STATE(area.is<picojson::object>());
-    auto json_object = area.get<picojson::object>();
-    CHECK_STATE(json_object["name"].is<std::string>());
-    CHECK_STATE(json_object["aabb"].is<picojson::object>());
-    CHECK_STATE(json_object["messages"].is<picojson::object>());
-    return new Area{
-      json_object["name"].get<std::string>(),
-      ReadAxisAlignedBoundingBox(json_object["aabb"]),
-      ReadMessageMap(json_object["messages"])
-    };
-  }
-
-  AxisAlignedBoundingBox SceneLoader::ReadAxisAlignedBoundingBox(picojson::value aabb) const {
+  AxisAlignedBoundingBox SceneLoader::ReadAxisAlignedBoundingBox(picojson::value &aabb) const {
     CHECK_STATE(aabb.is<picojson::object>());
     auto json_object = aabb.get<picojson::object>();
     CHECK_STATE(json_object["minimum"].is<picojson::object>());
@@ -76,7 +63,7 @@ namespace textengine {
     };
   }
 
-  MessageList *SceneLoader::ReadMessageList(picojson::value messages) const {
+  MessageList *SceneLoader::ReadMessageList(picojson::value &messages) const {
     CHECK_STATE(messages.is<picojson::array>());
     auto json_array = messages.get<picojson::array>();
     auto message_list = new MessageList();
@@ -87,7 +74,7 @@ namespace textengine {
     return message_list;
   }
 
-  MessageMap SceneLoader::ReadMessageMap(picojson::value messages) const {
+  MessageMap SceneLoader::ReadMessageMap(picojson::value &messages) const {
     CHECK_STATE(messages.is<picojson::object>());
     auto json_object = messages.get<picojson::object>();
     auto message_map = MessageMap();
@@ -98,17 +85,31 @@ namespace textengine {
     return message_map;
   }
 
-  Object *SceneLoader::ReadObject(picojson::value object) const {
+  Object *SceneLoader::ReadObject(picojson::value &object) const {
     CHECK_STATE(object.is<picojson::object>());
     auto json_object = object.get<picojson::object>();
     CHECK_STATE(json_object["name"].is<std::string>());
     CHECK_STATE(json_object["messages"].is<picojson::object>());
-    CHECK_STATE(json_object["position"].is<picojson::object>());
-    return new Object{
-      json_object["name"].get<std::string>(),
-      ReadMessageMap(json_object["messages"]),
-      ReadVec2(json_object["position"])
-    };
+    const auto result = new Object();
+    result->name = json_object["name"].get<std::string>();
+    if (json_object.cend() == json_object.find("aabb")) {
+      CHECK_STATE(json_object["position"].is<picojson::object>());
+      CHECK_STATE(json_object["radius"].is<double>());
+      const auto position = ReadVec2(json_object["position"]);
+      const auto radius = json_object["radius"].get<double>();
+      auto aabb = AxisAlignedBoundingBox{
+        position + glm::vec2(-radius, -radius),
+        position + glm::vec2(radius, radius)
+      };
+      result->shape = Shape::kCircle;
+      result->aabb = aabb;
+    } else {
+      CHECK_STATE(json_object["aabb"].is<picojson::object>());
+      result->shape = Shape::kAxisAlignedBoundingBox;
+      result->aabb = ReadAxisAlignedBoundingBox(json_object["aabb"]);
+    }
+    result->messages = ReadMessageMap(json_object["messages"]);
+    return result;
   }
 
   glm::vec2 SceneLoader::ReadVec2(const picojson::value &vector) const {
