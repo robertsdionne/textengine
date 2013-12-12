@@ -29,9 +29,8 @@ namespace textengine {
 
   WebSocketPrompt *WebSocketPrompt::instance = nullptr;
 
-  WebSocketPrompt::WebSocketPrompt(SynchronizedQueue &command_queue,
-                                   SynchronizedQueue &reply_queue, const std::string &prompt)
-  : command_queue(command_queue), reply_queue(reply_queue), prompt(prompt), thread(), context() {
+  WebSocketPrompt::WebSocketPrompt(SynchronizedQueue &reply_queue, const std::string &prompt)
+  : reply_queue(reply_queue), prompt(prompt), thread(), context() {
     instance = this;
   }
 
@@ -110,23 +109,10 @@ namespace textengine {
         }
         break;
       }
-      case LWS_CALLBACK_RECEIVE: {
-        const std::string json = reinterpret_cast<const char *>(in);
-        std::istringstream input(json);
-        picojson::value message;
-        input >> message;
-        instance->HandleRequest(message);
-        break;
-      }
       default:
         break;
     }
     return 0;
-  }
-
-  void WebSocketPrompt::HandleRequest(picojson::value &message) {
-    const std::string value = message.get<picojson::object>()["message"].get<std::string>();
-    command_queue.PushMessage(value);
   }
 
   std::unique_ptr<picojson::value> WebSocketPrompt::HandleResponse() {

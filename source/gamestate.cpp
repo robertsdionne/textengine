@@ -12,8 +12,7 @@ namespace textengine {
 
   GameState::GameState(Scene &scene,
                        std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries)
-  : camera_position(), world(b2Vec2(0.0f, 0.0f)), boundary(), player_body(), target_angle(),
-  flashlight_on() {
+  : camera_position(), world(b2Vec2(0.0f, 0.0f)), boundary(), player_body() {
     b2BodyDef boundary_body_definition;
     boundary_body_definition.position.Set(0, 0);
     boundary = world.CreateBody(&boundary_body_definition);
@@ -65,42 +64,38 @@ namespace textengine {
       object_body_definition.position.Set(object->position.x, object->position.y);
       object_body_definition.fixedRotation = true;
       object_body_definition.userData = object.get();
-      areas.push_back(world.CreateBody(&object_body_definition));
+      objects.push_back(world.CreateBody(&object_body_definition));
       b2CircleShape object_shape;
       object_shape.m_radius = 0.5f;
       b2FixtureDef object_fixture_definition;
       object_fixture_definition.shape = &object_shape;
       object_fixture_definition.friction = 0.5f;
-      areas.back()->CreateFixture(&object_fixture_definition);
+      objects.back()->CreateFixture(&object_fixture_definition);
     }
   }
 
   GameState::~GameState() {
-    b2Fixture *fixture = boundary->GetFixtureList();
-    while (fixture) {
-      auto next = fixture->GetNext();
-      boundary->DestroyFixture(fixture);
-      fixture = next;
+    if (boundary) {
+      world.DestroyBody(boundary);
+      boundary = nullptr;
     }
-    world.DestroyBody(boundary);
-    boundary = nullptr;
-  }
-
-  Drawable GameState::Shots() const {
-    Drawable drawable;
-    drawable.data.reserve(shots.size());
-    for (auto &shot : shots) {
-      const auto amount = 0.1f * shot.intensity;
-      drawable.data.insert(drawable.data.cend(), {
-//        shot.start.x, shot.start.y,
-//        1.0f, 1.0f, 1.0f, amount,
-        shot.end.x, shot.end.y,
-        1.0f, 1.0f, 1.0f, amount
-      });
+    // TODO(robertsdionne): debug the mutex lock failure; not even sure why that's happening.
+//    if (player_body) {
+//      world.DestroyBody(player_body);
+//      player_body = nullptr;
+//    }
+//    for (auto &area : areas) {
+//      if (area) {
+//        world.DestroyBody(area);
+//        area = nullptr;
+//      }
+//    }
+    for (auto &object : objects) {
+      if (object) {
+        world.DestroyBody(object);
+        object = nullptr;
+      }
     }
-    drawable.element_count = static_cast<GLsizei>(shots.size());
-    drawable.element_type = GL_POINTS;
-    return drawable;
   }
 
 }  // namespace textengine

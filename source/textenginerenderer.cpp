@@ -10,7 +10,6 @@
 #include "checks.h"
 #include "gamestate.h"
 #include "mouse.h"
-#include "subjectivemeshrenderer.h"
 #include "textenginerenderer.h"
 #include "updater.h"
 

@@ -25,26 +25,25 @@ int main(int argument_count, char *arguments[]) {
   textengine::Joystick joystick(GLFW_JOYSTICK_1);
   textengine::Keyboard keyboard;
   textengine::Mouse mouse;
-  textengine::Input input{joystick, keyboard, mouse};
+  textengine::Input input(joystick, keyboard, mouse);
   textengine::Scene scene;
   textengine::SceneLoader scene_loader;
   scene = scene_loader.ReadScene(filename);
   textengine::GameState initial_state{
     scene, std::vector<std::unique_ptr<std::vector<glm::vec2>>>()
   };
-  textengine::Log playtest_log{kPlaytestLog};
-  textengine::SynchronizedQueue command_queue, reply_queue;
-  textengine::Updater updater{
-    command_queue, reply_queue,
-    playtest_log, input, initial_state, scene
-  };
-  textengine::WebSocketPrompt prompt{command_queue, reply_queue, kPrompt};
+  textengine::Log playtest_log(kPlaytestLog);
+  textengine::SynchronizedQueue reply_queue;
+  textengine::Updater updater(
+    reply_queue,
+    playtest_log, input, initial_state, scene);
+  textengine::WebSocketPrompt prompt(reply_queue, kPrompt);
   prompt.Run();
-  textengine::TextEngineRenderer renderer{mouse, updater, scene};
-  textengine::GlfwApplication application{
+  textengine::TextEngineRenderer renderer(mouse, updater, scene);
+  textengine::GlfwApplication application(
     argument_count, arguments, kWindowWidth, kWindowHeight,
     kWindowTitle, updater, renderer, input, joystick,
-    keyboard, mouse
-  };
-  return application.Run();
+    keyboard, mouse);
+  const auto result = application.Run();
+  return result;
 }
