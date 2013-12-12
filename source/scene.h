@@ -47,11 +47,11 @@ namespace textengine {
     float DistanceTo(glm::vec2 position) const {
       switch (shape) {
         case Shape::kAxisAlignedBoundingBox:
-          return glm::length(glm::max(glm::abs(position - aabb.center()) - aabb.half_extent(),
+          return glm::length(glm::max(glm::abs(aabb.center() - position) - aabb.half_extent(),
                                       glm::vec2()));
           break;
         case Shape::kCircle:
-          return glm::length(position - aabb.center()) - aabb.radius();
+          return glm::length(aabb.center() - position) - aabb.radius();
           break;
         default:
           return std::numeric_limits<float>::infinity();

@@ -137,9 +137,10 @@ namespace textengine {
         return a->DistanceTo(position) < b->DistanceTo(position);
       };
       auto nth = nearby.begin() + 3;
-      std::nth_element(nearby.begin(), nth, nearby.end(), compare);
+      std::partial_sort(nearby.begin(), nth, nearby.end(), compare);
       for (auto element = nearby.begin(); element < nth; ++element) {
         out << ChooseMessage((*element)->messages, "describe") << " ";
+//        out << "(" << (*element)->DistanceTo(position) << ") ";
       }
       reply_queue.PushMessage(out.str());
     } else if (input.GetLookVelocity() < 0) {
