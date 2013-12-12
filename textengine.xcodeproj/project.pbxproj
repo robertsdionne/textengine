@@ -2303,39 +2303,6 @@
 		462C2AB21839C1A3001EE26F /* b2Polygon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = b2Polygon.h; sourceTree = "<group>"; };
 		462C2AB31839C1A3001EE26F /* b2Triangle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = b2Triangle.cpp; sourceTree = "<group>"; };
 		462C2AB41839C1A3001EE26F /* b2Triangle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = b2Triangle.h; sourceTree = "<group>"; };
-		4630C5FD183EC90E000071AA /* shoot00.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot00.wav; sourceTree = "<group>"; };
-		4630C5FE183EC90E000071AA /* shoot01.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot01.wav; sourceTree = "<group>"; };
-		4630C5FF183EC90E000071AA /* shoot02.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot02.wav; sourceTree = "<group>"; };
-		4630C600183EC90E000071AA /* shoot03.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot03.wav; sourceTree = "<group>"; };
-		4630C601183EC90E000071AA /* shoot04.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot04.wav; sourceTree = "<group>"; };
-		4630C602183EC90E000071AA /* shoot05.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot05.wav; sourceTree = "<group>"; };
-		4630C603183EC90E000071AA /* shoot06.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot06.wav; sourceTree = "<group>"; };
-		4630C604183EC90E000071AA /* shoot07.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot07.wav; sourceTree = "<group>"; };
-		4630C605183EC90E000071AA /* shoot08.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot08.wav; sourceTree = "<group>"; };
-		4630C606183EC90E000071AA /* shoot09.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot09.wav; sourceTree = "<group>"; };
-		4630C607183EC90E000071AA /* shoot10.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shoot10.wav; sourceTree = "<group>"; };
-		4630C608183EC90E000071AA /* subway.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = subway.json; sourceTree = "<group>"; };
-		4630C609183EC90E000071AA /* cave.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cave.json; sourceTree = "<group>"; };
-		4630C60B183EC90E000071AA /* CONTRIBUTING.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = CONTRIBUTING.txt; sourceTree = "<group>"; };
-		4630C60C183EC90E000071AA /* copyright.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = copyright.txt; sourceTree = "<group>"; };
-		4630C60D183EC90E000071AA /* FONTLOG.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = FONTLOG.txt; sourceTree = "<group>"; };
-		4630C60E183EC90E000071AA /* LICENCE-FAQ.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "LICENCE-FAQ.txt"; sourceTree = "<group>"; };
-		4630C60F183EC90E000071AA /* LICENCE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENCE.txt; sourceTree = "<group>"; };
-		4630C610183EC90E000071AA /* README.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
-		4630C611183EC90E000071AA /* TRADEMARKS.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = TRADEMARKS.txt; sourceTree = "<group>"; };
-		4630C612183EC90E000071AA /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
-		4630C613183EC90E000071AA /* Ubuntu-BI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-BI.ttf"; sourceTree = "<group>"; };
-		4630C614183EC90E000071AA /* Ubuntu-C.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-C.ttf"; sourceTree = "<group>"; };
-		4630C615183EC90E000071AA /* Ubuntu-L.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-L.ttf"; sourceTree = "<group>"; };
-		4630C616183EC90E000071AA /* Ubuntu-LI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-LI.ttf"; sourceTree = "<group>"; };
-		4630C617183EC90E000071AA /* Ubuntu-M.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-M.ttf"; sourceTree = "<group>"; };
-		4630C618183EC90E000071AA /* Ubuntu-MI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-MI.ttf"; sourceTree = "<group>"; };
-		4630C619183EC90E000071AA /* Ubuntu-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-R.ttf"; sourceTree = "<group>"; };
-		4630C61A183EC90E000071AA /* Ubuntu-RI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-RI.ttf"; sourceTree = "<group>"; };
-		4630C61B183EC90E000071AA /* UbuntuMono-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UbuntuMono-B.ttf"; sourceTree = "<group>"; };
-		4630C61C183EC90E000071AA /* UbuntuMono-BI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UbuntuMono-BI.ttf"; sourceTree = "<group>"; };
-		4630C61D183EC90E000071AA /* UbuntuMono-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UbuntuMono-R.ttf"; sourceTree = "<group>"; };
-		4630C61E183EC90E000071AA /* UbuntuMono-RI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UbuntuMono-RI.ttf"; sourceTree = "<group>"; };
 		4630C623183ED5F1000071AA /* libstb_vorbis.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libstb_vorbis.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4630C628183ED664000071AA /* stb_vorbis.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stb_vorbis.c; sourceTree = "<group>"; };
 		4630C629183ED664000071AA /* stb_vorbis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_vorbis.h; sourceTree = "<group>"; };
@@ -2366,11 +2333,35 @@
 		466E70F917EB92F900CD9E9D /* gamestate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gamestate.h; sourceTree = "<group>"; };
 		466E70FE17EB96D500CD9E9D /* updater.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = updater.cpp; sourceTree = "<group>"; };
 		466E70FF17EB96D500CD9E9D /* updater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = updater.h; sourceTree = "<group>"; };
+		467437FF185A2BCE0062EE18 /* field.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = field.json; sourceTree = "<group>"; };
+		46743801185A2BCE0062EE18 /* client.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = client.js; sourceTree = "<group>"; };
+		46743802185A2BCE0062EE18 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		46743804185A2BE10062EE18 /* Stela_UT.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Stela_UT.otf; sourceTree = "<group>"; };
+		46743806185A2BE10062EE18 /* CONTRIBUTING.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CONTRIBUTING.txt; sourceTree = "<group>"; };
+		46743807185A2BE10062EE18 /* copyright.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = copyright.txt; sourceTree = "<group>"; };
+		46743808185A2BE10062EE18 /* FONTLOG.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FONTLOG.txt; sourceTree = "<group>"; };
+		46743809185A2BE10062EE18 /* LICENCE-FAQ.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENCE-FAQ.txt"; sourceTree = "<group>"; };
+		4674380A185A2BE10062EE18 /* LICENCE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENCE.txt; sourceTree = "<group>"; };
+		4674380B185A2BE10062EE18 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		4674380C185A2BE10062EE18 /* TRADEMARKS.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TRADEMARKS.txt; sourceTree = "<group>"; };
+		4674380D185A2BE10062EE18 /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
+		4674380E185A2BE10062EE18 /* Ubuntu-BI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-BI.ttf"; sourceTree = "<group>"; };
+		4674380F185A2BE10062EE18 /* Ubuntu-C.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-C.ttf"; sourceTree = "<group>"; };
+		46743810185A2BE10062EE18 /* Ubuntu-L.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-L.ttf"; sourceTree = "<group>"; };
+		46743811185A2BE10062EE18 /* Ubuntu-LI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-LI.ttf"; sourceTree = "<group>"; };
+		46743812185A2BE10062EE18 /* Ubuntu-M.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-M.ttf"; sourceTree = "<group>"; };
+		46743813185A2BE20062EE18 /* Ubuntu-MI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-MI.ttf"; sourceTree = "<group>"; };
+		46743814185A2BE20062EE18 /* Ubuntu-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-R.ttf"; sourceTree = "<group>"; };
+		46743815185A2BE20062EE18 /* Ubuntu-RI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-RI.ttf"; sourceTree = "<group>"; };
+		46743816185A2BE20062EE18 /* UbuntuMono-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UbuntuMono-B.ttf"; sourceTree = "<group>"; };
+		46743817185A2BE20062EE18 /* UbuntuMono-BI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UbuntuMono-BI.ttf"; sourceTree = "<group>"; };
+		46743818185A2BE20062EE18 /* UbuntuMono-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UbuntuMono-R.ttf"; sourceTree = "<group>"; };
+		46743819185A2BE20062EE18 /* UbuntuMono-RI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UbuntuMono-RI.ttf"; sourceTree = "<group>"; };
+		4674381A185A2BE20062EE18 /* Vetka.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vetka.otf; sourceTree = "<group>"; };
 		468E01421783DF4C00301C1C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		468E01441783DF9200301C1C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		468E01461783DFA100301C1C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		468E014E1783E9BD00301C1C /* base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base.h; sourceTree = "<group>"; };
-		469FFA82184EEE900074DA75 /* scene.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = scene.json; sourceTree = "<group>"; };
 		469FFA83184EF3270074DA75 /* sceneloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sceneloader.cpp; sourceTree = "<group>"; };
 		469FFA84184EF3270074DA75 /* sceneloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sceneloader.h; sourceTree = "<group>"; };
 		469FFA86184EF3300074DA75 /* sceneserializer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sceneserializer.cpp; sourceTree = "<group>"; };
@@ -2449,8 +2440,6 @@
 		46D0FCB7180F1D5200B00F93 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		46D21C101771F2B900C896A4 /* textengine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = textengine; sourceTree = BUILT_PRODUCTS_DIR; };
 		46E297A818340DFD0065D56E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		46FBD339180F338300F7C5F8 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
-		46FBD33A180F339400F7C5F8 /* client.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = client.js; sourceTree = "<group>"; };
 		46FBD33B180F4C7F00F7C5F8 /* commandlineprompt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = commandlineprompt.cpp; sourceTree = "<group>"; };
 		46FBD33C180F4C7F00F7C5F8 /* commandlineprompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commandlineprompt.h; sourceTree = "<group>"; };
 		46FBD341180F572400F7C5F8 /* websocketprompt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = websocketprompt.cpp; sourceTree = "<group>"; };
@@ -2459,8 +2448,6 @@
 		46FBD345180F6F7600F7C5F8 /* synchronizedqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = synchronizedqueue.h; sourceTree = "<group>"; };
 		46FBD347180F76BE00F7C5F8 /* console.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = console.cpp; sourceTree = "<group>"; };
 		46FBD348180F76BE00F7C5F8 /* console.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = console.h; sourceTree = "<group>"; };
-		46FBD34A180F897100F7C5F8 /* output.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = output.json; sourceTree = "<group>"; };
-		46FBD34B180F897100F7C5F8 /* output2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = output2.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5118,51 +5105,6 @@
 			path = ConvexDecomposition;
 			sourceTree = "<group>";
 		};
-		4630C5FC183EC90E000071AA /* sound */ = {
-			isa = PBXGroup;
-			children = (
-				4630C5FD183EC90E000071AA /* shoot00.wav */,
-				4630C5FE183EC90E000071AA /* shoot01.wav */,
-				4630C5FF183EC90E000071AA /* shoot02.wav */,
-				4630C600183EC90E000071AA /* shoot03.wav */,
-				4630C601183EC90E000071AA /* shoot04.wav */,
-				4630C602183EC90E000071AA /* shoot05.wav */,
-				4630C603183EC90E000071AA /* shoot06.wav */,
-				4630C604183EC90E000071AA /* shoot07.wav */,
-				4630C605183EC90E000071AA /* shoot08.wav */,
-				4630C606183EC90E000071AA /* shoot09.wav */,
-				4630C607183EC90E000071AA /* shoot10.wav */,
-			);
-			path = sound;
-			sourceTree = "<group>";
-		};
-		4630C60A183EC90E000071AA /* ubuntu-font-family-0.80 */ = {
-			isa = PBXGroup;
-			children = (
-				4630C60B183EC90E000071AA /* CONTRIBUTING.txt */,
-				4630C60C183EC90E000071AA /* copyright.txt */,
-				4630C60D183EC90E000071AA /* FONTLOG.txt */,
-				4630C60E183EC90E000071AA /* LICENCE-FAQ.txt */,
-				4630C60F183EC90E000071AA /* LICENCE.txt */,
-				4630C610183EC90E000071AA /* README.txt */,
-				4630C611183EC90E000071AA /* TRADEMARKS.txt */,
-				4630C612183EC90E000071AA /* Ubuntu-B.ttf */,
-				4630C613183EC90E000071AA /* Ubuntu-BI.ttf */,
-				4630C614183EC90E000071AA /* Ubuntu-C.ttf */,
-				4630C615183EC90E000071AA /* Ubuntu-L.ttf */,
-				4630C616183EC90E000071AA /* Ubuntu-LI.ttf */,
-				4630C617183EC90E000071AA /* Ubuntu-M.ttf */,
-				4630C618183EC90E000071AA /* Ubuntu-MI.ttf */,
-				4630C619183EC90E000071AA /* Ubuntu-R.ttf */,
-				4630C61A183EC90E000071AA /* Ubuntu-RI.ttf */,
-				4630C61B183EC90E000071AA /* UbuntuMono-B.ttf */,
-				4630C61C183EC90E000071AA /* UbuntuMono-BI.ttf */,
-				4630C61D183EC90E000071AA /* UbuntuMono-R.ttf */,
-				4630C61E183EC90E000071AA /* UbuntuMono-RI.ttf */,
-			);
-			path = "ubuntu-font-family-0.80";
-			sourceTree = "<group>";
-		};
 		4630C627183ED664000071AA /* stb_vorbis */ = {
 			isa = PBXGroup;
 			children = (
@@ -5201,6 +5143,60 @@
 				46B9A6081771F0F800E43B24 /* source */,
 			);
 			indentWidth = 2;
+			sourceTree = "<group>";
+		};
+		467437FE185A2BCE0062EE18 /* scenes */ = {
+			isa = PBXGroup;
+			children = (
+				467437FF185A2BCE0062EE18 /* field.json */,
+			);
+			path = scenes;
+			sourceTree = "<group>";
+		};
+		46743800185A2BCE0062EE18 /* web */ = {
+			isa = PBXGroup;
+			children = (
+				46743801185A2BCE0062EE18 /* client.js */,
+				46743802185A2BCE0062EE18 /* index.html */,
+			);
+			path = web;
+			sourceTree = "<group>";
+		};
+		46743803185A2BE10062EE18 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				46743804185A2BE10062EE18 /* Stela_UT.otf */,
+				46743805185A2BE10062EE18 /* ubuntu-font-family-0.80 */,
+				4674381A185A2BE20062EE18 /* Vetka.otf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		46743805185A2BE10062EE18 /* ubuntu-font-family-0.80 */ = {
+			isa = PBXGroup;
+			children = (
+				46743806185A2BE10062EE18 /* CONTRIBUTING.txt */,
+				46743807185A2BE10062EE18 /* copyright.txt */,
+				46743808185A2BE10062EE18 /* FONTLOG.txt */,
+				46743809185A2BE10062EE18 /* LICENCE-FAQ.txt */,
+				4674380A185A2BE10062EE18 /* LICENCE.txt */,
+				4674380B185A2BE10062EE18 /* README.txt */,
+				4674380C185A2BE10062EE18 /* TRADEMARKS.txt */,
+				4674380D185A2BE10062EE18 /* Ubuntu-B.ttf */,
+				4674380E185A2BE10062EE18 /* Ubuntu-BI.ttf */,
+				4674380F185A2BE10062EE18 /* Ubuntu-C.ttf */,
+				46743810185A2BE10062EE18 /* Ubuntu-L.ttf */,
+				46743811185A2BE10062EE18 /* Ubuntu-LI.ttf */,
+				46743812185A2BE10062EE18 /* Ubuntu-M.ttf */,
+				46743813185A2BE20062EE18 /* Ubuntu-MI.ttf */,
+				46743814185A2BE20062EE18 /* Ubuntu-R.ttf */,
+				46743815185A2BE20062EE18 /* Ubuntu-RI.ttf */,
+				46743816185A2BE20062EE18 /* UbuntuMono-B.ttf */,
+				46743817185A2BE20062EE18 /* UbuntuMono-BI.ttf */,
+				46743818185A2BE20062EE18 /* UbuntuMono-R.ttf */,
+				46743819185A2BE20062EE18 /* UbuntuMono-RI.ttf */,
+			);
+			path = "ubuntu-font-family-0.80";
 			sourceTree = "<group>";
 		};
 		468EF71B1783DC1B00301C1C /* libraries */ = {
@@ -5428,15 +5424,9 @@
 		46FBD338180F335C00F7C5F8 /* resource */ = {
 			isa = PBXGroup;
 			children = (
-				4630C609183EC90E000071AA /* cave.json */,
-				46FBD33A180F339400F7C5F8 /* client.js */,
-				46FBD339180F338300F7C5F8 /* index.html */,
-				469FFA82184EEE900074DA75 /* scene.json */,
-				46FBD34A180F897100F7C5F8 /* output.json */,
-				46FBD34B180F897100F7C5F8 /* output2.json */,
-				4630C5FC183EC90E000071AA /* sound */,
-				4630C608183EC90E000071AA /* subway.json */,
-				4630C60A183EC90E000071AA /* ubuntu-font-family-0.80 */,
+				46743803185A2BE10062EE18 /* fonts */,
+				467437FE185A2BCE0062EE18 /* scenes */,
+				46743800185A2BCE0062EE18 /* web */,
 			);
 			path = resource;
 			sourceTree = "<group>";
@@ -6240,6 +6230,7 @@
 				4638293D184FE01B00E03895 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		463E3D5E1767FB9000A4466B /* Build configuration list for PBXProject "textengine" */ = {
 			isa = XCConfigurationList;

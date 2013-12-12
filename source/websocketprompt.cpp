@@ -50,10 +50,10 @@ namespace textengine {
         const std::string url_path = reinterpret_cast<const char *>(in);
         std::string resource_path, content_type;
         if ("/" == url_path) {
-          resource_path = "../resource/index.html";
+          resource_path = "../resource/web/index.html";
           content_type = "text/html";
         } else if ("/client.js" == url_path) {
-          resource_path = "../resource/client.js";
+          resource_path = "../resource/web/client.js";
           content_type = "application/javascript";
         } else if ("/Stela_UT.otf" == url_path) {
           resource_path = "../resource/fonts/Stela_UT.otf";
