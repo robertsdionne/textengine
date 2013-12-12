@@ -5,6 +5,7 @@
 #include <glm/gtc/noise.hpp>
 #include <limits>
 #include <stb_vorbis.h>
+#include <sstream>
 #include <string>
 #include <tuple>
 #include <unordered_map>
@@ -75,7 +76,7 @@ namespace textengine {
   }
 
   std::string Updater::ChooseMessage(const MessageMap &messages, const std::string &name) {
-    if (messages.at(name)->size()) {
+    if (messages.cend() != messages.find(name) && messages.at(name)->size()) {
       const auto index = index_distribution(generator) % messages.at(name)->size();
       return *messages.at(name)->at(index);
     } else {
@@ -119,12 +120,28 @@ namespace textengine {
     }
 
     if (input.GetLookVelocity() > 0) {
-      reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "look"));
+      std::ostringstream out;
+      out << ChooseMessage(scene.messages_by_name, "look") << " ";
+      std::vector<Object *> nearby;
       for (auto &area : scene.areas) {
         if (Inside(area)) {
-          reply_queue.PushMessage(ChooseMessage(area->messages, "describe"));
+          out << ChooseMessage(area->messages, "inside") << " ";
+        } else if (area->messages.cend() != area->messages.find("describe")) {
+          nearby.push_back(area.get());
         }
       }
+      for (auto &object : scene.objects) {
+        nearby.push_back(object.get());
+      }
+      auto compare = [position] (const Object *a, const Object *b) {
+        return a->DistanceTo(position) < b->DistanceTo(position);
+      };
+      auto nth = nearby.begin() + 3;
+      std::nth_element(nearby.begin(), nth, nearby.end(), compare);
+      for (auto element = nearby.begin(); element < nth; ++element) {
+        out << ChooseMessage((*element)->messages, "describe") << " ";
+      }
+      reply_queue.PushMessage(out.str());
     } else if (input.GetLookVelocity() < 0) {
       reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "stop looking"));
     }

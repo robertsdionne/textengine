@@ -52,9 +52,14 @@
       },
       "messages": {
         "describe": [
+          "You see a field.",
+          "You see a grassy field.",
+          "You see before you a field full of vegetation."
+        ],
+        "inside": [
           "You are standing in a field.",
           "You stand in a grassy field.",
-          "You see before you a field full of vegetation."
+          "You stand within a field full of vegetation."
         ],
         "enter": [
           "You enter the grassy field.",
@@ -74,6 +79,10 @@
       },
       "messages": {
         "describe": [
+          "You see a stream that runs from east to west.",
+          "You see the stream with water running westward."
+        ],
+        "inside": [
           "You are standing in a stream that runs from east to west.",
           "The water of the stream trickles through your toes to the west."
         ],
@@ -92,7 +101,7 @@
         "maximum": {"x": 20.0, "y": 14.0}
       },
       "messages": {
-        "describe": [
+        "inside": [
           "You hear the rushing water of a stream to the south.",
           "You hear water to your south."
         ],
@@ -109,7 +118,7 @@
         "maximum": {"x": 20.0, "y": 10.0}
       },
       "messages": {
-        "describe": [
+        "inside": [
           "You hear the rushing water of a stream to the north.",
           "You hear water to your north."
         ],
@@ -125,6 +134,10 @@
       "radius": 1.5,
       "messages": {
         "describe": [
+          "You see the shade of the red tree.",
+          "The tree shades a wide area from the sun."
+        ],
+        "inside": [
           "You stand beneath the shade of the red tree.",
           "The tree shades you from the sun."
         ],
@@ -146,6 +159,11 @@
       },
       "messages": {
         "describe": [
+          "You see a patch of mud.",
+          "You see a mud patch.",
+          "You see a muddy puddle."
+        ],
+        "inside": [
           "You stand in a patch of mud.",
           "You stand in a mud patch.",
           "You stand in a muddy puddle."
@@ -169,6 +187,11 @@
       },
       "messages": {
         "describe": [
+          "You see a patch of mud.",
+          "You see a mud patch.",
+          "You see a muddy puddle."
+        ],
+        "inside": [
           "You stand in a patch of mud.",
           "You stand in a mud patch.",
           "You stand in a muddy puddle."
@@ -192,6 +215,10 @@
       },
       "messages": {
         "describe": [
+          "You see a ramada.",
+          "You see an orange roofed ramada."
+        ],
+        "inside": [
           "You stand in the shade of the ramada.",
           "The orange roof of the ramada shields you from the sun's rays."
         ],
@@ -217,7 +244,8 @@
       },
       "messages": {
         "describe": [
-          "You see a picnic table."
+          "You see a picnic table.",
+          "You see a picnic table beneath the ramada."
         ],
         "touch": [
           "Your legs brush against the benches of the picnic table.",
@@ -250,7 +278,7 @@
       },
       "messages": {
         "describe": [
-          "You stand at the southern border of the valley and should return north."
+          "You see the southern border of the valley."
         ],
         "touch": [
           "Reverse your course and head north. To continue southerly is dangerous."
@@ -265,7 +293,7 @@
       },
       "messages": {
         "describe": [
-          "You stand at the northern border of the valley and should return south."
+          "You see the northern border of the valley."
         ],
         "touch": [
           "Reverse your course and head south. To continue northerly is dangerous."
@@ -280,7 +308,7 @@
       },
       "messages": {
         "describe": [
-          "You stand at the eastern border of the valley and should return west."
+          "You see the eastern border of the valley."
         ],
         "touch": [
           "Reverse your course and head west. To continue easterly is dangerous."
@@ -295,7 +323,7 @@
       },
       "messages": {
         "describe": [
-          "You stand at the western border of the valley and should return east."
+          "You see the western border of the valley."
         ],
         "touch": [
           "Reverse your course and head east. To continue westerly is dangerous."
