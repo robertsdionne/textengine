@@ -45,7 +45,7 @@ namespace textengine {
   float Input::GetTriggerPressure() const {
     const auto result = ArgMax({
       joystick.IsButtonDown(Joystick::Button::kR1),
-      keyboard.IsKeyDown(GLFW_KEY_SPACE)
+      keyboard.IsKeyDown(GLFW_KEY_LEFT_SHIFT)
     });
     return result;
   }
@@ -53,7 +53,7 @@ namespace textengine {
   float Input::GetTriggerVelocity() const {
     const auto result = ArgMax({
       joystick.GetButtonVelocity(Joystick::Button::kR1),
-      keyboard.GetKeyVelocity(GLFW_KEY_SPACE)
+      keyboard.GetKeyVelocity(GLFW_KEY_LEFT_SHIFT)
     });
     return result;
   }
@@ -85,6 +85,7 @@ namespace textengine {
     mouse_primary_smoothed_axes = glm::mix(mouse_primary_smoothed_axes,
                                            mouse_primary_axes, kSmoothRate);
     looking = glm::length(joystick_secondary_axes) > Joystick::kDeadZone;
+    looking |= glm::length(keyboard_secondary_smoothed_axes) > Joystick::kDeadZone;
   }
 
   glm::vec2 Input::ArgMax(std::initializer_list<glm::vec2> &&vectors) {

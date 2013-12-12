@@ -17,7 +17,7 @@
 constexpr const char *kPlaytestLog = u8"playtest.log";
 constexpr const char *kPrompt = u8"> ";
 constexpr int kWindowHeight = 800;
-constexpr int kWindowWidth = 1280;
+constexpr int kWindowWidth = 1280/2;
 constexpr const char *kWindowTitle = u8"textengine";
 
 int main(int argument_count, char *arguments[]) {

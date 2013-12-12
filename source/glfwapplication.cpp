@@ -96,7 +96,9 @@ namespace textengine {
           minimized = true;
         }
       }
-      renderer.Render();
+      if (!minimized) {
+        renderer.Render();
+      }
       controller.Update();
       keyboard.Update();
       mouse.Update();
