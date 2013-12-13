@@ -43,6 +43,7 @@ namespace textengine {
     Shape shape;
     AxisAlignedBoundingBox aabb;
     MessageMap messages;
+    bool invisible;
 
     float DistanceTo(glm::vec2 position) const {
       switch (shape) {

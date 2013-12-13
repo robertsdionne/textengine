@@ -190,7 +190,7 @@ var SCROLL_DELAY = 80;
 var t = 0.0;
 
 
-var lines = [new Line([new GameState(t, 'Text Engine')])];
+var lines = [new Line([new GameState(t, 'Text Field')])];
 
 
 var lineCursor = 1;

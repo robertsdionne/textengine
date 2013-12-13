@@ -140,6 +140,9 @@ namespace textengine {
 
     fill = glm::vec4(0.0f, 0.5f, 0.3f, 0.5f);
     for (const auto &area : scene.areas) {
+      if (area->invisible) {
+        continue;
+      }
       if (Shape::kAxisAlignedBoundingBox == area->shape) {
         DrawAxisAlignedBoundingBox(area->aabb);
       } else {
@@ -148,6 +151,9 @@ namespace textengine {
     }
     fill = glm::vec4(1.0f, 0.0f, 0.0f, 0.5f);
     for (const auto &object : scene.objects) {
+      if (object->invisible) {
+        continue;
+      }
       if (Shape::kAxisAlignedBoundingBox == object->shape) {
         DrawAxisAlignedBoundingBox(object->aabb);
       } else {
@@ -189,18 +195,6 @@ namespace textengine {
     }
 
     imguiBeginFrame(mouse_position.x, height - mouse_position.y, mouse_buttons, 0);
-
-    for (auto &area : scene.areas) {
-      const glm::vec4 homogeneous = transform * glm::vec4(area->aabb.minimum.x, area->aabb.maximum.y, 0.0f, 1.0f);
-      const glm::vec2 transformed = homogeneous.xy() / homogeneous.w;
-      imguiDrawText(transformed.x, height - transformed.y, IMGUI_ALIGN_LEFT, area->name.c_str(), imguiRGBA(0, 0, 0));
-    }
-
-    for (auto &object : scene.objects) {
-      const glm::vec4 homogeneous = transform * glm::vec4(object->aabb.minimum.x, object->aabb.maximum.y, 0.0f, 1.0f);
-      const glm::vec2 transformed = homogeneous.xy() / homogeneous.w;
-      imguiDrawText(transformed.x, height - transformed.y, IMGUI_ALIGN_LEFT, object->name.c_str(), imguiRGBA(0, 0, 0));
-    }
 
     imguiEndFrame();
 

@@ -109,7 +109,8 @@
           "You hear rushing water to your south."
         ],
         "exit": []
-      }
+      },
+      "invisible": true
     },
     {
       "name": "stream noise south",
@@ -126,7 +127,8 @@
           "You hear rushing water to your north."
         ],
         "exit": []
-      }
+      },
+      "invisible": true
     },
     {
       "name": "tree shade",
