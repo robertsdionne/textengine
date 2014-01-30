@@ -147,17 +147,50 @@ var open = function() {
 };
 
 
+var target_x = 0, x = 0;
+var target_y = 0, y = 0;
+
+var alpha = 0.2;
+
+
 var message = function(event) {
   var payload = JSON.parse(event.data);
   if (payload.is_step) {
     lines[lines.length - 1].gameStates.push(
         new GameState(t += 1.0, payload.message, false, false, payload.is_report));
+  } else if (payload.is_movement) {
+    target_x = canvas.width / 3 * payload.direction.x;
+    target_y = canvas.width / 3 * -payload.direction.y;
   } else {
     lines.push(new Line([
       new GameState(t += 1.0, payload.message, false, false, payload.is_report)]));
     lineCursor += 1;
   }
   display();
+};
+
+
+var drawArrow = function() {
+  x = (1.0 - alpha) * x + alpha * target_x;
+  y = (1.0 - alpha) * y + alpha * target_y;
+  var x2 = y;
+  var y2 = -x;
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.strokeStyle = 'rgb(0, 0, 0)';
+  context.lineWidth = 4.0;
+  context.lineCap = 'round';
+  context.save();
+  context.translate(canvas.width / 2, canvas.height / 2);
+  context.beginPath();
+  context.moveTo(-x, -y);
+  context.lineTo(x, y);
+  context.moveTo(x / 2 + x2 / 4, y / 2 + y2 / 4);
+  context.lineTo(x, y);
+  context.lineTo(x / 2 - x2 / 4, y / 2 - y2 / 4);
+  context.stroke();
+  context.closePath();
+  context.restore();
+  window.requestAnimationFrame(drawArrow);
 };
 
 
@@ -220,12 +253,23 @@ var blink;
 var reconnect;
 
 
+var canvas, context;
+
+
 var load = function() {
   container = document.getElementById('container');
   commandline = document.getElementById('commandline');
   cursor = document.getElementById('cursor');
+  canvas = document.getElementById('arrow');
+  canvas.width = canvas.width * 2;
+  canvas.height = canvas.height * 2;
+  canvas.style.width = canvas.width / 2;
+  canvas.style.height = canvas.height / 2;
+  context = canvas.getContext('2d');
+  context.scale(1, 1);
   connect();
   display();
+  window.requestAnimationFrame(drawArrow);
 //  resetCursor();
 };
 window.addEventListener('load', load, false);

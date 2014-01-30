@@ -118,6 +118,11 @@ namespace textengine {
       current_state.accrued_distance -= kStepSize;
       reply_queue.PushStep();
     }
+    
+    if (now - last_transmit_time > std::chrono::milliseconds(16)) {
+      reply_queue.PushMovement(position, glm::length(offset) > 0 ? glm::normalize(offset) : glm::vec2());
+      last_transmit_time = now;
+    }
 
     if (input.GetLookVelocity() > 0) {
       std::ostringstream out;
