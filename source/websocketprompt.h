@@ -21,7 +21,8 @@ namespace textengine {
 
     void Run();
 
-  private:static int HttpCallback(libwebsocket_context *context,
+  private:
+    static int HttpCallback(libwebsocket_context *context,
                             libwebsocket *wsi,
                             enum libwebsocket_callback_reasons reason,
                             void *user,
