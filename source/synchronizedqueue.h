@@ -3,31 +3,119 @@
 
 #include <glm/glm.hpp>
 #include <deque>
+#include <memory>
 #include <mutex>
+#include <picojson.h>
 #include <string>
 
+#include "base.h"
+
 namespace textengine {
+  
+  class Message {
+    DECLARE_INTERFACE(Message);
+    
+  public:
+    virtual picojson::value ToJson() const = 0;
+    
+    virtual bool is_movement() const = 0;
+  };
+  
+  class CompositeMessage : public Message {
+  public:
+    CompositeMessage();
+    
+    virtual ~CompositeMessage() = default;
+    
+    virtual picojson::value ToJson() const override;
+    
+    virtual bool is_movement() const override;
+    
+  private:
+    std::vector<Message> messages;
+  };
+  
+  class EntityMessage : public Message {
+  public:
+    EntityMessage(glm::vec2 position);
+    
+    virtual ~EntityMessage() = default;
+    
+    virtual picojson::value ToJson() const override;
+    
+    virtual bool is_movement() const override;
+    
+  private:
+    glm::vec2 position;
+  };
+  
+  class ReportMessage : public Message {
+  public:
+    ReportMessage(const std::string &report);
+    
+    virtual ~ReportMessage() = default;
+    
+    virtual picojson::value ToJson() const override;
+    
+    virtual bool is_movement() const override;
+    
+  private:
+    std::string report;
+  };
+  
+  class StepMessage : public Message {
+  public:
+    StepMessage();
+    
+    virtual ~StepMessage() = default;
+    
+    virtual picojson::value ToJson() const override;
+    
+    virtual bool is_movement() const override;
+  };
+  
+  class TelemetryMessage : public Message {
+  public:
+    TelemetryMessage(glm::vec2 position, glm::vec2 direction);
+    
+    virtual ~TelemetryMessage() = default;
+    
+    virtual picojson::value ToJson() const override;
+    
+    virtual bool is_movement() const override;
+    
+  private:
+    glm::vec2 position;
+    glm::vec2 direction;
+  };
+  
+  class TextMessage : public Message {
+  public:
+    TextMessage(const std::string &text);
+    
+    virtual ~TextMessage() = default;
+    
+    virtual picojson::value ToJson() const override;
+    
+    virtual bool is_movement() const override;
+    
+  private:
+    std::string text;
+  };
 
   class SynchronizedQueue {
   public:
-    struct Message {
-      std::string message;
-      glm::vec2 position;
-      glm::vec2 direction;
-      bool is_report;
-      bool is_step;
-      bool is_movement;
-    };
-
     SynchronizedQueue() = default;
 
     virtual ~SynchronizedQueue() = default;
 
     bool HasMessage();
 
-    Message PeekMessage();
+    Message *PeekMessage();
 
-    Message PopMessage();
+    std::unique_ptr<Message> PopMessage();
+    
+    void PushEntity(glm::vec2 position);
 
     void PushMessage(const std::string &message);
 
@@ -39,7 +127,7 @@ namespace textengine {
 
   private:
     std::mutex mutex;
-    std::deque<Message> queue;
+    std::deque<std::unique_ptr<Message>> queue;
   };
 
 }  // namespace textengine

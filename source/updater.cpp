@@ -34,12 +34,20 @@ namespace textengine {
     std::tie(area, object, player) = ResolveContact(contact);
     if (player && area) {
       inside.insert(area);
-      reply_queue.PushMessage(ChooseMessage(area->messages, "enter"));
+      const auto enter = ChooseMessage(area->messages, "enter");
+      if (!enter.empty()) {
+        reply_queue.PushMessage(enter);
+        reply_queue.PushEntity(area->aabb.center());
+      }
     }
     const auto now = std::chrono::high_resolution_clock::now();
     if (player && object && now - last_touch_time[object] > std::chrono::seconds(2)) {
       last_touch_time[object] = now;
-      reply_queue.PushMessage(ChooseMessage(object->messages, "touch"));
+      const auto touch = ChooseMessage(object->messages, "touch");
+      if (!touch.empty()) {
+        reply_queue.PushMessage(touch);
+        reply_queue.PushEntity(object->aabb.center());
+      }
     }
   }
 
@@ -48,7 +56,11 @@ namespace textengine {
     b2Body *player;
     std::tie(area, object, player) = ResolveContact(contact);
     if (player && area) {
-      reply_queue.PushMessage(ChooseMessage(area->messages, "exit"));
+      const auto exit = ChooseMessage(area->messages, "exit");
+      if (!exit.empty()) {
+        reply_queue.PushMessage(exit);
+        reply_queue.PushEntity(area->aabb.center());
+      }
       inside.erase(area);
     }
   }
@@ -116,7 +128,7 @@ namespace textengine {
     constexpr auto kStepSize = 1.0f;
     if (current_state.accrued_distance > kStepSize) {
       current_state.accrued_distance -= kStepSize;
-      reply_queue.PushStep();
+//      reply_queue.PushStep();
     }
     
     if (now - last_transmit_time > std::chrono::milliseconds(16)) {

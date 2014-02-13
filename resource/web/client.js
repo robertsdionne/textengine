@@ -56,12 +56,14 @@ PerWordScrollBehavior.prototype.indexInto = function(line, cursor) {
  * @param {boolean=} opt_isCommand
  * @param {boolean=} opt_isDeath
  */
-var GameState = function(timestamp, description, opt_isCommand, opt_isDeath, opt_isReport) {
+var GameState = function(timestamp, description, opt_isCommand, opt_isDeath, opt_isReport, opt_isEntity, opt_position) {
   this.timestamp = timestamp;
   this.description = description;
   this.isCommand = opt_isCommand;
   this.isDeath = opt_isDeath;
   this.isReport = opt_isReport;
+  this.isEntity = opt_isEntity;
+  this.position = opt_position;
 };
 
 
@@ -79,6 +81,17 @@ GameState.prototype.toDomNode = function(cursor, scrollBehavior) {
     element.className = 'report';
     element.textContent = scrollBehavior.slice(this.description, 0, cursor);
     return element;
+  } else if (this.isEntity) {
+    var canvas = document.createElement('canvas');
+    canvas.style.display = "inline";
+    canvas.width = 40;
+    canvas.height = 40;
+    canvas.style.width = canvas.width / 2;
+    canvas.style.height = canvas.height / 2;
+    var context = canvas.getContext('2d');
+    context.scale(1, 1);
+    entities.push({canvas: canvas, context: context, position: this.position});
+    return canvas;
   } else {
     return document.createTextNode(scrollBehavior.slice(this.description, 0, cursor) + '\u00A0');
   }
@@ -146,33 +159,66 @@ var open = function() {
   window.clearTimeout(reconnect);
 };
 
+var entities = [];
 
 var target_x = 0, x = 0;
 var target_y = 0, y = 0;
+
+var position_x = 0, position_y = 0, target_position_x = 0, target_position_y = 0;
 
 var alpha = 0.2;
 
 
 var message = function(event) {
+  console.log(event.data);
   var payload = JSON.parse(event.data);
-  if (payload.is_step) {
+  if ("step" == payload.type) {
+    console.log("in step");
     lines[lines.length - 1].gameStates.push(
-        new GameState(t += 1.0, payload.message, false, false, payload.is_report));
-  } else if (payload.is_movement) {
+        new GameState(t += 1.0, ".", false, false, false));
+  } else if ("entity" == payload.type) {
+    lines[lines.length - 1].gameStates.push(
+        new GameState(t += 1.0, "", false, false, false, true, payload.position));
+  } else if ("telemetry" == payload.type) {
+    console.log("in telemetry");
     target_x = canvas.width / 3 * payload.direction.x;
     target_y = canvas.width / 3 * -payload.direction.y;
-  } else {
+    target_position_x = payload.position.x;
+    target_position_y = payload.position.y;
+  } else if ("report" == payload.type) {
+    console.log("in report");
     lines.push(new Line([
-      new GameState(t += 1.0, payload.message, false, false, payload.is_report)]));
+      new GameState(t += 1.0, payload.report, false, false, true)]));
+    lineCursor += 1;
+  } else if ("text" == payload.type) {
+    console.log("in text");
+    lines.push(new Line([
+      new GameState(t += 1.0, payload.text, false, false, false)]));
     lineCursor += 1;
   }
   display();
 };
 
 
-var drawArrow = function() {
+var drawArrows = function() {
   x = (1.0 - alpha) * x + alpha * target_x;
   y = (1.0 - alpha) * y + alpha * target_y;
+  position_x = (1.0 - alpha) * position_x + alpha * target_position_x;
+  position_y = (1.0 - alpha) * position_y + alpha * target_position_y;
+  drawArrow(canvas, context, target_x, target_y);
+  for (var i = 0; i < entities.length; ++i) {
+    var dx = entities[i].position.x - position_x;
+    var dy = entities[i].position.y - position_y;
+    var d = Math.sqrt(dx * dx + dy * dy);
+    var x = entities[i].canvas.width / 3 * dx / d;
+    var y = entities[i].canvas.width / 3 * -dy / d;
+    drawArrow(entities[i].canvas, entities[i].context, x, y);
+  }
+  window.requestAnimationFrame(drawArrows);
+};
+
+
+var drawArrow = function(canvas, context, x, y) {
   var x2 = y;
   var y2 = -x;
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -190,7 +236,6 @@ var drawArrow = function() {
   context.stroke();
   context.closePath();
   context.restore();
-  window.requestAnimationFrame(drawArrow);
 };
 
 
@@ -209,7 +254,6 @@ var close = function(event) {
   websocket.removeEventListener('message', message);
   websocket.removeEventListener('error', error);
   websocket.removeEventListener('close', close);
-  window.open('', '_self').close();
 //  reconnect = window.setTimeout(connect, 1000);
 };
 
@@ -269,7 +313,7 @@ var load = function() {
   context.scale(1, 1);
   connect();
   display();
-  window.requestAnimationFrame(drawArrow);
+  window.requestAnimationFrame(drawArrows);
 //  resetCursor();
 };
 window.addEventListener('load', load, false);
@@ -333,6 +377,7 @@ var command = function(e) {
 
 
 var display = function () {
+  console.log("in display");
   while (container.childNodes.length) {
     container.removeChild(container.childNodes[0]);
   }

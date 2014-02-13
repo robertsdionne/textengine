@@ -45,6 +45,13 @@ namespace textengine {
     MessageMap messages;
     bool invisible;
 
+    glm::vec2 DirectionTo(glm::vec2 position) const {
+      const auto dx = glm::vec2(1e-5, 0.0);
+      const auto dy = glm::vec2(0.0, 1e-5);
+      return glm::normalize(glm::vec2(DistanceTo(position + dx) - DistanceTo(position - dx),
+                                      DistanceTo(position + dy) - DistanceTo(position - dy)));
+    }
+
     float DistanceTo(glm::vec2 position) const {
       switch (shape) {
         case Shape::kAxisAlignedBoundingBox:
