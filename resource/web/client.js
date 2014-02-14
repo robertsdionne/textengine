@@ -378,6 +378,7 @@ var command = function(e) {
 
 var display = function () {
   console.log("in display");
+  entities = [];
   while (container.childNodes.length) {
     container.removeChild(container.childNodes[0]);
   }
