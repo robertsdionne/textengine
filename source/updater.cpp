@@ -37,7 +37,7 @@ namespace textengine {
       const auto enter = ChooseMessage(area->messages, "enter");
       if (!enter.empty()) {
         reply_queue.PushMessage(enter);
-        reply_queue.PushEntity(area->aabb.center());
+        reply_queue.PushEntity(area->id);
       }
     }
     const auto now = std::chrono::high_resolution_clock::now();
@@ -46,7 +46,7 @@ namespace textengine {
       const auto touch = ChooseMessage(object->messages, "touch");
       if (!touch.empty()) {
         reply_queue.PushMessage(touch);
-        reply_queue.PushEntity(object->aabb.center());
+        reply_queue.PushEntity(object->id);
       }
     }
   }
@@ -59,7 +59,7 @@ namespace textengine {
       const auto exit = ChooseMessage(area->messages, "exit");
       if (!exit.empty()) {
         reply_queue.PushMessage(exit);
-        reply_queue.PushEntity(area->aabb.center());
+        reply_queue.PushEntity(area->id);
       }
       inside.erase(area);
     }

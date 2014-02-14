@@ -23,14 +23,12 @@ namespace textengine {
     return false;
   }
   
-  EntityMessage::EntityMessage(glm::vec2 position) : position(position) {}
+  EntityMessage::EntityMessage(long id) :id(id) {}
   
   picojson::value EntityMessage::ToJson() const {
-    picojson::object position, object;
-    position["x"] = picojson::value(this->position.x);
-    position["y"] = picojson::value(this->position.y);
+    picojson::object object;
     object["type"] = picojson::value("entity");
-    object["position"] = picojson::value(position);
+    object["id"] = picojson::value(static_cast<double>(id));
     return picojson::value(object);
   }
   
@@ -113,9 +111,9 @@ namespace textengine {
     return result;
   }
   
-  void SynchronizedQueue::PushEntity(glm::vec2 position) {
+  void SynchronizedQueue::PushEntity(long id) {
     std::lock_guard<std::mutex> lock(mutex);
-    queue.emplace_back(new EntityMessage(position));
+    queue.emplace_back(new EntityMessage(id));
   }
   
   void SynchronizedQueue::PushMessage(const std::string &message) {

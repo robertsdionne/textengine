@@ -56,14 +56,14 @@ PerWordScrollBehavior.prototype.indexInto = function(line, cursor) {
  * @param {boolean=} opt_isCommand
  * @param {boolean=} opt_isDeath
  */
-var GameState = function(timestamp, description, opt_isCommand, opt_isDeath, opt_isReport, opt_isEntity, opt_position) {
+var GameState = function(timestamp, description, opt_isCommand, opt_isDeath, opt_isReport, opt_isEntity, opt_id) {
   this.timestamp = timestamp;
   this.description = description;
   this.isCommand = opt_isCommand;
   this.isDeath = opt_isDeath;
   this.isReport = opt_isReport;
   this.isEntity = opt_isEntity;
-  this.position = opt_position;
+  this.id = opt_id;
 };
 
 
@@ -90,7 +90,7 @@ GameState.prototype.toDomNode = function(cursor, scrollBehavior) {
     canvas.style.height = canvas.height / 2;
     var context = canvas.getContext('2d');
     context.scale(1, 1);
-    entities.push({canvas: canvas, context: context, position: this.position});
+    entities.push({canvas: canvas, context: context, id: this.id});
     return canvas;
   } else {
     return document.createTextNode(scrollBehavior.slice(this.description, 0, cursor) + '\u00A0');
@@ -178,7 +178,7 @@ var message = function(event) {
         new GameState(t += 1.0, ".", false, false, false));
   } else if ("entity" == payload.type) {
     lines[lines.length - 1].gameStates.push(
-        new GameState(t += 1.0, "", false, false, false, true, payload.position));
+        new GameState(t += 1.0, "", false, false, false, true, payload.id));
   } else if ("telemetry" == payload.type) {
     console.log("in telemetry");
     target_x = canvas.width / 3 * payload.direction.x;
@@ -207,8 +207,8 @@ var drawArrows = function() {
   position_y = (1.0 - alpha) * position_y + alpha * target_position_y;
   drawArrow(canvas, context, target_x, target_y);
   for (var i = 0; i < entities.length; ++i) {
-    var dx = entities[i].position.x - position_x;
-    var dy = entities[i].position.y - position_y;
+    var dx = 0 - position_x;
+    var dy = 0 - position_y;
     var d = Math.sqrt(dx * dx + dy * dy);
     var x = entities[i].canvas.width / 3 * dx / d;
     var y = entities[i].canvas.width / 3 * -dy / d;

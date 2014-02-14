@@ -37,7 +37,7 @@ namespace textengine {
   
   class EntityMessage : public Message {
   public:
-    EntityMessage(glm::vec2 position);
+    EntityMessage(long id);
     
     virtual ~EntityMessage() = default;
     
@@ -46,7 +46,7 @@ namespace textengine {
     virtual bool is_movement() const override;
     
   private:
-    glm::vec2 position;
+    long id;
   };
   
   class ReportMessage : public Message {
@@ -116,7 +116,7 @@ namespace textengine {
 
     std::unique_ptr<Message> PopMessage();
     
-    void PushEntity(glm::vec2 position);
+    void PushEntity(long id);
 
     void PushMessage(const std::string &message);
 
