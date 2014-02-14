@@ -63,7 +63,9 @@ namespace textengine {
     return false;
   }
   
-  TelemetryMessage::TelemetryMessage(glm::vec2 position, glm::vec2 direction) : position(position), direction(direction) {}
+  TelemetryMessage::TelemetryMessage(glm::vec2 position,
+                                     glm::vec2 direction, const std::vector<glm::vec2> &directions)
+  : position(position), direction(direction) {}
   
   picojson::value TelemetryMessage::ToJson() const {
     picojson::object position, direction, object;
@@ -132,12 +134,13 @@ namespace textengine {
     queue.emplace_back(new StepMessage);
   }
   
-  void SynchronizedQueue::PushMovement(const glm::vec2 &position, const glm::vec2 &direction) {
+  void SynchronizedQueue::PushMovement(const glm::vec2 &position,
+      const glm::vec2 &direction, const std::vector<glm::vec2> &directions) {
     std::lock_guard<std::mutex> lock(mutex);
     if (!queue.empty() && queue.back()->is_movement()) {
       queue.pop_back();
     }
-    queue.emplace_back(new TelemetryMessage{position, direction});
+    queue.emplace_back(new TelemetryMessage{position, direction, directions});
   }
 
 }  // namespace textengine

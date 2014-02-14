@@ -39,6 +39,7 @@ namespace textengine {
   };
 
   struct Object {
+    long id;
     std::string name;
     Shape shape;
     AxisAlignedBoundingBox aabb;
@@ -76,12 +77,13 @@ namespace textengine {
 
     Scene(Scene &&scene) = default;
 
-    Scene(MessageMap &&messages_by_name, ObjectList &&areas, ObjectList &&objects);
+    Scene(long next_id, MessageMap &&messages_by_name, ObjectList &&areas, ObjectList &&objects);
     
     virtual ~Scene() = default;
 
     Scene &operator =(Scene &&scene) = default;
 
+    long next_id;
     ObjectList areas;
     MessageMap messages_by_name;
     ObjectList objects;

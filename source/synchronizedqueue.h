@@ -76,7 +76,8 @@ namespace textengine {
   
   class TelemetryMessage : public Message {
   public:
-    TelemetryMessage(glm::vec2 position, glm::vec2 direction);
+    TelemetryMessage(glm::vec2 position,
+                     glm::vec2 direction, const std::vector<glm::vec2> &directions);
     
     virtual ~TelemetryMessage() = default;
     
@@ -123,7 +124,8 @@ namespace textengine {
 
     void PushStep();
     
-    void PushMovement(const glm::vec2 &position, const glm::vec2 &direction);
+    void PushMovement(const glm::vec2 &position,
+        const glm::vec2 &direction, const std::vector<glm::vec2> &directions);
 
   private:
     std::mutex mutex;

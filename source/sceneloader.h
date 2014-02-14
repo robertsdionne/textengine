@@ -31,7 +31,7 @@ namespace textengine {
 
     MessageMap ReadMessageMap(picojson::value &messages) const;
 
-    Object *ReadObject(picojson::value &object) const;
+    Object *ReadObject(long id, picojson::value &object) const;
 
     glm::vec2 ReadVec2(const picojson::value &vector) const;
   };

@@ -40,16 +40,17 @@ namespace textengine {
     CHECK_STATE(json_object["objects"].is<picojson::array>());
     auto areas_in = json_object["areas"].get<picojson::array>();
     auto objects_in = json_object["objects"].get<picojson::array>();
+    long next_id = 0;
     ObjectList areas_out;
     auto messages_out = ReadMessageMap(json_object["messages"]);
     ObjectList objects_out;
     for (auto &area : areas_in) {
-      areas_out.emplace_back(ReadObject(area));
+      areas_out.emplace_back(ReadObject(next_id++, area));
     }
     for (auto &object : objects_in) {
-      objects_out.emplace_back(ReadObject(object));
+      objects_out.emplace_back(ReadObject(next_id++, object));
     }
-    return Scene(std::move(messages_out), std::move(areas_out), std::move(objects_out));
+    return Scene(next_id, std::move(messages_out), std::move(areas_out), std::move(objects_out));
   }
 
   AxisAlignedBoundingBox SceneLoader::ReadAxisAlignedBoundingBox(picojson::value &aabb) const {
@@ -85,12 +86,13 @@ namespace textengine {
     return message_map;
   }
 
-  Object *SceneLoader::ReadObject(picojson::value &object) const {
+  Object *SceneLoader::ReadObject(long id, picojson::value &object) const {
     CHECK_STATE(object.is<picojson::object>());
     auto json_object = object.get<picojson::object>();
     CHECK_STATE(json_object["name"].is<std::string>());
     CHECK_STATE(json_object["messages"].is<picojson::object>());
     const auto result = new Object();
+    result->id = id;
     result->name = json_object["name"].get<std::string>();
     if (json_object.cend() == json_object.find("aabb")) {
       CHECK_STATE(json_object["position"].is<picojson::object>());
