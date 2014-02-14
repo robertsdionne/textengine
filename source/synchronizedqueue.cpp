@@ -1,5 +1,7 @@
+#include <map>
 #include <mutex>
 #include <picojson.h>
+#include <sstream>
 #include <string>
 
 #include "synchronizedqueue.h"
@@ -61,19 +63,28 @@ namespace textengine {
     return false;
   }
   
-  TelemetryMessage::TelemetryMessage(glm::vec2 position,
-                                     glm::vec2 direction, const std::vector<glm::vec2> &directions)
-  : position(position), direction(direction) {}
+  TelemetryMessage::TelemetryMessage(glm::vec2 position, glm::vec2 direction,
+                                     const std::map<long, glm::vec2> &directions)
+  : position(position), direction(direction), directions(directions) {}
   
   picojson::value TelemetryMessage::ToJson() const {
-    picojson::object position, direction, object;
+    picojson::object position, direction, directions, object;
     position["x"] = picojson::value(this->position.x);
     position["y"] = picojson::value(this->position.y);
     direction["x"] = picojson::value(this->direction.x);
     direction["y"] = picojson::value(this->direction.y);
+    for (auto object_direction : this->directions) {
+      picojson::object object_direction_json;
+      object_direction_json["x"] = picojson::value(object_direction.second.x);
+      object_direction_json["y"] = picojson::value(object_direction.second.y);
+      std::ostringstream id;
+      id << object_direction.first;
+      directions[id.str()] = picojson::value(object_direction_json);
+    }
     object["type"] = picojson::value("telemetry");
     object["position"] = picojson::value(position);
     object["direction"] = picojson::value(direction);
+    object["directions"] = picojson::value(directions);
     return picojson::value(object);
   }
   
@@ -133,7 +144,7 @@ namespace textengine {
   }
   
   void SynchronizedQueue::PushMovement(const glm::vec2 &position,
-      const glm::vec2 &direction, const std::vector<glm::vec2> &directions) {
+      const glm::vec2 &direction, const std::map<long, glm::vec2> &directions) {
     std::lock_guard<std::mutex> lock(mutex);
     if (!queue.empty() && queue.back()->is_movement()) {
       queue.pop_back();

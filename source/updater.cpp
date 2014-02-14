@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/noise.hpp>
 #include <limits>
+#include <map>
 #include <stb_vorbis.h>
 #include <sstream>
 #include <string>
@@ -132,9 +133,16 @@ namespace textengine {
     }
     
     if (now - last_transmit_time > std::chrono::milliseconds(16)) {
+      auto directions = std::map<long, glm::vec2>();
+      for (auto &object : scene.objects) {
+        directions.insert({object->id, object->DirectionFrom(position)});
+      }
+      for (auto &area : scene.areas) {
+        directions.insert({area->id, area->DirectionFrom(position)});
+      }
       reply_queue.PushMovement(position,
                                glm::length(offset) > 0 ? glm::normalize(offset) : glm::vec2(),
-                               std::vector<glm::vec2>());
+                               directions);
       last_transmit_time = now;
     }
 

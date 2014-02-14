@@ -161,8 +161,13 @@ var open = function() {
 
 var entities = [];
 
-var target_x = 0, x = 0;
-var target_y = 0, y = 0;
+var target_x = 0;
+var target_y = 0;
+var smooth_x = 0;
+var smooth_y = 0;
+
+var directions = {};
+var target_directions = {};
 
 var position_x = 0, position_y = 0, target_position_x = 0, target_position_y = 0;
 
@@ -185,6 +190,7 @@ var message = function(event) {
     target_y = canvas.width / 3 * -payload.direction.y;
     target_position_x = payload.position.x;
     target_position_y = payload.position.y;
+    target_directions = payload.directions;
   } else if ("report" == payload.type) {
     console.log("in report");
     lines.push(new Line([
@@ -201,17 +207,25 @@ var message = function(event) {
 
 
 var drawArrows = function() {
-  x = (1.0 - alpha) * x + alpha * target_x;
-  y = (1.0 - alpha) * y + alpha * target_y;
+  console.log(smooth_x);
+  console.log(smooth_y);
+  smooth_x = (1.0 - alpha) * smooth_x + alpha * target_x;
+  smooth_y = (1.0 - alpha) * smooth_y + alpha * target_y;
+  drawArrow(canvas, context, smooth_x, smooth_y);
   position_x = (1.0 - alpha) * position_x + alpha * target_position_x;
   position_y = (1.0 - alpha) * position_y + alpha * target_position_y;
-  drawArrow(canvas, context, target_x, target_y);
+  for (var id in target_directions) {
+    if (!directions[id]) {
+      directions[id] = {x: 0.0, y: 0.0};
+    }
+    directions[id].x = (1.0 - alpha) * directions[id].x + alpha * target_directions[id].x;
+    directions[id].y = (1.0 - alpha) * directions[id].y + alpha * target_directions[id].y;
+  }
   for (var i = 0; i < entities.length; ++i) {
-    var dx = 0 - position_x;
-    var dy = 0 - position_y;
-    var d = Math.sqrt(dx * dx + dy * dy);
-    var x = entities[i].canvas.width / 3 * dx / d;
-    var y = entities[i].canvas.width / 3 * -dy / d;
+    var dx = directions[entities[i].id].x;
+    var dy = directions[entities[i].id].y;
+    var x = entities[i].canvas.width / 3 * dx;
+    var y = entities[i].canvas.width / 3 * -dy;
     drawArrow(entities[i].canvas, entities[i].context, x, y);
   }
   window.requestAnimationFrame(drawArrows);

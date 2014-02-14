@@ -3,6 +3,7 @@
 
 #include <glm/glm.hpp>
 #include <deque>
+#include <map>
 #include <memory>
 #include <mutex>
 #include <picojson.h>
@@ -77,7 +78,7 @@ namespace textengine {
   class TelemetryMessage : public Message {
   public:
     TelemetryMessage(glm::vec2 position,
-                     glm::vec2 direction, const std::vector<glm::vec2> &directions);
+                     glm::vec2 direction, const std::map<long, glm::vec2> &directions);
     
     virtual ~TelemetryMessage() = default;
     
@@ -88,6 +89,7 @@ namespace textengine {
   private:
     glm::vec2 position;
     glm::vec2 direction;
+    std::map<long, glm::vec2> directions;
   };
   
   class TextMessage : public Message {
@@ -125,7 +127,7 @@ namespace textengine {
     void PushStep();
     
     void PushMovement(const glm::vec2 &position,
-        const glm::vec2 &direction, const std::vector<glm::vec2> &directions);
+        const glm::vec2 &direction, const std::map<long, glm::vec2> &directions);
 
   private:
     std::mutex mutex;
