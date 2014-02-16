@@ -15,7 +15,7 @@ namespace textengine {
 
   class WebSocketPrompt : public Prompt {
   public:
-    WebSocketPrompt(SynchronizedQueue &reply_queue, const std::string &prompt, bool edit);
+    WebSocketPrompt(SynchronizedQueue &reply_queue, const std::string &prompt);
 
     virtual ~WebSocketPrompt();
 
@@ -49,7 +49,6 @@ namespace textengine {
   private:
     SynchronizedQueue &reply_queue;
     const std::string &prompt;
-    const bool edit;
     std::thread thread;
     libwebsocket_context *context;
   };

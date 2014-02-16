@@ -83,6 +83,10 @@ namespace textengine {
     virtual ~Scene() = default;
 
     Scene &operator =(Scene &&scene) = default;
+    
+    Object *AddArea();
+    
+    Object *AddObject();
 
     long next_id;
     ObjectList areas;

@@ -8,10 +8,11 @@ namespace textengine {
 
   class Keyboard;
   class Mouse;
+  class Scene;
 
   class Editor : public Controller {
   public:
-    Editor(GameState &initial_state, Keyboard &keyboard, Mouse &mouse);
+    Editor(GameState &initial_state, Keyboard &keyboard, Mouse &mouse, Scene &scene);
 
     virtual ~Editor() = default;
 
@@ -22,9 +23,10 @@ namespace textengine {
     virtual void Update();
 
   private:
+    GameState &current_state;
     Keyboard &keyboard;
     Mouse &mouse;
-    GameState &current_state;
+    Scene &scene;
   };
 
 }  // namespace textengine

@@ -37,9 +37,11 @@ int main(int argument_count, char *arguments[]) {
   textengine::Updater updater(
     reply_queue,
     playtest_log, input, mouse, keyboard, initial_state, scene);
-  textengine::WebSocketPrompt prompt(reply_queue, kPrompt, edit);
-  textengine::Editor editor(initial_state, keyboard, mouse);
-  prompt.Run();
+  textengine::WebSocketPrompt prompt(reply_queue, kPrompt);
+  textengine::Editor editor(initial_state, keyboard, mouse, scene);
+  if (!edit) {
+    prompt.Run();
+  }
   textengine::Controller *controller = &updater;
   if (edit) {
     controller = &editor;
