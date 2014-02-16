@@ -15,9 +15,7 @@ namespace textengine {
     return current_state;
   }
 
-  void Editor::Setup() {
-
-  }
+  void Editor::Setup() {}
 
   void Editor::Update() {
     if (keyboard.GetKeyVelocity(GLFW_KEY_SPACE) > 0) {
