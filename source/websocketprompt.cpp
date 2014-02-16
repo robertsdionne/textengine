@@ -29,8 +29,10 @@ namespace textengine {
 
   WebSocketPrompt *WebSocketPrompt::instance = nullptr;
 
-  WebSocketPrompt::WebSocketPrompt(SynchronizedQueue &reply_queue, const std::string &prompt)
-  : reply_queue(reply_queue), prompt(prompt), thread(), context() {
+  WebSocketPrompt::WebSocketPrompt(SynchronizedQueue &reply_queue,
+                                   const std::string &prompt,
+                                   bool edit)
+  : reply_queue(reply_queue), prompt(prompt), edit(edit), thread(), context() {
     instance = this;
   }
 
@@ -146,11 +148,13 @@ namespace textengine {
     std::chrono::high_resolution_clock clock;
     auto old_time = clock.now();
 
-    const std::string url_string = "http://localhost:8888";
-    CFURLRef url = CFURLCreateWithBytes(nullptr, (UInt8 *)(url_string.c_str()),
-                                        url_string.size(), kCFStringEncodingUTF8, nullptr);
-    LSOpenCFURLRef(url, nullptr);
-    CFRelease(url);
+    if (!edit) {
+      const std::string url_string = "http://localhost:8888";
+      CFURLRef url = CFURLCreateWithBytes(nullptr, (UInt8 *)(url_string.c_str()),
+                                          url_string.size(), kCFStringEncodingUTF8, nullptr);
+      LSOpenCFURLRef(url, nullptr);
+      CFRelease(url);
+    }
 
     int result = 0;
     while (result >= 0) {

@@ -15,14 +15,14 @@
 #include "vertexformat.h"
 
 namespace textengine {
-
+  
+  class Controller;
   class Mouse;
   class Scene;
-  class Updater;
 
   class TextEngineRenderer : public Renderer {
   public:
-    TextEngineRenderer(Mouse &mouse, Updater &updater, Scene &scene);
+    TextEngineRenderer(Mouse &mouse, Controller &updater, Scene &scene);
 
     virtual ~TextEngineRenderer() = default;
 
@@ -50,7 +50,7 @@ namespace textengine {
     
   private:
     Mouse &mouse;
-    Updater &updater;
+    Controller &updater;
     Scene &scene;
     float inverse_aspect_ratio;
 

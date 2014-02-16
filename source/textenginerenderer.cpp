@@ -8,14 +8,14 @@
 #include <memory>
 
 #include "checks.h"
+#include "controller.h"
 #include "gamestate.h"
 #include "mouse.h"
 #include "textenginerenderer.h"
-#include "updater.h"
 
 namespace textengine {
 
-  TextEngineRenderer::TextEngineRenderer(Mouse &mouse, Updater &updater, Scene &scene)
+  TextEngineRenderer::TextEngineRenderer(Mouse &mouse, Controller &updater, Scene &scene)
   : mouse(mouse), updater(updater), scene(scene), model_view(glm::mat4()),
     projection(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)), matrix_stack{glm::mat4(1)} {}
 

@@ -17,6 +17,7 @@
 #include "input.h"
 #include "keyboard.h"
 #include "log.h"
+#include "mouse.h"
 #include "scene.h"
 #include "synchronizedqueue.h"
 #include "updater.h"
@@ -24,10 +25,11 @@
 namespace textengine {
 
   Updater::Updater(SynchronizedQueue &reply_queue,
-                   Log &playtest_log, Input &input, GameState &initial_state, Scene &scene)
+                   Log &playtest_log, Input &input, Mouse &mouse, Keyboard &keyboard,
+                   GameState &initial_state, Scene &scene)
   : reply_queue(reply_queue),
-  playtest_log(playtest_log), input(input), current_state(initial_state),
-  phrase_index(), scene(scene) {}
+  playtest_log(playtest_log), input(input), mouse(mouse), keyboard(keyboard),
+  current_state(initial_state), phrase_index(), scene(scene) {}
 
   void Updater::BeginContact(b2Contact *contact) {
     Object *area, *object;
@@ -129,7 +131,7 @@ namespace textengine {
     constexpr auto kStepSize = 1.0f;
     if (current_state.accrued_distance > kStepSize) {
       current_state.accrued_distance -= kStepSize;
-//      reply_queue.PushStep();
+      // reply_queue.PushStep();
     }
     
     if (now - last_transmit_time > std::chrono::milliseconds(16)) {
@@ -179,19 +181,19 @@ namespace textengine {
       auto velocity = current_state.player_body->GetLinearVelocity();
 
       last_direction_time = now;
-      if (Direction::kEast != last_direction && offset.x > glm::abs(offset.y)) {
-        last_direction = Direction::kEast;
-        reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "east"));
-      } else if (Direction::kWest != last_direction && offset.x < -glm::abs(offset.y)) {
-        last_direction = Direction::kWest;
-        reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "west"));
-      } else if (Direction::kNorth != last_direction && offset.y > glm::abs(offset.x)) {
-        last_direction = Direction::kNorth;
-        reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "north"));
-      } else if (Direction::kSouth != last_direction && offset.y < -glm::abs(offset.x)) {
-        last_direction = Direction::kSouth;
-        reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "south"));
-      }
+      // if (Direction::kEast != last_direction && offset.x > glm::abs(offset.y)) {
+      //   last_direction = Direction::kEast;
+      //   reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "east"));
+      // } else if (Direction::kWest != last_direction && offset.x < -glm::abs(offset.y)) {
+      //   last_direction = Direction::kWest;
+      //   reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "west"));
+      // } else if (Direction::kNorth != last_direction && offset.y > glm::abs(offset.x)) {
+      //   last_direction = Direction::kNorth;
+      //   reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "north"));
+      // } else if (Direction::kSouth != last_direction && offset.y < -glm::abs(offset.x)) {
+      //   last_direction = Direction::kSouth;
+      //   reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "south"));
+      // }
 
       const auto force = 200.0f * current_state.player_body->GetMass();
       if (input.GetTriggerVelocity() > 0) {

@@ -113,6 +113,7 @@
 		466E70FA17EB92F900CD9E9D /* gamestate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70F817EB92F900CD9E9D /* gamestate.cpp */; };
 		466E710017EB96D600CD9E9D /* updater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70FE17EB96D500CD9E9D /* updater.cpp */; };
 		468E01471783DFA100301C1C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01461783DFA100301C1C /* IOKit.framework */; };
+		469BE48118B0140C00F568DE /* editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469BE47F18B0140C00F568DE /* editor.cpp */; };
 		469FFA8B184EF3620074DA75 /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469FFA89184EF3620074DA75 /* scene.cpp */; };
 		469FFA8D184EF8370074DA75 /* sceneloader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469FFA83184EF3270074DA75 /* sceneloader.cpp */; };
 		46A11D39181964B700105526 /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46A11D37181964B600105526 /* log.cpp */; };
@@ -2278,6 +2279,8 @@
 		468E01441783DF9200301C1C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		468E01461783DFA100301C1C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		468E014E1783E9BD00301C1C /* base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base.h; sourceTree = "<group>"; };
+		469BE47F18B0140C00F568DE /* editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = editor.cpp; sourceTree = "<group>"; };
+		469BE48018B0140C00F568DE /* editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = editor.h; sourceTree = "<group>"; };
 		469FFA83184EF3270074DA75 /* sceneloader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sceneloader.cpp; sourceTree = "<group>"; };
 		469FFA84184EF3270074DA75 /* sceneloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sceneloader.h; sourceTree = "<group>"; };
 		469FFA86184EF3300074DA75 /* sceneserializer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sceneserializer.cpp; sourceTree = "<group>"; };
@@ -5128,6 +5131,8 @@
 				461717F51826A5F80070ABED /* controller.h */,
 				46A73D3D183137CC009F8B77 /* drawable.cpp */,
 				462B4A6917EA9760006FE9BB /* drawable.h */,
+				469BE47F18B0140C00F568DE /* editor.cpp */,
+				469BE48018B0140C00F568DE /* editor.h */,
 				466E70F817EB92F900CD9E9D /* gamestate.cpp */,
 				466E70F917EB92F900CD9E9D /* gamestate.h */,
 				46B9875517E6A62500B59145 /* glfwapplication.cpp */,
@@ -5542,6 +5547,7 @@
 				462B4A6717EA43AA006FE9BB /* buffer.cpp in Sources */,
 				463F38AF18316A39001326C3 /* input.cpp in Sources */,
 				466E70FA17EB92F900CD9E9D /* gamestate.cpp in Sources */,
+				469BE48118B0140C00F568DE /* editor.cpp in Sources */,
 				466E710017EB96D600CD9E9D /* updater.cpp in Sources */,
 				464E36801825B4BC00AC0AC0 /* joystick.cpp in Sources */,
 				460B493017F4B48F006B4828 /* mouse.cpp in Sources */,

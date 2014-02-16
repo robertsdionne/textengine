@@ -1,5 +1,6 @@
 #include <string>
 
+#include "editor.h"
 #include "gamestate.h"
 #include "glfwapplication.h"
 #include "input.h"
@@ -22,6 +23,7 @@ constexpr const char *kWindowTitle = u8"textengine";
 
 int main(int argument_count, char *arguments[]) {
   const std::string filename = argument_count > 1 ? arguments[1] : "../resource/scenes/field.json";
+  const auto edit = argument_count > 2 && "edit" == std::string(arguments[2]);
   textengine::Joystick joystick(GLFW_JOYSTICK_1);
   textengine::Keyboard keyboard;
   textengine::Mouse mouse;
@@ -29,20 +31,23 @@ int main(int argument_count, char *arguments[]) {
   textengine::Scene scene;
   textengine::SceneLoader scene_loader;
   scene = scene_loader.ReadScene(filename);
-  textengine::GameState initial_state{
-    scene, std::vector<std::unique_ptr<std::vector<glm::vec2>>>()
-  };
+  textengine::GameState initial_state{scene};
   textengine::Log playtest_log(kPlaytestLog);
   textengine::SynchronizedQueue reply_queue;
   textengine::Updater updater(
     reply_queue,
-    playtest_log, input, initial_state, scene);
-  textengine::WebSocketPrompt prompt(reply_queue, kPrompt);
+    playtest_log, input, mouse, keyboard, initial_state, scene);
+  textengine::WebSocketPrompt prompt(reply_queue, kPrompt, edit);
+  textengine::Editor editor(initial_state, keyboard, mouse);
   prompt.Run();
-  textengine::TextEngineRenderer renderer(mouse, updater, scene);
+  textengine::Controller *controller = &updater;
+  if (edit) {
+    controller = &editor;
+  }
+  textengine::TextEngineRenderer renderer(mouse, *controller, scene);
   textengine::GlfwApplication application(
     argument_count, arguments, kWindowWidth, kWindowHeight,
-    kWindowTitle, updater, renderer, input, joystick,
+    kWindowTitle, *controller, renderer, input, joystick,
     keyboard, mouse);
   const auto result = application.Run();
   return result;

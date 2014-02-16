@@ -10,25 +10,9 @@
 
 namespace textengine {
 
-  GameState::GameState(Scene &scene,
-                       std::vector<std::unique_ptr<std::vector<glm::vec2>>> &&boundaries)
+  GameState::GameState(Scene &scene)
   : camera_position(), previous_player_position(), accrued_distance(),
-    world(b2Vec2(0.0f, 0.0f)), boundary(), player_body() {
-    b2BodyDef boundary_body_definition;
-    boundary_body_definition.position.Set(0, 0);
-    boundary = world.CreateBody(&boundary_body_definition);
-    for (auto &boundary : boundaries) {
-      auto vertices = std::unique_ptr<b2Vec2[]>(new b2Vec2[boundary->size()]);
-      for (auto i = 0; i < boundary->size(); ++i) {
-        vertices[i].Set((*boundary)[i].x, (*boundary)[i].y);
-      }
-      b2ChainShape boundary_shape;
-      boundary_shape.CreateLoop(vertices.get(), static_cast<int>(boundary->size()));
-      b2FixtureDef boundary_fixture_definition;
-      boundary_fixture_definition.shape = &boundary_shape;
-      boundary_fixture_definition.friction = 0.0f;
-      GameState::boundary->CreateFixture(&boundary_fixture_definition);
-    }
+    world(b2Vec2(0.0f, 0.0f)), player_body() {
     b2BodyDef player_body_definition;
     player_body_definition.type = b2_dynamicBody;
     player_body_definition.position.Set(0.0f, 0.0f);
@@ -88,10 +72,6 @@ namespace textengine {
   }
 
   GameState::~GameState() {
-    if (boundary) {
-      world.DestroyBody(boundary);
-      boundary = nullptr;
-    }
     // TODO(robertsdionne): debug the mutex lock failure; not even sure why that's happening.
 //    if (player_body) {
 //      world.DestroyBody(player_body);
