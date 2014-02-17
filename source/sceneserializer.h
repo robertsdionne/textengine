@@ -1,47 +1,33 @@
-#ifndef TEXTENGINE_MESHSERIALIZER_H_
-#define TEXTENGINE_MESHSERIALIZER_H_
+#ifndef TEXTENGINE_SCENESERIALIZER_H_
+#define TEXTENGINE_SCENESERIALIZER_H_
 
+#include <glm/glm.hpp>
 #include <picojson.h>
 #include <string>
 #include <unordered_map>
 
-#include "mesh.h"
+#include "scene.h"
 
 namespace textengine {
 
-  class MeshSerializer {
+  class SceneSerializer {
   public:
-    MeshSerializer() = default;
+    SceneSerializer() = default;
 
-    virtual ~MeshSerializer() = default;
+    virtual ~SceneSerializer() = default;
 
-    void WriteMesh(const std::string &filename, Mesh &mesh) const;
+    void WriteScene(const std::string &filename, Scene &scene) const;
 
   private:
-    typedef std::unordered_map<Mesh::Face *, double> FaceIndexMap;
-    typedef std::unordered_map<Mesh::HalfEdge *, double> HalfEdgeIndexMap;
-    typedef std::unordered_map<Mesh::Vertex *, double> VertexIndexMap;
-    typedef std::unordered_map<Mesh::RoomInfo *, double> RoomInfoIndexMap;
-
-    picojson::value WriteVertex(const HalfEdgeIndexMap &half_edge_indices,
-                                const Mesh::Vertex *vertex) const;
-
-    picojson::value WriteHalfEdge(const FaceIndexMap &face_indices,
-                                  const HalfEdgeIndexMap &half_edge_indices,
-                                  const VertexIndexMap &vertex_indices,
-                                  const Mesh::HalfEdge *half_edge) const;
-
-    picojson::value WriteFace(const HalfEdgeIndexMap &half_edge_indices,
-                              const RoomInfoIndexMap &room_info_indices,
-                              const Mesh::Face *face) const;
-
-    picojson::value WriteRoomInfo(const Mesh::RoomInfo *room_info) const;
-
+    picojson::value WriteAxisAlignedBoundingBox(AxisAlignedBoundingBox aabb) const;
+    
+    picojson::value WriteMessageMap(MessageMap &messages) const;
+    
+    picojson::value WriteObject(Object *object) const;
+    
     picojson::value WriteVec2(glm::vec2 vector) const;
-
-    picojson::value WriteColor(glm::vec4 color) const;
   };
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_MESHSERIALIZER_H_
+#endif  // TEXTENGINE_SCENESERIALIZER_H_

@@ -10,6 +10,7 @@
 #include "mouse.h"
 #include "scene.h"
 #include "sceneloader.h"
+#include "sceneserializer.h"
 #include "synchronizedqueue.h"
 #include "textenginerenderer.h"
 #include "updater.h"
@@ -38,7 +39,7 @@ int main(int argument_count, char *arguments[]) {
     reply_queue,
     playtest_log, input, mouse, keyboard, initial_state, scene);
   textengine::WebSocketPrompt prompt(reply_queue, kPrompt);
-  textengine::Editor editor(initial_state, keyboard, mouse, scene);
+  textengine::Editor editor(kWindowWidth, kWindowHeight, initial_state, keyboard, mouse, scene);
   if (!edit) {
     prompt.Run();
   }
@@ -52,5 +53,9 @@ int main(int argument_count, char *arguments[]) {
     kWindowTitle, *controller, renderer, input, joystick,
     keyboard, mouse);
   const auto result = application.Run();
+  if (edit) {
+    textengine::SceneSerializer serializer;
+    serializer.WriteScene(filename, scene);
+  }
   return result;
 }

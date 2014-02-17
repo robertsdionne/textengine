@@ -1,6 +1,8 @@
 #ifndef __textengine__controller__
 #define __textengine__controller__
 
+#include <glm/glm.hpp>
+
 #include "base.h"
 
 namespace textengine {
@@ -15,6 +17,8 @@ namespace textengine {
     virtual GameState &GetCurrentState() = 0;
     
     virtual void Setup() = 0;
+    
+    virtual void SetModelViewProjection(glm::mat4 model_view_projection) = 0;
 
     virtual void Update() = 0;
   };

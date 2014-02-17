@@ -3,6 +3,7 @@
 
 #include <Box2D/Box2D.h>
 #include <chrono>
+#include <glm/glm.hpp>
 #include <random>
 #include <tuple>
 #include <unordered_map>
@@ -32,6 +33,8 @@ namespace textengine {
     virtual void EndContact(b2Contact* contact) override;
 
     virtual GameState &GetCurrentState();
+    
+    virtual void SetModelViewProjection(glm::mat4 model_view_projection);
 
     virtual void Setup() override;
 

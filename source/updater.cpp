@@ -106,6 +106,8 @@ namespace textengine {
   GameState &Updater::GetCurrentState() {
     return current_state;
   }
+  
+  void Updater::SetModelViewProjection(glm::mat4 model_view_projection) {}
 
   void Updater::Setup() {
     last_direction = Direction::kEast;

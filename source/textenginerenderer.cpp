@@ -25,6 +25,7 @@ namespace textengine {
     glViewport(0, 0, width, height);
     inverse_aspect_ratio = static_cast<float>(height) / static_cast<float>(width);
     projection = glm::ortho(-1.0f, 1.0f, -inverse_aspect_ratio, inverse_aspect_ratio, -1.0f, 1.0f);
+    updater.SetModelViewProjection(projection);
   }
 
   void TextEngineRenderer::Create() {

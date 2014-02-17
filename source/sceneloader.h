@@ -23,8 +23,6 @@ namespace textengine {
   private:
     Scene ReadScene(std::ifstream &in) const;
 
-    AxisAlignedBoundingBox ReadShape(picojson::object &area_or_object) const;
-
     AxisAlignedBoundingBox ReadAxisAlignedBoundingBox(picojson::value &aabb) const;
 
     MessageList *ReadMessageList(picojson::value &messages) const;
