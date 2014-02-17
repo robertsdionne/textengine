@@ -47,7 +47,7 @@ int main(int argument_count, char *arguments[]) {
   if (edit) {
     controller = &editor;
   }
-  textengine::TextEngineRenderer renderer(mouse, *controller, scene);
+  textengine::TextEngineRenderer renderer(mouse, *controller, scene, edit);
   textengine::GlfwApplication application(
     argument_count, arguments, kWindowWidth, kWindowHeight,
     kWindowTitle, *controller, renderer, input, joystick,

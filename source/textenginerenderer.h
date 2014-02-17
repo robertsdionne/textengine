@@ -22,7 +22,7 @@ namespace textengine {
 
   class TextEngineRenderer : public Renderer {
   public:
-    TextEngineRenderer(Mouse &mouse, Controller &updater, Scene &scene);
+    TextEngineRenderer(Mouse &mouse, Controller &updater, Scene &scene, bool edit);
 
     virtual ~TextEngineRenderer() = default;
 
@@ -52,6 +52,7 @@ namespace textengine {
     Mouse &mouse;
     Controller &updater;
     Scene &scene;
+    bool edit;
     float inverse_aspect_ratio;
 
     Shader edge_geometry_shader, fragment_shader, point_geometry_shader, vertex_shader;

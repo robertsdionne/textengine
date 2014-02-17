@@ -15,8 +15,8 @@
 
 namespace textengine {
 
-  TextEngineRenderer::TextEngineRenderer(Mouse &mouse, Controller &updater, Scene &scene)
-  : mouse(mouse), updater(updater), scene(scene), model_view(glm::mat4()),
+  TextEngineRenderer::TextEngineRenderer(Mouse &mouse, Controller &updater, Scene &scene, bool edit)
+  : mouse(mouse), updater(updater), scene(scene), edit(edit), model_view(glm::mat4()),
     projection(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)), matrix_stack{glm::mat4(1)} {}
 
   void TextEngineRenderer::Change(int width, int height) {
@@ -194,10 +194,24 @@ namespace textengine {
     if (mouse.IsButtonDown(GLFW_MOUSE_BUTTON_2)) {
       mouse_buttons |= IMGUI_MBUT_RIGHT;
     }
-
-    imguiBeginFrame(mouse_position.x, height - mouse_position.y, mouse_buttons, 0);
-
-    imguiEndFrame();
+    
+    if (edit) {
+      imguiBeginFrame(mouse_position.x, height - mouse_position.y, mouse_buttons, 0);
+      
+      for (auto &area : scene.areas) {
+        const glm::vec4 homogeneous = transform * glm::vec4(area->aabb.minimum.x, area->aabb.maximum.y, 0.0f, 1.0f);
+        const glm::vec2 transformed = homogeneous.xy() / homogeneous.w;
+        imguiDrawText(transformed.x, height - transformed.y, IMGUI_ALIGN_LEFT, area->name.c_str(), imguiRGBA(0, 0, 0));
+      }
+      
+      for (auto &object : scene.objects) {
+        const glm::vec4 homogeneous = transform * glm::vec4(object->aabb.minimum.x, object->aabb.maximum.y, 0.0f, 1.0f);
+        const glm::vec2 transformed = homogeneous.xy() / homogeneous.w;
+        imguiDrawText(transformed.x, height - transformed.y, IMGUI_ALIGN_LEFT, object->name.c_str(), imguiRGBA(0, 0, 0));
+      }
+      
+      imguiEndFrame();
+    }
 
     imguiRenderGLDraw(width, height);
   }
