@@ -17,7 +17,7 @@ namespace textengine {
   Editor::Editor(int width, int height,
                  GameState &initial_state, Keyboard &keyboard, Mouse &mouse, Scene &scene)
   : width(width), height(height), current_state(initial_state), keyboard(keyboard), mouse(mouse),
-  scene(scene), last_area(), last_object(), start(), stop(), selecting() {}
+  scene(scene), selected_item(), selected_area(), selected_object(), start(), stop(), selecting() {}
 
   GameState &Editor::GetCurrentState() {
     return current_state;
@@ -36,14 +36,6 @@ namespace textengine {
     return transformed;
   }
   
-  void Editor::MakeDefaultMessageList(Object *object, const std::vector<std::string> &&keys) {
-    for (auto &key : keys) {
-      auto message_list = new MessageList();
-      message_list->emplace_back(new std::string("TODO: " + key + "."));
-      object->messages.emplace(key, std::unique_ptr<MessageList>(message_list));
-    }
-  }
-  
   void Editor::SetModelViewProjection(glm::mat4 model_view_projection) {
     Editor::model_view_projection = model_view_projection;
   }
@@ -52,35 +44,32 @@ namespace textengine {
 
   void Editor::Update() {
     if (keyboard.GetKeyVelocity(GLFW_KEY_A) > 0) {
-      last_item = last_area = scene.AddArea();
-      MakeDefaultMessageList(last_area, {
-        "describe",
-        "inside",
-        "enter",
-        "exit"
-      });
+      selected_item = selected_area = scene.AddArea();
     }
     if (keyboard.GetKeyVelocity(GLFW_KEY_O) > 0) {
-      last_item = last_object = scene.AddObject();
-      MakeDefaultMessageList(last_object, {
-        "describe",
-        "touch"
-      });
+      selected_item = selected_object = scene.AddObject();
     }
-    if (!selecting && last_item && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) > 0) {
+    if (selected_item && keyboard.GetKeyVelocity(GLFW_KEY_SPACE) > 0) {
+      if (Shape::kAxisAlignedBoundingBox == selected_item->shape) {
+        selected_item->shape = Shape::kCircle;
+      } else {
+        selected_item->shape = Shape::kAxisAlignedBoundingBox;
+      }
+    }
+    if (!selecting && selected_item && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) > 0) {
       selecting = true;
       start = GetCursorPosition();
     }
-    if (selecting && mouse.HasCursorMoved()) {
+    if (selecting && selected_item && mouse.HasCursorMoved()) {
       stop = GetCursorPosition();
-      last_item->aabb.minimum = glm::min(start, stop);
-      last_item->aabb.maximum = glm::max(start, stop);
+      selected_item->aabb.minimum = glm::min(start, stop);
+      selected_item->aabb.maximum = glm::max(start, stop);
     }
-    if (selecting && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) < 0) {
+    if (selecting && selected_item && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) < 0) {
       selecting = false;
       stop = GetCursorPosition();
-      last_item->aabb.minimum = glm::min(start, stop);
-      last_item->aabb.maximum = glm::max(start, stop);
+      selected_item->aabb.minimum = glm::min(start, stop);
+      selected_item->aabb.maximum = glm::max(start, stop);
     }
   }
 

@@ -87,7 +87,13 @@ namespace textengine {
     Object *AddArea();
     
     Object *AddObject();
-
+    
+  private:
+    void MakeDefaultMessageList(Object *object, const std::vector<std::string> &&keys) const;
+    
+    std::string MakeDefaultName(const std::string &type) const;
+    
+  public:
     long next_id;
     ObjectList areas;
     MessageMap messages_by_name;

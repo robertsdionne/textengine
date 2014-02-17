@@ -32,15 +32,13 @@ namespace textengine {
     virtual void Update();
 
   private:
-    void MakeDefaultMessageList(Object *object, const std::vector<std::string> &&keys);
-    
     int width, height;
     GameState &current_state;
     Keyboard &keyboard;
     Mouse &mouse;
     Scene &scene;
     glm::mat4 model_view_projection;
-    Object *last_item, *last_area, *last_object;
+    Object *selected_item, *selected_area, *selected_object;
     glm::vec2 start, stop;
     bool selecting;
   };
