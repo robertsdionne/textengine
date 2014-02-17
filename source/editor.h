@@ -38,9 +38,9 @@ namespace textengine {
     Mouse &mouse;
     Scene &scene;
     glm::mat4 model_view_projection;
-    Object *selected_item, *selected_area, *selected_object;
+    Object *selected_item;
     glm::vec2 start, stop;
-    bool selecting;
+    bool moving, ready, placing;
   };
 
 }  // namespace textengine

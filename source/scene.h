@@ -12,6 +12,10 @@ namespace textengine {
 
   struct AxisAlignedBoundingBox {
     glm::vec2 minimum, maximum;
+    
+    float area() const {
+      return glm::compMul(maximum - minimum);
+    }
 
     glm::vec2 center() const {
       return (minimum + maximum) / 2.0f;
@@ -27,6 +31,11 @@ namespace textengine {
 
     float radius() const {
       return glm::max(half_extent().x, half_extent().y);
+    }
+    
+    bool Contains(glm::vec2 position) {
+      return glm::all(glm::lessThanEqual(minimum, position))
+          && glm::all(glm::lessThan(position, maximum));
     }
   };
 
@@ -45,6 +54,34 @@ namespace textengine {
     AxisAlignedBoundingBox aabb;
     MessageMap messages;
     bool invisible;
+    
+    float area() const {
+      switch (shape) {
+        case Shape::kAxisAlignedBoundingBox:
+          return aabb.area();
+          break;
+        case Shape::kCircle:
+          return M_PI * aabb.radius() * aabb.radius();
+          break;
+        default:
+          return std::numeric_limits<float>::infinity();
+          break;
+      }
+    }
+    
+    bool Contains(glm::vec2 position) {
+      switch (shape) {
+        case Shape::kAxisAlignedBoundingBox:
+          return aabb.Contains(position);
+          break;
+        case Shape::kCircle:
+          return glm::length(aabb.center() - position) < aabb.radius();
+          break;
+        default:
+          return std::numeric_limits<float>::infinity();
+          break;
+      }
+    }
 
     glm::vec2 DirectionFrom(glm::vec2 position) const {
       const auto dx = glm::vec2(1e-5, 0.0);
@@ -87,6 +124,8 @@ namespace textengine {
     Object *AddArea();
     
     Object *AddObject();
+    
+    void EraseItem(Object *item);
     
   private:
     void MakeDefaultMessageList(Object *object, const std::vector<std::string> &&keys) const;

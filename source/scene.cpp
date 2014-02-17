@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <memory>
 #include <sstream>
 #include <utility>
 
@@ -34,6 +36,17 @@ namespace textengine {
     return object;
   }
   
+  void Scene::EraseItem(Object *item) {
+    auto removal_criterion = [&] (const std::unique_ptr<Object> &p) {
+      return item == p.get();
+    };
+    if (areas.end() != std::find_if(areas.begin(), areas.end(), removal_criterion)) {
+      areas.erase(std::remove_if(areas.begin(), areas.end(), removal_criterion));
+    } else if (objects.end() != std::find_if(objects.begin(), objects.end(), removal_criterion)) {
+      objects.erase(std::remove_if(objects.begin(), objects.end(), removal_criterion));
+    }
+  }
+  
   void Scene::MakeDefaultMessageList(Object *object, const std::vector<std::string> &&keys) const {
     for (auto &key : keys) {
       auto message_list = new MessageList();
@@ -44,7 +57,7 @@ namespace textengine {
   
   std::string Scene::MakeDefaultName(const std::string &type) const {
     std::ostringstream out;
-    out << type << " " << next_id;
+    out << type << " " << next_id - 1;
     return out.str();
   }
 

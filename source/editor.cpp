@@ -5,7 +5,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include <iostream>
+#include <limits>
 #include <memory>
+#include <unordered_set>
 
 #include "editor.h"
 #include "keyboard.h"
@@ -17,7 +19,8 @@ namespace textengine {
   Editor::Editor(int width, int height,
                  GameState &initial_state, Keyboard &keyboard, Mouse &mouse, Scene &scene)
   : width(width), height(height), current_state(initial_state), keyboard(keyboard), mouse(mouse),
-  scene(scene), selected_item(), selected_area(), selected_object(), start(), stop(), selecting() {}
+  scene(scene), selected_item(), start(), stop(), moving(),
+  ready(), placing() {}
 
   GameState &Editor::GetCurrentState() {
     return current_state;
@@ -43,11 +46,12 @@ namespace textengine {
   void Editor::Setup() {}
 
   void Editor::Update() {
-    if (keyboard.GetKeyVelocity(GLFW_KEY_A) > 0) {
-      selected_item = selected_area = scene.AddArea();
+    ready = !(moving || placing);
+    if (ready && keyboard.GetKeyVelocity(GLFW_KEY_A) > 0) {
+      selected_item = scene.AddArea();
     }
-    if (keyboard.GetKeyVelocity(GLFW_KEY_O) > 0) {
-      selected_item = selected_object = scene.AddObject();
+    if (ready && keyboard.GetKeyVelocity(GLFW_KEY_Z) > 0) {
+      selected_item = scene.AddObject();
     }
     if (selected_item && keyboard.GetKeyVelocity(GLFW_KEY_SPACE) > 0) {
       if (Shape::kAxisAlignedBoundingBox == selected_item->shape) {
@@ -56,17 +60,47 @@ namespace textengine {
         selected_item->shape = Shape::kAxisAlignedBoundingBox;
       }
     }
-    if (!selecting && selected_item && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) > 0) {
-      selecting = true;
+    if (ready && selected_item && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) > 0) {
+      placing = true;
       start = GetCursorPosition();
     }
-    if (selecting && selected_item && mouse.HasCursorMoved()) {
+    if (ready && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_2)) {
+      const auto cursor = GetCursorPosition();
+      std::unordered_set<Object *> candidates;
+      for (auto &area : scene.areas) {
+        if (area->Contains(cursor)) {
+          candidates.insert(area.get());
+        }
+      }
+      for (auto &object : scene.objects) {
+        if (object->Contains(cursor)) {
+          candidates.insert(object.get());
+        }
+      }
+      auto minimum = std::numeric_limits<float>::infinity();
+      Object *argmin = nullptr;
+      for (auto candidate : candidates) {
+        const auto area = candidate->area();
+        if (area < minimum) {
+          minimum = area;
+          argmin = candidate;
+        }
+      }
+      if (argmin) {
+        selected_item = argmin;
+      }
+    }
+    if (ready && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_BACKSPACE)) {
+      scene.EraseItem(selected_item);
+      selected_item = nullptr;
+    }
+    if (placing && selected_item && mouse.HasCursorMoved()) {
       stop = GetCursorPosition();
       selected_item->aabb.minimum = glm::min(start, stop);
       selected_item->aabb.maximum = glm::max(start, stop);
     }
-    if (selecting && selected_item && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) < 0) {
-      selecting = false;
+    if (placing && selected_item && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) < 0) {
+      placing = false;
       stop = GetCursorPosition();
       selected_item->aabb.minimum = glm::min(start, stop);
       selected_item->aabb.maximum = glm::max(start, stop);
