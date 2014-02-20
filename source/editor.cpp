@@ -48,17 +48,20 @@ namespace textengine {
 
   void Editor::Update() {
     ready = !(moving || placing);
+    const auto d = keyboard.IsKeyDown(GLFW_KEY_LEFT_SHIFT) ? 1.0 : 0.25;
+    const auto dx = glm::vec2(d, 0);
+    const auto dy = glm::vec2(0, d);
     if (keyboard.IsKeyDown(GLFW_KEY_W)) {
-      current_state.camera_position += glm::vec2(0.0, 0.1);
+      current_state.camera_position += dy;
     }
     if (keyboard.IsKeyDown(GLFW_KEY_S)) {
-      current_state.camera_position -= glm::vec2(0.0, 0.1);
+      current_state.camera_position -= dy;
     }
     if (keyboard.IsKeyDown(GLFW_KEY_D)) {
-      current_state.camera_position += glm::vec2(0.1, 0.0);
+      current_state.camera_position += dx;
     }
     if (keyboard.IsKeyDown(GLFW_KEY_A)) {
-      current_state.camera_position -= glm::vec2(0.1, 0.0);
+      current_state.camera_position -= dx;
     }
     if (ready && keyboard.GetKeyVelocity(GLFW_KEY_Q) > 0) {
       selected_item = scene.AddArea();

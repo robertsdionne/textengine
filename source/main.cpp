@@ -39,7 +39,8 @@ int main(int argument_count, char *arguments[]) {
     reply_queue,
     playtest_log, input, mouse, keyboard, initial_state, scene);
   textengine::WebSocketPrompt prompt(reply_queue, kPrompt);
-  textengine::Editor editor(kWindowWidth, kWindowHeight, initial_state, keyboard, mouse, scene);
+  textengine::Editor editor(edit ? 2 * kWindowWidth : kWindowWidth, kWindowHeight, initial_state,
+                            keyboard, mouse, scene);
   if (!edit) {
     prompt.Run();
   }
@@ -49,7 +50,7 @@ int main(int argument_count, char *arguments[]) {
   }
   textengine::TextEngineRenderer renderer(mouse, *controller, scene, edit);
   textengine::GlfwApplication application(
-    argument_count, arguments, kWindowWidth, kWindowHeight,
+    argument_count, arguments, edit ? 2 * kWindowWidth : kWindowWidth, kWindowHeight,
     kWindowTitle, *controller, renderer, input, joystick,
     keyboard, mouse);
   const auto result = application.Run();
