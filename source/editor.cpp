@@ -110,6 +110,23 @@ namespace textengine {
       scene.EraseItem(selected_item);
       selected_item = nullptr;
     }
+    if (ready && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_G) > 0) {
+      moving = true;
+      aabb = selected_item->aabb;
+      delta = aabb.minimum - GetCursorPosition();
+    }
+    if (moving && selected_item) {
+      const auto position = GetCursorPosition();
+      selected_item->aabb.minimum = position + delta;
+      selected_item->aabb.maximum = position + delta + aabb.extent();
+    }
+    if (moving && keyboard.GetKeyVelocity(GLFW_KEY_ESCAPE) > 0) {
+      moving = false;
+      selected_item->aabb = aabb;
+    }
+    if (moving && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) > 0) {
+      moving = false;
+    }
     if (selected_item && keyboard.GetKeyVelocity(GLFW_KEY_V) > 0) {
       selected_item->invisible = !selected_item->invisible;
     }
