@@ -106,9 +106,12 @@ namespace textengine {
         selected_item = argmin;
       }
     }
-    if (ready && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_BACKSPACE)) {
+    if (ready && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_BACKSPACE) > 0) {
       scene.EraseItem(selected_item);
       selected_item = nullptr;
+    }
+    if (selected_item && keyboard.GetKeyVelocity(GLFW_KEY_V) > 0) {
+      selected_item->invisible = !selected_item->invisible;
     }
     if (placing && selected_item) {
       stop = GetCursorPosition();
