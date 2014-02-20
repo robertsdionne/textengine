@@ -1,0 +1,426 @@
+{
+  "areas": [
+    {
+      "aabb": {
+        "maximum": {
+          "x": 20, 
+          "y": 20
+        }, 
+        "minimum": {
+          "x": -5, 
+          "y": -5
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see a field.", 
+          "You see a grassy field.", 
+          "You see before you a field full of vegetation."
+        ], 
+        "enter": [
+          "You enter the grassy field.", 
+          "You step into the field's vegetation."
+        ], 
+        "exit": [
+          "You exit the field.", 
+          "You leave the grassy field."
+        ], 
+        "inside": [
+          "You are standing in a field.", 
+          "You stand in a grassy field.", 
+          "You stand within a field full of vegetation."
+        ]
+      }, 
+      "name": "field"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 20, 
+          "y": 11
+        }, 
+        "minimum": {
+          "x": -5, 
+          "y": 10
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see a stream that runs from east to west.", 
+          "You see the stream with water running westward."
+        ], 
+        "enter": [
+          "You step into the stream."
+        ], 
+        "exit": [
+          "You step out of the stream."
+        ], 
+        "inside": [
+          "You are standing in a stream that runs from east to west.", 
+          "The water of the stream trickles through your toes to the west."
+        ]
+      }, 
+      "name": "stream"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 20, 
+          "y": 14
+        }, 
+        "minimum": {
+          "x": -5, 
+          "y": 11
+        }
+      }, 
+      "invisible": true, 
+      "messages": {
+        "enter": [
+          "You hear rushing water to your south."
+        ], 
+        "exit": [], 
+        "inside": [
+          "You hear the rushing water of a stream to the south.", 
+          "You hear water to your south."
+        ]
+      }, 
+      "name": "stream noise north"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 20, 
+          "y": 10
+        }, 
+        "minimum": {
+          "x": -5, 
+          "y": 7
+        }
+      }, 
+      "invisible": true, 
+      "messages": {
+        "enter": [
+          "You hear rushing water to your north."
+        ], 
+        "exit": [], 
+        "inside": [
+          "You hear the rushing water of a stream to the north.", 
+          "You hear water to your north."
+        ]
+      }, 
+      "name": "stream noise south"
+    }, 
+    {
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see the shade of the red tree.", 
+          "The tree shades a wide area from the sun."
+        ], 
+        "enter": [
+          "You step beneath the shade of the red tree.", 
+          "The tree shades you from the sun."
+        ], 
+        "exit": [
+          "You step back into the sunlight.", 
+          "You step out from underneath the red tree's shade."
+        ], 
+        "inside": [
+          "You stand beneath the shade of the red tree.", 
+          "The tree shades you from the sun."
+        ]
+      }, 
+      "name": "tree shade", 
+      "position": {
+        "x": 5, 
+        "y": 2.5
+      }, 
+      "radius": 1.5
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 10, 
+          "y": 10
+        }, 
+        "minimum": {
+          "x": 7, 
+          "y": 7
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see a patch of mud.", 
+          "You see a mud patch.", 
+          "You see a muddy puddle."
+        ], 
+        "enter": [
+          "You step in a puddle of mud.", 
+          "You splash your feet through a mud puddle.", 
+          "A mud puddle wets your shoes."
+        ], 
+        "exit": [
+          "You leave muddy footprints behind.", 
+          "You are glad you stepped out of the mud."
+        ], 
+        "inside": [
+          "You stand in a patch of mud.", 
+          "You stand in a mud patch.", 
+          "You stand in a muddy puddle."
+        ]
+      }, 
+      "name": "mud patch"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": -1, 
+          "y": -1
+        }, 
+        "minimum": {
+          "x": -4, 
+          "y": -3
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see a patch of mud.", 
+          "You see a mud patch.", 
+          "You see a muddy puddle."
+        ], 
+        "enter": [
+          "You step in a puddle of mud.", 
+          "You splash your feet through a mud puddle.", 
+          "A mud puddle wets your shoes."
+        ], 
+        "exit": [
+          "You leave muddy footprints behind.", 
+          "You are glad you stepped out of the mud."
+        ], 
+        "inside": [
+          "You stand in a patch of mud.", 
+          "You stand in a mud patch.", 
+          "You stand in a muddy puddle."
+        ]
+      }, 
+      "name": "mud patch"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 4.5, 
+          "y": 5
+        }, 
+        "minimum": {
+          "x": 0, 
+          "y": 2.5
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see a ramada.", 
+          "You see an orange roofed ramada."
+        ], 
+        "enter": [
+          "You move under the ramada's shade.", 
+          "You duck into the ramada.", 
+          "You take shelter beneath the ramada."
+        ], 
+        "exit": [
+          "You venture out from beneath the ramada.", 
+          "You leave the ramada, stepping into its vicinity.", 
+          "You exit the ramada."
+        ], 
+        "inside": [
+          "You stand in the shade of the ramada.", 
+          "The orange roof of the ramada shields you from the sun's rays."
+        ]
+      }, 
+      "name": "ramada"
+    }
+  ], 
+  "messages": {
+    "east": [
+      "You head to the east.", 
+      "You move easterly.", 
+      "You go eastward."
+    ], 
+    "look": [
+      "You look around.", 
+      "You observe your surroundings.", 
+      "You inspect your environment."
+    ], 
+    "north": [
+      "You head to the north.", 
+      "You march northerly.", 
+      "You move northward."
+    ], 
+    "run": [
+      "You start to run.", 
+      "You begin running.", 
+      "You run.", 
+      "You move briskly."
+    ], 
+    "south": [
+      "You head south.", 
+      "You go southerly.", 
+      "You turn southward."
+    ], 
+    "stop looking": [
+      "You return to your thoughts.", 
+      "You are done observing.", 
+      "You conclude your inspection."
+    ], 
+    "walk": [
+      "You walk.", 
+      "You start to walk.", 
+      "You stop running.", 
+      "You slow yourself."
+    ], 
+    "west": [
+      "You go to the west.", 
+      "You move westerly.", 
+      "You head westward."
+    ]
+  }, 
+  "objects": [
+    {
+      "aabb": {
+        "maximum": {
+          "x": 3, 
+          "y": 4
+        }, 
+        "minimum": {
+          "x": 1.5, 
+          "y": 3.5
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see a picnic table.", 
+          "You see a picnic table beneath the ramada."
+        ], 
+        "touch": [
+          "Your legs brush against the benches of the picnic table.", 
+          "You run your hand along the rough surface of the picnic table.", 
+          "You scrape gently against the edges of the table."
+        ]
+      }, 
+      "name": "picnic table"
+    }, 
+    {
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see a big red tree."
+        ], 
+        "touch": [
+          "You touch the red tree.", 
+          "You press against the red bark of the tree.", 
+          "You push against the trunk of the red tree.", 
+          "You approach the red tree, touching it."
+        ]
+      }, 
+      "name": "red tree", 
+      "position": {
+        "x": 5, 
+        "y": 2.5
+      }, 
+      "radius": 0.5
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 40, 
+          "y": -10
+        }, 
+        "minimum": {
+          "x": -20, 
+          "y": -20
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see the southern border of the valley."
+        ], 
+        "touch": [
+          "Reverse your course and head north. To continue southerly is dangerous."
+        ]
+      }, 
+      "name": "border south"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 40, 
+          "y": 40
+        }, 
+        "minimum": {
+          "x": -20, 
+          "y": 30
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see the northern border of the valley."
+        ], 
+        "touch": [
+          "Reverse your course and head south. To continue northerly is dangerous."
+        ]
+      }, 
+      "name": "border north"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 40, 
+          "y": 40
+        }, 
+        "minimum": {
+          "x": 30, 
+          "y": -20
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see the eastern border of the valley."
+        ], 
+        "touch": [
+          "Reverse your course and head west. To continue easterly is dangerous."
+        ]
+      }, 
+      "name": "border east"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": -10, 
+          "y": 40
+        }, 
+        "minimum": {
+          "x": -20, 
+          "y": -20
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see the western border of the valley."
+        ], 
+        "touch": [
+          "Reverse your course and head east. To continue westerly is dangerous."
+        ]
+      }, 
+      "name": "border west"
+    }
+  ]
+}

@@ -23,7 +23,7 @@ constexpr int kWindowWidth = 1280/2;
 constexpr const char *kWindowTitle = u8"textengine";
 
 int main(int argument_count, char *arguments[]) {
-  const std::string filename = argument_count > 1 ? arguments[1] : "../resource/scenes/field.json";
+  const std::string filename = argument_count > 1 ? arguments[1] : "../resource/scenes/terrarium.json";
   const auto edit = argument_count > 2 && "edit" == std::string(arguments[2]);
   textengine::Joystick joystick(GLFW_JOYSTICK_1);
   textengine::Keyboard keyboard;

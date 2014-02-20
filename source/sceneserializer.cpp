@@ -25,7 +25,7 @@ namespace textengine {
     object["objects"] = picojson::value(objects);
     out << picojson::value(object) << std::endl;
     out.close();
-    std::system("python ../resource/scripts/pretty_print_json.py ../resource/scenes/field.json");
+    std::system(("python ../resource/scripts/pretty_print_json.py " + filename).c_str());
   }
   
   picojson::value SceneSerializer::WriteAxisAlignedBoundingBox(AxisAlignedBoundingBox aabb) const {
