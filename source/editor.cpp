@@ -33,7 +33,8 @@ namespace textengine {
     const auto screen_to_window = glm::scale(glm::mat4(), glm::vec3(width, height, 1.0f));
     const auto homogeneous = (glm::inverse(screen_to_window * offset_to_screen *
                                            reversed_to_offset * normalized_to_reversed *
-                                           model_view_projection * glm::scale(glm::mat4(1), glm::vec3(glm::vec2(0.1f), 1.0f))) *
+                                           model_view_projection * glm::scale(glm::mat4(1), glm::vec3(glm::vec2(0.1f), 1.0f)) *
+                                           glm::translate(glm::mat4(1), glm::vec3(-current_state.camera_position, 0))) *
                               glm::vec4(mouse.get_cursor_position(), 0.0f, 1.0f));
     const auto transformed = homogeneous.xy() / homogeneous.w;
     return transformed;
@@ -47,10 +48,22 @@ namespace textengine {
 
   void Editor::Update() {
     ready = !(moving || placing);
-    if (ready && keyboard.GetKeyVelocity(GLFW_KEY_A) > 0) {
+    if (keyboard.IsKeyDown(GLFW_KEY_W)) {
+      current_state.camera_position += glm::vec2(0.0, 0.1);
+    }
+    if (keyboard.IsKeyDown(GLFW_KEY_S)) {
+      current_state.camera_position -= glm::vec2(0.0, 0.1);
+    }
+    if (keyboard.IsKeyDown(GLFW_KEY_D)) {
+      current_state.camera_position += glm::vec2(0.1, 0.0);
+    }
+    if (keyboard.IsKeyDown(GLFW_KEY_A)) {
+      current_state.camera_position -= glm::vec2(0.1, 0.0);
+    }
+    if (ready && keyboard.GetKeyVelocity(GLFW_KEY_Q) > 0) {
       selected_item = scene.AddArea();
     }
-    if (ready && keyboard.GetKeyVelocity(GLFW_KEY_Z) > 0) {
+    if (ready && keyboard.GetKeyVelocity(GLFW_KEY_E) > 0) {
       selected_item = scene.AddObject();
     }
     if (selected_item && keyboard.GetKeyVelocity(GLFW_KEY_SPACE) > 0) {
@@ -94,7 +107,7 @@ namespace textengine {
       scene.EraseItem(selected_item);
       selected_item = nullptr;
     }
-    if (placing && selected_item && mouse.HasCursorMoved()) {
+    if (placing && selected_item) {
       stop = GetCursorPosition();
       selected_item->aabb.minimum = glm::min(start, stop);
       selected_item->aabb.maximum = glm::max(start, stop);
