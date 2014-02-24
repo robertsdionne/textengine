@@ -14,6 +14,7 @@ namespace textengine {
   
   Object *Scene::AddArea() {
     auto area = new Object{next_id++};
+    area->aabb.maximum = glm::vec2(1);
     area->name = MakeDefaultName("area");
     MakeDefaultMessageList(area, {
       "describe",
@@ -27,6 +28,7 @@ namespace textengine {
   
   Object *Scene::AddObject() {
     auto object = new Object{next_id++};
+    object->aabb.maximum = glm::vec2(1);
     object->name = MakeDefaultName("object");
     MakeDefaultMessageList(object, {
       "describe",
