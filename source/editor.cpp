@@ -33,7 +33,7 @@ namespace textengine {
     const auto screen_to_window = glm::scale(glm::mat4(), glm::vec3(width, height, 1.0f));
     const auto homogeneous = (glm::inverse(screen_to_window * offset_to_screen *
                                            reversed_to_offset * normalized_to_reversed *
-                                           model_view_projection * glm::scale(glm::mat4(1), glm::vec3(glm::vec2(0.1f), 1.0f)) *
+                                           model_view_projection * glm::scale(glm::mat4(1), glm::vec3(glm::vec2(current_state.zoom * 0.1f), 1.0f)) *
                                            glm::translate(glm::mat4(1), glm::vec3(-current_state.camera_position, 0))) *
                               glm::vec4(mouse.get_cursor_position(), 0.0f, 1.0f));
     const auto transformed = homogeneous.xy() / homogeneous.w;
@@ -49,8 +49,8 @@ namespace textengine {
   void Editor::Update() {
     ready = !(moving || placing);
     const auto d = keyboard.IsKeyDown(GLFW_KEY_LEFT_SHIFT) ? 1.0 : 0.25;
-    const auto dx = glm::vec2(d, 0);
-    const auto dy = glm::vec2(0, d);
+    const auto dx = glm::vec2(d, 0) / current_state.zoom;
+    const auto dy = glm::vec2(0, d) / current_state.zoom;
     if (keyboard.IsKeyDown(GLFW_KEY_W)) {
       current_state.camera_position += dy;
     }
@@ -75,6 +75,38 @@ namespace textengine {
       } else {
         selected_item->shape = Shape::kAxisAlignedBoundingBox;
       }
+    }
+    if (selected_item && keyboard.GetKeyVelocity(GLFW_KEY_T) > 0) {
+      auto removal_criterion = [&] (const std::unique_ptr<Object> &p) {
+        return selected_item == p.get();
+      };
+      auto area = std::find_if(scene.areas.begin(), scene.areas.end(), removal_criterion);
+      auto object = std::find_if(scene.objects.begin(), scene.objects.end(), removal_criterion);
+      if (scene.areas.end() == area) {
+        scene.areas.emplace_back(object->release());
+        scene.objects.erase(object);
+      } else {
+        scene.objects.emplace_back(area->release());
+        scene.areas.erase(area);
+      }
+    }
+    if (ready && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_R) > 0) {
+      auto old_selected_item = selected_item;
+      auto removal_criterion = [&] (const std::unique_ptr<Object> &p) {
+        return selected_item == p.get();
+      };
+      auto area = std::find_if(scene.areas.begin(), scene.areas.end(), removal_criterion);
+      if (scene.areas.end() == area) {
+        selected_item = scene.AddObject();
+      } else {
+        selected_item = scene.AddArea();
+      }
+      selected_item->aabb = old_selected_item->aabb;
+      selected_item->invisible = old_selected_item->invisible;
+      selected_item->shape = old_selected_item->shape;
+      moving = true;
+      aabb = selected_item->aabb;
+      delta = aabb.minimum - GetCursorPosition();
     }
     if (ready && selected_item && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) > 0) {
       placing = true;
@@ -140,6 +172,15 @@ namespace textengine {
       stop = GetCursorPosition();
       selected_item->aabb.minimum = glm::min(start, stop);
       selected_item->aabb.maximum = glm::max(start, stop);
+    }
+    if (keyboard.IsKeyDown(GLFW_KEY_MINUS)) {
+      current_state.zoom *= 0.9;
+    }
+    if (keyboard.IsKeyDown(GLFW_KEY_EQUAL)) {
+      current_state.zoom *= 1.1;
+    }
+    if (keyboard.GetKeyVelocity(GLFW_KEY_0) > 0) {
+      current_state.zoom = 1.0;
     }
   }
 

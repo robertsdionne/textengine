@@ -11,7 +11,7 @@
 namespace textengine {
 
   GameState::GameState(Scene &scene)
-  : camera_position(), previous_player_position(), accrued_distance(),
+  : camera_position(), previous_player_position(), accrued_distance(), zoom(1.0),
     world(b2Vec2(0.0f, 0.0f)), player_body() {
     b2BodyDef player_body_definition;
     player_body_definition.type = b2_dynamicBody;
