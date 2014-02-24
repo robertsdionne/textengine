@@ -1,5 +1,34 @@
 {
-  "areas": [], 
+  "areas": [
+    {
+      "aabb": {
+        "maximum": {
+          "x": 5.50689697265625, 
+          "y": 5.926513671875
+        }, 
+        "minimum": {
+          "x": -6.05133056640625, 
+          "y": -5.70269775390625
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "TODO: describe area 0."
+        ], 
+        "enter": [
+          "TODO: enter area 0."
+        ], 
+        "exit": [
+          "TODO: exit area 0."
+        ], 
+        "inside": [
+          "TODO: inside area 0."
+        ]
+      }, 
+      "name": "area 0"
+    }
+  ], 
   "messages": {
     "east": [
       "You head to the east.", 
@@ -44,5 +73,94 @@
       "You head westward."
     ]
   }, 
-  "objects": []
+  "objects": [
+    {
+      "aabb": {
+        "maximum": {
+          "x": 6.331083297729492, 
+          "y": 6.888369560241699
+        }, 
+        "minimum": {
+          "x": -6.884268760681152, 
+          "y": 5.857285499572754
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "TODO: describe object 1."
+        ], 
+        "touch": [
+          "TODO: touch object 1."
+        ]
+      }, 
+      "name": "object 1"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 6.326913833618164, 
+          "y": -5.63004207611084
+        }, 
+        "minimum": {
+          "x": -6.8884382247924805, 
+          "y": -6.661126136779785
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "TODO: describe object 2."
+        ], 
+        "touch": [
+          "TODO: touch object 2."
+        ]
+      }, 
+      "name": "object 2"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": -5.9951629638671875, 
+          "y": 6.898088455200195
+        }, 
+        "minimum": {
+          "x": -6.878729820251465, 
+          "y": -6.647133827209473
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "TODO: describe object 3."
+        ], 
+        "touch": [
+          "TODO: touch object 3."
+        ]
+      }, 
+      "name": "object 3"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 6.322229385375977, 
+          "y": 6.883688926696777
+        }, 
+        "minimum": {
+          "x": 5.438662528991699, 
+          "y": -6.661533355712891
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "TODO: describe object 4."
+        ], 
+        "touch": [
+          "TODO: touch object 4."
+        ]
+      }, 
+      "name": "object 4"
+    }
+  ]
 }
