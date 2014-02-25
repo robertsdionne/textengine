@@ -261,9 +261,9 @@ var drawArrow = function(canvas, context, x, y) {
   context.beginPath();
   context.moveTo(-x, -y);
   context.lineTo(x, y);
-  context.moveTo(x / 2 + x2 / 4, y / 2 + y2 / 4);
+  context.moveTo(x / 2 + x2 / 3, y / 2 + y2 / 3);
   context.lineTo(x, y);
-  context.lineTo(x / 2 - x2 / 4, y / 2 - y2 / 4);
+  context.lineTo(x / 2 - x2 / 3, y / 2 - y2 / 3);
   context.stroke();
   context.closePath();
   context.restore();
@@ -289,7 +289,7 @@ var close = function(event) {
 };
 
 
-var LINE_COUNT = 18;
+var LINE_COUNT = 30;
 
 
 var SCROLL_DELAY = 80;
