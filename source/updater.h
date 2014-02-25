@@ -46,6 +46,8 @@ namespace textengine {
     std::tuple<Object *, Object *, b2Body *> ResolveContact(b2Contact *contact) const;
 
     std::string ChooseMessage(const MessageMap &messages, const std::string &name);
+    
+    bool HasMessage(const MessageMap &messages, const std::string &name);
 
     bool Inside(const std::unique_ptr<Object> &area) const;
 

@@ -91,12 +91,16 @@ namespace textengine {
   }
 
   std::string Updater::ChooseMessage(const MessageMap &messages, const std::string &name) {
-    if (messages.cend() != messages.find(name) && messages.at(name)->size()) {
+    if (HasMessage(messages, name)) {
       const auto index = index_distribution(generator) % messages.at(name)->size();
       return *messages.at(name)->at(index);
     } else {
       return "";
     }
+  }
+  
+  bool Updater::HasMessage(const MessageMap &messages, const std::string &name) {
+    return messages.cend() != messages.find(name) && messages.at(name)->size();
   }
 
   bool Updater::Inside(const std::unique_ptr<Object> &area) const {
@@ -142,7 +146,11 @@ namespace textengine {
         directions.insert({object->id, object->DirectionFrom(position)});
       }
       for (auto &area : scene.areas) {
-        directions.insert({area->id, area->DirectionFrom(position)});
+        if (area->Contains(position)) {
+          directions.insert({area->id, glm::vec2()});
+        } else {
+          directions.insert({area->id, area->DirectionFrom(position)});
+        }
       }
       reply_queue.PushMovement(position,
                                glm::length(offset) > 0 ? glm::normalize(offset) : glm::vec2(),
@@ -157,12 +165,14 @@ namespace textengine {
       for (auto &area : scene.areas) {
         if (Inside(area)) {
           out << ChooseMessage(area->messages, "inside") << " ";
-        } else if (area->messages.cend() != area->messages.find("describe")) {
+        } else if (HasMessage(area->messages, "describe")) {
           nearby.push_back(area.get());
         }
       }
       for (auto &object : scene.objects) {
-        nearby.push_back(object.get());
+        if (HasMessage(object->messages, "describe")) {
+          nearby.push_back(object.get());
+        }
       }
       auto compare = [position] (const Object *a, const Object *b) {
         return a->DistanceTo(position) < b->DistanceTo(position);
