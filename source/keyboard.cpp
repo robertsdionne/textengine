@@ -1,6 +1,12 @@
+#include <functional>
+
 #include "keyboard.h"
 
 namespace textengine {
+  
+  void Keyboard::AddKeyDownListener(std::function<void(int)> key_listener) {
+    key_listeners.push_back(key_listener);
+  }
 
   float Keyboard::GetKeyVelocity(int key) {
     return (keys[key] - previous_keys[key]) * dt;
@@ -12,6 +18,9 @@ namespace textengine {
 
   void Keyboard::OnKeyDown(const int key) {
     keys[key] = true;
+    for (auto &key_listener : key_listeners) {
+      key_listener(key);
+    }
   }
 
   void Keyboard::OnKeyUp(const int key) {

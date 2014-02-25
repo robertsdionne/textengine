@@ -2,7 +2,9 @@
 #define TEXTENGINE_KEYBOARD_H_
 
 #include <chrono>
+#include <functional>
 #include <unordered_map>
+#include <vector>
 
 namespace textengine {
 
@@ -11,6 +13,8 @@ namespace textengine {
     Keyboard() = default;
 
     virtual ~Keyboard() = default;
+    
+    void AddKeyDownListener(std::function<void(int)> key_listener);
 
     float GetKeyVelocity(int key);
 
@@ -23,6 +27,7 @@ namespace textengine {
     void Update();
 
   private:
+    std::vector<std::function<void(int)>> key_listeners;
     std::unordered_map<int, bool> keys, previous_keys;
     std::chrono::high_resolution_clock::time_point last_update_time;
     float dt;

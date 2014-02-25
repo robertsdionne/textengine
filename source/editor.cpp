@@ -19,8 +19,24 @@ namespace textengine {
   Editor::Editor(int width, int height,
                  GameState &initial_state, Keyboard &keyboard, Mouse &mouse, Scene &scene)
   : width(width), height(height), current_state(initial_state), keyboard(keyboard), mouse(mouse),
-  scene(scene), selected_item(), start(), stop(), moving(),
-  ready(), placing() {}
+  scene(scene), selected_item(), start(), stop(), moving(), naming(), ready(), placing() {
+    keyboard.AddKeyDownListener([this] (int key) {
+      if (naming && selected_item) {
+        if (GLFW_KEY_A <= key && key <= GLFW_KEY_Z) {
+          selected_item->name += static_cast<char>(key - GLFW_KEY_A) + 'a';
+        }
+        if (GLFW_KEY_0 <= key && key <= GLFW_KEY_9) {
+          selected_item->name += static_cast<char>(key - GLFW_KEY_0) + '0';
+        }
+        if (GLFW_KEY_SPACE == key) {
+          selected_item->name += ' ';
+        }
+        if (GLFW_KEY_BACKSPACE == key && selected_item->name.size()) {
+          selected_item->name.resize(selected_item->name.size() - 1);
+        }
+      }
+    });
+  }
 
   GameState &Editor::GetCurrentState() {
     return current_state;
@@ -47,20 +63,20 @@ namespace textengine {
   void Editor::Setup() {}
 
   void Editor::Update() {
-    ready = !(moving || placing);
+    ready = !(moving || naming || placing);
     const auto d = keyboard.IsKeyDown(GLFW_KEY_LEFT_SHIFT) ? 1.0 : 0.25;
     const auto dx = glm::vec2(d, 0) / current_state.zoom;
     const auto dy = glm::vec2(0, d) / current_state.zoom;
-    if (keyboard.IsKeyDown(GLFW_KEY_W)) {
+    if (!naming && keyboard.IsKeyDown(GLFW_KEY_W)) {
       current_state.camera_position += dy;
     }
-    if (keyboard.IsKeyDown(GLFW_KEY_S)) {
+    if (!naming && keyboard.IsKeyDown(GLFW_KEY_S)) {
       current_state.camera_position -= dy;
     }
-    if (keyboard.IsKeyDown(GLFW_KEY_D)) {
+    if (!naming && keyboard.IsKeyDown(GLFW_KEY_D)) {
       current_state.camera_position += dx;
     }
-    if (keyboard.IsKeyDown(GLFW_KEY_A)) {
+    if (!naming && keyboard.IsKeyDown(GLFW_KEY_A)) {
       current_state.camera_position -= dx;
     }
     if (ready && keyboard.GetKeyVelocity(GLFW_KEY_Q) > 0) {
@@ -69,14 +85,20 @@ namespace textengine {
     if (ready && keyboard.GetKeyVelocity(GLFW_KEY_E) > 0) {
       selected_item = scene.AddObject();
     }
-    if (selected_item && keyboard.GetKeyVelocity(GLFW_KEY_SPACE) > 0) {
+    if (ready && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_ENTER) > 0) {
+      naming = true;
+      selected_item->name.clear();
+    } else if (naming && keyboard.GetKeyVelocity(GLFW_KEY_ENTER) > 0) {
+      naming = false;
+    }
+    if (!naming && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_SPACE) > 0) {
       if (Shape::kAxisAlignedBoundingBox == selected_item->shape) {
         selected_item->shape = Shape::kCircle;
       } else {
         selected_item->shape = Shape::kAxisAlignedBoundingBox;
       }
     }
-    if (selected_item && keyboard.GetKeyVelocity(GLFW_KEY_T) > 0) {
+    if (!naming && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_T) > 0) {
       auto removal_criterion = [&] (const std::unique_ptr<Object> &p) {
         return selected_item == p.get();
       };
@@ -159,7 +181,7 @@ namespace textengine {
     if (moving && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) > 0) {
       moving = false;
     }
-    if (selected_item && keyboard.GetKeyVelocity(GLFW_KEY_V) > 0) {
+    if (!naming && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_V) > 0) {
       selected_item->invisible = !selected_item->invisible;
     }
     if (placing && selected_item) {
@@ -173,13 +195,13 @@ namespace textengine {
       selected_item->aabb.minimum = glm::min(start, stop);
       selected_item->aabb.maximum = glm::max(start, stop);
     }
-    if (keyboard.IsKeyDown(GLFW_KEY_MINUS)) {
+    if (!naming && keyboard.IsKeyDown(GLFW_KEY_MINUS)) {
       current_state.zoom *= 0.9;
     }
-    if (keyboard.IsKeyDown(GLFW_KEY_EQUAL)) {
+    if (!naming && keyboard.IsKeyDown(GLFW_KEY_EQUAL)) {
       current_state.zoom *= 1.1;
     }
-    if (keyboard.GetKeyVelocity(GLFW_KEY_0) > 0) {
+    if (!naming && keyboard.GetKeyVelocity(GLFW_KEY_0) > 0) {
       current_state.zoom = 1.0;
     }
   }

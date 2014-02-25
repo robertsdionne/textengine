@@ -39,7 +39,7 @@ namespace textengine {
     Object *selected_item;
     glm::vec2 start, stop, delta;
     AxisAlignedBoundingBox aabb;
-    bool moving, ready, placing;
+    bool moving, naming, ready, placing;
   };
 
 }  // namespace textengine
