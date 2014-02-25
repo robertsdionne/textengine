@@ -2300,6 +2300,7 @@
 		46B9875717E6A62500B59145 /* application.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = application.h; sourceTree = "<group>"; };
 		46B9875817E6A62500B59145 /* renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = renderer.h; sourceTree = "<group>"; };
 		46B9A6091771F0F800E43B24 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		46BA294318BC393D004C68ED /* EVA1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EVA1.ttf; sourceTree = "<group>"; };
 		46C47CCD180F3139002DD37E /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
 		46D0FBFB180F1A7C00B00F93 /* libwebsockets.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libwebsockets.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		46D0FC00180F1A9500B00F93 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -5072,6 +5073,7 @@
 		46743803185A2BE10062EE18 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
+				46BA294318BC393D004C68ED /* EVA1.ttf */,
 				46743804185A2BE10062EE18 /* Stela_UT.otf */,
 				46743805185A2BE10062EE18 /* ubuntu-font-family-0.80 */,
 				4674381A185A2BE20062EE18 /* Vetka.otf */,

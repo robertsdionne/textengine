@@ -55,6 +55,9 @@ namespace textengine {
         } else if ("/client.js" == url_path) {
           resource_path = "../resource/web/client.js";
           content_type = "application/javascript";
+        } else if ("/EVA1.ttf" == url_path) {
+          resource_path = "../resource/fonts/EVA1.ttf";
+          content_type = "application/x-font-ttf";
         } else if ("/Stela_UT.otf" == url_path) {
           resource_path = "../resource/fonts/Stela_UT.otf";
           content_type = "application/vnd.ms-opentype";

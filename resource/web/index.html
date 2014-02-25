@@ -1,8 +1,13 @@
 <html>
   <head>
+    <meta charset="utf-8">
     <title>Text Field</title>
     <script type="application/javascript" src="client.js"></script>
     <style type="text/css">
+      @font-face {
+        font-family: 'EVA Hand 1';
+        src: url('EVA1.ttf');
+      }
       @font-face {
         font-family: 'Stela UT';
         src: url('Stela_UT.otf');
@@ -34,6 +39,10 @@
         color: purple;
       }
       canvas {
+        margin: 0px 0px 0px 0px;
+        padding: 0px 0px 0px 0px;
+      }
+      .margin {
         margin-left: 30px;
       }
       div#container {
@@ -45,8 +54,7 @@
     </style>
   </head>
   <body>
-    <div id="container"></div> <canvas id="arrow" width="20" height="20"></canvas>
-    <br />
-    <!--&gt;<b id="commandline" class="command"></b><cursor id="cursor"></cursor>-->
+    <div id="container"></div>
+    <canvas id="arrow" class="margin" width="10" height="10"></canvas>
   </body>
 </html>

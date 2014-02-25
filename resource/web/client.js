@@ -56,7 +56,7 @@ PerWordScrollBehavior.prototype.indexInto = function(line, cursor) {
  * @param {boolean=} opt_isCommand
  * @param {boolean=} opt_isDeath
  */
-var GameState = function(timestamp, description, opt_isCommand, opt_isDeath, opt_isReport, opt_isEntity, opt_id) {
+var GameState = function(timestamp, description, opt_isCommand, opt_isDeath, opt_isReport, opt_isEntity, opt_id, opt_isTitle) {
   this.timestamp = timestamp;
   this.description = description;
   this.isCommand = opt_isCommand;
@@ -64,6 +64,7 @@ var GameState = function(timestamp, description, opt_isCommand, opt_isDeath, opt
   this.isReport = opt_isReport;
   this.isEntity = opt_isEntity;
   this.id = opt_id;
+  this.isTitle = opt_isTitle;
 };
 
 
@@ -84,16 +85,32 @@ GameState.prototype.toDomNode = function(cursor, scrollBehavior) {
   } else if (this.isEntity) {
     var canvas = document.createElement('canvas');
     canvas.style.display = "inline";
-    canvas.width = 40;
-    canvas.height = 40;
+    canvas.width = 20;
+    canvas.height = 20;
     canvas.style.width = canvas.width / 2;
     canvas.style.height = canvas.height / 2;
     var context = canvas.getContext('2d');
     context.scale(1, 1);
     entities.push({canvas: canvas, context: context, id: this.id});
     return canvas;
+  } else if (this.isTitle) {
+    var parent = document.createElement('div');
+    var span = document.createElement('span');
+    parent.appendChild(span);
+    var parts = this.description.split(' ');
+    var title = parts[0];
+    var subtitle = parts[1];
+    var content = document.createTextNode(title + '\u00A0');
+    span.appendChild(content);
+    span.style.fontFamily = '"EVA Hand 1"';
+    span.style.fontWeight = 'bold';
+    span = document.createElement('span');
+    span.appendChild(document.createTextNode(subtitle + '\u00A0'));
+    span.style.fontWeight = 'bold';
+    parent.appendChild(span);
+    return parent;
   } else {
-    return document.createTextNode(scrollBehavior.slice(this.description, 0, cursor) + '\u00A0');
+    return document.createTextNode(this.description + '\u00A0');
   }
 };
 
@@ -272,7 +289,7 @@ var close = function(event) {
 };
 
 
-var LINE_COUNT = 10;
+var LINE_COUNT = 18;
 
 
 var SCROLL_DELAY = 80;
@@ -281,7 +298,7 @@ var SCROLL_DELAY = 80;
 var t = 0.0;
 
 
-var lines = [new Line([new GameState(t, 'Text Field')])];
+var lines = [new Line([new GameState(t, '\u00A0polimpsasd /ˈpælɪmpsɛst/', false, false, false, false, null, true)])];
 
 
 var lineCursor = 1;
@@ -399,9 +416,7 @@ var display = function () {
   var startIndex = lineCursor - LINE_COUNT >= 0 ? lineCursor - LINE_COUNT : 0;
   lines.slice(startIndex, lineCursor).forEach(function(line, index) {
                                               var content = line.toDomNode('', line.description.length, scrollBehavior);
-                                              var newline = document.createElement('br');
                                               container.appendChild(content);
-                                              container.appendChild(newline);
                                               });
   if (lineCursor >= 0 && lines.length > lineCursor) {
     var content = lines[lineCursor].toDomNode('', 0, scrollBehavior);
