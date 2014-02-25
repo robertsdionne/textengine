@@ -31,7 +31,8 @@ namespace textengine {
     BUILD_MAP_ENTRY(Joystick::Button::kCircle),
     BUILD_MAP_ENTRY(Joystick::Button::kX),
     BUILD_MAP_ENTRY(Joystick::Button::kSquare),
-    BUILD_MAP_ENTRY(Joystick::Button::kPs)
+    BUILD_MAP_ENTRY(Joystick::Button::kPs),
+    BUILD_MAP_ENTRY(Joystick::Button::kClick)
   };
 
   Joystick::Joystick(int joystick_id)

@@ -15,30 +15,33 @@ namespace textengine {
       kLeftX = 0,
       kLeftY = 1,
       kRightX = 2,
-      kRightY = 3
+      kRightY = 3,
+      kLeftTrigger = 4,
+      kRightTrigger = 5
     };
     static std::map<Axis, std::string> axis_names;
-
+    
     enum class Button {
-      kSelect = 0,
-      kL3 = 1,
-      kR3 = 2,
-      kStart = 3,
-      kDpadUp = 4,
-      kDpadRight = 5,
-      kDpadDown = 6,
-      kDpadLeft = 7,
-      kL2 = 8,
-      kR2 = 9,
-      kL1 = 10,
-      kR1 = 11,
-      kTriangle = 12,
-      kCircle = 13,
-      kX = 14,
-      kSquare = 15,
-      kPs = 16,
+      kSquare = 0,
+      kX = 1,
+      kCircle = 2,
+      kTriangle = 3,
+      kL1 = 4,
+      kR1 = 5,
+      kL2 = 6,
+      kR2 = 7,
+      kSelect = 8,
+      kStart = 9,
+      kL3 = 10,
+      kR3 = 11,
+      kPs = 12,
+      kClick = 13,
+      kDpadUp = 14,
+      kDpadRight = 15,
+      kDpadDown = 16,
+      kDpadLeft = 17,
       kEnd,
-      kBegin = kSelect
+      kBegin = kSquare
     };
     static std::map<Button, std::string> button_names;
 
