@@ -14,19 +14,292 @@
       "invisible": false, 
       "messages": {
         "describe": [
-          "TODO: describe area 0."
+          "You see an enclosed pasture with an open gate."
         ], 
         "enter": [
-          "TODO: enter area 0."
+          "You have entered the pasture.."
         ], 
         "exit": [
-          "TODO: exit area 0."
+          "You have left the pasture."
         ], 
         "inside": [
-          "TODO: inside area 0."
+          "You are standing inside the pasture."
         ]
       }, 
-      "name": "area 0"
+      "name": "pasture"
+    }, 
+    {
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see the gate to the pasture."
+        ], 
+        "enter": [
+          "You approach the open gate."
+        ], 
+        "exit": [
+          "You leave the open gate."
+        ], 
+        "inside": [
+          "You stand within the open gate."
+        ]
+      }, 
+      "name": "open gate", 
+      "position": {
+        "x": -0.21805715560913086, 
+        "y": 6.31934928894043
+      }, 
+      "radius": 2.0584394931793213
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 5.468314170837402, 
+          "y": 18.481597900390625
+        }, 
+        "minimum": {
+          "x": -6.089913368225098, 
+          "y": 6.852385520935059
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see an open field neighboring the pasture."
+        ], 
+        "enter": [
+          "You've entered the field."
+        ], 
+        "exit": [
+          "You left the field."
+        ], 
+        "inside": [
+          "You stand in the field just outside the pasture."
+        ]
+      }, 
+      "name": "field"
+    }, 
+    {
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "The eastern tree shades its surroundings."
+        ], 
+        "enter": [
+          "You entered the eastern tree's shade."
+        ], 
+        "exit": [
+          "You exited the shade."
+        ], 
+        "inside": [
+          "You are beneath the shade of the eastern tree."
+        ]
+      }, 
+      "name": "eastern tree shade", 
+      "position": {
+        "x": 3.175466537475586, 
+        "y": -2.708846092224121
+      }, 
+      "radius": 1.3350553512573242
+    }, 
+    {
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "The western tree shades its surroundings."
+        ], 
+        "enter": [
+          "You entered the western tree's shade."
+        ], 
+        "exit": [
+          "You exited the shade."
+        ], 
+        "inside": [
+          "You are beneath the shade of the western tree."
+        ]
+      }, 
+      "name": "western tree shade", 
+      "position": {
+        "x": -1.7546300888061523, 
+        "y": -2.153183937072754
+      }, 
+      "radius": 1.3350553512573242
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": -3.3494720458984375, 
+          "y": 5.048035621643066
+        }, 
+        "minimum": {
+          "x": -5.3790483474731445, 
+          "y": 0.5993976593017578
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see a mud puddle."
+        ], 
+        "enter": [
+          "You've stepped in a mud puddle."
+        ], 
+        "exit": [
+          "You're glad you stepped out of the mud."
+        ], 
+        "inside": [
+          "You are standing in a mud puddle."
+        ]
+      }, 
+      "name": "mud puddle"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 1.0751361846923828, 
+          "y": 10.372687339782715
+        }, 
+        "minimum": {
+          "x": -1.4720172882080078, 
+          "y": 0.8758258819580078
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see a dirt path leading out from the pasture."
+        ], 
+        "enter": [
+          "You follow the dirt path."
+        ], 
+        "exit": [
+          "You stray from the dirt path."
+        ], 
+        "inside": [
+          "You stand on the dirt path."
+        ]
+      }, 
+      "name": "dirt path"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 0.3291015625, 
+          "y": 2.54638671875
+        }, 
+        "minimum": {
+          "x": -1.03826904296875, 
+          "y": 1.42706298828125
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [], 
+        "enter": [
+          "You step on the first stone."
+        ], 
+        "exit": [], 
+        "inside": [
+          "You stand atop the first stone in the path."
+        ]
+      }, 
+      "name": "first stone"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 0.85809326171875, 
+          "y": 4.03448486328125
+        }, 
+        "minimum": {
+          "x": -0.49847412109375, 
+          "y": 2.93096923828125
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [], 
+        "enter": [
+          "You step on the second stone"
+        ], 
+        "exit": [], 
+        "inside": [
+          "You stand atop the second stone in the path."
+        ]
+      }, 
+      "name": "second stone"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 0.259033203125, 
+          "y": 5.85980224609375
+        }, 
+        "minimum": {
+          "x": -1.09820556640625, 
+          "y": 4.79217529296875
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [], 
+        "enter": [
+          "You step on the third stone"
+        ], 
+        "exit": [], 
+        "inside": [
+          "You stand atop the third stone in the path."
+        ]
+      }, 
+      "name": "third stone"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 0.845703125, 
+          "y": 8.02423095703125
+        }, 
+        "minimum": {
+          "x": -0.570556640625, 
+          "y": 6.9735107421875
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [], 
+        "enter": [
+          "You step on the fourth stone"
+        ], 
+        "exit": [], 
+        "inside": [
+          "You stand atop the fourth stone in the path."
+        ]
+      }, 
+      "name": "fourth stone"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 0.3089599609375, 
+          "y": 9.7723388671875
+        }, 
+        "minimum": {
+          "x": -1.1988525390625, 
+          "y": 8.74200439453125
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [], 
+        "enter": [
+          "You step on the last stone"
+        ], 
+        "exit": [], 
+        "inside": [
+          "You stand atop the last stone in the path."
+        ]
+      }, 
+      "name": "last stone"
     }
   ], 
   "messages": {
@@ -77,24 +350,24 @@
     {
       "aabb": {
         "maximum": {
-          "x": 6.331083297729492, 
-          "y": 6.888369560241699
+          "x": 6.325135231018066, 
+          "y": 6.878105163574219
         }, 
         "minimum": {
-          "x": -6.884268760681152, 
-          "y": 5.857285499572754
+          "x": 0.8957223892211914, 
+          "y": 5.891178607940674
         }
       }, 
       "invisible": false, 
       "messages": {
         "describe": [
-          "TODO: describe object 1."
+          "You see a fence enclosing the pasture."
         ], 
         "touch": [
-          "TODO: touch object 1."
+          "The fence blocks your path."
         ]
       }, 
-      "name": "object 1"
+      "name": "fence"
     }, 
     {
       "aabb": {
@@ -110,13 +383,13 @@
       "invisible": false, 
       "messages": {
         "describe": [
-          "TODO: describe object 2."
+          "You see a fence enclosing the pasture."
         ], 
         "touch": [
-          "TODO: touch object 2."
+          "The fence blocks your path."
         ]
       }, 
-      "name": "object 2"
+      "name": "fence"
     }, 
     {
       "aabb": {
@@ -132,13 +405,13 @@
       "invisible": false, 
       "messages": {
         "describe": [
-          "TODO: describe object 3."
+          "You see a fence enclosing the pasture."
         ], 
         "touch": [
-          "TODO: touch object 3."
+          "The fence blocks your path."
         ]
       }, 
-      "name": "object 3"
+      "name": "fence"
     }, 
     {
       "aabb": {
@@ -154,13 +427,179 @@
       "invisible": false, 
       "messages": {
         "describe": [
-          "TODO: describe object 4."
+          "You see a fence enclosing the pasture."
         ], 
         "touch": [
-          "TODO: touch object 4."
+          "The fence blocks your path."
         ]
       }, 
-      "name": "object 4"
+      "name": "fence"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": -1.3581795692443848, 
+          "y": 6.8719377517700195
+        }, 
+        "minimum": {
+          "x": -6.883072853088379, 
+          "y": 5.840719223022461
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see a fence enclosing the pasture."
+        ], 
+        "touch": [
+          "The fence blocks your path."
+        ]
+      }, 
+      "name": "fence"
+    }, 
+    {
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see the western tree."
+        ], 
+        "touch": [
+          "You touch the bark of the western tree."
+        ]
+      }, 
+      "name": "western tree", 
+      "position": {
+        "x": -1.9318037033081055, 
+        "y": -2.080341339111328
+      }, 
+      "radius": 0.5
+    }, 
+    {
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see the eastern tree."
+        ], 
+        "touch": [
+          "You touch the bark of the eastern tree."
+        ]
+      }, 
+      "name": "eastern tree", 
+      "position": {
+        "x": 3.332592010498047, 
+        "y": -2.946218490600586
+      }, 
+      "radius": 0.5
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 4.782392501831055, 
+          "y": 5.130805015563965
+        }, 
+        "minimum": {
+          "x": 3.7823925018310547, 
+          "y": 4.130805015563965
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "TODO: describe object 19."
+        ], 
+        "touch": [
+          "TODO: touch object 19."
+        ]
+      }, 
+      "name": "object 19"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 4.799884796142578, 
+          "y": 3.4807376861572266
+        }, 
+        "minimum": {
+          "x": 3.799884796142578, 
+          "y": 2.4807376861572266
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "TODO: describe object 20."
+        ], 
+        "touch": [
+          "TODO: touch object 20."
+        ]
+      }, 
+      "name": "object 20"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 4.798458099365234, 
+          "y": 1.7585010528564453
+        }, 
+        "minimum": {
+          "x": 3.7984580993652344, 
+          "y": 0.7585010528564453
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "TODO: describe object 21."
+        ], 
+        "touch": [
+          "TODO: touch object 21."
+        ]
+      }, 
+      "name": "object 21"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 2.0693836212158203, 
+          "y": -3.363229751586914
+        }, 
+        "minimum": {
+          "x": -1.2753238677978516, 
+          "y": -4.8763427734375
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "TODO: describe object 22."
+        ], 
+        "touch": [
+          "TODO: touch object 22."
+        ]
+      }, 
+      "name": "object 22"
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": -4.371175765991211, 
+          "y": 2.258380889892578
+        }, 
+        "minimum": {
+          "x": -5.371175765991211, 
+          "y": 1.2583808898925781
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "TODO: describe object 23."
+        ], 
+        "touch": [
+          "TODO: touch object 23."
+        ]
+      }, 
+      "name": "object 23"
     }
   ]
 }
