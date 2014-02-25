@@ -31,6 +31,9 @@ namespace textengine {
         if (GLFW_KEY_SPACE == key) {
           selected_item->name += ' ';
         }
+        if (GLFW_KEY_MINUS == key) {
+          selected_item->name += '-';
+        }
         if (GLFW_KEY_BACKSPACE == key && selected_item->name.size()) {
           selected_item->name.resize(selected_item->name.size() - 1);
         }
