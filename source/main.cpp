@@ -52,7 +52,7 @@ int main(int argument_count, char *arguments[]) {
   textengine::GlfwApplication application(
     argument_count, arguments, edit ? 2 * kWindowWidth : kWindowWidth, kWindowHeight,
     kWindowTitle, *controller, renderer, input, joystick,
-    keyboard, mouse);
+    keyboard, mouse, !edit);
   const auto result = application.Run();
   if (edit) {
     textengine::SceneSerializer serializer;

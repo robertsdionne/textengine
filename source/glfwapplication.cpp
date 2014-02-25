@@ -18,10 +18,10 @@ namespace textengine {
   GlfwApplication::GlfwApplication(int argument_count, char *arguments[], int width, int height,
                                    const std::string &title, Controller &controller,
                                    Renderer &renderer, Input &input, Joystick &joystick,
-                                   Keyboard &keyboard, Mouse &mouse)
+                                   Keyboard &keyboard, Mouse &mouse, bool minimized)
   : window(nullptr), argument_count(argument_count), arguments(arguments), width(width),
   height(height), title(title), controller(controller), renderer(renderer), input(input),
-  joystick(joystick), keyboard(keyboard), mouse(mouse), minimized(true) {
+  joystick(joystick), keyboard(keyboard), mouse(mouse), minimized(minimized) {
     instance = this;
   }
 
@@ -73,7 +73,11 @@ namespace textengine {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    window = glfwCreateWindow(kMinimizedWidth, kMinimizedHeight, title.c_str(), nullptr, nullptr);
+    if (minimized) {
+      window = glfwCreateWindow(kMinimizedWidth, kMinimizedHeight, title.c_str(), nullptr, nullptr);
+    } else {
+      window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+    }
     CHECK_STATE(window != nullptr);
     glfwSetKeyCallback(window, HandleKeyboard);
     glfwSetMouseButtonCallback(window, HandleMouseButton);

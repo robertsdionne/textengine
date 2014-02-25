@@ -19,7 +19,8 @@ namespace textengine {
   public:
     GlfwApplication(int argument_count, char *arguments[], int width, int height,
                     const std::string &title, Controller &controller, Renderer &renderer,
-                    Input &input, Joystick &joystick, Keyboard &keyboard, Mouse &mouse);
+                    Input &input, Joystick &joystick, Keyboard &keyboard, Mouse &mouse,
+                    bool minimized);
 
     virtual ~GlfwApplication();
 
