@@ -160,7 +160,6 @@ namespace textengine {
 
     if (input.GetLookVelocity() > 0) {
       std::ostringstream out;
-      out << ChooseMessage(scene.messages_by_name, "look") << " ";
       std::vector<Object *> nearby;
       for (auto &area : scene.areas) {
         if (Inside(area)) {
@@ -184,8 +183,6 @@ namespace textengine {
 //        out << "(" << (*element)->DistanceTo(position) << ") ";
       }
       reply_queue.PushMessage(out.str());
-    } else if (input.GetLookVelocity() < 0) {
-      reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "stop looking"));
     }
 
     if (glm::length(offset) > 0.0 || input.GetTriggerVelocity() > 0.0) {
