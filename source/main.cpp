@@ -20,7 +20,7 @@ constexpr const char *kPlaytestLog = u8"playtest.log";
 constexpr const char *kPrompt = u8"> ";
 constexpr int kWindowHeight = 800;
 constexpr int kWindowWidth = 1280/2;
-constexpr const char *kWindowTitle = u8"textengine";
+constexpr const char *kWindowTitle = u8"Palimpsest";
 
 int main(int argument_count, char *arguments[]) {
   const std::string filename = argument_count > 1 ? arguments[1] : "../resource/scenes/terrarium.json";
