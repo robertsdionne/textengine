@@ -17,7 +17,7 @@
           "You see an enclosed pasture with an open gate."
         ], 
         "enter": [
-          "You have entered the pasture.."
+          "You have entered the pasture."
         ], 
         "exit": [
           "You have left the pasture."
@@ -220,7 +220,7 @@
       "messages": {
         "describe": [], 
         "enter": [
-          "You step on the second stone"
+          "You step on the second stone."
         ], 
         "exit": [], 
         "inside": [
@@ -244,7 +244,7 @@
       "messages": {
         "describe": [], 
         "enter": [
-          "You step on the third stone"
+          "You step on the third stone."
         ], 
         "exit": [], 
         "inside": [
@@ -268,7 +268,7 @@
       "messages": {
         "describe": [], 
         "enter": [
-          "You step on the fourth stone"
+          "You step on the fourth stone."
         ], 
         "exit": [], 
         "inside": [
@@ -505,13 +505,13 @@
       "invisible": false, 
       "messages": {
         "describe": [
-          "TODO: describe object 19."
+          "You see the wolf kennel."
         ], 
         "touch": [
-          "TODO: touch object 19."
+          "You brush against the walls of the kennel."
         ]
       }, 
-      "name": "object 19"
+      "name": "kennel"
     }, 
     {
       "aabb": {
@@ -527,35 +527,13 @@
       "invisible": false, 
       "messages": {
         "describe": [
-          "TODO: describe object 20."
+          "You see the big-cat abode."
         ], 
         "touch": [
-          "TODO: touch object 20."
+          "You brush against the walls of the big-cat abode."
         ]
       }, 
-      "name": "object 20"
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": 4.798458099365234, 
-          "y": 1.7585010528564453
-        }, 
-        "minimum": {
-          "x": 3.7984580993652344, 
-          "y": 0.7585010528564453
-        }
-      }, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "TODO: describe object 21."
-        ], 
-        "touch": [
-          "TODO: touch object 21."
-        ]
-      }, 
-      "name": "object 21"
+      "name": "big-cat abode"
     }, 
     {
       "aabb": {
@@ -571,13 +549,13 @@
       "invisible": false, 
       "messages": {
         "describe": [
-          "TODO: describe object 22."
+          "You see your robotic sleeping quarters nearby."
         ], 
         "touch": [
-          "TODO: touch object 22."
+          "You are beside your sleeping quarters."
         ]
       }, 
-      "name": "object 22"
+      "name": "humanoid robot quarters"
     }, 
     {
       "aabb": {
@@ -593,13 +571,52 @@
       "invisible": false, 
       "messages": {
         "describe": [
-          "TODO: describe object 23."
+          "You see the pig pen."
         ], 
         "touch": [
-          "TODO: touch object 23."
+          "You brush against the walls of the pig pen."
         ]
       }, 
-      "name": "object 23"
+      "name": "pig pen"
+    }, 
+    {
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "Your charging station juts out from the wall of your sleeping quarters."
+        ], 
+        "touch": [
+          "You plug yourself briefly into your charging station."
+        ]
+      }, 
+      "name": "charging station", 
+      "position": {
+        "x": 1.03399658203125, 
+        "y": -3.626708984375
+      }, 
+      "radius": 0.5
+    }, 
+    {
+      "aabb": {
+        "maximum": {
+          "x": 4.798458099365234, 
+          "y": 1.7585010528564453
+        }, 
+        "minimum": {
+          "x": 3.7984580993652344, 
+          "y": 0.7585010528564453
+        }
+      }, 
+      "invisible": false, 
+      "messages": {
+        "describe": [
+          "You see the giant-tortoise pen."
+        ], 
+        "touch": [
+          "You brush against the giant-tortoise pen's walls."
+        ]
+      }, 
+      "name": "giant-tortoise pen"
     }
   ]
 }
