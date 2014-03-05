@@ -51,18 +51,6 @@ namespace textengine {
     return false;
   }
   
-  StepMessage::StepMessage() {}
-  
-  picojson::value StepMessage::ToJson() const {
-    picojson::object object;
-    object["type"] = picojson::value("step");
-    return picojson::value(object);
-  }
-  
-  bool StepMessage::is_movement() const {
-    return false;
-  }
-  
   TelemetryMessage::TelemetryMessage(glm::vec2 position, glm::vec2 direction,
                                      const std::map<long, glm::vec2> &directions)
   : position(position), direction(direction), directions(directions) {}
@@ -137,10 +125,6 @@ namespace textengine {
   void SynchronizedQueue::PushReport(const std::string &report) {
     std::lock_guard<std::mutex> lock(mutex);
     queue.emplace_back(new ReportMessage{report});
-  }
-
-  void SynchronizedQueue::PushStep() {
-    queue.emplace_back(new StepMessage);
   }
   
   void SynchronizedQueue::PushMovement(const glm::vec2 &position,

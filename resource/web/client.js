@@ -142,9 +142,7 @@ var alpha = 0.2;
 
 var message = function(event) {
   var payload = JSON.parse(event.data);
-  if ("step" == payload.type) {
-    lines[lines.length - 1].gameStates.push(new Text("."));
-  } else if ("entity" == payload.type) {
+  if ("entity" == payload.type) {
     lines[lines.length - 1].gameStates.push(new Entity(payload.id));
   } else if ("telemetry" == payload.type) {
     target_x = canvas.width / 3 * payload.direction.x;

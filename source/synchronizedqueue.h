@@ -64,17 +64,6 @@ namespace textengine {
     std::string report;
   };
   
-  class StepMessage : public Message {
-  public:
-    StepMessage();
-    
-    virtual ~StepMessage() = default;
-    
-    virtual picojson::value ToJson() const override;
-    
-    virtual bool is_movement() const override;
-  };
-  
   class TelemetryMessage : public Message {
   public:
     TelemetryMessage(glm::vec2 position,
@@ -123,8 +112,6 @@ namespace textengine {
     void PushMessage(const std::string &message);
 
     void PushReport(const std::string &report);
-
-    void PushStep();
     
     void PushMovement(const glm::vec2 &position,
         const glm::vec2 &direction, const std::map<long, glm::vec2> &directions);
