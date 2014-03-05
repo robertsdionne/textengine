@@ -84,8 +84,12 @@ Text.prototype.toDomNode = function() {
 
 
 
-var Line = function(gameStates) {
-  this.gameStates = gameStates;
+/**
+ * @constructor
+ * @param {Array} items
+ */
+var Line = function(items) {
+  this.items = items;
 };
 
 
@@ -93,8 +97,8 @@ Object.defineProperties(
   Line.prototype, {
     description: {
       get: function() {
-        return this.gameStates.map(function(state) {
-         return state.description;
+        return this.items.map(function(item) {
+         return item.description;
         }).join(' ');
       }
     }
@@ -104,8 +108,8 @@ Object.defineProperties(
 Line.prototype.toDomNode = function(prefix) {
   var element = document.createElement('p');
   element.appendChild(document.createTextNode(prefix));
-  this.gameStates.forEach(function(state) {
-    element.appendChild(state.toDomNode());
+  this.items.forEach(function(item) {
+    element.appendChild(item.toDomNode());
   });
   return element;
 };
