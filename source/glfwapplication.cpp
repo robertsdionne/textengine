@@ -1,6 +1,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <iostream>
+#include <unistd.h>
 
 #include "checks.h"
 #include "controller.h"
@@ -90,16 +91,16 @@ namespace textengine {
     glfwGetFramebufferSize(window, &framebuffer_width, &framebuffer_height);
     HandleReshape(window, framebuffer_width, framebuffer_height);
     controller.Setup();
-    glfwSwapInterval(1);
     while (!glfwWindowShouldClose(window)) {
       if (keyboard.GetKeyVelocity(GLFW_KEY_TAB) > 0) {
         if (minimized) {
+          glfwShowWindow(window);
           glfwSetWindowSize(window, width, height);
-          minimized = false;
         } else {
+          glfwHideWindow(window);
           glfwSetWindowSize(window, kMinimizedWidth, kMinimizedHeight);
-          minimized = true;
         }
+        minimized = !minimized;
       }
       renderer.Render();
       controller.Update();
@@ -112,6 +113,7 @@ namespace textengine {
       input.Update();
       glfwSwapBuffers(window);
       glfwPollEvents();
+      usleep(16666);
     }
     glfwTerminate();
     return 0;

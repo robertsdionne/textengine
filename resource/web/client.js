@@ -79,7 +79,7 @@ var Text = function(text) {
 
 
 Text.prototype.toDomNode = function() {
-  return document.createTextNode(this.text + '\u00A0');
+  return document.createTextNode('\u00A0' + this.text + '\u00A0');
 };
 
 
@@ -141,23 +141,43 @@ var alpha = 0.2;
 
 
 var message = function(event) {
-  var payload = JSON.parse(event.data);
-  if ("entity" == payload.type) {
-    lines[lines.length - 1].gameStates.push(new Entity(payload.id));
-  } else if ("telemetry" == payload.type) {
+  var items = processMessage(JSON.parse(event.data));
+  if (items) {
+    lines.push(new Line(items));
+    lineCursor += 1;
+  }
+  display();
+};
+
+
+var processMessage = function(payload) {
+  if ('composite' == payload.type) {
+    console.log('composite');
+    var result = [];
+    for (var i = 0; i < payload.messages.length; ++i) {
+      var items = processMessage(payload.messages[i]);
+      if (items) {
+        Array.prototype.push.apply(result, items);
+      }
+    }
+    return result;
+  } else if ('entity' == payload.type) {
+    console.log('entity');
+    return [new Entity(payload.id)];
+  } else if ('telemetry' == payload.type) {
     target_x = canvas.width / 3 * payload.direction.x;
     target_y = canvas.width / 3 * -payload.direction.y;
     target_position_x = payload.position.x;
     target_position_y = payload.position.y;
     target_directions = payload.directions;
-  } else if ("report" == payload.type) {
-    lines.push(new Line([new Report(payload.report)]));
-    lineCursor += 1;
-  } else if ("text" == payload.type) {
-    lines.push(new Line([new Text(payload.text)]));
-    lineCursor += 1;
+    return null;
+  } else if ('report' == payload.type) {
+    console.log('report');
+    return [new Report(payload.report)];
+  } else if ('text' == payload.type) {
+    console.log('text');
+    return [new Text(payload.text)];
   }
-  display();
 };
 
 
@@ -214,7 +234,6 @@ var error = function(event) {
 
 var close = function(event) {
   console.log('closed');
-  clearCursor();
   websocket.removeEventListener('open', open);
   websocket.removeEventListener('message', message);
   websocket.removeEventListener('error', error);

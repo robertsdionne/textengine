@@ -8,12 +8,13 @@
 
 namespace textengine {
   
-  CompositeMessage::CompositeMessage() : messages() {}
+  CompositeMessage::CompositeMessage(std::vector<std::unique_ptr<MixedMessage>> &&messages)
+  : messages(std::move(messages)) {}
   
   picojson::value CompositeMessage::ToJson() const {
     picojson::array messages;
     for (auto &message : this->messages) {
-      messages.push_back(message.ToJson());
+      messages.push_back(message->ToJson());
     }
     picojson::object object;
     object["type"] = picojson::value("composite");
@@ -115,11 +116,18 @@ namespace textengine {
     queue.emplace_back(new EntityMessage(id));
   }
   
-  void SynchronizedQueue::PushMessage(const std::string &message) {
+  void SynchronizedQueue::PushMessages(std::vector<MixedMessage *> &&messages) {
     std::lock_guard<std::mutex> lock(mutex);
-    if (!message.empty()) {
-      queue.emplace_back(new TextMessage{message});
+    queue.emplace_back(new CompositeMessage(Unique(messages)));
+  }
+  
+  void SynchronizedQueue::PushMovement(const glm::vec2 &position,
+                                       const glm::vec2 &direction, const std::map<long, glm::vec2> &directions) {
+    std::lock_guard<std::mutex> lock(mutex);
+    if (!queue.empty() && queue.back()->is_movement()) {
+      queue.pop_back();
     }
+    queue.emplace_back(new TelemetryMessage{position, direction, directions});
   }
 
   void SynchronizedQueue::PushReport(const std::string &report) {
@@ -127,13 +135,9 @@ namespace textengine {
     queue.emplace_back(new ReportMessage{report});
   }
   
-  void SynchronizedQueue::PushMovement(const glm::vec2 &position,
-      const glm::vec2 &direction, const std::map<long, glm::vec2> &directions) {
+  void SynchronizedQueue::PushText(const std::string &text) {
     std::lock_guard<std::mutex> lock(mutex);
-    if (!queue.empty() && queue.back()->is_movement()) {
-      queue.pop_back();
-    }
-    queue.emplace_back(new TelemetryMessage{position, direction, directions});
+    queue.emplace_back(new TextMessage{text});
   }
 
 }  // namespace textengine

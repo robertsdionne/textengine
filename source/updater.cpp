@@ -38,8 +38,7 @@ namespace textengine {
       inside.insert(area);
       const auto enter = ChooseMessage(area->messages, "enter");
       if (!enter.empty()) {
-        reply_queue.PushMessage(enter);
-        reply_queue.PushEntity(area->id);
+        reply_queue.PushText(enter);
       }
     }
     const auto now = std::chrono::high_resolution_clock::now();
@@ -47,8 +46,10 @@ namespace textengine {
       last_touch_time[object] = now;
       const auto touch = ChooseMessage(object->messages, "touch");
       if (!touch.empty()) {
-        reply_queue.PushMessage(touch);
-        reply_queue.PushEntity(object->id);
+        reply_queue.PushMessages({
+          new EntityMessage{object->id},
+          new TextMessage{touch}
+        });
       }
     }
   }
@@ -60,8 +61,7 @@ namespace textengine {
     if (player && area) {
       const auto exit = ChooseMessage(area->messages, "exit");
       if (!exit.empty()) {
-        reply_queue.PushMessage(exit);
-        reply_queue.PushEntity(area->id);
+        reply_queue.PushText(exit);
       }
       inside.erase(area);
     }
@@ -160,9 +160,10 @@ namespace textengine {
     if (input.GetLookVelocity() > 0) {
       std::ostringstream out;
       std::vector<Object *> nearby;
+      reply_queue.PushText("");
       for (auto &area : scene.areas) {
         if (Inside(area)) {
-          out << ChooseMessage(area->messages, "inside") << " ";
+          reply_queue.PushText(ChooseMessage(area->messages, "inside"));
         } else if (HasMessage(area->messages, "describe")) {
           nearby.push_back(area.get());
         }
@@ -178,9 +179,22 @@ namespace textengine {
       auto nth = nearby.begin() + 3;
       std::partial_sort(nearby.begin(), nth, nearby.end(), compare);
       for (auto element = nearby.begin(); element < nth; ++element) {
-        out << ChooseMessage((*element)->messages, "describe") << " ";
+        reply_queue.PushMessages({
+          new EntityMessage((*element)->id),
+          new TextMessage(ChooseMessage((*element)->messages, "describe"))
+        });
       }
-      reply_queue.PushMessage(out.str());
+//      std::sort(nearby.begin(), nearby.end(), compare);
+//      for (auto element = nearby.begin(); element < nearby.end(); ++element) {
+//        std::ostringstream out;
+//        out << (*element)->DistanceTo(position);
+//        reply_queue.PushMessages({
+//          new EntityMessage((*element)->id),
+//          new TextMessage((*element)->name),
+//          new TextMessage(out.str())
+//        });
+//      }
+      reply_queue.PushText("");
     }
 
     if (glm::length(offset) > 0.0 || input.GetTriggerVelocity() > 0.0) {
@@ -191,9 +205,9 @@ namespace textengine {
 
       const auto force = 200.0f * current_state.player_body->GetMass();
       if (input.GetTriggerVelocity() > 0) {
-        reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "run"));
+        reply_queue.PushText(ChooseMessage(scene.messages_by_name, "run"));
       } else if (input.GetTriggerVelocity() < 0) {
-        reply_queue.PushMessage(ChooseMessage(scene.messages_by_name, "walk"));
+        reply_queue.PushText(ChooseMessage(scene.messages_by_name, "walk"));
       }
       const auto max_velocity = glm::mix(1.38f, 5.81f, input.GetTriggerPressure()) / 2.0f;
       current_state.player_body->ApplyForceToCenter(force * b2Vec2(offset.x, offset.y), true);

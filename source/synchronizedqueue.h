@@ -22,9 +22,18 @@ namespace textengine {
     virtual bool is_movement() const = 0;
   };
   
+  class MixedMessage : public Message {
+  public:
+    MixedMessage() = default;
+    
+    MixedMessage(MixedMessage &message) = default;
+    
+    virtual ~MixedMessage() = default;
+  };
+  
   class CompositeMessage : public Message {
   public:
-    CompositeMessage();
+    CompositeMessage(std::vector<std::unique_ptr<MixedMessage>> &&messages);
     
     virtual ~CompositeMessage() = default;
     
@@ -33,10 +42,10 @@ namespace textengine {
     virtual bool is_movement() const override;
     
   private:
-    std::vector<Message> messages;
+    std::vector<std::unique_ptr<MixedMessage>> messages;
   };
   
-  class EntityMessage : public Message {
+  class EntityMessage : public MixedMessage {
   public:
     EntityMessage(long id);
     
@@ -50,7 +59,7 @@ namespace textengine {
     long id;
   };
   
-  class ReportMessage : public Message {
+  class ReportMessage : public MixedMessage {
   public:
     ReportMessage(const std::string &report);
     
@@ -81,7 +90,7 @@ namespace textengine {
     std::map<long, glm::vec2> directions;
   };
   
-  class TextMessage : public Message {
+  class TextMessage : public MixedMessage {
   public:
     TextMessage(const std::string &text);
     
@@ -109,12 +118,14 @@ namespace textengine {
     
     void PushEntity(long id);
 
-    void PushMessage(const std::string &message);
+    void PushMessages(std::vector<MixedMessage *> &&messages);
+    
+    void PushMovement(const glm::vec2 &position,
+                      const glm::vec2 &direction, const std::map<long, glm::vec2> &directions);
 
     void PushReport(const std::string &report);
     
-    void PushMovement(const glm::vec2 &position,
-        const glm::vec2 &direction, const std::map<long, glm::vec2> &directions);
+    void PushText(const std::string &text);
 
   private:
     std::mutex mutex;
