@@ -1,14 +1,14 @@
 /**
  * @enum {string}
  */
-var KeyCode = {
-BACKSPACE: 8,
-DOWN: 40,
-LEFT: 37,
-RETURN: 13,
-RIGHT: 39,
-TILDE: 96,
-UP: 38
+ var KeyCode = {
+  BACKSPACE: 8,
+  DOWN: 40,
+  LEFT: 37,
+  RETURN: 13,
+  RIGHT: 39,
+  TILDE: 96,
+  UP: 38
 };
 
 
@@ -16,14 +16,14 @@ UP: 38
  * @constructor
  * @implements {ScrollBehavior}
  */
-var PerWordScrollBehavior = function() {};
+ var PerWordScrollBehavior = function() {};
 
 
 /**
  * @param {string} value
  * @return {number} the length
  */
-PerWordScrollBehavior.prototype.length = function(value) {
+ PerWordScrollBehavior.prototype.length = function(value) {
   return value.split(' ').length;
 };
 
@@ -34,7 +34,7 @@ PerWordScrollBehavior.prototype.length = function(value) {
  * @param {number} stop
  * @return {string}
  */
-PerWordScrollBehavior.prototype.slice = function(value, start, stop) {
+ PerWordScrollBehavior.prototype.slice = function(value, start, stop) {
   return value.split(' ').slice(start, stop).join(' ');
 };
 
@@ -56,7 +56,7 @@ PerWordScrollBehavior.prototype.indexInto = function(line, cursor) {
  * @param {boolean=} opt_isCommand
  * @param {boolean=} opt_isDeath
  */
-var GameState = function(timestamp, description, opt_isCommand, opt_isDeath, opt_isReport, opt_isEntity, opt_id, opt_isTitle) {
+ var GameState = function(timestamp, description, opt_isCommand, opt_isDeath, opt_isReport, opt_isEntity, opt_id, opt_isTitle) {
   this.timestamp = timestamp;
   this.description = description;
   this.isCommand = opt_isCommand;
@@ -120,33 +120,34 @@ var Line = function(gameStates) {
 };
 
 
-Object.defineProperties(Line.prototype, {
-                        timestamp: {
-                        get: function() {
-                        return this.gameStates.map(function(state) {
-                                                   return state.timestamp;
-                                                   }).reduce(function(timestamp0, timestamp1) {
-                                                             return Math.min(timestamp0, timestamp1);
-                                                             });
-                        }
-                        },
-                        description: {
-                        get: function() {
-                        return this.gameStates.map(function(state) {
-                                                   return state.description;
-                                                   }).join(' ');
-                        }
-                        },
-                        isDeath: {
-                        get: function() {
-                        return this.gameStates.map(function(state) {
-                                                   return state.isDeath;
-                                                   }).reduce(function(isDeath0, isDeath1) {
-                                                             return isDeath0 || isDeath1;
-                                                             });
-                        }
-                        }
-                        });
+Object.defineProperties(
+  Line.prototype, {
+    timestamp: {
+      get: function() {
+        return this.gameStates.map(function(state) {
+          return state.timestamp;
+        }).reduce(function(timestamp0, timestamp1) {
+          return Math.min(timestamp0, timestamp1);
+        });
+      }
+    },
+    description: {
+      get: function() {
+        return this.gameStates.map(function(state) {
+         return state.description;
+       }).join(' ');
+      }
+    },
+    isDeath: {
+      get: function() {
+        return this.gameStates.map(function(state) {
+         return state.isDeath;
+       }).reduce(function(isDeath0, isDeath1) {
+         return isDeath0 || isDeath1;
+       });
+     }
+   }
+ });
 
 
 Line.prototype.toDomNode = function(prefix, cursor, scrollBehavior) {
@@ -154,16 +155,15 @@ Line.prototype.toDomNode = function(prefix, cursor, scrollBehavior) {
   var element = document.createElement('p');
   element.appendChild(document.createTextNode(prefix));
   this.gameStates.forEach(function(state) {
-                          element.appendChild(state.toDomNode(cursor, scrollBehavior));
-                          cursor -= scrollBehavior.length(state.description);
-                          });
+    element.appendChild(state.toDomNode(cursor, scrollBehavior));
+    cursor -= scrollBehavior.length(state.description);
+  });
   return element;
 };
 
 
 var connect = function() {
   var location = window.location.toString().replace(/http/, 'ws');
-  console.log(location);
   websocket = new WebSocket(location, 'interactive-fiction-protocol');
   websocket.addEventListener('open', open);
   websocket.addEventListener('message', message);
@@ -192,29 +192,24 @@ var alpha = 0.2;
 
 
 var message = function(event) {
-  console.log(event.data);
   var payload = JSON.parse(event.data);
   if ("step" == payload.type) {
-    console.log("in step");
     lines[lines.length - 1].gameStates.push(
-        new GameState(t += 1.0, ".", false, false, false));
+      new GameState(t += 1.0, ".", false, false, false));
   } else if ("entity" == payload.type) {
     lines[lines.length - 1].gameStates.push(
-        new GameState(t += 1.0, "", false, false, false, true, payload.id));
+      new GameState(t += 1.0, "", false, false, false, true, payload.id));
   } else if ("telemetry" == payload.type) {
-    console.log("in telemetry");
     target_x = canvas.width / 3 * payload.direction.x;
     target_y = canvas.width / 3 * -payload.direction.y;
     target_position_x = payload.position.x;
     target_position_y = payload.position.y;
     target_directions = payload.directions;
   } else if ("report" == payload.type) {
-    console.log("in report");
     lines.push(new Line([
       new GameState(t += 1.0, payload.report, false, false, true)]));
     lineCursor += 1;
   } else if ("text" == payload.type) {
-    console.log("in text");
     lines.push(new Line([
       new GameState(t += 1.0, payload.text, false, false, false)]));
     lineCursor += 1;
@@ -224,8 +219,6 @@ var message = function(event) {
 
 
 var drawArrows = function() {
-  console.log(smooth_x);
-  console.log(smooth_y);
   smooth_x = (1.0 - alpha) * smooth_x + alpha * target_x;
   smooth_y = (1.0 - alpha) * smooth_y + alpha * target_y;
   drawArrow(canvas, context, smooth_x, smooth_y);
@@ -408,16 +401,15 @@ var command = function(e) {
 
 
 var display = function () {
-  console.log("in display");
   entities = [];
   while (container.childNodes.length) {
     container.removeChild(container.childNodes[0]);
   }
   var startIndex = lineCursor - LINE_COUNT >= 0 ? lineCursor - LINE_COUNT : 0;
   lines.slice(startIndex, lineCursor).forEach(function(line, index) {
-                                              var content = line.toDomNode('', line.description.length, scrollBehavior);
-                                              container.appendChild(content);
-                                              });
+    var content = line.toDomNode('', line.description.length, scrollBehavior);
+    container.appendChild(content);
+  });
   if (lineCursor >= 0 && lines.length > lineCursor) {
     var content = lines[lineCursor].toDomNode('', 0, scrollBehavior);
     var newline = document.createElement('br');
