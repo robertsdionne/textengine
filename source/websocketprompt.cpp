@@ -29,15 +29,33 @@ namespace textengine {
   
   
   std::unordered_map<std::string, Resource> WebSocketPrompt::resource_map{
-    {u8"/", Resource{u8"../resource/web/index.html", kTextHtml}},
-    {u8"/client.js", Resource{u8"../resource/web/client.js", kApplicationJavascript}},
     {u8"/EVA1.ttf", Resource{u8"../resource/fonts/EVA1.ttf", kApplicationTrueTypeFont}},
     {u8"/Stela_UT.otf", Resource{u8"../resource/fonts/Stela_UT.otf", kApplicationOpenTypeFont}},
+    {u8"/Vetka.otf", Resource{u8"../resource/fonts/Vetka.otf", kApplicationOpenTypeFont}},
     {u8"/Ubuntu-M.ttf", Resource{u8"../resource/fonts/ubuntu-font-family-0.80/Ubuntu-M.ttf",
       kApplicationTrueTypeFont}},
     {u8"/Ubuntu-R.ttf", Resource{u8"../resource/fonts/ubuntu-font-family-0.80/Ubuntu-R.ttf",
       kApplicationTrueTypeFont}},
-    {u8"/Vetka.otf", Resource{u8"../resource/fonts/Vetka.otf", kApplicationOpenTypeFont}}
+    {u8"/PS4_Circle.png", Resource{u8"../resource/images/PS4/PS4_Circle.png", kImagePng}},
+    {u8"/PS4_Cross.png", Resource{u8"../resource/images/PS4/PS4_Cross.png", kImagePng}},
+    {u8"/PS4_Dpad.png", Resource{u8"../resource/images/PS4/PS4_Dpad.png", kImagePng}},
+    {u8"/PS4_Dpad_Down.png", Resource{u8"../resource/images/PS4/PS4_Dpad_Down.png", kImagePng}},
+    {u8"/PS4_Dpad_Left.png", Resource{u8"../resource/images/PS4/PS4_Dpad_Left.png", kImagePng}},
+    {u8"/PS4_Dpad_Right.png", Resource{u8"../resource/images/PS4/PS4_Dpad_Right.png", kImagePng}},
+    {u8"/PS4_Dpad_Up.png", Resource{u8"../resource/images/PS4/PS4_Dpad_Up.png", kImagePng}},
+    {u8"/PS4_L1.png", Resource{u8"../resource/images/PS4/PS4_L1.png", kImagePng}},
+    {u8"/PS4_L2.png", Resource{u8"../resource/images/PS4/PS4_L2.png", kImagePng}},
+    {u8"/PS4_Left_Stick.png", Resource{u8"../resource/images/PS4/PS4_Left_Stick.png", kImagePng}},
+    {u8"/PS4_Options.png", Resource{u8"../resource/images/PS4/PS4_Options.png", kImagePng}},
+    {u8"/PS4_R1.png", Resource{u8"../resource/images/PS4/PS4_R1.png", kImagePng}},
+    {u8"/PS4_R2.png", Resource{u8"../resource/images/PS4/PS4_R2.png", kImagePng}},
+    {u8"/PS4_Right_Stick.png", Resource{u8"../resource/images/PS4/PS4_Right_Stick.png", kImagePng}},
+    {u8"/PS4_Share.png", Resource{u8"../resource/images/PS4/PS4_Share.png", kImagePng}},
+    {u8"/PS4_Square.png", Resource{u8"../resource/images/PS4/PS4_Square.png", kImagePng}},
+    {u8"/PS4_Touch_Pad.png", Resource{u8"../resource/images/PS4/PS4_Touch_Pad.png", kImagePng}},
+    {u8"/PS4_Triangle.png", Resource{u8"../resource/images/PS4/PS4_Triangle.png", kImagePng}},
+    {u8"/client.js", Resource{u8"../resource/web/client.js", kApplicationJavascript}},
+    {u8"/", Resource{u8"../resource/web/index.html", kTextHtml}}
   };
 
   WebSocketPrompt *WebSocketPrompt::instance = nullptr;

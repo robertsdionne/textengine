@@ -29,10 +29,11 @@ namespace textengine {
     static std::unordered_map<std::string, Resource> resource_map;
 
   private:
-    static constexpr const char *kTextHtml = u8"text/html";
     static constexpr const char *kApplicationJavascript = u8"application/javascript";
-    static constexpr const char *kApplicationTrueTypeFont = u8"application/x-font-ttf";
     static constexpr const char *kApplicationOpenTypeFont = u8"application/vnd.ms-opentype";
+    static constexpr const char *kApplicationTrueTypeFont = u8"application/x-font-ttf";
+    static constexpr const char *kImagePng = u8"image/png";
+    static constexpr const char *kTextHtml = u8"text/html";
     
     static int HttpCallback(libwebsocket_context *context,
                             libwebsocket *wsi,
