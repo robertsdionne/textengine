@@ -5,7 +5,6 @@
 #include <glm/gtc/noise.hpp>
 #include <limits>
 #include <map>
-#include <stb_vorbis.h>
 #include <sstream>
 #include <string>
 #include <tuple>
