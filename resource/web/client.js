@@ -221,43 +221,6 @@ var close = function(event) {
 };
 
 
-var LINE_COUNT = 30;
-
-
-var lines = [new Line([new Title('\u00A0polimpsasd /ˈpælɪmpsɛst/')])];
-
-
-var lineCursor = 1;
-
-
-var container;
-
-
-var websocket;
-
-
-var reconnect;
-
-
-var canvas, context;
-
-
-var load = function() {
-  container = document.getElementById('container');
-  canvas = document.getElementById('arrow');
-  canvas.width = canvas.width * 2;
-  canvas.height = canvas.height * 2;
-  canvas.style.width = canvas.width / 2;
-  canvas.style.height = canvas.height / 2;
-  context = canvas.getContext('2d');
-  context.scale(1, 1);
-  connect();
-  display();
-  window.requestAnimationFrame(drawArrows);
-};
-window.addEventListener('load', load, false);
-
-
 var display = function () {
   entities = [];
   while (container.childNodes.length > 0) {
@@ -275,3 +238,28 @@ var display = function () {
     container.appendChild(newline);
   }
 };
+
+
+var LINE_COUNT = 30;
+
+
+var canvas, container, context;
+var lines = [new Line([new Title('\u00A0polimpsasd /ˈpælɪmpsɛst/')])];
+var lineCursor = 1;
+var reconnect, websocket;
+
+
+var load = function() {
+  container = document.getElementById('container');
+  canvas = document.getElementById('arrow');
+  canvas.width = canvas.width * 2;
+  canvas.height = canvas.height * 2;
+  canvas.style.width = canvas.width / 2;
+  canvas.style.height = canvas.height / 2;
+  context = canvas.getContext('2d');
+  context.scale(1, 1);
+  connect();
+  display();
+  window.requestAnimationFrame(drawArrows);
+};
+window.addEventListener('load', load, false);
