@@ -26,6 +26,19 @@ namespace textengine {
     },
     {nullptr, nullptr, 0, 0}
   };
+  
+  
+  std::unordered_map<std::string, Resource> WebSocketPrompt::resource_map{
+    {u8"/", Resource{u8"../resource/web/index.html", kTextHtml}},
+    {u8"/client.js", Resource{u8"../resource/web/client.js", kApplicationJavascript}},
+    {u8"/EVA1.ttf", Resource{u8"../resource/fonts/EVA1.ttf", kApplicationTrueTypeFont}},
+    {u8"/Stela_UT.otf", Resource{u8"../resource/fonts/Stela_UT.otf", kApplicationOpenTypeFont}},
+    {u8"/Ubuntu-M.ttf", Resource{u8"../resource/fonts/ubuntu-font-family-0.80/Ubuntu-M.ttf",
+      kApplicationTrueTypeFont}},
+    {u8"/Ubuntu-R.ttf", Resource{u8"../resource/fonts/ubuntu-font-family-0.80/Ubuntu-R.ttf",
+      kApplicationTrueTypeFont}},
+    {u8"/Vetka.otf", Resource{u8"../resource/fonts/Vetka.otf", kApplicationOpenTypeFont}}
+  };
 
   WebSocketPrompt *WebSocketPrompt::instance = nullptr;
 
@@ -48,34 +61,13 @@ namespace textengine {
     switch (reason) {
       case LWS_CALLBACK_HTTP: {
         const std::string url_path = reinterpret_cast<const char *>(in);
-        std::string resource_path, content_type;
-        if ("/" == url_path) {
-          resource_path = "../resource/web/index.html";
-          content_type = "text/html";
-        } else if ("/client.js" == url_path) {
-          resource_path = "../resource/web/client.js";
-          content_type = "application/javascript";
-        } else if ("/EVA1.ttf" == url_path) {
-          resource_path = "../resource/fonts/EVA1.ttf";
-          content_type = "application/x-font-ttf";
-        } else if ("/Stela_UT.otf" == url_path) {
-          resource_path = "../resource/fonts/Stela_UT.otf";
-          content_type = "application/vnd.ms-opentype";
-        } else if ("/Ubuntu-M.ttf" == url_path) {
-          resource_path = "../resource/fonts/ubuntu-font-family-0.80/Ubuntu-M.ttf";
-          content_type = "application/x-font-ttf";
-        } else if ("/Ubuntu-R.ttf" == url_path) {
-          resource_path = "../resource/fonts/ubuntu-font-family-0.80/Ubuntu-R.ttf";
-          content_type = "application/x-font-ttf";
-        } else if ("/Vetka.otf" == url_path) {
-          resource_path = "../resource/fonts/Vetka.otf";
-          content_type = "application/vnd.ms-opentype";
-        } else {
+        if (resource_map.cend() == resource_map.find(url_path)) {
           return -1;
         }
-        std::cout << "serving " << resource_path << " (" << content_type << ")" << std::endl;
+        const auto &resource = resource_map[url_path];
+        std::cout << "serving " << resource.path << " (" << resource.content_type << ")" << std::endl;
         if (libwebsockets_serve_http_file(context, wsi,
-                                          resource_path.c_str(), content_type.c_str())) {
+                                          resource.path.c_str(), resource.content_type.c_str())) {
           return -1;
         }
         break;

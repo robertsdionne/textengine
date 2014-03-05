@@ -6,12 +6,17 @@
 #include <picojson.h>
 #include <string>
 #include <thread>
+#include <unordered_map>
 
 #include "prompt.h"
 
 namespace textengine {
 
   class SynchronizedQueue;
+  
+  struct Resource {
+    std::string path, content_type;
+  };
 
   class WebSocketPrompt : public Prompt {
   public:
@@ -20,8 +25,15 @@ namespace textengine {
     virtual ~WebSocketPrompt();
 
     void Run();
+    
+    static std::unordered_map<std::string, Resource> resource_map;
 
   private:
+    static constexpr const char *kTextHtml = u8"text/html";
+    static constexpr const char *kApplicationJavascript = u8"application/javascript";
+    static constexpr const char *kApplicationTrueTypeFont = u8"application/x-font-ttf";
+    static constexpr const char *kApplicationOpenTypeFont = u8"application/vnd.ms-opentype";
+    
     static int HttpCallback(libwebsocket_context *context,
                             libwebsocket *wsi,
                             enum libwebsocket_callback_reasons reason,
