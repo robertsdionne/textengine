@@ -197,7 +197,7 @@ namespace textengine {
       }
       const auto max_velocity = glm::mix(1.38f, 5.81f, input.GetTriggerPressure()) / 2.0f;
       current_state.player_body->ApplyForceToCenter(force * b2Vec2(offset.x, offset.y), true);
-      auto target_angle = 0.0f;
+      auto target_angle = current_state.player_body->GetAngle();
       if (glm::length(offset2) > 0.1f) {
         target_angle = glm::atan(offset2.y, offset2.x);
       } else if (glm::length(offset) > 0.1f) {
