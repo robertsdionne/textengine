@@ -224,12 +224,6 @@ var close = function(event) {
 var LINE_COUNT = 30;
 
 
-var SCROLL_DELAY = 80;
-
-
-var t = 0.0;
-
-
 var lines = [new Line([new Title('\u00A0polimpsasd /ˈpælɪmpsɛst/')])];
 
 
