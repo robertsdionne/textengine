@@ -1,18 +1,4 @@
 /**
- * @enum {string}
- */
- var KeyCode = {
-  BACKSPACE: 8,
-  DOWN: 40,
-  LEFT: 37,
-  RETURN: 13,
-  RIGHT: 39,
-  TILDE: 96,
-  UP: 38
-};
-
-
-/**
  * @constructor
  * @implements {ScrollBehavior}
  */
@@ -59,7 +45,6 @@ PerWordScrollBehavior.prototype.indexInto = function(line, cursor) {
  var GameState = function(timestamp, description, opt_isCommand, opt_isDeath, opt_isReport, opt_isEntity, opt_id, opt_isTitle) {
   this.timestamp = timestamp;
   this.description = description;
-  this.isCommand = opt_isCommand;
   this.isDeath = opt_isDeath;
   this.isReport = opt_isReport;
   this.isEntity = opt_isEntity;
@@ -72,12 +57,7 @@ GameState.prototype.toDomNode = function(cursor, scrollBehavior) {
   if (cursor <= 0) {
     return document.createTextNode('');
   }
-  if (this.isCommand) {
-    var element = document.createElement('b');
-    element.className = 'command';
-    element.textContent = scrollBehavior.slice(this.description, 0, cursor);
-    return element;
-  } else if (this.isReport) {
+  if (this.isReport) {
     var element = document.createElement('p');
     element.className = 'report';
     element.textContent = scrollBehavior.slice(this.description, 0, cursor);
@@ -272,8 +252,6 @@ var error = function(event) {
 var close = function(event) {
   console.log('closed');
   clearCursor();
-  document.removeEventListener('keypress', command, false);
-  document.removeEventListener('keydown', backspace, false);
   websocket.removeEventListener('open', open);
   websocket.removeEventListener('message', message);
   websocket.removeEventListener('error', error);
@@ -300,9 +278,6 @@ var lineCursor = 1;
 var container;
 
 
-var commandline;
-
-
 var cursor;
 
 
@@ -326,7 +301,6 @@ var canvas, context;
 
 var load = function() {
   container = document.getElementById('container');
-  commandline = document.getElementById('commandline');
   cursor = document.getElementById('cursor');
   canvas = document.getElementById('arrow');
   canvas.width = canvas.width * 2;
@@ -372,37 +346,9 @@ var toggleScheme = function() {
 };
 
 
-var backspace = function(e) {
-  if (e.keyCode == KeyCode.BACKSPACE) {
-    commandline.textContent = commandline.textContent.slice(0, -1);
-    resetCursor();
-    e.preventDefault();
-  }
-};
-
-
-var command = function(e) {
-  if (e.keyCode == KeyCode.RETURN) {
-    if (commandline.textContent) {
-      websocket.send(JSON.stringify({message: commandline.textContent}));
-      lines.push(new Line([new GameState(t += 1.0, commandline.textContent, true)]));
-      lineCursor += 1;
-      commandline.textContent = '';
-      resetCursor();
-      display();
-    }
-  } else if (e.keyCode == KeyCode.TILDE) {
-    toggleScheme();
-  } else {
-    commandline.textContent = commandline.textContent + String.fromCharCode(e.keyCode);
-    resetCursor();
-  }
-};
-
-
 var display = function () {
   entities = [];
-  while (container.childNodes.length) {
+  while (container.childNodes.length > 0) {
     container.removeChild(container.childNodes[0]);
   }
   var startIndex = lineCursor - LINE_COUNT >= 0 ? lineCursor - LINE_COUNT : 0;
