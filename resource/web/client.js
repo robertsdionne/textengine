@@ -1,14 +1,9 @@
 /**
  * @constructor
- * @param {number} timestamp
  * @param {string} description
- * @param {boolean=} opt_isCommand
- * @param {boolean=} opt_isDeath
  */
- var GameState = function(timestamp, description, opt_isCommand, opt_isDeath, opt_isReport, opt_isEntity, opt_id, opt_isTitle) {
-  this.timestamp = timestamp;
+ var GameState = function(description, opt_isReport, opt_isEntity, opt_id, opt_isTitle) {
   this.description = description;
-  this.isDeath = opt_isDeath;
   this.isReport = opt_isReport;
   this.isEntity = opt_isEntity;
   this.id = opt_id;
@@ -65,32 +60,14 @@ var Line = function(gameStates) {
 
 Object.defineProperties(
   Line.prototype, {
-    timestamp: {
-      get: function() {
-        return this.gameStates.map(function(state) {
-          return state.timestamp;
-        }).reduce(function(timestamp0, timestamp1) {
-          return Math.min(timestamp0, timestamp1);
-        });
-      }
-    },
     description: {
       get: function() {
         return this.gameStates.map(function(state) {
          return state.description;
-       }).join(' ');
+        }).join(' ');
       }
-    },
-    isDeath: {
-      get: function() {
-        return this.gameStates.map(function(state) {
-         return state.isDeath;
-       }).reduce(function(isDeath0, isDeath1) {
-         return isDeath0 || isDeath1;
-       });
-     }
-   }
- });
+    }
+  });
 
 
 Line.prototype.toDomNode = function(prefix, cursor) {
@@ -136,10 +113,10 @@ var message = function(event) {
   var payload = JSON.parse(event.data);
   if ("step" == payload.type) {
     lines[lines.length - 1].gameStates.push(
-      new GameState(t += 1.0, ".", false, false, false));
+      new GameState(".", false));
   } else if ("entity" == payload.type) {
     lines[lines.length - 1].gameStates.push(
-      new GameState(t += 1.0, "", false, false, false, true, payload.id));
+      new GameState("", false, true, payload.id));
   } else if ("telemetry" == payload.type) {
     target_x = canvas.width / 3 * payload.direction.x;
     target_y = canvas.width / 3 * -payload.direction.y;
@@ -148,11 +125,11 @@ var message = function(event) {
     target_directions = payload.directions;
   } else if ("report" == payload.type) {
     lines.push(new Line([
-      new GameState(t += 1.0, payload.report, false, false, true)]));
+      new GameState(payload.report, true)]));
     lineCursor += 1;
   } else if ("text" == payload.type) {
     lines.push(new Line([
-      new GameState(t += 1.0, payload.text, false, false, false)]));
+      new GameState(payload.text, false)]));
     lineCursor += 1;
   }
   display();
@@ -230,7 +207,7 @@ var SCROLL_DELAY = 80;
 var t = 0.0;
 
 
-var lines = [new Line([new GameState(t, '\u00A0polimpsasd /ˈpælɪmpsɛst/', false, false, false, false, null, true)])];
+var lines = [new Line([new GameState('\u00A0polimpsasd /ˈpælɪmpsɛst/', false, false, null, true)])];
 
 
 var lineCursor = 1;
