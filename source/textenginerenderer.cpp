@@ -1,6 +1,7 @@
 #include <GLFW/glfw3.h>
 #include <imgui.h>
 #include <imguiRenderGL3.h>
+#define GLM_FORCE_RADIANS
 #define GLM_SWIZZLE
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -178,7 +179,7 @@ namespace textengine {
     PushMatrix();
     matrix_stack.back() *= glm::translate(glm::mat4(1), glm::vec3(position, 0));
     matrix_stack.back() *= glm::rotate(glm::mat4(1),
-                                       glm::degrees(current_state.player_body->GetAngle()),
+                                       current_state.player_body->GetAngle(),
                                        glm::vec3(0, 0, 1));
     DrawRectangle(glm::vec2(0), glm::vec2(0.25f, 0.5f));
     PopMatrix();
