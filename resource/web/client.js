@@ -97,11 +97,11 @@ Object.defineProperties(
   });
 
 
-Line.prototype.toDomNode = function(prefix, cursor) {
+Line.prototype.toDomNode = function(prefix) {
   var element = document.createElement('p');
   element.appendChild(document.createTextNode(prefix));
   this.gameStates.forEach(function(state) {
-    element.appendChild(state.toDomNode(cursor));
+    element.appendChild(state.toDomNode());
   });
   return element;
 };
@@ -239,9 +239,6 @@ var lineCursor = 1;
 var container;
 
 
-var cursor;
-
-
 var isDark = false;
 
 
@@ -259,7 +256,6 @@ var canvas, context;
 
 var load = function() {
   container = document.getElementById('container');
-  cursor = document.getElementById('cursor');
   canvas = document.getElementById('arrow');
   canvas.width = canvas.width * 2;
   canvas.height = canvas.height * 2;
@@ -270,26 +266,8 @@ var load = function() {
   connect();
   display();
   window.requestAnimationFrame(drawArrows);
-//  resetCursor();
 };
 window.addEventListener('load', load, false);
-
-
-var blinkCursor = function() {
-  cursor.textContent = cursor.textContent ? '' : '\u258b';
-};
-
-var resetCursor = function() {
-  cursor.textContent = '\u258b';
-  window.clearInterval(blink);
-  blink = window.setInterval(blinkCursor, 1000);
-};
-
-
-var clearCursor = function() {
-  cursor.textContent = '';
-  window.clearInterval(blink);
-};
 
 
 var toggleScheme = function() {
