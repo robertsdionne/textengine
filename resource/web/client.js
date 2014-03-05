@@ -26,6 +26,7 @@ Title.prototype.toDomNode = function() {
 };
 
 
+
 /**
  * @constructor
  * @param {string} report
@@ -41,6 +42,7 @@ Report.prototype.toDomNode = function() {
   element.textContent = this.report;
   return element;
 };
+
 
 
 /**
@@ -66,6 +68,7 @@ Entity.prototype.toDomNode = function() {
 };
 
 
+
 /**
  * @constructor
  * @param {string} text
@@ -78,6 +81,7 @@ var Text = function(text) {
 Text.prototype.toDomNode = function() {
   return document.createTextNode(this.text + '\u00A0');
 };
+
 
 
 var Line = function(gameStates) {
