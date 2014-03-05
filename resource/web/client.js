@@ -1,42 +1,5 @@
 /**
  * @constructor
- * @implements {ScrollBehavior}
- */
- var PerWordScrollBehavior = function() {};
-
-
-/**
- * @param {string} value
- * @return {number} the length
- */
- PerWordScrollBehavior.prototype.length = function(value) {
-  return value.split(' ').length;
-};
-
-
-/**
- * @param {string} value
- * @param {number} start
- * @param {number} stop
- * @return {string}
- */
- PerWordScrollBehavior.prototype.slice = function(value, start, stop) {
-  return value.split(' ').slice(start, stop).join(' ');
-};
-
-
-PerWordScrollBehavior.prototype.indexInto = function(line, cursor) {
-  for (var i = 0; i < line.gameStates.length; ++i) {
-    cursor -= this.length(line.gameStates[i].description);
-    if (cursor < 0) {
-      return i;
-    }
-  }
-};
-
-
-/**
- * @constructor
  * @param {number} timestamp
  * @param {string} description
  * @param {boolean=} opt_isCommand
@@ -53,14 +16,14 @@ PerWordScrollBehavior.prototype.indexInto = function(line, cursor) {
 };
 
 
-GameState.prototype.toDomNode = function(cursor, scrollBehavior) {
+GameState.prototype.toDomNode = function(cursor) {
   if (cursor <= 0) {
     return document.createTextNode('');
   }
   if (this.isReport) {
     var element = document.createElement('p');
     element.className = 'report';
-    element.textContent = scrollBehavior.slice(this.description, 0, cursor);
+    element.textContent = this.description;
     return element;
   } else if (this.isEntity) {
     var canvas = document.createElement('canvas');
@@ -130,13 +93,11 @@ Object.defineProperties(
  });
 
 
-Line.prototype.toDomNode = function(prefix, cursor, scrollBehavior) {
-  var index = scrollBehavior.indexInto(this, cursor);
+Line.prototype.toDomNode = function(prefix, cursor) {
   var element = document.createElement('p');
   element.appendChild(document.createTextNode(prefix));
   this.gameStates.forEach(function(state) {
-    element.appendChild(state.toDomNode(cursor, scrollBehavior));
-    cursor -= scrollBehavior.length(state.description);
+    element.appendChild(state.toDomNode(cursor));
   });
   return element;
 };
@@ -284,9 +245,6 @@ var cursor;
 var isDark = false;
 
 
-var scrollBehavior = new PerWordScrollBehavior();
-
-
 var websocket;
 
 
@@ -353,11 +311,11 @@ var display = function () {
   }
   var startIndex = lineCursor - LINE_COUNT >= 0 ? lineCursor - LINE_COUNT : 0;
   lines.slice(startIndex, lineCursor).forEach(function(line, index) {
-    var content = line.toDomNode('', line.description.length, scrollBehavior);
+    var content = line.toDomNode('', line.description.length);
     container.appendChild(content);
   });
   if (lineCursor >= 0 && lines.length > lineCursor) {
-    var content = lines[lineCursor].toDomNode('', 0, scrollBehavior);
+    var content = lines[lineCursor].toDomNode('', 0);
     var newline = document.createElement('br');
     container.appendChild(content);
     container.appendChild(newline);
