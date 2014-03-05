@@ -1,55 +1,82 @@
 /**
  * @constructor
- * @param {string} description
+ * @param {string} title
  */
- var GameState = function(description, opt_isReport, opt_isEntity, opt_id, opt_isTitle) {
-  this.description = description;
-  this.isReport = opt_isReport;
-  this.isEntity = opt_isEntity;
-  this.id = opt_id;
-  this.isTitle = opt_isTitle;
+var Title = function(title) {
+  this.title = title;
 };
 
 
-GameState.prototype.toDomNode = function(cursor) {
-  if (cursor <= 0) {
-    return document.createTextNode('');
-  }
-  if (this.isReport) {
-    var element = document.createElement('p');
-    element.className = 'report';
-    element.textContent = this.description;
-    return element;
-  } else if (this.isEntity) {
-    var canvas = document.createElement('canvas');
-    canvas.style.display = "inline";
-    canvas.width = 20;
-    canvas.height = 20;
-    canvas.style.width = canvas.width / 2;
-    canvas.style.height = canvas.height / 2;
-    var context = canvas.getContext('2d');
-    context.scale(1, 1);
-    entities.push({canvas: canvas, context: context, id: this.id});
-    return canvas;
-  } else if (this.isTitle) {
-    var parent = document.createElement('div');
-    var span = document.createElement('span');
-    parent.appendChild(span);
-    var parts = this.description.split(' ');
-    var title = parts[0];
-    var subtitle = parts[1];
-    var content = document.createTextNode(title + '\u00A0');
-    span.appendChild(content);
-    span.style.fontFamily = '"EVA Hand 1"';
-    span.style.fontWeight = 'bold';
-    span = document.createElement('span');
-    span.appendChild(document.createTextNode(subtitle + '\u00A0'));
-    span.style.fontWeight = 'bold';
-    parent.appendChild(span);
-    return parent;
-  } else {
-    return document.createTextNode(this.description + '\u00A0');
-  }
+Title.prototype.toDomNode = function() {
+  var parent = document.createElement('div');
+  var span = document.createElement('span');
+  parent.appendChild(span);
+  var parts = this.title.split(' ');
+  var title = parts[0];
+  var subtitle = parts[1];
+  var content = document.createTextNode(title + '\u00A0');
+  span.appendChild(content);
+  span.style.fontFamily = '"EVA Hand 1"';
+  span.style.fontWeight = 'bold';
+  span = document.createElement('span');
+  span.appendChild(document.createTextNode(subtitle + '\u00A0'));
+  span.style.fontWeight = 'bold';
+  parent.appendChild(span);
+  return parent;
+};
+
+
+/**
+ * @constructor
+ * @param {string} report
+ */
+var Report = function(report) {
+  this.report = report;
+};
+
+
+Report.prototype.toDomNode = function() {
+  var element = document.createElement('p');
+  element.className = 'report';
+  element.textContent = this.report;
+  return element;
+};
+
+
+/**
+ * @constructor
+ * @param {number} id
+ */
+var Entity = function(id) {
+  this.id = id;
+};
+
+
+Entity.prototype.toDomNode = function() {
+  var canvas = document.createElement('canvas');
+  canvas.style.display = "inline";
+  canvas.width = 20;
+  canvas.height = 20;
+  canvas.style.width = canvas.width / 2;
+  canvas.style.height = canvas.height / 2;
+  var context = canvas.getContext('2d');
+  context.scale(1, 1);
+  entities.push({canvas: canvas, context: context, id: this.id});
+  return canvas;
+};
+
+
+/**
+ * @constructor
+ * @param {string} text
+ */
+var Text = function(text) {
+  this.text = text;
+};
+
+
+Text.prototype.toDomNode = function() {
+  return document.createTextNode(this.text + '\u00A0');
 };
 
 
@@ -112,11 +139,9 @@ var alpha = 0.2;
 var message = function(event) {
   var payload = JSON.parse(event.data);
   if ("step" == payload.type) {
-    lines[lines.length - 1].gameStates.push(
-      new GameState(".", false));
+    lines[lines.length - 1].gameStates.push(new Text("."));
   } else if ("entity" == payload.type) {
-    lines[lines.length - 1].gameStates.push(
-      new GameState("", false, true, payload.id));
+    lines[lines.length - 1].gameStates.push(new Entity(payload.id));
   } else if ("telemetry" == payload.type) {
     target_x = canvas.width / 3 * payload.direction.x;
     target_y = canvas.width / 3 * -payload.direction.y;
@@ -124,12 +149,10 @@ var message = function(event) {
     target_position_y = payload.position.y;
     target_directions = payload.directions;
   } else if ("report" == payload.type) {
-    lines.push(new Line([
-      new GameState(payload.report, true)]));
+    lines.push(new Line([new Report(payload.report)]));
     lineCursor += 1;
   } else if ("text" == payload.type) {
-    lines.push(new Line([
-      new GameState(payload.text, false)]));
+    lines.push(new Line([new Text(payload.text)]));
     lineCursor += 1;
   }
   display();
@@ -207,7 +230,7 @@ var SCROLL_DELAY = 80;
 var t = 0.0;
 
 
-var lines = [new Line([new GameState('\u00A0polimpsasd /ˈpælɪmpsɛst/', false, false, null, true)])];
+var lines = [new Line([new Title('\u00A0polimpsasd /ˈpælɪmpsɛst/')])];
 
 
 var lineCursor = 1;
