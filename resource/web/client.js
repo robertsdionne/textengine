@@ -239,13 +239,7 @@ var lineCursor = 1;
 var container;
 
 
-var isDark = false;
-
-
 var websocket;
-
-
-var blink;
 
 
 var reconnect;
@@ -268,18 +262,6 @@ var load = function() {
   window.requestAnimationFrame(drawArrows);
 };
 window.addEventListener('load', load, false);
-
-
-var toggleScheme = function() {
-  if (isDark) {
-    document.body.style.background = 'white';
-    document.body.style.color = 'black';
-  } else {
-    document.body.style.background = 'black';
-    document.body.style.color = 'white';
-  }
-  isDark = !isDark;
-};
 
 
 var display = function () {
