@@ -173,7 +173,7 @@ namespace textengine {
         libwebsocket_callback_on_writable_all_protocol(&kProtocols[1]);
         old_time = new_time;
       }
-      result = libwebsocket_service(context, 50);
+      result = libwebsocket_service(context, 0);
     }
     libwebsocket_context_destroy(context);
     context = nullptr;

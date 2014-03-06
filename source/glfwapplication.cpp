@@ -95,8 +95,8 @@ namespace textengine {
     while (!glfwWindowShouldClose(window)) {
       if (keyboard.GetKeyVelocity(GLFW_KEY_TAB) > 0) {
         if (minimized) {
-          glfwShowWindow(window);
           glfwSetWindowSize(window, width, height);
+          glfwShowWindow(window);
         } else {
           glfwHideWindow(window);
           glfwSetWindowSize(window, kMinimizedWidth, kMinimizedHeight);
