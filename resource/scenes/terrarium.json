@@ -29,6 +29,7 @@
       "name": "pasture"
     }, 
     {
+      "linear_attenuation": 0.5, 
       "invisible": false, 
       "messages": {
         "describe": [
@@ -192,9 +193,12 @@
           "y": 1.42706298828125
         }
       }, 
+      "linear_attenuation": 10.0, 
       "invisible": false, 
       "messages": {
-        "describe": [], 
+        "describe": [
+          "You see the first stone of the path."
+        ], 
         "enter": [
           "You step on the first stone."
         ], 
@@ -216,9 +220,12 @@
           "y": 5.305328369140625
         }
       }, 
+      "linear_attenuation": 10.0, 
       "invisible": false, 
       "messages": {
-        "describe": [], 
+        "describe": [
+          "You see the second stone of the path."
+        ], 
         "enter": [
           "You step on the second stone."
         ], 
@@ -240,9 +247,12 @@
           "y": 9.093927383422852
         }
       }, 
+      "linear_attenuation": 10.0, 
       "invisible": false, 
       "messages": {
-        "describe": [], 
+        "describe": [
+          "You see the third stone of the path."
+        ], 
         "enter": [
           "You step on the third stone."
         ], 
@@ -264,9 +274,12 @@
           "y": 12.33236312866211
         }
       }, 
+      "linear_attenuation": 10.0,
       "invisible": false, 
       "messages": {
-        "describe": [], 
+        "describe": [
+          "You see the fourth stone of the path."
+        ], 
         "enter": [
           "You step on the fourth stone."
         ], 
@@ -288,9 +301,12 @@
           "y": 15.884747505187988
         }
       }, 
+      "linear_attenuation": 10.0, 
       "invisible": false, 
       "messages": {
-        "describe": [], 
+        "describe": [
+          "You see the last stone of the path."
+        ], 
         "enter": [
           "You step on the last stone"
         ], 
@@ -358,6 +374,7 @@
           "y": 5.891178607940674
         }
       }, 
+      "linear_attenuation": 2.0, 
       "invisible": false, 
       "messages": {
         "describe": [
@@ -380,6 +397,7 @@
           "y": -6.661126136779785
         }
       }, 
+      "linear_attenuation": 2.0,
       "invisible": false, 
       "messages": {
         "describe": [
@@ -402,6 +420,7 @@
           "y": -6.647133827209473
         }
       }, 
+      "linear_attenuation": 2.0,
       "invisible": false, 
       "messages": {
         "describe": [
@@ -424,6 +443,7 @@
           "y": -6.661533355712891
         }
       }, 
+      "linear_attenuation": 2.0,
       "invisible": false, 
       "messages": {
         "describe": [
@@ -580,6 +600,7 @@
       "name": "pig pen"
     }, 
     {
+      "linear_attenuation": 0.5, 
       "invisible": false, 
       "messages": {
         "describe": [

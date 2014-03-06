@@ -111,11 +111,10 @@ namespace textengine {
       result->aabb = ReadAxisAlignedBoundingBox(json_object["aabb"]);
     }
     result->messages = ReadMessageMap(json_object["messages"]);
-    if (json_object.cend() == json_object.find("invisible")) {
-      result->invisible = false;
-    } else {
-      result->invisible = json_object["invisible"].get<bool>();
-    }
+    result->invisible = Get(json_object, "invisible", false);
+    result->base_attenuation = Get(json_object, "base_attenuation", 1.0);
+    result->linear_attenuation = Get(json_object, "linear_attenuation", 1.0);
+    result->quadratic_attenuation = Get(json_object, "quadratic_attenuation", 0.0);
     return result;
   }
 

@@ -58,6 +58,9 @@ namespace textengine {
     }
     result["messages"] = WriteMessageMap(object->messages);
     result["invisible"] = picojson::value(object->invisible);
+    result["base_attenuation"] = picojson::value(object->base_attenuation);
+    result["linear_attenuation"] = picojson::value(object->linear_attenuation);
+    result["quadratic_attenuation"] = picojson::value(object->quadratic_attenuation);
     return picojson::value(result);
   }
 

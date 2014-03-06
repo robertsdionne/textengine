@@ -162,7 +162,7 @@ namespace textengine {
       std::vector<Object *> nearby;
       reply_queue.PushText("");
       for (auto &area : scene.areas) {
-        if (Inside(area)) {
+        if (Inside(area) && HasMessage(area->messages, "inside")) {
           reply_queue.PushText(ChooseMessage(area->messages, "inside"));
         } else if (HasMessage(area->messages, "describe")) {
           nearby.push_back(area.get());
@@ -174,7 +174,7 @@ namespace textengine {
         }
       }
       auto compare = [position] (const Object *a, const Object *b) {
-        return a->DistanceTo(position) < b->DistanceTo(position);
+        return a->attenuation(position) < b->attenuation(position);
       };
       auto nth = nearby.begin() + 3;
       std::partial_sort(nearby.begin(), nth, nearby.end(), compare);
@@ -184,17 +184,8 @@ namespace textengine {
           new TextMessage(ChooseMessage((*element)->messages, "describe"))
         });
       }
-//      std::sort(nearby.begin(), nearby.end(), compare);
-//      for (auto element = nearby.begin(); element < nearby.end(); ++element) {
-//        std::ostringstream out;
-//        out << (*element)->DistanceTo(position);
-//        reply_queue.PushMessages({
-//          new EntityMessage((*element)->id),
-//          new TextMessage((*element)->name),
-//          new TextMessage(out.str())
-//        });
-//      }
       reply_queue.PushText("");
+
     }
 
     if (glm::length(offset) > 0.0 || input.GetTriggerVelocity() > 0.0) {

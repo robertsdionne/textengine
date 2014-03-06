@@ -32,6 +32,15 @@ namespace textengine {
     Object *ReadObject(long id, picojson::value &object) const;
 
     glm::vec2 ReadVec2(const picojson::value &vector) const;
+    
+    template <typename T>
+    T Get(picojson::object &object, const std::string &key, T default_value) const {
+      if (object.cend() == object.find(key)) {
+        return default_value;
+      } else {
+        return object[key].get<T>();
+      }
+    }
   };
 
 }  // namespace textengine

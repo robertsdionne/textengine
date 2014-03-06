@@ -54,6 +54,7 @@ namespace textengine {
     AxisAlignedBoundingBox aabb;
     MessageMap messages;
     bool invisible;
+    float base_attenuation, linear_attenuation, quadratic_attenuation;
     
     float area() const {
       switch (shape) {
@@ -67,6 +68,14 @@ namespace textengine {
           return std::numeric_limits<float>::infinity();
           break;
       }
+    }
+    
+    float attenuation(glm::vec2 position) const {
+      return attenuation(DistanceTo(position));
+    }
+    
+    float attenuation(float distance) const {
+      return base_attenuation + linear_attenuation * distance + quadratic_attenuation * distance * distance;
     }
     
     bool Contains(glm::vec2 position) {
