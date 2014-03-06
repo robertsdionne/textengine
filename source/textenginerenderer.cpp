@@ -35,18 +35,10 @@ namespace textengine {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     vertex_shader.Create(GL_VERTEX_SHADER, {kVertexShaderSource});
-    point_geometry_shader.Create(GL_GEOMETRY_SHADER, {kPointGeometryShaderSource});
-    edge_geometry_shader.Create(GL_GEOMETRY_SHADER, {kEdgeGeometryShaderSource});
     fragment_shader.Create(GL_FRAGMENT_SHADER, {kFragmentShaderSource});
 
     face_program.Create({&vertex_shader, &fragment_shader});
     face_program.CompileAndLink();
-
-    edge_program.Create({&vertex_shader, &edge_geometry_shader, &fragment_shader});
-    edge_program.CompileAndLink();
-
-    point_program.Create({&vertex_shader, &point_geometry_shader, &fragment_shader});
-    point_program.CompileAndLink();
 
     vertex_format.Create({
       {u8"vertex_position", GL_FLOAT, 2}
@@ -61,14 +53,9 @@ namespace textengine {
       unit_circle.data.insert(unit_circle.data.cend(), {
         point.x, point.y
       });
-      unit_circle_border.data.insert(unit_circle_border.data.cend(), {
-        point.x, point.y
-      });
     }
     unit_circle.element_count = 102;
     unit_circle.element_type = GL_TRIANGLE_FAN;
-    unit_circle_border.element_count = 100;
-    unit_circle_border.element_type = GL_LINE_LOOP;
 
     unit_square.data.insert(unit_square.data.cend(), {
       0.5f, -0.5f,
@@ -79,44 +66,16 @@ namespace textengine {
     unit_square.element_count = 4;
     unit_square.element_type = GL_TRIANGLE_STRIP;
 
-    unit_square_border.data.insert(unit_square_border.data.cend(), {
-      0.5f, -0.5f,
-      0.5f, 0.5f,
-      -0.5f, 0.5f,
-      -0.5f, -0.5f
-    });
-    unit_square_border.element_count = 4;
-    unit_square_border.element_type = GL_LINE_LOOP;
-
     circle_buffer.Create(GL_ARRAY_BUFFER);
     circle_buffer.Data(unit_circle.data_size(), unit_circle.data.data(), GL_STATIC_DRAW);
     circle_array.Create();
     vertex_format.Apply(circle_array, face_program);
     CHECK_STATE(!glGetError());
 
-    circle_edge_buffer.Create(GL_ARRAY_BUFFER);
-    circle_edge_buffer.Data(unit_circle_border.data_size(),
-                            unit_circle_border.data.data(), GL_STATIC_DRAW);
-    circle_edge_array.Create();
-    vertex_format.Apply(circle_edge_array, edge_program);
-    CHECK_STATE(!glGetError());
-
     rectangle_buffer.Create(GL_ARRAY_BUFFER);
     rectangle_buffer.Data(unit_square.data_size(), unit_square.data.data(), GL_STATIC_DRAW);
     rectangle_array.Create();
     vertex_format.Apply(rectangle_array, face_program);
-    CHECK_STATE(!glGetError());
-
-    rectangle_edge_buffer.Create(GL_ARRAY_BUFFER);
-    rectangle_edge_buffer.Data(unit_square_border.data_size(),
-                               unit_square_border.data.data(), GL_STATIC_DRAW);
-    rectangle_edge_array.Create();
-    vertex_format.Apply(rectangle_edge_array, edge_program);
-    CHECK_STATE(!glGetError());
-
-    line_buffer.Create(GL_ARRAY_BUFFER);
-    line_array.Create();
-    vertex_format.Apply(line_array, edge_program);
     CHECK_STATE(!glGetError());
 
     stroke_width = 0.0025f;
@@ -183,8 +142,6 @@ namespace textengine {
                                        glm::vec3(0, 0, 1));
     DrawRectangle(glm::vec2(0), glm::vec2(0.25f, 0.5f));
     PopMatrix();
-
-    DrawLines();
     PopMatrix();
 
     const auto mouse_position = 2.0f * mouse.get_cursor_position();
@@ -239,35 +196,6 @@ namespace textengine {
     CHECK_STATE(!glGetError());
 
     PopMatrix();
-  }
-
-  void TextEngineRenderer::DrawLine(glm::vec2 begin, glm::vec2 end) {
-    lines.data.insert(lines.data.cend(), {
-      begin.x, begin.y,
-      end.x, end.y
-    });
-    lines.element_count += 2;
-  }
-
-  void TextEngineRenderer::DrawLines() {
-    line_buffer.Data(lines.data_size(), lines.data.data(), GL_STREAM_DRAW);
-    edge_program.Use();
-    edge_program.Uniforms({
-      {u8"projection", &projection},
-      {u8"model_view", &matrix_stack.back()}
-    });
-    edge_program.Uniforms({
-      {u8"color", stroke}
-    });
-    edge_program.Uniforms({
-      {u8"inverse_aspect_ratio", inverse_aspect_ratio},
-      {u8"line_width", stroke_width}
-    });
-    line_array.Bind();
-    glDrawArrays(lines.element_type, 0, lines.element_count);
-
-    lines.data.clear();
-    lines.element_count = 0;
   }
 
   void TextEngineRenderer::DrawRectangle(glm::vec2 center, glm::vec2 dimensions) {

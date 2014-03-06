@@ -38,10 +38,6 @@ namespace textengine {
 
     void DrawCircle(glm::vec2 center, float radius);
 
-    void DrawLine(glm::vec2 begin, glm::vec2 end);
-
-    void DrawLines();
-
     void DrawRectangle(glm::vec2 center, glm::vec2 dimensions);
 
     void PopMatrix();
@@ -55,13 +51,11 @@ namespace textengine {
     bool edit;
     float inverse_aspect_ratio;
 
-    Shader edge_geometry_shader, fragment_shader, point_geometry_shader, vertex_shader;
-    Program edge_program, face_program, point_program;
+    Shader fragment_shader, vertex_shader;
+    Program face_program;
     VertexFormat vertex_format;
-    VertexArray circle_array, circle_edge_array, rectangle_array, rectangle_edge_array;
-    VertexArray line_array;
-    Buffer circle_buffer, circle_edge_buffer, rectangle_buffer, rectangle_edge_buffer;
-    Buffer line_buffer;
+    VertexArray circle_array, rectangle_array;
+    Buffer circle_buffer, rectangle_buffer;
 
     glm::mat4 model_view, projection;
 
@@ -70,7 +64,7 @@ namespace textengine {
 
     std::vector<glm::mat4> matrix_stack;
 
-    Drawable unit_circle, unit_circle_border, unit_square, unit_square_border, lines;
+    Drawable unit_circle, unit_square, lines;
 
     int width, height, scroll0;
   };
