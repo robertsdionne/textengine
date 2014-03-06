@@ -56,14 +56,14 @@ var Entity = function(id) {
 
 Entity.prototype.toDomNode = function() {
   var canvas = document.createElement('canvas');
-  canvas.style.display = "inline";
+  canvas.className = 'entity' + this.id;
+  canvas.style.display = 'inline';
   canvas.width = 20;
   canvas.height = 20;
   canvas.style.width = canvas.width / 2;
   canvas.style.height = canvas.height / 2;
   var context = canvas.getContext('2d');
   context.scale(1, 1);
-  entities.push({canvas: canvas, context: context, id: this.id});
   return canvas;
 };
 
@@ -105,9 +105,8 @@ Object.defineProperties(
   });
 
 
-Line.prototype.toDomNode = function(prefix) {
+Line.prototype.toDomNode = function() {
   var element = document.createElement('p');
-  element.appendChild(document.createTextNode(prefix));
   this.items.forEach(function(item) {
     element.appendChild(item.toDomNode());
   });
@@ -129,8 +128,6 @@ var open = function() {
   window.clearTimeout(reconnect);
 };
 
-var entities = [];
-
 var target_x = 0;
 var target_y = 0;
 var smooth_x = 0;
@@ -148,7 +145,6 @@ var message = function(event) {
   var items = processMessage(JSON.parse(event.data));
   if (items) {
     lines.push(new Line(items));
-    lineCursor += 1;
   }
   display();
 };
@@ -198,12 +194,17 @@ var drawArrows = function() {
     directions[id].x = (1.0 - alpha) * directions[id].x + alpha * target_directions[id].x;
     directions[id].y = (1.0 - alpha) * directions[id].y + alpha * target_directions[id].y;
   }
-  for (var i = 0; i < entities.length; ++i) {
-    var dx = directions[entities[i].id].x;
-    var dy = directions[entities[i].id].y;
-    var x = entities[i].canvas.width / 3 * dx;
-    var y = entities[i].canvas.width / 3 * -dy;
-    drawArrow(entities[i].canvas, entities[i].context, x, y);
+  for (var id in target_directions) {
+    var canvases = document.getElementsByClassName('entity' + id);
+    if (canvases.length) {
+      var dx = directions[id].x;
+      var dy = directions[id].y;
+      for (var i = 0; i < canvases.length; ++i) {
+        var x = canvases[i].width / 3 * dx;
+        var y = canvases[i].width / 3 * -dy;
+        drawArrow(canvases[i], canvases[i].getContext('2d'), x, y);
+      }
+    }
   }
   window.requestAnimationFrame(drawArrows);
 };
@@ -217,6 +218,7 @@ var drawArrow = function(canvas, context, x, y) {
   context.lineWidth = 4.0;
   context.lineCap = 'round';
   context.save();
+  context.scale(1, 1);
   context.translate(canvas.width / 2, canvas.height / 2);
   context.beginPath();
   context.moveTo(-x, -y);
@@ -247,21 +249,13 @@ var close = function(event) {
 
 
 var display = function () {
-  entities = [];
-  while (container.childNodes.length > 0) {
+  while (container.childNodes.length > LINE_COUNT) {
     container.removeChild(container.childNodes[0]);
   }
-  var startIndex = lineCursor - LINE_COUNT >= 0 ? lineCursor - LINE_COUNT : 0;
-  lines.slice(startIndex, lineCursor).forEach(function(line, index) {
-    var content = line.toDomNode('', line.description.length);
-    container.appendChild(content);
+  lines.forEach(function(line, index) {
+    container.appendChild(line.toDomNode());
   });
-  if (lineCursor >= 0 && lines.length > lineCursor) {
-    var content = lines[lineCursor].toDomNode('', 0);
-    var newline = document.createElement('br');
-    container.appendChild(content);
-    container.appendChild(newline);
-  }
+  lines = [];
 };
 
 
@@ -269,8 +263,7 @@ var LINE_COUNT = 30;
 
 
 var canvas, container, context;
-var lines = [new Line([new Title('\u00A0polimpsasd /ˈpælɪmpsɛst/')])];
-var lineCursor = 1;
+var lines = [];
 var reconnect, websocket;
 
 
@@ -282,7 +275,6 @@ var load = function() {
   canvas.style.width = canvas.width / 2;
   canvas.style.height = canvas.height / 2;
   context = canvas.getContext('2d');
-  context.scale(1, 1);
   connect();
   display();
   window.requestAnimationFrame(drawArrows);

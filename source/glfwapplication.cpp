@@ -84,6 +84,7 @@ namespace textengine {
     glfwSetMouseButtonCallback(window, HandleMouseButton);
     glfwSetFramebufferSizeCallback(window, HandleReshape);
     glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
     std::cout << glGetString(GL_VERSION) << std::endl;
     std::cout << glfwGetJoystickName(GLFW_JOYSTICK_1) << std::endl;
     renderer.Create();
@@ -102,7 +103,9 @@ namespace textengine {
         }
         minimized = !minimized;
       }
-      renderer.Render();
+      if (!minimized) {
+        renderer.Render();
+      }
       controller.Update();
       keyboard.Update();
       mouse.Update();
@@ -113,7 +116,9 @@ namespace textengine {
       input.Update();
       glfwSwapBuffers(window);
       glfwPollEvents();
-      usleep(16666);
+      if (minimized) {
+        usleep(16666);
+      }
     }
     glfwTerminate();
     return 0;
