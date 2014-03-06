@@ -103,7 +103,10 @@ namespace textengine {
         }
         minimized = !minimized;
       }
-      if (!minimized) {
+      if (minimized) {
+        glClearColor(1.0, 1.0, 1.0, 1.0);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+      } else {
         renderer.Render();
       }
       controller.Update();

@@ -152,7 +152,6 @@ var message = function(event) {
 
 var processMessage = function(payload) {
   if ('composite' == payload.type) {
-    console.log('composite');
     var result = [];
     for (var i = 0; i < payload.messages.length; ++i) {
       var items = processMessage(payload.messages[i]);
@@ -162,7 +161,6 @@ var processMessage = function(payload) {
     }
     return result;
   } else if ('entity' == payload.type) {
-    console.log('entity');
     return [new Entity(payload.id)];
   } else if ('telemetry' == payload.type) {
     target_x = canvas.width / 3 * payload.direction.x;
@@ -172,10 +170,8 @@ var processMessage = function(payload) {
     target_directions = payload.directions;
     return null;
   } else if ('report' == payload.type) {
-    console.log('report');
     return [new Report(payload.report)];
   } else if ('text' == payload.type) {
-    console.log('text');
     return [new Text(payload.text)];
   }
 };
