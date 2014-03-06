@@ -51,11 +51,11 @@ namespace textengine {
     bool edit;
     float inverse_aspect_ratio;
 
-    Shader fragment_shader, vertex_shader;
-    Program face_program;
+    Shader attenuation_fragment_shader, attenuation_vertex_shader, fragment_shader, vertex_shader;
+    Program attenuation_program, face_program;
     VertexFormat vertex_format;
-    VertexArray circle_array, rectangle_array;
-    Buffer circle_buffer, rectangle_buffer;
+    VertexArray attenuation_array, circle_array, rectangle_array;
+    Buffer attenuation_buffer, circle_buffer, rectangle_buffer;
 
     glm::mat4 model_view, projection;
 
@@ -64,7 +64,7 @@ namespace textengine {
 
     std::vector<glm::mat4> matrix_stack;
 
-    Drawable unit_circle, unit_square, lines;
+    Drawable attenuation, unit_circle, unit_square;
 
     int width, height, scroll0;
   };

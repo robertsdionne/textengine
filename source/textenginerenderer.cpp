@@ -33,16 +33,29 @@ namespace textengine {
     glClearColor(1.0, 1.0, 1.0, 1.0);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+    
+    attenuation_vertex_shader.Create(GL_VERTEX_SHADER, {kAttenuationVertexShaderSource});
+    attenuation_fragment_shader.Create(GL_FRAGMENT_SHADER, {kAttenuationFragmentShaderSource});
     vertex_shader.Create(GL_VERTEX_SHADER, {kVertexShaderSource});
     fragment_shader.Create(GL_FRAGMENT_SHADER, {kFragmentShaderSource});
 
+    attenuation_program.Create({&attenuation_vertex_shader, &attenuation_fragment_shader});
+    attenuation_program.CompileAndLink();
     face_program.Create({&vertex_shader, &fragment_shader});
     face_program.CompileAndLink();
 
     vertex_format.Create({
       {u8"vertex_position", GL_FLOAT, 2}
     });
+    
+    attenuation.data.insert(attenuation.data.cend(), {
+      1.0f, -1.0f,
+      1.0f, 1.0f,
+      -1.0f, -1.0f,
+      -1.0f, 1.0f
+    });
+    attenuation.element_count = 4;
+    attenuation.element_type = GL_TRIANGLE_STRIP;
 
     unit_circle.data.insert(unit_circle.data.cend(), {
       0.0f, 0.0f
@@ -66,6 +79,12 @@ namespace textengine {
     unit_square.element_count = 4;
     unit_square.element_type = GL_TRIANGLE_STRIP;
 
+    attenuation_buffer.Create(GL_ARRAY_BUFFER);
+    attenuation_buffer.Data(attenuation.data_size(), attenuation.data.data(), GL_STATIC_DRAW);
+    attenuation_array.Create();
+    vertex_format.Apply(attenuation_array, attenuation_program);
+    CHECK_STATE(!glGetError());
+    
     circle_buffer.Create(GL_ARRAY_BUFFER);
     circle_buffer.Data(unit_circle.data_size(), unit_circle.data.data(), GL_STATIC_DRAW);
     circle_array.Create();
@@ -81,8 +100,6 @@ namespace textengine {
     stroke_width = 0.0025f;
     stroke = glm::vec4(0, 0, 0, 1);
     fill = glm::vec4(0.5, 0.5, 0.5, 1);
-
-    lines.element_type = GL_LINES;
 
     CHECK_STATE(imguiRenderGLInit("../resource/fonts/ubuntu-font-family-0.80/Ubuntu-R.ttf"));
   }
@@ -143,6 +160,10 @@ namespace textengine {
     DrawRectangle(glm::vec2(0), glm::vec2(0.25f, 0.5f));
     PopMatrix();
     PopMatrix();
+    
+    attenuation_program.Use();
+    attenuation_array.Bind();
+    glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
 
     const auto mouse_position = 2.0f * mouse.get_cursor_position();
     unsigned char mouse_buttons = 0;

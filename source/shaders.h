@@ -2,6 +2,28 @@
 #define TEXTENGINE_SHADERS_H_
 
 namespace textengine {
+  
+  static constexpr const char *kAttenuationVertexShaderSource = u8R"glsl(
+  #version 410 core
+  
+  in vec4 vertex_position;
+  
+  void main() {
+    gl_Position = vertex_position;
+  }
+  )glsl";
+  
+  static constexpr const char *kAttenuationFragmentShaderSource = u8R"glsl(
+  #version 410 core
+  uniform mat4 model_view;
+  
+  out vec4 fragment_color;
+  
+  void main() {
+    discard;
+  }
+  
+  )glsl";
 
   static constexpr const char *kVertexShaderSource = u8R"glsl(
   #version 410 core
