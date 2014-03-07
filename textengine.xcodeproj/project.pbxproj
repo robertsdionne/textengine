@@ -1162,7 +1162,6 @@
 		46382A38184FE13900E03895 /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_truetype.h; sourceTree = "<group>"; };
 		463F38AD18316A39001326C3 /* input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = input.cpp; sourceTree = "<group>"; };
 		463F38AE18316A39001326C3 /* input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = input.h; sourceTree = "<group>"; };
-		4645A79218B19882005FC551 /* pretty_print_json.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = pretty_print_json.py; sourceTree = "<group>"; };
 		464E367E1825B4BC00AC0AC0 /* joystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = joystick.cpp; sourceTree = "<group>"; };
 		464E367F1825B4BC00AC0AC0 /* joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = joystick.h; sourceTree = "<group>"; };
 		464E36851825D1B400AC0AC0 /* libbox2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbox2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3805,14 +3804,6 @@
 			indentWidth = 2;
 			sourceTree = "<group>";
 		};
-		4645A79118B19882005FC551 /* scripts */ = {
-			isa = PBXGroup;
-			children = (
-				4645A79218B19882005FC551 /* pretty_print_json.py */,
-			);
-			path = scripts;
-			sourceTree = "<group>";
-		};
 		467437FE185A2BCE0062EE18 /* scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -5890,7 +5881,6 @@
 			children = (
 				46743803185A2BE10062EE18 /* fonts */,
 				467437FE185A2BCE0062EE18 /* scenes */,
-				4645A79118B19882005FC551 /* scripts */,
 				46743800185A2BCE0062EE18 /* web */,
 			);
 			path = resource;

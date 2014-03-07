@@ -1,643 +1,707 @@
 {
-  "areas": [
-    {
-      "aabb": {
-        "maximum": {
-          "x": 5.50689697265625, 
-          "y": 5.926513671875
-        }, 
-        "minimum": {
-          "x": -6.05133056640625, 
-          "y": -5.70269775390625
+    "areas": [
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 5.50689697265625,
+                    "y": 5.926513671875
+                },
+                "minimum": {
+                    "x": -6.05133056640625,
+                    "y": -5.70269775390625
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 1,
+            "messages": {
+                "describe": [
+                    "You see an enclosed pasture with an open gate."
+                ],
+                "enter": [
+                    "You have entered the pasture."
+                ],
+                "exit": [
+                    "You have left the pasture."
+                ],
+                "inside": [
+                    "You are standing inside the pasture."
+                ]
+            },
+            "name": "pasture",
+            "quadratic_attenuation": 0
+        },
+        {
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 0.5,
+            "messages": {
+                "describe": [
+                    "You see the gate to the pasture."
+                ],
+                "enter": [
+                    "You approach the open gate."
+                ],
+                "exit": [
+                    "You leave the open gate."
+                ],
+                "inside": [
+                    "You stand within the open gate."
+                ]
+            },
+            "name": "open gate",
+            "position": {
+                "x": -0.21805715560913086,
+                "y": 6.31934928894043
+            },
+            "quadratic_attenuation": 0,
+            "radius": 2.0584394931793213
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 5.468314170837402,
+                    "y": 18.481597900390625
+                },
+                "minimum": {
+                    "x": -6.089913368225098,
+                    "y": 6.852385520935059
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 1,
+            "messages": {
+                "describe": [
+                    "You see an open field neighboring the pasture."
+                ],
+                "enter": [
+                    "You've entered the field."
+                ],
+                "exit": [
+                    "You left the field."
+                ],
+                "inside": [
+                    "You stand in the field just outside the pasture."
+                ]
+            },
+            "name": "field",
+            "quadratic_attenuation": 0
+        },
+        {
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 1,
+            "messages": {
+                "describe": [
+                    "The eastern tree shades its surroundings."
+                ],
+                "enter": [
+                    "You entered the eastern tree's shade."
+                ],
+                "exit": [
+                    "You exited the shade."
+                ],
+                "inside": [
+                    "You are beneath the shade of the eastern tree."
+                ]
+            },
+            "name": "eastern tree shade",
+            "position": {
+                "x": 3.175466537475586,
+                "y": -2.708846092224121
+            },
+            "quadratic_attenuation": 0,
+            "radius": 1.3350553512573242
+        },
+        {
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 1,
+            "messages": {
+                "describe": [
+                    "The western tree shades its surroundings."
+                ],
+                "enter": [
+                    "You entered the western tree's shade."
+                ],
+                "exit": [
+                    "You exited the shade."
+                ],
+                "inside": [
+                    "You are beneath the shade of the western tree."
+                ]
+            },
+            "name": "western tree shade",
+            "position": {
+                "x": -1.7546300888061523,
+                "y": -2.153183937072754
+            },
+            "quadratic_attenuation": 0,
+            "radius": 1.3350553512573242
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": -3.3494720458984375,
+                    "y": 5.048035621643066
+                },
+                "minimum": {
+                    "x": -5.3790483474731445,
+                    "y": 0.5993976593017578
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 1,
+            "messages": {
+                "describe": [
+                    "You see a mud puddle."
+                ],
+                "enter": [
+                    "You've stepped in a mud puddle."
+                ],
+                "exit": [
+                    "You're glad you stepped out of the mud."
+                ],
+                "inside": [
+                    "You are standing in a mud puddle."
+                ]
+            },
+            "name": "mud puddle",
+            "quadratic_attenuation": 0
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 1.0800018310546875,
+                    "y": 17.461294174194336
+                },
+                "minimum": {
+                    "x": -1.479726791381836,
+                    "y": 1.2453193664550781
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 1,
+            "messages": {
+                "describe": [
+                    "You see a dirt path leading out from the pasture."
+                ],
+                "enter": [
+                    "You follow the dirt path."
+                ],
+                "exit": [
+                    "You stray from the dirt path."
+                ],
+                "inside": [
+                    "You stand on the dirt path."
+                ]
+            },
+            "name": "dirt path",
+            "quadratic_attenuation": 0
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 0.3291015625,
+                    "y": 2.54638671875
+                },
+                "minimum": {
+                    "x": -1.03826904296875,
+                    "y": 1.42706298828125
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 10,
+            "messages": {
+                "describe": [
+                    "You see the first stone of the path."
+                ],
+                "enter": [
+                    "You step on the first stone."
+                ],
+                "exit": [],
+                "inside": [
+                    "You stand atop the first stone in the path."
+                ]
+            },
+            "name": "first stone",
+            "quadratic_attenuation": 0
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 0.7991008758544922,
+                    "y": 6.408843994140625
+                },
+                "minimum": {
+                    "x": -0.5574665069580078,
+                    "y": 5.305328369140625
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 10,
+            "messages": {
+                "describe": [
+                    "You see the second stone of the path."
+                ],
+                "enter": [
+                    "You step on the second stone."
+                ],
+                "exit": [],
+                "inside": [
+                    "You stand atop the second stone in the path."
+                ]
+            },
+            "name": "second stone",
+            "quadratic_attenuation": 0
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 0.0135650634765625,
+                    "y": 10.161554336547852
+                },
+                "minimum": {
+                    "x": -1.3436737060546875,
+                    "y": 9.093927383422852
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 10,
+            "messages": {
+                "describe": [
+                    "You see the third stone of the path."
+                ],
+                "enter": [
+                    "You step on the third stone."
+                ],
+                "exit": [],
+                "inside": [
+                    "You stand atop the third stone in the path."
+                ]
+            },
+            "name": "third stone",
+            "quadratic_attenuation": 0
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 0.9254627227783203,
+                    "y": 13.38308334350586
+                },
+                "minimum": {
+                    "x": -0.4907970428466797,
+                    "y": 12.33236312866211
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 10,
+            "messages": {
+                "describe": [
+                    "You see the fourth stone of the path."
+                ],
+                "enter": [
+                    "You step on the fourth stone."
+                ],
+                "exit": [],
+                "inside": [
+                    "You stand atop the fourth stone in the path."
+                ]
+            },
+            "name": "fourth stone",
+            "quadratic_attenuation": 0
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 0.19230270385742188,
+                    "y": 16.915081024169922
+                },
+                "minimum": {
+                    "x": -1.3155097961425781,
+                    "y": 15.884747505187988
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 10,
+            "messages": {
+                "describe": [
+                    "You see the last stone of the path."
+                ],
+                "enter": [
+                    "You step on the last stone"
+                ],
+                "exit": [],
+                "inside": [
+                    "You stand atop the last stone in the path."
+                ]
+            },
+            "name": "last stone",
+            "quadratic_attenuation": 0
         }
-      }, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see an enclosed pasture with an open gate."
-        ], 
-        "enter": [
-          "You have entered the pasture."
-        ], 
-        "exit": [
-          "You have left the pasture."
-        ], 
-        "inside": [
-          "You are standing inside the pasture."
+    ],
+    "messages": {
+        "east": [
+            "You head to the east.",
+            "You move easterly.",
+            "You go eastward."
+        ],
+        "look": [
+            "You look around.",
+            "You observe your surroundings.",
+            "You inspect your environment."
+        ],
+        "north": [
+            "You head to the north.",
+            "You march northerly.",
+            "You move northward."
+        ],
+        "run": [
+            "You start to run.",
+            "You begin running.",
+            "You run.",
+            "You move briskly."
+        ],
+        "south": [
+            "You head south.",
+            "You go southerly.",
+            "You turn southward."
+        ],
+        "stop looking": [
+            "You return to your thoughts.",
+            "You are done observing.",
+            "You conclude your inspection."
+        ],
+        "walk": [
+            "You walk.",
+            "You start to walk.",
+            "You stop running.",
+            "You slow yourself."
+        ],
+        "west": [
+            "You go to the west.",
+            "You move westerly.",
+            "You head westward."
         ]
-      }, 
-      "name": "pasture"
-    }, 
-    {
-      "linear_attenuation": 0.5, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see the gate to the pasture."
-        ], 
-        "enter": [
-          "You approach the open gate."
-        ], 
-        "exit": [
-          "You leave the open gate."
-        ], 
-        "inside": [
-          "You stand within the open gate."
-        ]
-      }, 
-      "name": "open gate", 
-      "position": {
-        "x": -0.21805715560913086, 
-        "y": 6.31934928894043
-      }, 
-      "radius": 2.0584394931793213
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": 5.468314170837402, 
-          "y": 18.481597900390625
-        }, 
-        "minimum": {
-          "x": -6.089913368225098, 
-          "y": 6.852385520935059
+    },
+    "objects": [
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 6.325135231018066,
+                    "y": 6.878105163574219
+                },
+                "minimum": {
+                    "x": 0.8957223892211914,
+                    "y": 5.891178607940674
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 2,
+            "messages": {
+                "describe": [
+                    "You see a fence enclosing the pasture."
+                ],
+                "touch": [
+                    "The fence blocks your path."
+                ]
+            },
+            "name": "fence",
+            "quadratic_attenuation": 0
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 6.326913833618164,
+                    "y": -5.63004207611084
+                },
+                "minimum": {
+                    "x": -6.8884382247924805,
+                    "y": -6.661126136779785
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 2,
+            "messages": {
+                "describe": [
+                    "You see a fence enclosing the pasture."
+                ],
+                "touch": [
+                    "The fence blocks your path."
+                ]
+            },
+            "name": "fence",
+            "quadratic_attenuation": 0
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": -5.9951629638671875,
+                    "y": 6.898088455200195
+                },
+                "minimum": {
+                    "x": -6.878729820251465,
+                    "y": -6.647133827209473
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 2,
+            "messages": {
+                "describe": [
+                    "You see a fence enclosing the pasture."
+                ],
+                "touch": [
+                    "The fence blocks your path."
+                ]
+            },
+            "name": "fence",
+            "quadratic_attenuation": 0
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 6.322229385375977,
+                    "y": 6.883688926696777
+                },
+                "minimum": {
+                    "x": 5.438662528991699,
+                    "y": -6.661533355712891
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 2,
+            "messages": {
+                "describe": [
+                    "You see a fence enclosing the pasture."
+                ],
+                "touch": [
+                    "The fence blocks your path."
+                ]
+            },
+            "name": "fence",
+            "quadratic_attenuation": 0
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": -1.3581795692443848,
+                    "y": 6.8719377517700195
+                },
+                "minimum": {
+                    "x": -6.883072853088379,
+                    "y": 5.840719223022461
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 1,
+            "messages": {
+                "describe": [
+                    "You see a fence enclosing the pasture."
+                ],
+                "touch": [
+                    "The fence blocks your path."
+                ]
+            },
+            "name": "fence",
+            "quadratic_attenuation": 0
+        },
+        {
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 1,
+            "messages": {
+                "describe": [
+                    "You see the western tree."
+                ],
+                "touch": [
+                    "You touch the bark of the western tree."
+                ]
+            },
+            "name": "western tree",
+            "position": {
+                "x": -1.9318037033081055,
+                "y": -2.080341339111328
+            },
+            "quadratic_attenuation": 0,
+            "radius": 0.5
+        },
+        {
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 1,
+            "messages": {
+                "describe": [
+                    "You see the eastern tree."
+                ],
+                "touch": [
+                    "You touch the bark of the eastern tree."
+                ]
+            },
+            "name": "eastern tree",
+            "position": {
+                "x": 3.332592010498047,
+                "y": -2.946218490600586
+            },
+            "quadratic_attenuation": 0,
+            "radius": 0.5
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 4.782392501831055,
+                    "y": 5.130805015563965
+                },
+                "minimum": {
+                    "x": 3.7823925018310547,
+                    "y": 4.130805015563965
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 1,
+            "messages": {
+                "describe": [
+                    "You see the wolf kennel."
+                ],
+                "touch": [
+                    "You brush against the walls of the kennel."
+                ]
+            },
+            "name": "kennel",
+            "quadratic_attenuation": 0
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 4.799884796142578,
+                    "y": 3.4807376861572266
+                },
+                "minimum": {
+                    "x": 3.799884796142578,
+                    "y": 2.4807376861572266
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 1,
+            "messages": {
+                "describe": [
+                    "You see the big-cat abode."
+                ],
+                "touch": [
+                    "You brush against the walls of the big-cat abode."
+                ]
+            },
+            "name": "big-cat abode",
+            "quadratic_attenuation": 0
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 2.0693836212158203,
+                    "y": -3.363229751586914
+                },
+                "minimum": {
+                    "x": -1.2753238677978516,
+                    "y": -4.8763427734375
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 1,
+            "messages": {
+                "describe": [
+                    "You see your robotic sleeping quarters nearby."
+                ],
+                "touch": [
+                    "You are beside your sleeping quarters."
+                ]
+            },
+            "name": "humanoid robot quarters",
+            "quadratic_attenuation": 0
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": -4.371175765991211,
+                    "y": 2.258380889892578
+                },
+                "minimum": {
+                    "x": -5.371175765991211,
+                    "y": 1.2583808898925781
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 1,
+            "messages": {
+                "describe": [
+                    "You see the pig pen."
+                ],
+                "touch": [
+                    "You brush against the walls of the pig pen."
+                ]
+            },
+            "name": "pig pen",
+            "quadratic_attenuation": 0
+        },
+        {
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 0.5,
+            "messages": {
+                "describe": [
+                    "Your charging station juts out from the wall of your sleeping quarters."
+                ],
+                "touch": [
+                    "You plug yourself briefly into your charging station."
+                ]
+            },
+            "name": "charging station",
+            "position": {
+                "x": 1.03399658203125,
+                "y": -3.626708984375
+            },
+            "quadratic_attenuation": 0,
+            "radius": 0.5
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 4.798458099365234,
+                    "y": 1.7585010528564453
+                },
+                "minimum": {
+                    "x": 3.7984580993652344,
+                    "y": 0.7585010528564453
+                }
+            },
+            "base_attenuation": 1,
+            "invisible": false,
+            "linear_attenuation": 1,
+            "messages": {
+                "describe": [
+                    "You see the giant-tortoise pen."
+                ],
+                "touch": [
+                    "You brush against the giant-tortoise pen's walls."
+                ]
+            },
+            "name": "giant-tortoise pen",
+            "quadratic_attenuation": 0
         }
-      }, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see an open field neighboring the pasture."
-        ], 
-        "enter": [
-          "You've entered the field."
-        ], 
-        "exit": [
-          "You left the field."
-        ], 
-        "inside": [
-          "You stand in the field just outside the pasture."
-        ]
-      }, 
-      "name": "field"
-    }, 
-    {
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "The eastern tree shades its surroundings."
-        ], 
-        "enter": [
-          "You entered the eastern tree's shade."
-        ], 
-        "exit": [
-          "You exited the shade."
-        ], 
-        "inside": [
-          "You are beneath the shade of the eastern tree."
-        ]
-      }, 
-      "name": "eastern tree shade", 
-      "position": {
-        "x": 3.175466537475586, 
-        "y": -2.708846092224121
-      }, 
-      "radius": 1.3350553512573242
-    }, 
-    {
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "The western tree shades its surroundings."
-        ], 
-        "enter": [
-          "You entered the western tree's shade."
-        ], 
-        "exit": [
-          "You exited the shade."
-        ], 
-        "inside": [
-          "You are beneath the shade of the western tree."
-        ]
-      }, 
-      "name": "western tree shade", 
-      "position": {
-        "x": -1.7546300888061523, 
-        "y": -2.153183937072754
-      }, 
-      "radius": 1.3350553512573242
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": -3.3494720458984375, 
-          "y": 5.048035621643066
-        }, 
-        "minimum": {
-          "x": -5.3790483474731445, 
-          "y": 0.5993976593017578
-        }
-      }, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see a mud puddle."
-        ], 
-        "enter": [
-          "You've stepped in a mud puddle."
-        ], 
-        "exit": [
-          "You're glad you stepped out of the mud."
-        ], 
-        "inside": [
-          "You are standing in a mud puddle."
-        ]
-      }, 
-      "name": "mud puddle"
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": 1.0800018310546875, 
-          "y": 17.461294174194336
-        }, 
-        "minimum": {
-          "x": -1.479726791381836, 
-          "y": 1.2453193664550781
-        }
-      }, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see a dirt path leading out from the pasture."
-        ], 
-        "enter": [
-          "You follow the dirt path."
-        ], 
-        "exit": [
-          "You stray from the dirt path."
-        ], 
-        "inside": [
-          "You stand on the dirt path."
-        ]
-      }, 
-      "name": "dirt path"
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": 0.3291015625, 
-          "y": 2.54638671875
-        }, 
-        "minimum": {
-          "x": -1.03826904296875, 
-          "y": 1.42706298828125
-        }
-      }, 
-      "linear_attenuation": 10.0, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see the first stone of the path."
-        ], 
-        "enter": [
-          "You step on the first stone."
-        ], 
-        "exit": [], 
-        "inside": [
-          "You stand atop the first stone in the path."
-        ]
-      }, 
-      "name": "first stone"
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": 0.7991008758544922, 
-          "y": 6.408843994140625
-        }, 
-        "minimum": {
-          "x": -0.5574665069580078, 
-          "y": 5.305328369140625
-        }
-      }, 
-      "linear_attenuation": 10.0, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see the second stone of the path."
-        ], 
-        "enter": [
-          "You step on the second stone."
-        ], 
-        "exit": [], 
-        "inside": [
-          "You stand atop the second stone in the path."
-        ]
-      }, 
-      "name": "second stone"
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": 0.0135650634765625, 
-          "y": 10.161554336547852
-        }, 
-        "minimum": {
-          "x": -1.3436737060546875, 
-          "y": 9.093927383422852
-        }
-      }, 
-      "linear_attenuation": 10.0, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see the third stone of the path."
-        ], 
-        "enter": [
-          "You step on the third stone."
-        ], 
-        "exit": [], 
-        "inside": [
-          "You stand atop the third stone in the path."
-        ]
-      }, 
-      "name": "third stone"
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": 0.9254627227783203, 
-          "y": 13.38308334350586
-        }, 
-        "minimum": {
-          "x": -0.4907970428466797, 
-          "y": 12.33236312866211
-        }
-      }, 
-      "linear_attenuation": 10.0,
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see the fourth stone of the path."
-        ], 
-        "enter": [
-          "You step on the fourth stone."
-        ], 
-        "exit": [], 
-        "inside": [
-          "You stand atop the fourth stone in the path."
-        ]
-      }, 
-      "name": "fourth stone"
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": 0.19230270385742188, 
-          "y": 16.915081024169922
-        }, 
-        "minimum": {
-          "x": -1.3155097961425781, 
-          "y": 15.884747505187988
-        }
-      }, 
-      "linear_attenuation": 10.0, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see the last stone of the path."
-        ], 
-        "enter": [
-          "You step on the last stone"
-        ], 
-        "exit": [], 
-        "inside": [
-          "You stand atop the last stone in the path."
-        ]
-      }, 
-      "name": "last stone"
-    }
-  ], 
-  "messages": {
-    "east": [
-      "You head to the east.", 
-      "You move easterly.", 
-      "You go eastward."
-    ], 
-    "look": [
-      "You look around.", 
-      "You observe your surroundings.", 
-      "You inspect your environment."
-    ], 
-    "north": [
-      "You head to the north.", 
-      "You march northerly.", 
-      "You move northward."
-    ], 
-    "run": [
-      "You start to run.", 
-      "You begin running.", 
-      "You run.", 
-      "You move briskly."
-    ], 
-    "south": [
-      "You head south.", 
-      "You go southerly.", 
-      "You turn southward."
-    ], 
-    "stop looking": [
-      "You return to your thoughts.", 
-      "You are done observing.", 
-      "You conclude your inspection."
-    ], 
-    "walk": [
-      "You walk.", 
-      "You start to walk.", 
-      "You stop running.", 
-      "You slow yourself."
-    ], 
-    "west": [
-      "You go to the west.", 
-      "You move westerly.", 
-      "You head westward."
     ]
-  }, 
-  "objects": [
-    {
-      "aabb": {
-        "maximum": {
-          "x": 6.325135231018066, 
-          "y": 6.878105163574219
-        }, 
-        "minimum": {
-          "x": 0.8957223892211914, 
-          "y": 5.891178607940674
-        }
-      }, 
-      "linear_attenuation": 2.0, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see a fence enclosing the pasture."
-        ], 
-        "touch": [
-          "The fence blocks your path."
-        ]
-      }, 
-      "name": "fence"
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": 6.326913833618164, 
-          "y": -5.63004207611084
-        }, 
-        "minimum": {
-          "x": -6.8884382247924805, 
-          "y": -6.661126136779785
-        }
-      }, 
-      "linear_attenuation": 2.0,
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see a fence enclosing the pasture."
-        ], 
-        "touch": [
-          "The fence blocks your path."
-        ]
-      }, 
-      "name": "fence"
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": -5.9951629638671875, 
-          "y": 6.898088455200195
-        }, 
-        "minimum": {
-          "x": -6.878729820251465, 
-          "y": -6.647133827209473
-        }
-      }, 
-      "linear_attenuation": 2.0,
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see a fence enclosing the pasture."
-        ], 
-        "touch": [
-          "The fence blocks your path."
-        ]
-      }, 
-      "name": "fence"
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": 6.322229385375977, 
-          "y": 6.883688926696777
-        }, 
-        "minimum": {
-          "x": 5.438662528991699, 
-          "y": -6.661533355712891
-        }
-      }, 
-      "linear_attenuation": 2.0,
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see a fence enclosing the pasture."
-        ], 
-        "touch": [
-          "The fence blocks your path."
-        ]
-      }, 
-      "name": "fence"
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": -1.3581795692443848, 
-          "y": 6.8719377517700195
-        }, 
-        "minimum": {
-          "x": -6.883072853088379, 
-          "y": 5.840719223022461
-        }
-      }, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see a fence enclosing the pasture."
-        ], 
-        "touch": [
-          "The fence blocks your path."
-        ]
-      }, 
-      "name": "fence"
-    }, 
-    {
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see the western tree."
-        ], 
-        "touch": [
-          "You touch the bark of the western tree."
-        ]
-      }, 
-      "name": "western tree", 
-      "position": {
-        "x": -1.9318037033081055, 
-        "y": -2.080341339111328
-      }, 
-      "radius": 0.5
-    }, 
-    {
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see the eastern tree."
-        ], 
-        "touch": [
-          "You touch the bark of the eastern tree."
-        ]
-      }, 
-      "name": "eastern tree", 
-      "position": {
-        "x": 3.332592010498047, 
-        "y": -2.946218490600586
-      }, 
-      "radius": 0.5
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": 4.782392501831055, 
-          "y": 5.130805015563965
-        }, 
-        "minimum": {
-          "x": 3.7823925018310547, 
-          "y": 4.130805015563965
-        }
-      }, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see the wolf kennel."
-        ], 
-        "touch": [
-          "You brush against the walls of the kennel."
-        ]
-      }, 
-      "name": "kennel"
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": 4.799884796142578, 
-          "y": 3.4807376861572266
-        }, 
-        "minimum": {
-          "x": 3.799884796142578, 
-          "y": 2.4807376861572266
-        }
-      }, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see the big-cat abode."
-        ], 
-        "touch": [
-          "You brush against the walls of the big-cat abode."
-        ]
-      }, 
-      "name": "big-cat abode"
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": 2.0693836212158203, 
-          "y": -3.363229751586914
-        }, 
-        "minimum": {
-          "x": -1.2753238677978516, 
-          "y": -4.8763427734375
-        }
-      }, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see your robotic sleeping quarters nearby."
-        ], 
-        "touch": [
-          "You are beside your sleeping quarters."
-        ]
-      }, 
-      "name": "humanoid robot quarters"
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": -4.371175765991211, 
-          "y": 2.258380889892578
-        }, 
-        "minimum": {
-          "x": -5.371175765991211, 
-          "y": 1.2583808898925781
-        }
-      }, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see the pig pen."
-        ], 
-        "touch": [
-          "You brush against the walls of the pig pen."
-        ]
-      }, 
-      "name": "pig pen"
-    }, 
-    {
-      "linear_attenuation": 0.5, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "Your charging station juts out from the wall of your sleeping quarters."
-        ], 
-        "touch": [
-          "You plug yourself briefly into your charging station."
-        ]
-      }, 
-      "name": "charging station", 
-      "position": {
-        "x": 1.03399658203125, 
-        "y": -3.626708984375
-      }, 
-      "radius": 0.5
-    }, 
-    {
-      "aabb": {
-        "maximum": {
-          "x": 4.798458099365234, 
-          "y": 1.7585010528564453
-        }, 
-        "minimum": {
-          "x": 3.7984580993652344, 
-          "y": 0.7585010528564453
-        }
-      }, 
-      "invisible": false, 
-      "messages": {
-        "describe": [
-          "You see the giant-tortoise pen."
-        ], 
-        "touch": [
-          "You brush against the giant-tortoise pen's walls."
-        ]
-      }, 
-      "name": "giant-tortoise pen"
-    }
-  ]
 }
