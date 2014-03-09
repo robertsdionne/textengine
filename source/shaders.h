@@ -21,6 +21,10 @@ namespace textengine {
 
   std::string AabbDataTemplate(Object *object);
 
+  std::string AabbContainsTemplate(Object *object);
+
+  std::string AabbDistanceToTemplate(Object *object);
+
   std::string AabbMinimumAttenuationCheckTemplate(Object *object);
 
   std::string AabbMinimumAttenuationTemplate(Object *object);
@@ -30,7 +34,13 @@ namespace textengine {
   std::string AttenuationFragmentShaderSource(
       Object *selected_object, const std::set<Object *> &objects);
 
+  std::string AttenuationTemplate(Object *object, const std::string &distance);
+
   std::string CircleDataTemplate(Object *object);
+
+  std::string CircleContainsTemplate(Object *object);
+
+  std::string CircleDistanceToTemplate(Object *object);
 
   std::string CircleMinimumAttenuationCheckTemplate(Object *object);
 

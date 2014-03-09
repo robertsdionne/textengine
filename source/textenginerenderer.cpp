@@ -9,6 +9,7 @@
 #include <glm/gtx/string_cast.hpp>
 #include <memory>
 #include <set>
+#include <sstream>
 
 #include "checks.h"
 #include "controller.h"
@@ -222,6 +223,20 @@ namespace textengine {
         const glm::vec4 homogeneous = transform * glm::vec4(object->aabb.minimum.x, object->aabb.maximum.y, 0.0f, 1.0f);
         const glm::vec2 transformed = homogeneous.xy() / homogeneous.w;
         imguiDrawText(transformed.x, height - transformed.y, IMGUI_ALIGN_LEFT, object->name.c_str(), imguiRGBA(0, 0, 0));
+      }
+      
+      if (current_state.selected_item) {
+        std::ostringstream out;
+        out << "c: " << current_state.selected_item->base_attenuation;
+        imguiDrawText(10, height - 50, IMGUI_ALIGN_LEFT, out.str().c_str(), imguiRGBA(0, 0, 0));
+        out.str("");
+        out.clear();
+        out << "l: " << current_state.selected_item->linear_attenuation;
+        imguiDrawText(10, height - 75, IMGUI_ALIGN_LEFT, out.str().c_str(), imguiRGBA(0, 0, 0));
+        out.str("");
+        out.clear();
+        out << "q: " << current_state.selected_item->quadratic_attenuation << std::endl;
+        imguiDrawText(10, height - 100, IMGUI_ALIGN_LEFT, out.str().c_str(), imguiRGBA(0, 0, 0));
       }
       
       imguiEndFrame();

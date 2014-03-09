@@ -32,9 +32,9 @@
             "quadratic_attenuation": 0
         },
         {
-            "base_attenuation": 1,
+            "base_attenuation": 1.562499761581421,
             "invisible": false,
-            "linear_attenuation": 0.5,
+            "linear_attenuation": 0.007205759175121784,
             "messages": {
                 "describe": [
                     "You see the gate to the pasture."
@@ -54,7 +54,7 @@
                 "x": -0.21805715560913086,
                 "y": 6.31934928894043
             },
-            "quadratic_attenuation": 0,
+            "quadratic_attenuation": 0.018014397472143173,
             "radius": 2.0584394931793213
         },
         {
