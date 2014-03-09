@@ -70,6 +70,13 @@ namespace textengine {
     virtual ~Attenuation2ShaderTemplate() = default;
 
   protected:
+    virtual std::string AabbMinimumAttenuationCheckTemplate(Object *object) override;
+    
+    virtual std::string AabbMinimumAttenuationTemplate(Object *object) override;
+
+    virtual std::string CircleMinimumAttenuationCheckTemplate(Object *object) override;
+    
+    virtual std::string CircleMinimumAttenuationTemplate(Object *object) override;
   };
 
   class Attenuation3ShaderTemplate : public AttenuationShaderTemplate {
@@ -79,6 +86,13 @@ namespace textengine {
     virtual ~Attenuation3ShaderTemplate() = default;
 
   protected:
+    virtual std::string AabbMinimumAttenuationCheckTemplate(Object *object) override;
+    
+    virtual std::string AabbMinimumAttenuationTemplate(Object *object) override;
+    
+    virtual std::string CircleMinimumAttenuationCheckTemplate(Object *object) override;
+    
+    virtual std::string CircleMinimumAttenuationTemplate(Object *object) override;
   };
   
   static constexpr const char *kAttenuationFragmentShaderSourcePrefix = u8R"glsl(
