@@ -5,6 +5,7 @@
 #include <set>
 #include <string>
 
+#include "base.h"
 #include "scene.h"
 
 namespace textengine {
@@ -19,40 +20,66 @@ namespace textengine {
   }
   )glsl";
 
-  std::string AabbDataTemplate(Object *object);
+  class AttenuationShaderTemplate {
+  public:
+    AttenuationShaderTemplate() = default;
 
-  std::string AabbContainsTemplate(Object *object);
+    virtual ~AttenuationShaderTemplate() = default;
 
-  std::string AabbDistanceToTemplate(Object *object);
+    virtual std::string AttenuationFragmentShaderSource(
+        Object *selected_object, const std::set<Object *> &objects);
 
-  std::string AabbMinimumAttenuationCheckTemplate(Object *object);
+  protected:
+    virtual std::string AabbDataTemplate(Object *object);
 
-  std::string AabbMinimumAttenuationTemplate(Object *object);
+    virtual std::string AabbContainsTemplate(Object *object);
 
-  std::string AttenuationDataTemplate(Object *object);
+    virtual std::string AabbDistanceToTemplate(Object *object);
 
-  std::string AttenuationFragmentShaderSource(
-      Object *selected_object, const std::set<Object *> &objects);
+    virtual std::string AabbMinimumAttenuationCheckTemplate(Object *object);
 
-  std::string AttenuationTemplate(Object *object, const std::string &distance);
+    virtual std::string AabbMinimumAttenuationTemplate(Object *object);
 
-  std::string CircleDataTemplate(Object *object);
+    virtual std::string AttenuationDataTemplate(Object *object);
 
-  std::string CircleContainsTemplate(Object *object);
+    virtual std::string AttenuationTemplate(Object *object, const std::string &distance);
 
-  std::string CircleDistanceToTemplate(Object *object);
+    virtual std::string CircleDataTemplate(Object *object);
 
-  std::string CircleMinimumAttenuationCheckTemplate(Object *object);
+    virtual std::string CircleContainsTemplate(Object *object);
 
-  std::string CircleMinimumAttenuationTemplate(Object *object);
+    virtual std::string CircleDistanceToTemplate(Object *object);
 
-  std::string ObjectTemplate(Object *object);
+    virtual std::string CircleMinimumAttenuationCheckTemplate(Object *object);
 
-  std::string SelectedObjectTemplate(Object *object);
+    virtual std::string CircleMinimumAttenuationTemplate(Object *object);
 
-  std::string Vec2Template(glm::vec2 vector);
+    virtual std::string ObjectTemplate(Object *object);
 
-  std::string Vec3Template(glm::vec3 vector);
+    virtual std::string SelectedObjectTemplate(Object *object);
+
+    virtual std::string Vec2Template(glm::vec2 vector);
+
+    virtual std::string Vec3Template(glm::vec3 vector);
+  };
+
+  class Attenuation2ShaderTemplate : public AttenuationShaderTemplate {
+  public:
+    Attenuation2ShaderTemplate() = default;
+
+    virtual ~Attenuation2ShaderTemplate() = default;
+
+  protected:
+  };
+
+  class Attenuation3ShaderTemplate : public AttenuationShaderTemplate {
+  public:
+    Attenuation3ShaderTemplate() = default;
+
+    virtual ~Attenuation3ShaderTemplate() = default;
+
+  protected:
+  };
   
   static constexpr const char *kAttenuationFragmentShaderSourcePrefix = u8R"glsl(
   #version 410 core
@@ -88,7 +115,7 @@ namespace textengine {
   )glsl";
 
   static constexpr const char *kAttenuationFragmentShaderSourceSuffix = u8R"glsl(
-    fragment_color = vec4(0, 0, 1, 0.25);
+    fragment_color = vec4(0, 0, 0, 0.25);
   }
   )glsl";
 

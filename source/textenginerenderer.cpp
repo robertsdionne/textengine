@@ -22,7 +22,8 @@ namespace textengine {
   TextEngineRenderer::TextEngineRenderer(Mouse &mouse, Controller &updater, Scene &scene, bool edit)
   : mouse(mouse), updater(updater), scene(scene), edit(edit), model_view(glm::mat4()),
     projection(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)), matrix_stack{glm::mat4(1)},
-    attenuation_fragment_shader_source_hash() {}
+    attenuation_fragment_shader_source_hash(), attenuation_template(), attenuation2_template(),
+    attenuation3_template() {}
 
   void TextEngineRenderer::Change(int width, int height) {
     this->width = width;
@@ -101,15 +102,30 @@ namespace textengine {
       for (auto &object : scene.areas) {
         objects.insert(object.get());
       }
-      const auto attenuation_shader_source =
-      AttenuationFragmentShaderSource(updater.GetCurrentState().selected_item, objects);
+      const auto attenuation_shader_source = attenuation_template.AttenuationFragmentShaderSource(
+          updater.GetCurrentState().selected_item, objects);
       std::hash<std::string> string_hash;
       const auto source_hash = string_hash(attenuation_shader_source);
       if (source_hash != attenuation_fragment_shader_source_hash) {
+        const auto attenuation2_shader_source =
+            attenuation2_template.AttenuationFragmentShaderSource(
+                updater.GetCurrentState().selected_item, objects);
+        const auto attenuation3_shader_source =
+            attenuation3_template.AttenuationFragmentShaderSource(
+                updater.GetCurrentState().selected_item, objects);
         attenuation_vertex_shader.Create(GL_VERTEX_SHADER, {kAttenuationVertexShaderSource});
         attenuation_fragment_shader.Create(GL_FRAGMENT_SHADER, {attenuation_shader_source});
         attenuation_program.Create({&attenuation_vertex_shader, &attenuation_fragment_shader});
         attenuation_program.CompileAndLink();
+        
+        attenuation2_fragment_shader.Create(GL_FRAGMENT_SHADER, {attenuation2_shader_source});
+        attenuation2_program.Create({&attenuation_vertex_shader, &attenuation2_fragment_shader});
+        attenuation2_program.CompileAndLink();
+        
+        attenuation3_fragment_shader.Create(GL_FRAGMENT_SHADER, {attenuation3_shader_source});
+        attenuation3_program.Create({&attenuation_vertex_shader, &attenuation3_fragment_shader});
+        attenuation3_program.CompileAndLink();
+        
         attenuation.data.insert(attenuation.data.cend(), {
           1.0f, -1.0f,
           1.0f, 1.0f,
@@ -198,6 +214,20 @@ namespace textengine {
         });
         attenuation_array.Bind();
         glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
+        
+//        attenuation2_program.Use();
+//        attenuation2_program.Uniforms({
+//          {u8"model_view_inverse", &inverse}
+//        });
+//        attenuation_array.Bind();
+//        glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
+//        
+//        attenuation3_program.Use();
+//        attenuation3_program.Uniforms({
+//          {u8"model_view_inverse", &inverse}
+//        });
+//        attenuation_array.Bind();
+//        glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
       }
     }
 

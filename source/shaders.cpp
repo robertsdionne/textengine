@@ -8,62 +8,7 @@
 
 namespace textengine {
 
-  std::string AabbDataTemplate(Object *object) {
-    std::ostringstream result;
-    result.precision(std::numeric_limits<double>::max_digits10);
-    result << "vec2 object" << object->id << "_minimum = "
-        << Vec2Template(object->aabb.minimum) << ";" << std::endl;
-    result << "vec2 object" << object->id << "_maximum = "
-        << Vec2Template(object->aabb.maximum) << ";" << std::endl;
-    result << AttenuationDataTemplate(object);
-    return result.str();
-  }
-
-  std::string AabbContainsTemplate(Object *object) {
-    std::ostringstream result;
-    result << "AabbContains(object" << object->id << "_minimum, object"
-          << object->id << "_maximum, position)";
-    return result.str();
-  }
-
-  std::string AabbDistanceToTemplate(Object *object) {
-    std::ostringstream result;
-    result << "AabbDistanceTo(object" << object->id << "_minimum, object"
-        << object->id << "_maximum, position)";
-    return result.str();
-  }
-
-  std::string AabbMinimumAttenuationCheckTemplate(Object *object) {
-    std::ostringstream result;
-    result << "if (" << AttenuationTemplate(object, AabbDistanceToTemplate(object)) << " < minimum_attenuation) {" << std::endl
-        << "  if (!" << AabbContainsTemplate(object) << ") {" << std::endl
-        << "    discard;" << std::endl
-        << "  }" << std::endl
-        << "}" << std::endl;
-    return result.str();
-  }
-
-  std::string AabbMinimumAttenuationTemplate(Object *object) {
-    std::ostringstream result;
-    result << "float minimum_attenuation = "
-        << AttenuationTemplate(object, AabbDistanceToTemplate(object)) << ";" << std::endl
-        << "if (" << AabbContainsTemplate(object) << ") {" << std::endl
-        << "  discard;" << std::endl
-        << "}" << std::endl;
-    return result.str();
-  }
-
-  std::string AttenuationDataTemplate(Object *object) {
-    std::ostringstream result;
-    result.precision(std::numeric_limits<double>::max_digits10);
-    const auto attenuation = glm::vec3(
-        object->base_attenuation, object->linear_attenuation, object->quadratic_attenuation);
-    result << "vec3 object" << object->id << "_attenuation = "
-        << Vec3Template(attenuation) << ";" << std::endl;
-    return result.str();
-  }
-
-  std::string AttenuationFragmentShaderSource(
+  std::string AttenuationShaderTemplate::AttenuationFragmentShaderSource(
       Object *selected_object, const std::set<Object *> &objects) {
     std::ostringstream result;
     result.precision(std::numeric_limits<double>::max_digits10);
@@ -78,20 +23,75 @@ namespace textengine {
     return result.str();
   }
 
-  std::string AttenuationTemplate(Object *object, const std::string &distance) {
+  std::string AttenuationShaderTemplate::AabbDataTemplate(Object *object) {
+    std::ostringstream result;
+    result.precision(std::numeric_limits<double>::max_digits10);
+    result << "vec2 object" << object->id << "_minimum = "
+        << Vec2Template(object->aabb.minimum) << ";" << std::endl;
+    result << "vec2 object" << object->id << "_maximum = "
+        << Vec2Template(object->aabb.maximum) << ";" << std::endl;
+    result << AttenuationDataTemplate(object);
+    return result.str();
+  }
+
+  std::string AttenuationShaderTemplate::AabbContainsTemplate(Object *object) {
+    std::ostringstream result;
+    result << "AabbContains(object" << object->id << "_minimum, object"
+          << object->id << "_maximum, position)";
+    return result.str();
+  }
+
+  std::string AttenuationShaderTemplate::AabbDistanceToTemplate(Object *object) {
+    std::ostringstream result;
+    result << "AabbDistanceTo(object" << object->id << "_minimum, object"
+        << object->id << "_maximum, position)";
+    return result.str();
+  }
+
+  std::string AttenuationShaderTemplate::AabbMinimumAttenuationCheckTemplate(Object *object) {
+    std::ostringstream result;
+    result << "if (" << AttenuationTemplate(object, AabbDistanceToTemplate(object)) << " < minimum_attenuation) {" << std::endl
+        << "  if (!" << AabbContainsTemplate(object) << ") {" << std::endl
+        << "    discard;" << std::endl
+        << "  }" << std::endl
+        << "}" << std::endl;
+    return result.str();
+  }
+
+  std::string AttenuationShaderTemplate::AabbMinimumAttenuationTemplate(Object *object) {
+    std::ostringstream result;
+    result << "float minimum_attenuation = "
+        << AttenuationTemplate(object, AabbDistanceToTemplate(object)) << ";" << std::endl
+        << "if (" << AabbContainsTemplate(object) << ") {" << std::endl
+        << "  discard;" << std::endl
+        << "}" << std::endl;
+    return result.str();
+  }
+
+  std::string AttenuationShaderTemplate::AttenuationDataTemplate(Object *object) {
+    std::ostringstream result;
+    result.precision(std::numeric_limits<double>::max_digits10);
+    const auto attenuation = glm::vec3(
+        object->base_attenuation, object->linear_attenuation, object->quadratic_attenuation);
+    result << "vec3 object" << object->id << "_attenuation = "
+        << Vec3Template(attenuation) << ";" << std::endl;
+    return result.str();
+  }
+
+  std::string AttenuationShaderTemplate::AttenuationTemplate(Object *object, const std::string &distance) {
     std::ostringstream result;
     result << "Attenuation(object" << object->id << "_attenuation, " << distance << ")";
     return result.str();
   }
 
-  std::string CircleContainsTemplate(Object *object) {
+  std::string AttenuationShaderTemplate::CircleContainsTemplate(Object *object) {
     std::ostringstream result;
     result << "CircleContains(object" << object->id << "_center, object"
           << object->id << "_radius, position)";
     return result.str();
   }
 
-  std::string CircleDataTemplate(Object *object) {
+  std::string AttenuationShaderTemplate::CircleDataTemplate(Object *object) {
     std::ostringstream result;
     result.precision(std::numeric_limits<double>::max_digits10);
     result << "vec2 object" << object->id << "_center = "
@@ -102,14 +102,14 @@ namespace textengine {
     return result.str();
   }
 
-  std::string CircleDistanceToTemplate(Object *object) {
+  std::string AttenuationShaderTemplate::CircleDistanceToTemplate(Object *object) {
     std::ostringstream result;
     result << "CircleDistanceTo(object" << object->id << "_center, object"
         << object->id << "_radius, position)";
     return result.str();
   }
 
-  std::string CircleMinimumAttenuationCheckTemplate(Object *object) {
+  std::string AttenuationShaderTemplate::CircleMinimumAttenuationCheckTemplate(Object *object) {
     std::ostringstream result;
     result << "if (" << AttenuationTemplate(object, CircleDistanceToTemplate(object)) << " < minimum_attenuation) {" << std::endl
         << "  if (!" << CircleContainsTemplate(object) << ") {" << std::endl
@@ -119,7 +119,7 @@ namespace textengine {
     return result.str();
   }
 
-  std::string CircleMinimumAttenuationTemplate(Object *object) {
+  std::string AttenuationShaderTemplate::CircleMinimumAttenuationTemplate(Object *object) {
     std::ostringstream result;
     result << "float minimum_attenuation = "
         << AttenuationTemplate(object, CircleDistanceToTemplate(object)) << ";" << std::endl
@@ -129,7 +129,7 @@ namespace textengine {
     return result.str();
   }
 
-  std::string ObjectTemplate(Object *object) {
+  std::string AttenuationShaderTemplate::ObjectTemplate(Object *object) {
     std::ostringstream result;
     if (Shape::kAxisAlignedBoundingBox == object->shape) {
       result << AabbDataTemplate(object) << AabbMinimumAttenuationCheckTemplate(object);
@@ -139,7 +139,7 @@ namespace textengine {
     return result.str();
   }
 
-  std::string SelectedObjectTemplate(Object *object) {
+  std::string AttenuationShaderTemplate::SelectedObjectTemplate(Object *object) {
     std::ostringstream result;
     if (Shape::kAxisAlignedBoundingBox == object->shape) {
       result << AabbDataTemplate(object) << AabbMinimumAttenuationTemplate(object);
@@ -149,14 +149,14 @@ namespace textengine {
     return result.str();
   }
 
-  std::string Vec2Template(glm::vec2 vector) {
+  std::string AttenuationShaderTemplate::Vec2Template(glm::vec2 vector) {
     std::ostringstream result;
     result.precision(std::numeric_limits<double>::max_digits10);
     result << "vec2(" << vector.x << ", " << vector.y << ")";
     return result.str();
   }
 
-  std::string Vec3Template(glm::vec3 vector) {
+  std::string AttenuationShaderTemplate::Vec3Template(glm::vec3 vector) {
     std::ostringstream result;
     result.precision(std::numeric_limits<double>::max_digits10);
     result << "vec3(" << vector.x << ", " << vector.y << ", " << vector.z << ")";
