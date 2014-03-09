@@ -45,6 +45,10 @@ namespace textengine {
   }
 
   void Shader::Create(GLenum type, const std::vector<std::string> &&sources) {
+    if (handle) {
+      glDeleteShader(handle);
+      handle = 0;
+    }
     this->type = type;
     this->sources = sources;
     handle = glCreateShader(type);

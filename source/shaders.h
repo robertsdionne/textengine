@@ -1,6 +1,12 @@
 #ifndef TEXTENGINE_SHADERS_H_
 #define TEXTENGINE_SHADERS_H_
 
+#include <memory>
+#include <set>
+#include <string>
+
+#include "scene.h"
+
 namespace textengine {
   
   static constexpr const char *kAttenuationVertexShaderSource = u8R"glsl(
@@ -12,13 +18,35 @@ namespace textengine {
     gl_Position = vertex_position;
   }
   )glsl";
+
+  std::string AabbDataTemplate(Object *object);
+
+  std::string AabbMinimumAttenuationCheckTemplate(Object *object);
+
+  std::string AabbMinimumAttenuationTemplate(Object *object);
+
+  std::string AttenuationDataTemplate(Object *object);
+
+  std::string AttenuationFragmentShaderSource(
+      Object *selected_object, const std::set<Object *> &objects);
+
+  std::string CircleDataTemplate(Object *object);
+
+  std::string CircleMinimumAttenuationCheckTemplate(Object *object);
+
+  std::string CircleMinimumAttenuationTemplate(Object *object);
+
+  std::string ObjectTemplate(Object *object);
+
+  std::string SelectedObjectTemplate(Object *object);
+
+  std::string Vec2Template(glm::vec2 vector);
+
+  std::string Vec3Template(glm::vec3 vector);
   
-  static constexpr const char *kAttenuationFragmentShaderSource = u8R"glsl(
+  static constexpr const char *kAttenuationFragmentShaderSourcePrefix = u8R"glsl(
   #version 410 core
-  uniform mat4 model_view;
-  uniform vec2 selected_minimum;
-  uniform vec2 selected_maximum;
-  uniform vec3 selected_attenuation;
+  uniform mat4 model_view_inverse;
   
   out vec4 fragment_color;
   
@@ -45,12 +73,13 @@ namespace textengine {
   }
   
   void main() {
-    vec2 object0_minimum = vec2(-6, -5);
-    vec2 object0_maximum = vec2(5, 5);
-    vec3 object0_attenuation = vec3(1, 1, 0);
-    discard;
+    vec4 transformed = model_view_inverse * gl_FragCoord;
+    vec2 position = transformed.xy / transformed.w;
+  )glsl";
+
+  static constexpr const char *kAttenuationFragmentShaderSourceSuffix = u8R"glsl(
+    fragment_color = vec4(0, 0, 1, 0.25);
   }
-  
   )glsl";
 
   static constexpr const char *kVertexShaderSource = u8R"glsl(

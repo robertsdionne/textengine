@@ -1,4 +1,5 @@
 #include <GLFW/glfw3.h>
+#include <functional>
 #include <imgui.h>
 #include <imguiRenderGL3.h>
 #define GLM_FORCE_RADIANS
@@ -7,6 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include <memory>
+#include <set>
 
 #include "checks.h"
 #include "controller.h"
@@ -18,7 +20,8 @@ namespace textengine {
 
   TextEngineRenderer::TextEngineRenderer(Mouse &mouse, Controller &updater, Scene &scene, bool edit)
   : mouse(mouse), updater(updater), scene(scene), edit(edit), model_view(glm::mat4()),
-    projection(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)), matrix_stack{glm::mat4(1)} {}
+    projection(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)), matrix_stack{glm::mat4(1)},
+    attenuation_fragment_shader_source_hash() {}
 
   void TextEngineRenderer::Change(int width, int height) {
     this->width = width;
@@ -34,28 +37,18 @@ namespace textengine {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    attenuation_vertex_shader.Create(GL_VERTEX_SHADER, {kAttenuationVertexShaderSource});
-    attenuation_fragment_shader.Create(GL_FRAGMENT_SHADER, {kAttenuationFragmentShaderSource});
+    if (edit) {
+      MaybeRebuildAttenuationShader();
+    }
+    
     vertex_shader.Create(GL_VERTEX_SHADER, {kVertexShaderSource});
     fragment_shader.Create(GL_FRAGMENT_SHADER, {kFragmentShaderSource});
-
-    attenuation_program.Create({&attenuation_vertex_shader, &attenuation_fragment_shader});
-    attenuation_program.CompileAndLink();
     face_program.Create({&vertex_shader, &fragment_shader});
     face_program.CompileAndLink();
 
     vertex_format.Create({
       {u8"vertex_position", GL_FLOAT, 2}
     });
-    
-    attenuation.data.insert(attenuation.data.cend(), {
-      1.0f, -1.0f,
-      1.0f, 1.0f,
-      -1.0f, -1.0f,
-      -1.0f, 1.0f
-    });
-    attenuation.element_count = 4;
-    attenuation.element_type = GL_TRIANGLE_STRIP;
 
     unit_circle.data.insert(unit_circle.data.cend(), {
       0.0f, 0.0f
@@ -78,12 +71,6 @@ namespace textengine {
     });
     unit_square.element_count = 4;
     unit_square.element_type = GL_TRIANGLE_STRIP;
-
-    attenuation_buffer.Create(GL_ARRAY_BUFFER);
-    attenuation_buffer.Data(attenuation.data_size(), attenuation.data.data(), GL_STATIC_DRAW);
-    attenuation_array.Create();
-    vertex_format.Apply(attenuation_array, attenuation_program);
-    CHECK_STATE(!glGetError());
     
     circle_buffer.Create(GL_ARRAY_BUFFER);
     circle_buffer.Data(unit_circle.data_size(), unit_circle.data.data(), GL_STATIC_DRAW);
@@ -102,6 +89,43 @@ namespace textengine {
     fill = glm::vec4(0.5, 0.5, 0.5, 1);
 
     CHECK_STATE(imguiRenderGLInit("../resource/fonts/ubuntu-font-family-0.80/Ubuntu-R.ttf"));
+  }
+  
+  void TextEngineRenderer::MaybeRebuildAttenuationShader() {
+    if (updater.GetCurrentState().selected_item) {
+      std::set<textengine::Object *> objects;
+      for (auto &object : scene.objects) {
+        objects.insert(object.get());
+      }
+      for (auto &object : scene.areas) {
+        objects.insert(object.get());
+      }
+      const auto attenuation_shader_source =
+      AttenuationFragmentShaderSource(updater.GetCurrentState().selected_item, objects);
+      std::hash<std::string> string_hash;
+      const auto source_hash = string_hash(attenuation_shader_source);
+      if (source_hash != attenuation_fragment_shader_source_hash) {
+        attenuation_vertex_shader.Create(GL_VERTEX_SHADER, {kAttenuationVertexShaderSource});
+        attenuation_fragment_shader.Create(GL_FRAGMENT_SHADER, {attenuation_shader_source});
+        attenuation_program.Create({&attenuation_vertex_shader, &attenuation_fragment_shader});
+        attenuation_program.CompileAndLink();
+        attenuation.data.insert(attenuation.data.cend(), {
+          1.0f, -1.0f,
+          1.0f, 1.0f,
+          -1.0f, -1.0f,
+          -1.0f, 1.0f
+        });
+        attenuation.element_count = 4;
+        attenuation.element_type = GL_TRIANGLE_STRIP;
+        
+        attenuation_buffer.Create(GL_ARRAY_BUFFER);
+        attenuation_buffer.Data(attenuation.data_size(), attenuation.data.data(), GL_STATIC_DRAW);
+        attenuation_array.Create();
+        vertex_format.Apply(attenuation_array, attenuation_program);
+        CHECK_STATE(!glGetError());
+        attenuation_fragment_shader_source_hash = source_hash;
+      }
+    }
   }
 
   void TextEngineRenderer::Render() {
@@ -136,9 +160,8 @@ namespace textengine {
         DrawAxisAlignedBoundingBox(object->aabb);
       } else {
         DrawCircle(object->aabb.center(), object->aabb.radius());
-      }
+      }	
     }
-
 
     const glm::mat4 normalized_to_reversed = glm::scale(glm::mat4(), glm::vec3(1.0f, -1.0f, 1.0f));
     const glm::mat4 reversed_to_offset = glm::translate(glm::mat4(), glm::vec3(glm::vec2(1.0f), 0.0f));
@@ -148,6 +171,10 @@ namespace textengine {
     const glm::mat4 transform = (screen_to_window * offset_to_screen *
                                  reversed_to_offset * normalized_to_reversed *
                                  model_view * projection * matrix_stack.back());
+    const glm::mat4 transform2 = (screen_to_window * offset_to_screen *
+                                  reversed_to_offset *
+                                  model_view * projection * matrix_stack.back());
+    const auto inverse = glm::inverse(transform2);
     const glm::vec4 homogeneous = transform * glm::vec4(position, 0.0f, 1.0f);
     const glm::vec2 transformed = homogeneous.xy() / homogeneous.w;
 
@@ -161,9 +188,17 @@ namespace textengine {
     PopMatrix();
     PopMatrix();
     
-    attenuation_program.Use();
-    attenuation_array.Bind();
-    glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
+    if (edit) {
+      MaybeRebuildAttenuationShader();
+      if (updater.GetCurrentState().selected_item) {
+        attenuation_program.Use();
+        attenuation_program.Uniforms({
+          {u8"model_view_inverse", &inverse}
+        });
+        attenuation_array.Bind();
+        glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
+      }
+    }
 
     const auto mouse_position = 2.0f * mouse.get_cursor_position();
     unsigned char mouse_buttons = 0;

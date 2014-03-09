@@ -30,6 +30,10 @@ namespace textengine {
   }
 
   void Program::Create(const std::vector<Shader *> &&shaders) {
+    if (handle) {
+      glDeleteProgram(handle);
+      handle = 0;
+    }
     this->shaders = shaders;
     handle = glCreateProgram();
   }

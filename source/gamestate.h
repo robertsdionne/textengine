@@ -13,6 +13,7 @@
 
 namespace textengine {
 
+  class Object;
   class Scene;
 
   class GameState {
@@ -25,6 +26,7 @@ namespace textengine {
     float accrued_distance, zoom;
     b2World world;
     b2Body *player_body;
+    Object *selected_item;
 
     std::vector<b2Body *> areas;
     std::vector<b2Body *> objects;

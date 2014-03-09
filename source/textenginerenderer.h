@@ -44,6 +44,8 @@ namespace textengine {
 
     void PushMatrix();
     
+    void MaybeRebuildAttenuationShader();
+    
   private:
     Mouse &mouse;
     Controller &updater;
@@ -52,11 +54,11 @@ namespace textengine {
     float inverse_aspect_ratio;
 
     Shader attenuation_fragment_shader, attenuation_vertex_shader, fragment_shader, vertex_shader;
+    size_t attenuation_fragment_shader_source_hash;
     Program attenuation_program, face_program;
     VertexFormat vertex_format;
     VertexArray attenuation_array, circle_array, rectangle_array;
     Buffer attenuation_buffer, circle_buffer, rectangle_buffer;
-
     glm::mat4 model_view, projection;
 
     glm::vec4 fill, stroke;

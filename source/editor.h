@@ -36,7 +36,6 @@ namespace textengine {
     Mouse &mouse;
     Scene &scene;
     glm::mat4 model_view_projection;
-    Object *selected_item;
     glm::vec2 start, stop, delta;
     AxisAlignedBoundingBox aabb;
     bool moving, naming, ready, placing;

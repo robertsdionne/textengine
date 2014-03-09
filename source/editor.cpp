@@ -20,23 +20,23 @@ namespace textengine {
   Editor::Editor(int width, int height,
                  GameState &initial_state, Keyboard &keyboard, Mouse &mouse, Scene &scene)
   : width(width), height(height), current_state(initial_state), keyboard(keyboard), mouse(mouse),
-  scene(scene), selected_item(), start(), stop(), moving(), naming(), ready(), placing() {
+  scene(scene), start(), stop(), moving(), naming(), ready(), placing() {
     keyboard.AddKeyDownListener([this] (int key) {
-      if (naming && selected_item) {
+      if (naming && current_state.selected_item) {
         if (GLFW_KEY_A <= key && key <= GLFW_KEY_Z) {
-          selected_item->name += static_cast<char>(key - GLFW_KEY_A) + 'a';
+          current_state.selected_item->name += static_cast<char>(key - GLFW_KEY_A) + 'a';
         }
         if (GLFW_KEY_0 <= key && key <= GLFW_KEY_9) {
-          selected_item->name += static_cast<char>(key - GLFW_KEY_0) + '0';
+          current_state.selected_item->name += static_cast<char>(key - GLFW_KEY_0) + '0';
         }
         if (GLFW_KEY_SPACE == key) {
-          selected_item->name += ' ';
+          current_state.selected_item->name += ' ';
         }
         if (GLFW_KEY_MINUS == key) {
-          selected_item->name += '-';
+          current_state.selected_item->name += '-';
         }
-        if (GLFW_KEY_BACKSPACE == key && selected_item->name.size()) {
-          selected_item->name.resize(selected_item->name.size() - 1);
+        if (GLFW_KEY_BACKSPACE == key && current_state.selected_item->name.size()) {
+          current_state.selected_item->name.resize(current_state.selected_item->name.size() - 1);
         }
       }
     });
@@ -84,27 +84,27 @@ namespace textengine {
       current_state.camera_position -= dx;
     }
     if (ready && keyboard.GetKeyVelocity(GLFW_KEY_Q) > 0) {
-      selected_item = scene.AddArea();
+      current_state.selected_item = scene.AddArea();
     }
     if (ready && keyboard.GetKeyVelocity(GLFW_KEY_E) > 0) {
-      selected_item = scene.AddObject();
+      current_state.selected_item = scene.AddObject();
     }
-    if (ready && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_ENTER) > 0) {
+    if (ready && current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_ENTER) > 0) {
       naming = true;
-      selected_item->name.clear();
+      current_state.selected_item->name.clear();
     } else if (naming && keyboard.GetKeyVelocity(GLFW_KEY_ENTER) > 0) {
       naming = false;
     }
-    if (!naming && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_SPACE) > 0) {
-      if (Shape::kAxisAlignedBoundingBox == selected_item->shape) {
-        selected_item->shape = Shape::kCircle;
+    if (!naming && current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_SPACE) > 0) {
+      if (Shape::kAxisAlignedBoundingBox == current_state.selected_item->shape) {
+        current_state.selected_item->shape = Shape::kCircle;
       } else {
-        selected_item->shape = Shape::kAxisAlignedBoundingBox;
+        current_state.selected_item->shape = Shape::kAxisAlignedBoundingBox;
       }
     }
-    if (!naming && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_T) > 0) {
+    if (!naming && current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_T) > 0) {
       auto removal_criterion = [&] (const std::unique_ptr<Object> &p) {
-        return selected_item == p.get();
+        return current_state.selected_item == p.get();
       };
       auto area = std::find_if(scene.areas.begin(), scene.areas.end(), removal_criterion);
       auto object = std::find_if(scene.objects.begin(), scene.objects.end(), removal_criterion);
@@ -116,25 +116,25 @@ namespace textengine {
         scene.areas.erase(area);
       }
     }
-    if (ready && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_R) > 0) {
-      auto old_selected_item = selected_item;
+    if (ready && current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_R) > 0) {
+      auto old_selected_item = current_state.selected_item;
       auto removal_criterion = [&] (const std::unique_ptr<Object> &p) {
-        return selected_item == p.get();
+        return current_state.selected_item == p.get();
       };
       auto area = std::find_if(scene.areas.begin(), scene.areas.end(), removal_criterion);
       if (scene.areas.end() == area) {
-        selected_item = scene.AddObject();
+        current_state.selected_item = scene.AddObject();
       } else {
-        selected_item = scene.AddArea();
+        current_state.selected_item = scene.AddArea();
       }
-      selected_item->aabb = old_selected_item->aabb;
-      selected_item->invisible = old_selected_item->invisible;
-      selected_item->shape = old_selected_item->shape;
+      current_state.selected_item->aabb = old_selected_item->aabb;
+      current_state.selected_item->invisible = old_selected_item->invisible;
+      current_state.selected_item->shape = old_selected_item->shape;
       moving = true;
-      aabb = selected_item->aabb;
+      aabb = current_state.selected_item->aabb;
       delta = aabb.minimum - GetCursorPosition();
     }
-    if (ready && selected_item && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) > 0) {
+    if (ready && current_state.selected_item && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) > 0) {
       placing = true;
       start = GetCursorPosition();
     }
@@ -161,43 +161,43 @@ namespace textengine {
         }
       }
       if (argmin) {
-        selected_item = argmin;
+        current_state.selected_item = argmin;
       }
     }
-    if (ready && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_BACKSPACE) > 0) {
-      scene.EraseItem(selected_item);
-      selected_item = nullptr;
+    if (ready && current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_BACKSPACE) > 0) {
+      scene.EraseItem(current_state.selected_item);
+      current_state.selected_item = nullptr;
     }
-    if (ready && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_G) > 0) {
+    if (ready && current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_G) > 0) {
       moving = true;
-      aabb = selected_item->aabb;
+      aabb = current_state.selected_item->aabb;
       delta = aabb.minimum - GetCursorPosition();
     }
-    if (moving && selected_item) {
+    if (moving && current_state.selected_item) {
       const auto position = GetCursorPosition();
-      selected_item->aabb.minimum = position + delta;
-      selected_item->aabb.maximum = position + delta + aabb.extent();
+      current_state.selected_item->aabb.minimum = position + delta;
+      current_state.selected_item->aabb.maximum = position + delta + aabb.extent();
     }
     if (moving && keyboard.GetKeyVelocity(GLFW_KEY_ESCAPE) > 0) {
       moving = false;
-      selected_item->aabb = aabb;
+      current_state.selected_item->aabb = aabb;
     }
     if (moving && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) > 0) {
       moving = false;
     }
-    if (!naming && selected_item && keyboard.GetKeyVelocity(GLFW_KEY_V) > 0) {
-      selected_item->invisible = !selected_item->invisible;
+    if (!naming && current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_V) > 0) {
+      current_state.selected_item->invisible = !current_state.selected_item->invisible;
     }
-    if (placing && selected_item) {
+    if (placing && current_state.selected_item) {
       stop = GetCursorPosition();
-      selected_item->aabb.minimum = glm::min(start, stop);
-      selected_item->aabb.maximum = glm::max(start, stop);
+      current_state.selected_item->aabb.minimum = glm::min(start, stop);
+      current_state.selected_item->aabb.maximum = glm::max(start, stop);
     }
-    if (placing && selected_item && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) < 0) {
+    if (placing && current_state.selected_item && mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_1) < 0) {
       placing = false;
       stop = GetCursorPosition();
-      selected_item->aabb.minimum = glm::min(start, stop);
-      selected_item->aabb.maximum = glm::max(start, stop);
+      current_state.selected_item->aabb.minimum = glm::min(start, stop);
+      current_state.selected_item->aabb.maximum = glm::max(start, stop);
     }
     if (!naming && keyboard.IsKeyDown(GLFW_KEY_MINUS)) {
       current_state.zoom *= 0.9;
