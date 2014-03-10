@@ -54,17 +54,16 @@ namespace textengine {
     bool edit;
     float inverse_aspect_ratio;
 
-    Shader attenuation_fragment_shader, attenuation2_fragment_shader, attenuation3_fragment_shader;
+    Shader attenuation_fragment_shader, attenuation3_fragment_shader;
     Shader attenuation_vertex_shader, fragment_shader, vertex_shader;
     size_t attenuation_fragment_shader_source_hash;
-    Program attenuation_program, attenuation2_program, attenuation3_program;
+    Program attenuation_program, attenuation3_program;
     Program face_program;
     VertexFormat vertex_format;
     VertexArray attenuation_array, circle_array, rectangle_array;
     Buffer attenuation_buffer, circle_buffer, rectangle_buffer;
     glm::mat4 model_view, projection;
     AttenuationShaderTemplate attenuation_template;
-    Attenuation2ShaderTemplate attenuation2_template;
     Attenuation3ShaderTemplate attenuation3_template;
 
     glm::vec4 fill, stroke;

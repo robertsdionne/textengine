@@ -65,24 +65,6 @@ namespace textengine {
     virtual std::string Vec3Template(glm::vec3 vector);
   };
 
-  class Attenuation2ShaderTemplate : public AttenuationShaderTemplate {
-  public:
-    Attenuation2ShaderTemplate() = default;
-
-    virtual ~Attenuation2ShaderTemplate() = default;
-
-  protected:
-    virtual std::string AabbMinimumAttenuationCheckTemplate(Object *object) override;
-    
-    virtual std::string AabbMinimumAttenuationTemplate(Object *object) override;
-
-    virtual std::string CircleMinimumAttenuationCheckTemplate(Object *object) override;
-    
-    virtual std::string CircleMinimumAttenuationTemplate(Object *object) override;
-
-    virtual std::string SuffixTemplate() override;
-  };
-
   class Attenuation3ShaderTemplate : public AttenuationShaderTemplate {
   public:
     Attenuation3ShaderTemplate() = default;

@@ -167,80 +167,6 @@ namespace textengine {
     return result.str();
   }
 
-  std::string Attenuation2ShaderTemplate::AabbMinimumAttenuationCheckTemplate(Object *object) {
-    std::ostringstream result;
-    result << "if (!" << AabbContainsTemplate(object) << ") {" << std::endl
-        << "  float attenuation = " << AttenuationTemplate(object, AabbDistanceToTemplate(object)) << ";" << std::endl
-        << "  if (attenuation < minimum_attenuation) {" << std::endl
-        << "    minimum2_attenuation = minimum_attenuation;" << std::endl
-        << "    minimum_attenuation = attenuation;" << std::endl
-        << "    index += 1;" << std::endl
-        << "  } else if (attenuation < minimum2_attenuation) {" << std::endl
-        << "    minimum2_attenuation = attenuation;" << std::endl
-        << "    if (index > 0) {" << std::endl
-        << "      index += 1;" << std::endl
-        << "    }" << std::endl
-        << "  }" << std::endl
-        << "  if (index > 1) {" << std::endl
-        << "    discard;" << std::endl
-        << "  }" << std::endl
-        << "}" << std::endl;
-    return result.str();
-  }
-
-  std::string Attenuation2ShaderTemplate::AabbMinimumAttenuationTemplate(Object *object) {
-    std::ostringstream result;
-    result << "float minimum_attenuation = "
-        << AttenuationTemplate(object, AabbDistanceToTemplate(object)) << ";" << std::endl
-        << "float minimum2_attenuation = 3.40282e+038;" << std::endl
-        << "int index = 0;" << std::endl
-        << "if (" << AabbContainsTemplate(object) << ") {" << std::endl
-        << "  discard;" << std::endl
-        << "}" << std::endl;
-    return result.str();
-  }
-
-  std::string Attenuation2ShaderTemplate::CircleMinimumAttenuationCheckTemplate(Object *object) {
-    std::ostringstream result;
-    result << "if (!" << CircleContainsTemplate(object) << ") {" << std::endl
-        << "  float attenuation = " << AttenuationTemplate(object, CircleDistanceToTemplate(object)) << ";" << std::endl
-        << "  if (attenuation < minimum_attenuation) {" << std::endl
-        << "    minimum2_attenuation = minimum_attenuation;" << std::endl
-        << "    minimum_attenuation = attenuation;" << std::endl
-        << "    index += 1;" << std::endl
-        << "  } else if (attenuation < minimum2_attenuation) {" << std::endl
-        << "    minimum2_attenuation = attenuation;" << std::endl
-        << "    if (index > 0) {" << std::endl
-        << "      index += 1;" << std::endl
-        << "    }" << std::endl
-        << "  }" << std::endl
-        << "  if (index > 1) {" << std::endl
-        << "    discard;" << std::endl
-        << "  }" << std::endl
-        << "}" << std::endl;
-    return result.str();
-  }
-
-  std::string Attenuation2ShaderTemplate::CircleMinimumAttenuationTemplate(Object *object) {
-    std::ostringstream result;
-    result << "float minimum_attenuation = "
-        << AttenuationTemplate(object, CircleDistanceToTemplate(object)) << ";" << std::endl
-        << "float minimum2_attenuation = 3.40282e+038;" << std::endl
-        << "int index = 0;" << std::endl
-        << "if (" << CircleContainsTemplate(object) << ") {" << std::endl
-        << "  discard;" << std::endl
-        << "}" << std::endl;
-    return result.str();
-  }
-
-  std::string Attenuation2ShaderTemplate::SuffixTemplate() {
-    return R"glsl(
-      if (index == 0) {
-        discard;
-      }
-      )glsl";
-  }
-
   std::string Attenuation3ShaderTemplate::AabbMinimumAttenuationCheckTemplate(Object *object) {
     std::ostringstream result;
     result << "if (!" << AabbContainsTemplate(object) << ") {" << std::endl
@@ -325,7 +251,7 @@ namespace textengine {
 
   std::string Attenuation3ShaderTemplate::SuffixTemplate() {
     return R"glsl(
-      if (index <= 1) {
+      if (index == 0) {
         discard;
       }
       )glsl";
