@@ -209,6 +209,9 @@ namespace textengine {
       current_state.zoom = 1.0;
     }
     constexpr auto kMultiplier = 1.25;
+    if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_SLASH) > 0) {
+      current_state.selected_item->base_attenuation *= -1.0;
+    }
     if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_7) > 0) {
       current_state.selected_item->base_attenuation = 1.0;
     }

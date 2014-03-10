@@ -32,7 +32,7 @@
             "quadratic_attenuation": 1
         },
         {
-            "base_attenuation": 0,
+            "base_attenuation": -18.189891815185547,
             "invisible": false,
             "linear_attenuation": 0,
             "messages": {
