@@ -104,19 +104,13 @@ namespace textengine {
       for (auto &area : scene.areas) {
         areas.insert(area.get());
       }
-      const auto attenuation_shader_source = attenuation_template.AttenuationFragmentShaderSource(
+      const auto attenuation3_shader_source = attenuation3_template.AttenuationFragmentShaderSource(
           updater.GetCurrentState().selected_item, objects, areas);
-      std::cout << attenuation_shader_source << std::endl;
+      std::cout << attenuation3_shader_source << std::endl;
       std::hash<std::string> string_hash;
-      const auto source_hash = string_hash(attenuation_shader_source);
+      const auto source_hash = string_hash(attenuation3_shader_source);
       if (source_hash != attenuation_fragment_shader_source_hash) {
-        const auto attenuation3_shader_source =
-            attenuation3_template.AttenuationFragmentShaderSource(
-                updater.GetCurrentState().selected_item, objects, areas);
         attenuation_vertex_shader.Create(GL_VERTEX_SHADER, {kAttenuationVertexShaderSource});
-        attenuation_fragment_shader.Create(GL_FRAGMENT_SHADER, {attenuation_shader_source});
-        attenuation_program.Create({&attenuation_vertex_shader, &attenuation_fragment_shader});
-        attenuation_program.CompileAndLink();
         
         attenuation3_fragment_shader.Create(GL_FRAGMENT_SHADER, {attenuation3_shader_source});
         attenuation3_program.Create({&attenuation_vertex_shader, &attenuation3_fragment_shader});
@@ -134,7 +128,7 @@ namespace textengine {
         attenuation_buffer.Create(GL_ARRAY_BUFFER);
         attenuation_buffer.Data(attenuation.data_size(), attenuation.data.data(), GL_STATIC_DRAW);
         attenuation_array.Create();
-        vertex_format.Apply(attenuation_array, attenuation_program);
+        vertex_format.Apply(attenuation_array, attenuation3_program);
         CHECK_STATE(!glGetError());
         attenuation_fragment_shader_source_hash = source_hash;
       }
@@ -211,17 +205,6 @@ namespace textengine {
         const auto color3 = glm::vec4(0, 0, 0, 0.125);
         attenuation3_program.Uniforms({
           {u8"color", color3}
-        });
-        attenuation_array.Bind();
-        glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
-
-        attenuation_program.Use();
-        attenuation_program.Uniforms({
-          {u8"model_view_inverse", &inverse}
-        });
-        const auto color = glm::vec4(0, 0, 0, 0.5);
-        attenuation_program.Uniforms({
-          {u8"color", color}
         });
         attenuation_array.Bind();
         glDrawArrays(attenuation.element_type, 0, attenuation.element_count);

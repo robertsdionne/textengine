@@ -275,11 +275,7 @@ namespace textengine {
   }
 
   std::string Attenuation3ShaderTemplate::SuffixTemplate() {
-    return R"glsl(
-      if (index == 0) {
-        discard;
-      }
-      )glsl";
+    return "";
   }
 
 }  // namespace textengine
