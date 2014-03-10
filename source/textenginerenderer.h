@@ -74,8 +74,6 @@ namespace textengine {
     Drawable attenuation, unit_circle, unit_square;
 
     int width, height, scroll0;
-    
-    std::chrono::high_resolution_clock::time_point last_attenuation_time;
   };
 
 }  // namespace textengine

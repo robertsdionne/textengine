@@ -16,9 +16,9 @@ namespace textengine {
     auto area = new Object{next_id++};
     area->aabb.maximum = glm::vec2(1);
     area->name = MakeDefaultName("area");
-    area->base_attenuation = 1.0;
-    area->linear_attenuation = 1.0;
-    area->quadratic_attenuation = 0.0;
+    area->base_attenuation = 0.0;
+    area->linear_attenuation = 0.0;
+    area->quadratic_attenuation = 1.0;
     MakeDefaultMessageList(area, {
       "describe",
       "inside",
@@ -33,9 +33,9 @@ namespace textengine {
     auto object = new Object{next_id++};
     object->aabb.maximum = glm::vec2(1);
     object->name = MakeDefaultName("object");
-    object->base_attenuation = 1.0;
-    object->linear_attenuation = 1.0;
-    object->quadratic_attenuation = 0.0;
+    object->base_attenuation = 0.0;
+    object->linear_attenuation = 0.0;
+    object->quadratic_attenuation = 1.0;
     MakeDefaultMessageList(object, {
       "describe",
       "touch"

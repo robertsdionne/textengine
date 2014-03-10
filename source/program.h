@@ -25,8 +25,14 @@ namespace textengine {
     GLint GetAttributeLocation(const std::string &name);
 
     GLint GetUniformLocation(const std::string &name);
+    
+    void Uniforms(const std::unordered_map<std::string, int> &&uniforms);
 
     void Uniforms(const std::unordered_map<std::string, float> &&uniforms);
+    
+    void Uniforms(const std::unordered_map<std::string, glm::vec2> &&uniforms);
+    
+    void Uniforms(const std::unordered_map<std::string, glm::vec3> &&uniforms);
 
     void Uniforms(const std::unordered_map<std::string, glm::vec4> &&uniforms);
 

@@ -112,9 +112,9 @@ namespace textengine {
     }
     result->messages = ReadMessageMap(json_object["messages"]);
     result->invisible = Get(json_object, "invisible", false);
-    result->base_attenuation = Get(json_object, "base_attenuation", 1.0);
-    result->linear_attenuation = Get(json_object, "linear_attenuation", 1.0);
-    result->quadratic_attenuation = Get(json_object, "quadratic_attenuation", 0.0);
+    result->base_attenuation = Get(json_object, "base_attenuation", 0.0);
+    result->linear_attenuation = Get(json_object, "linear_attenuation", 0.0);
+    result->quadratic_attenuation = Get(json_object, "quadratic_attenuation", 1.0);
     return result;
   }
 

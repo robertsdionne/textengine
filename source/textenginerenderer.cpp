@@ -23,7 +23,7 @@ namespace textengine {
   : mouse(mouse), updater(updater), scene(scene), edit(edit), model_view(glm::mat4()),
     projection(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)), matrix_stack{glm::mat4(1)},
     attenuation_fragment_shader_source_hash(), attenuation_template(),
-    attenuation3_template(), last_attenuation_time() {}
+    attenuation3_template() {}
 
   void TextEngineRenderer::Change(int width, int height) {
     this->width = width;
@@ -94,9 +94,7 @@ namespace textengine {
   }
   
   void TextEngineRenderer::MaybeRebuildAttenuationShader() {
-    const auto now = std::chrono::high_resolution_clock::now();
-    if (updater.GetCurrentState().selected_item && (now - last_attenuation_time) > std::chrono::milliseconds(250)) {
-      last_attenuation_time = now;
+    if (updater.GetCurrentState().selected_item) {
       std::set<textengine::Object *> objects, areas;
       for (auto &object : scene.objects) {
         objects.insert(object.get());
@@ -106,7 +104,6 @@ namespace textengine {
       }
       const auto attenuation3_shader_source = attenuation3_template.AttenuationFragmentShaderSource(
           updater.GetCurrentState().selected_item, objects, areas);
-      std::cout << attenuation3_shader_source << std::endl;
       std::hash<std::string> string_hash;
       const auto source_hash = string_hash(attenuation3_shader_source);
       if (source_hash != attenuation_fragment_shader_source_hash) {
@@ -197,10 +194,32 @@ namespace textengine {
     
     if (edit) {
       MaybeRebuildAttenuationShader();
-      if (updater.GetCurrentState().selected_item) {
+      if (current_state.selected_item) {
         attenuation3_program.Use();
         attenuation3_program.Uniforms({
           {u8"model_view_inverse", &inverse}
+        });
+        const auto isaabb = Shape::kAxisAlignedBoundingBox == current_state.selected_item->shape;
+        glUniform1i(attenuation3_program.GetUniformLocation(u8"selected_isaabb"), isaabb);
+        if (Shape::kAxisAlignedBoundingBox == current_state.selected_item->shape) {
+          attenuation3_program.Uniforms({
+            {u8"selected_minimum_or_center", current_state.selected_item->aabb.minimum},
+            {u8"selected_maximum_or_radius", current_state.selected_item->aabb.maximum},
+          });
+          CHECK_STATE(!glGetError());
+        } else {
+          attenuation3_program.Uniforms({
+            {u8"selected_minimum_or_center", current_state.selected_item->aabb.center()},
+            {u8"selected_maximum_or_radius", glm::vec2(current_state.selected_item->aabb.radius())},
+          });
+          CHECK_STATE(!glGetError());
+        }
+        const auto attenuation_coefficients = glm::vec3(
+            current_state.selected_item->base_attenuation,
+                current_state.selected_item->linear_attenuation,
+                    current_state.selected_item->quadratic_attenuation);
+        attenuation3_program.Uniforms({
+          {u8"selected_attenuation", attenuation_coefficients},
         });
         const auto color3 = glm::vec4(0, 0, 0, 0.125);
         attenuation3_program.Uniforms({
@@ -208,6 +227,7 @@ namespace textengine {
         });
         attenuation_array.Bind();
         glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
+        CHECK_STATE(!glGetError());
       }
     }
 

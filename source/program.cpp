@@ -60,11 +60,32 @@ namespace textengine {
       }
     }
   }
+  
+  void Program::Uniforms(const std::unordered_map<std::string, int> &&uniforms) {
+    Use();
+    for (auto &uniform : uniforms) {
+      glUniform1i(GetUniformLocation(uniform.first), uniform.second);
+    }
+  }
 
   void Program::Uniforms(const std::unordered_map<std::string, float> &&uniforms) {
     Use();
     for (auto &uniform : uniforms) {
       glUniform1f(GetUniformLocation(uniform.first), uniform.second);
+    }
+  }
+  
+  void Program::Uniforms(const std::unordered_map<std::string, glm::vec2> &&uniforms) {
+    Use();
+    for (auto &uniform : uniforms) {
+      glUniform2fv(GetUniformLocation(uniform.first), 1, &uniform.second[0]);
+    }
+  }
+  
+  void Program::Uniforms(const std::unordered_map<std::string, glm::vec3> &&uniforms) {
+    Use();
+    for (auto &uniform : uniforms) {
+      glUniform3fv(GetUniformLocation(uniform.first), 1, &uniform.second[0]);
     }
   }
 

@@ -38,8 +38,6 @@ namespace textengine {
 
     virtual std::string AabbMinimumAttenuationCheckTemplate(Object *object, bool is_object);
 
-    virtual std::string AabbMinimumAttenuationTemplate(Object *object);
-
     virtual std::string AttenuationDataTemplate(Object *object);
 
     virtual std::string AttenuationTemplate(Object *object, const std::string &distance);
@@ -52,11 +50,9 @@ namespace textengine {
 
     virtual std::string CircleMinimumAttenuationCheckTemplate(Object *object, bool is_object);
 
-    virtual std::string CircleMinimumAttenuationTemplate(Object *object);
-
     virtual std::string ObjectTemplate(Object *object, bool is_object);
 
-    virtual std::string SelectedObjectTemplate(Object *object, bool is_object);
+    virtual std::string MinimumAttenuationTemplate();
 
     virtual std::string SuffixTemplate();
 
@@ -74,11 +70,9 @@ namespace textengine {
   protected:
     virtual std::string AabbMinimumAttenuationCheckTemplate(Object *object, bool is_object) override;
     
-    virtual std::string AabbMinimumAttenuationTemplate(Object *object) override;
-    
     virtual std::string CircleMinimumAttenuationCheckTemplate(Object *object, bool is_object) override;
     
-    virtual std::string CircleMinimumAttenuationTemplate(Object *object) override;
+    virtual std::string MinimumAttenuationTemplate() override;
 
     virtual std::string SuffixTemplate() override;
   };
@@ -87,6 +81,10 @@ namespace textengine {
   #version 410 core
   uniform mat4 model_view_inverse;
   uniform vec4 color;
+  uniform vec2 selected_minimum_or_center;
+  uniform vec2 selected_maximum_or_radius;
+  uniform vec3 selected_attenuation;
+  uniform bool selected_isaabb;
   
   out vec4 fragment_color;
   
