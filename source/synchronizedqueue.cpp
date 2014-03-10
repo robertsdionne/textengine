@@ -26,7 +26,7 @@ namespace textengine {
     return false;
   }
   
-  EntityMessage::EntityMessage(long id) :id(id) {}
+  EntityMessage::EntityMessage(long id) : id(id) {}
   
   picojson::value EntityMessage::ToJson() const {
     picojson::object object;
