@@ -27,7 +27,7 @@ namespace textengine {
     virtual ~AttenuationShaderTemplate() = default;
 
     virtual std::string AttenuationFragmentShaderSource(
-        Object *selected_object, const std::set<Object *> &objects);
+        Object *selected_object, const std::set<Object *> &objects, const std::set<Object *> &areas);
 
   protected:
     virtual std::string AabbDataTemplate(Object *object);
@@ -36,7 +36,7 @@ namespace textengine {
 
     virtual std::string AabbDistanceToTemplate(Object *object);
 
-    virtual std::string AabbMinimumAttenuationCheckTemplate(Object *object);
+    virtual std::string AabbMinimumAttenuationCheckTemplate(Object *object, bool is_object);
 
     virtual std::string AabbMinimumAttenuationTemplate(Object *object);
 
@@ -50,13 +50,13 @@ namespace textengine {
 
     virtual std::string CircleDistanceToTemplate(Object *object);
 
-    virtual std::string CircleMinimumAttenuationCheckTemplate(Object *object);
+    virtual std::string CircleMinimumAttenuationCheckTemplate(Object *object, bool is_object);
 
     virtual std::string CircleMinimumAttenuationTemplate(Object *object);
 
-    virtual std::string ObjectTemplate(Object *object);
+    virtual std::string ObjectTemplate(Object *object, bool is_object);
 
-    virtual std::string SelectedObjectTemplate(Object *object);
+    virtual std::string SelectedObjectTemplate(Object *object, bool is_object);
 
     virtual std::string SuffixTemplate();
 
@@ -72,11 +72,11 @@ namespace textengine {
     virtual ~Attenuation3ShaderTemplate() = default;
 
   protected:
-    virtual std::string AabbMinimumAttenuationCheckTemplate(Object *object) override;
+    virtual std::string AabbMinimumAttenuationCheckTemplate(Object *object, bool is_object) override;
     
     virtual std::string AabbMinimumAttenuationTemplate(Object *object) override;
     
-    virtual std::string CircleMinimumAttenuationCheckTemplate(Object *object) override;
+    virtual std::string CircleMinimumAttenuationCheckTemplate(Object *object, bool is_object) override;
     
     virtual std::string CircleMinimumAttenuationTemplate(Object *object) override;
 

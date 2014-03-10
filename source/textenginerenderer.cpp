@@ -97,21 +97,22 @@ namespace textengine {
     const auto now = std::chrono::high_resolution_clock::now();
     if (updater.GetCurrentState().selected_item && (now - last_attenuation_time) > std::chrono::milliseconds(250)) {
       last_attenuation_time = now;
-      std::set<textengine::Object *> objects;
+      std::set<textengine::Object *> objects, areas;
       for (auto &object : scene.objects) {
         objects.insert(object.get());
       }
-      for (auto &object : scene.areas) {
-        objects.insert(object.get());
+      for (auto &area : scene.areas) {
+        areas.insert(area.get());
       }
       const auto attenuation_shader_source = attenuation_template.AttenuationFragmentShaderSource(
-          updater.GetCurrentState().selected_item, objects);
+          updater.GetCurrentState().selected_item, objects, areas);
+      std::cout << attenuation_shader_source << std::endl;
       std::hash<std::string> string_hash;
       const auto source_hash = string_hash(attenuation_shader_source);
       if (source_hash != attenuation_fragment_shader_source_hash) {
         const auto attenuation3_shader_source =
             attenuation3_template.AttenuationFragmentShaderSource(
-                updater.GetCurrentState().selected_item, objects);
+                updater.GetCurrentState().selected_item, objects, areas);
         attenuation_vertex_shader.Create(GL_VERTEX_SHADER, {kAttenuationVertexShaderSource});
         attenuation_fragment_shader.Create(GL_FRAGMENT_SHADER, {attenuation_shader_source});
         attenuation_program.Create({&attenuation_vertex_shader, &attenuation_fragment_shader});
