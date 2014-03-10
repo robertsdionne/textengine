@@ -1,8 +1,12 @@
 #include <Box2D/Box2D.h>
 #include <algorithm>
 #include <cmath>
+#define GLM_FORCE_RADIANS
+#define GLM_SWIZZLE
 #include <glm/glm.hpp>
-#include <glm/gtc/noise.hpp>
+#include <glm/gtc/matrix_inverse.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
 #include <limits>
 #include <map>
 #include <sstream>
@@ -23,12 +27,12 @@
 
 namespace textengine {
 
-  Updater::Updater(SynchronizedQueue &reply_queue,
+  Updater::Updater(int width, int height, SynchronizedQueue &reply_queue,
                    Log &playtest_log, Input &input, Mouse &mouse, Keyboard &keyboard,
                    GameState &initial_state, Scene &scene)
-  : reply_queue(reply_queue),
+  : width(width), height(height), reply_queue(reply_queue),
   playtest_log(playtest_log), input(input), mouse(mouse), keyboard(keyboard),
-  current_state(initial_state), phrase_index(), scene(scene) {}
+  current_state(initial_state), phrase_index(), scene(scene), model_view_projection() {}
 
   void Updater::BeginContact(b2Contact *contact) {
     Object *area, *object;
@@ -110,7 +114,23 @@ namespace textengine {
     return current_state;
   }
   
-  void Updater::SetModelViewProjection(glm::mat4 model_view_projection) {}
+  glm::vec2 Updater::GetCursorPosition() const {
+    const auto normalized_to_reversed = glm::scale(glm::mat4(), glm::vec3(1.0f, -1.0f, 1.0f));
+    const auto reversed_to_offset = glm::translate(glm::mat4(), glm::vec3(glm::vec2(1.0f), 0.0f));
+    const auto offset_to_screen = glm::scale(glm::mat4(), glm::vec3(glm::vec2(0.5f), 1.0f));
+    const auto screen_to_window = glm::scale(glm::mat4(), glm::vec3(width, height, 1.0f));
+    const auto homogeneous = (glm::inverse(screen_to_window * offset_to_screen *
+                                           reversed_to_offset * normalized_to_reversed *
+                                           model_view_projection * glm::scale(glm::mat4(1), glm::vec3(glm::vec2(current_state.zoom * 0.1f), 1.0f)) *
+                                           glm::translate(glm::mat4(1), glm::vec3(-current_state.camera_position, 0))) *
+                              glm::vec4(mouse.get_cursor_position(), 0.0f, 1.0f));
+    const auto transformed = homogeneous.xy() / homogeneous.w;
+    return transformed;
+  }
+  
+  void Updater::SetModelViewProjection(glm::mat4 model_view_projection) {
+    Updater::model_view_projection = model_view_projection;
+  }
 
   void Updater::Setup() {
     last_direction = Direction::kEast;
@@ -125,6 +145,37 @@ namespace textengine {
     const auto now = std::chrono::high_resolution_clock::now();
     const auto offset = input.GetPrimaryAxes();
     const auto offset2 = input.GetSecondaryAxes();
+    
+    if (keyboard.GetKeyVelocity(GLFW_KEY_BACKSPACE) > 0) {
+      current_state.selected_item = nullptr;
+    }
+    
+    if (mouse.GetButtonVelocity(GLFW_MOUSE_BUTTON_2)) {
+      const auto cursor = GetCursorPosition();
+      std::unordered_set<Object *> candidates;
+      for (auto &area : scene.areas) {
+        if (area->Contains(cursor)) {
+          candidates.insert(area.get());
+        }
+      }
+      for (auto &object : scene.objects) {
+        if (object->Contains(cursor)) {
+          candidates.insert(object.get());
+        }
+      }
+      auto minimum = std::numeric_limits<float>::infinity();
+      Object *argmin = nullptr;
+      for (auto candidate : candidates) {
+        const auto area = candidate->area();
+        if (area < minimum) {
+          minimum = area;
+          argmin = candidate;
+        }
+      }
+      if (argmin) {
+        current_state.selected_item = argmin;
+      }
+    }
 
     const auto dt = 0.016f;
     const auto position = glm::vec2(current_state.player_body->GetPosition().x,

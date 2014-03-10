@@ -23,7 +23,7 @@ namespace textengine {
 
   class Updater : public Controller, public b2ContactListener {
   public:
-    Updater(SynchronizedQueue &reply_queue, Log &playtest_log,
+    Updater(int width, int height, SynchronizedQueue &reply_queue, Log &playtest_log,
             Input &input, Mouse &mouse, Keyboard &keyboard, GameState &initial_state, Scene &scene);
 
     virtual ~Updater() = default;
@@ -33,6 +33,8 @@ namespace textengine {
     virtual void EndContact(b2Contact* contact) override;
 
     virtual GameState &GetCurrentState();
+    
+    glm::vec2 GetCursorPosition() const;
     
     virtual void SetModelViewProjection(glm::mat4 model_view_projection);
 
@@ -59,6 +61,7 @@ namespace textengine {
     };
 
   private:
+    int width, height;
     SynchronizedQueue &reply_queue;
     Log &playtest_log;
     Input &input;
@@ -75,6 +78,8 @@ namespace textengine {
     std::chrono::high_resolution_clock::time_point last_direction_time, last_transmit_time;
     std::unordered_map<Object *, std::chrono::high_resolution_clock::time_point> last_touch_time;
     std::unordered_set<Object *> inside;
+    
+    glm::mat4 model_view_projection;
   };
 
 }  // namespace textengine
