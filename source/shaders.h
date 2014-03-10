@@ -58,6 +58,8 @@ namespace textengine {
 
     virtual std::string SelectedObjectTemplate(Object *object);
 
+    virtual std::string SuffixTemplate();
+
     virtual std::string Vec2Template(glm::vec2 vector);
 
     virtual std::string Vec3Template(glm::vec3 vector);
@@ -77,6 +79,8 @@ namespace textengine {
     virtual std::string CircleMinimumAttenuationCheckTemplate(Object *object) override;
     
     virtual std::string CircleMinimumAttenuationTemplate(Object *object) override;
+
+    virtual std::string SuffixTemplate() override;
   };
 
   class Attenuation3ShaderTemplate : public AttenuationShaderTemplate {
@@ -93,6 +97,8 @@ namespace textengine {
     virtual std::string CircleMinimumAttenuationCheckTemplate(Object *object) override;
     
     virtual std::string CircleMinimumAttenuationTemplate(Object *object) override;
+
+    virtual std::string SuffixTemplate() override;
   };
   
   static constexpr const char *kAttenuationFragmentShaderSourcePrefix = u8R"glsl(

@@ -210,33 +210,33 @@ namespace textengine {
     if (edit) {
       MaybeRebuildAttenuationShader();
       if (updater.GetCurrentState().selected_item) {
-        //        attenuation3_program.Use();
-        //        attenuation3_program.Uniforms({
-        //          {u8"model_view_inverse", &inverse}
-        //        });
-//        const auto color3 = glm::vec4(0, 1, 0, 0.25);
-//        attenuation2_program.Uniforms({
-//          {u8"color", color3}
-//        });
-        //        attenuation_array.Bind();
-        //        glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
+        attenuation3_program.Use();
+        attenuation3_program.Uniforms({
+          {u8"model_view_inverse", &inverse}
+        });
+        const auto color3 = glm::vec4(0, 0, 0, 0.125);
+        attenuation3_program.Uniforms({
+          {u8"color", color3}
+        });
+        attenuation_array.Bind();
+        glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
         
         attenuation2_program.Use();
         attenuation2_program.Uniforms({
           {u8"model_view_inverse", &inverse}
         });
-        const auto color2 = glm::vec4(0, 1, 0, 0.5);
+        const auto color2 = glm::vec4(0, 0, 0, 0.25);
         attenuation2_program.Uniforms({
           {u8"color", color2}
         });
         attenuation_array.Bind();
         glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
-        
+
         attenuation_program.Use();
         attenuation_program.Uniforms({
           {u8"model_view_inverse", &inverse}
         });
-        const auto color = glm::vec4(1, 0, 0, 0.5);
+        const auto color = glm::vec4(0, 0, 0, 0.5);
         attenuation_program.Uniforms({
           {u8"color", color}
         });
@@ -270,17 +270,15 @@ namespace textengine {
       }
       
       if (current_state.selected_item) {
-        std::ostringstream out;
-        out << "c: " << current_state.selected_item->base_attenuation;
-        imguiDrawText(10, height - 50, IMGUI_ALIGN_LEFT, out.str().c_str(), imguiRGBA(0, 0, 0));
-        out.str("");
-        out.clear();
-        out << "l: " << current_state.selected_item->linear_attenuation;
-        imguiDrawText(10, height - 75, IMGUI_ALIGN_LEFT, out.str().c_str(), imguiRGBA(0, 0, 0));
-        out.str("");
-        out.clear();
-        out << "q: " << current_state.selected_item->quadratic_attenuation << std::endl;
-        imguiDrawText(10, height - 100, IMGUI_ALIGN_LEFT, out.str().c_str(), imguiRGBA(0, 0, 0));
+        std::ostringstream name, constant, linear, quadratic;
+        name << current_state.selected_item->name;
+        imguiDrawText(10, height - 50, IMGUI_ALIGN_LEFT, name.str().c_str(), imguiRGBA(0, 0, 0));
+        constant << "c: " << current_state.selected_item->base_attenuation;
+        imguiDrawText(10, height - 75, IMGUI_ALIGN_LEFT, constant.str().c_str(), imguiRGBA(0, 0, 0));
+        linear << "l: " << current_state.selected_item->linear_attenuation;
+        imguiDrawText(10, height - 100, IMGUI_ALIGN_LEFT, linear.str().c_str(), imguiRGBA(0, 0, 0));
+        quadratic << "q: " << current_state.selected_item->quadratic_attenuation << std::endl;
+        imguiDrawText(10, height - 125, IMGUI_ALIGN_LEFT, quadratic.str().c_str(), imguiRGBA(0, 0, 0));
       }
       
       imguiEndFrame();

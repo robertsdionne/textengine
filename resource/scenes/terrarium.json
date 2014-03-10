@@ -11,9 +11,9 @@
                     "y": -5.70269775390625
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 1,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see an enclosed pasture with an open gate."
@@ -29,12 +29,12 @@
                 ]
             },
             "name": "pasture",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
-            "base_attenuation": 1.562499761581421,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 0.007205759175121784,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see the gate to the pasture."
@@ -54,7 +54,7 @@
                 "x": -0.21805715560913086,
                 "y": 6.31934928894043
             },
-            "quadratic_attenuation": 0.018014397472143173,
+            "quadratic_attenuation": 1,
             "radius": 2.0584394931793213
         },
         {
@@ -68,9 +68,9 @@
                     "y": 6.852385520935059
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 1,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see an open field neighboring the pasture."
@@ -86,12 +86,12 @@
                 ]
             },
             "name": "field",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 1,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "The eastern tree shades its surroundings."
@@ -111,13 +111,13 @@
                 "x": 3.175466537475586,
                 "y": -2.708846092224121
             },
-            "quadratic_attenuation": 0,
+            "quadratic_attenuation": 1,
             "radius": 1.3350553512573242
         },
         {
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 1,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "The western tree shades its surroundings."
@@ -137,7 +137,7 @@
                 "x": -1.7546300888061523,
                 "y": -2.153183937072754
             },
-            "quadratic_attenuation": 0,
+            "quadratic_attenuation": 1,
             "radius": 1.3350553512573242
         },
         {
@@ -151,9 +151,9 @@
                     "y": 0.5993976593017578
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 1,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see a mud puddle."
@@ -169,7 +169,7 @@
                 ]
             },
             "name": "mud puddle",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
             "aabb": {
@@ -182,9 +182,9 @@
                     "y": 1.2453193664550781
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 1,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see a dirt path leading out from the pasture."
@@ -200,7 +200,7 @@
                 ]
             },
             "name": "dirt path",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
             "aabb": {
@@ -213,9 +213,9 @@
                     "y": 1.42706298828125
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 10,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see the first stone of the path."
@@ -229,7 +229,7 @@
                 ]
             },
             "name": "first stone",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
             "aabb": {
@@ -242,9 +242,9 @@
                     "y": 5.305328369140625
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 10,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see the second stone of the path."
@@ -258,7 +258,7 @@
                 ]
             },
             "name": "second stone",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
             "aabb": {
@@ -271,9 +271,9 @@
                     "y": 9.093927383422852
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 10,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see the third stone of the path."
@@ -287,7 +287,7 @@
                 ]
             },
             "name": "third stone",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
             "aabb": {
@@ -300,9 +300,9 @@
                     "y": 12.33236312866211
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 10,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see the fourth stone of the path."
@@ -316,7 +316,7 @@
                 ]
             },
             "name": "fourth stone",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
             "aabb": {
@@ -329,9 +329,9 @@
                     "y": 15.884747505187988
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 10,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see the last stone of the path."
@@ -345,7 +345,7 @@
                 ]
             },
             "name": "last stone",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         }
     ],
     "messages": {
@@ -404,9 +404,9 @@
                     "y": 5.891178607940674
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 2,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see a fence enclosing the pasture."
@@ -416,7 +416,7 @@
                 ]
             },
             "name": "fence",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
             "aabb": {
@@ -429,9 +429,9 @@
                     "y": -6.661126136779785
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 2,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see a fence enclosing the pasture."
@@ -441,7 +441,7 @@
                 ]
             },
             "name": "fence",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
             "aabb": {
@@ -454,9 +454,9 @@
                     "y": -6.647133827209473
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 2,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see a fence enclosing the pasture."
@@ -466,7 +466,7 @@
                 ]
             },
             "name": "fence",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
             "aabb": {
@@ -479,9 +479,9 @@
                     "y": -6.661533355712891
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 2,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see a fence enclosing the pasture."
@@ -491,7 +491,7 @@
                 ]
             },
             "name": "fence",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
             "aabb": {
@@ -504,9 +504,9 @@
                     "y": 5.840719223022461
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 1,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see a fence enclosing the pasture."
@@ -516,12 +516,12 @@
                 ]
             },
             "name": "fence",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 1,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see the western tree."
@@ -535,13 +535,13 @@
                 "x": -1.9318037033081055,
                 "y": -2.080341339111328
             },
-            "quadratic_attenuation": 0,
+            "quadratic_attenuation": 1,
             "radius": 0.5
         },
         {
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 1,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see the eastern tree."
@@ -555,7 +555,7 @@
                 "x": 3.332592010498047,
                 "y": -2.946218490600586
             },
-            "quadratic_attenuation": 0,
+            "quadratic_attenuation": 1,
             "radius": 0.5
         },
         {
@@ -569,9 +569,9 @@
                     "y": 4.130805015563965
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 1,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see the wolf kennel."
@@ -581,7 +581,7 @@
                 ]
             },
             "name": "kennel",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
             "aabb": {
@@ -594,9 +594,9 @@
                     "y": 2.4807376861572266
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 1,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see the big-cat abode."
@@ -606,7 +606,7 @@
                 ]
             },
             "name": "big-cat abode",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
             "aabb": {
@@ -619,9 +619,9 @@
                     "y": -4.8763427734375
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 1,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see your robotic sleeping quarters nearby."
@@ -631,7 +631,7 @@
                 ]
             },
             "name": "humanoid robot quarters",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
             "aabb": {
@@ -644,9 +644,9 @@
                     "y": 1.2583808898925781
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 1,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see the pig pen."
@@ -656,12 +656,12 @@
                 ]
             },
             "name": "pig pen",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         },
         {
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 0.5,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "Your charging station juts out from the wall of your sleeping quarters."
@@ -675,7 +675,7 @@
                 "x": 1.03399658203125,
                 "y": -3.626708984375
             },
-            "quadratic_attenuation": 0,
+            "quadratic_attenuation": 1,
             "radius": 0.5
         },
         {
@@ -689,9 +689,9 @@
                     "y": 0.7585010528564453
                 }
             },
-            "base_attenuation": 1,
+            "base_attenuation": 0,
             "invisible": false,
-            "linear_attenuation": 1,
+            "linear_attenuation": 0,
             "messages": {
                 "describe": [
                     "You see the giant-tortoise pen."
@@ -701,7 +701,7 @@
                 ]
             },
             "name": "giant-tortoise pen",
-            "quadratic_attenuation": 0
+            "quadratic_attenuation": 1
         }
     ]
 }
