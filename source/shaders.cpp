@@ -165,8 +165,19 @@ namespace textengine {
 
   std::string Attenuation2ShaderTemplate::AabbMinimumAttenuationCheckTemplate(Object *object) {
     std::ostringstream result;
-    result << "if (" << AttenuationTemplate(object, AabbDistanceToTemplate(object)) << " < minimum_attenuation) {" << std::endl
-        << "  if (!" << AabbContainsTemplate(object) << ") {" << std::endl
+    result << "if (!" << AabbContainsTemplate(object) << ") {" << std::endl
+        << "  float attenuation = " << AttenuationTemplate(object, AabbDistanceToTemplate(object)) << ";" << std::endl
+        << "  if (attenuation < minimum_attenuation) {" << std::endl
+        << "    minimum2_attenuation = minimum_attenuation;" << std::endl
+        << "    minimum_attenuation = attenuation;" << std::endl
+        << "    index += 1;" << std::endl
+        << "  } else if (attenuation < minimum2_attenuation) {" << std::endl
+        << "    minimum2_attenuation = attenuation;" << std::endl
+        << "    if (index > 0) {" << std::endl
+        << "      index += 1;" << std::endl
+        << "    }" << std::endl
+        << "  }" << std::endl
+        << "  if (index > 1) {" << std::endl
         << "    discard;" << std::endl
         << "  }" << std::endl
         << "}" << std::endl;
@@ -187,8 +198,19 @@ namespace textengine {
 
   std::string Attenuation2ShaderTemplate::CircleMinimumAttenuationCheckTemplate(Object *object) {
     std::ostringstream result;
-    result << "if (" << AttenuationTemplate(object, CircleDistanceToTemplate(object)) << " < minimum_attenuation) {" << std::endl
-        << "  if (!" << CircleContainsTemplate(object) << ") {" << std::endl
+    result << "if (!" << CircleContainsTemplate(object) << ") {" << std::endl
+        << "  float attenuation = " << AttenuationTemplate(object, CircleDistanceToTemplate(object)) << ";" << std::endl
+        << "  if (attenuation < minimum_attenuation) {" << std::endl
+        << "    minimum2_attenuation = minimum_attenuation;" << std::endl
+        << "    minimum_attenuation = attenuation;" << std::endl
+        << "    index += 1;" << std::endl
+        << "  } else if (attenuation < minimum2_attenuation) {" << std::endl
+        << "    minimum2_attenuation = attenuation;" << std::endl
+        << "    if (index > 0) {" << std::endl
+        << "      index += 1;" << std::endl
+        << "    }" << std::endl
+        << "  }" << std::endl
+        << "  if (index > 1) {" << std::endl
         << "    discard;" << std::endl
         << "  }" << std::endl
         << "}" << std::endl;

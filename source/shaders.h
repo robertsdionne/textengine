@@ -98,6 +98,7 @@ namespace textengine {
   static constexpr const char *kAttenuationFragmentShaderSourcePrefix = u8R"glsl(
   #version 410 core
   uniform mat4 model_view_inverse;
+  uniform vec4 color;
   
   out vec4 fragment_color;
   
@@ -129,7 +130,7 @@ namespace textengine {
   )glsl";
 
   static constexpr const char *kAttenuationFragmentShaderSourceSuffix = u8R"glsl(
-    fragment_color = vec4(0, 0, 0, 0.25);
+    fragment_color = color;
   }
   )glsl";
 

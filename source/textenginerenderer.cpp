@@ -23,7 +23,7 @@ namespace textengine {
   : mouse(mouse), updater(updater), scene(scene), edit(edit), model_view(glm::mat4()),
     projection(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f)), matrix_stack{glm::mat4(1)},
     attenuation_fragment_shader_source_hash(), attenuation_template(), attenuation2_template(),
-    attenuation3_template() {}
+    attenuation3_template(), last_attenuation_time() {}
 
   void TextEngineRenderer::Change(int width, int height) {
     this->width = width;
@@ -94,7 +94,9 @@ namespace textengine {
   }
   
   void TextEngineRenderer::MaybeRebuildAttenuationShader() {
-    if (updater.GetCurrentState().selected_item) {
+    const auto now = std::chrono::high_resolution_clock::now();
+    if (updater.GetCurrentState().selected_item && (now - last_attenuation_time) > std::chrono::milliseconds(250)) {
+      last_attenuation_time = now;
       std::set<textengine::Object *> objects;
       for (auto &object : scene.objects) {
         objects.insert(object.get());
@@ -208,26 +210,38 @@ namespace textengine {
     if (edit) {
       MaybeRebuildAttenuationShader();
       if (updater.GetCurrentState().selected_item) {
-        attenuation_program.Use();
-        attenuation_program.Uniforms({
+        //        attenuation3_program.Use();
+        //        attenuation3_program.Uniforms({
+        //          {u8"model_view_inverse", &inverse}
+        //        });
+//        const auto color3 = glm::vec4(0, 1, 0, 0.25);
+//        attenuation2_program.Uniforms({
+//          {u8"color", color3}
+//        });
+        //        attenuation_array.Bind();
+        //        glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
+        
+        attenuation2_program.Use();
+        attenuation2_program.Uniforms({
           {u8"model_view_inverse", &inverse}
+        });
+        const auto color2 = glm::vec4(0, 1, 0, 0.5);
+        attenuation2_program.Uniforms({
+          {u8"color", color2}
         });
         attenuation_array.Bind();
         glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
         
-//        attenuation2_program.Use();
-//        attenuation2_program.Uniforms({
-//          {u8"model_view_inverse", &inverse}
-//        });
-//        attenuation_array.Bind();
-//        glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
-//        
-//        attenuation3_program.Use();
-//        attenuation3_program.Uniforms({
-//          {u8"model_view_inverse", &inverse}
-//        });
-//        attenuation_array.Bind();
-//        glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
+        attenuation_program.Use();
+        attenuation_program.Uniforms({
+          {u8"model_view_inverse", &inverse}
+        });
+        const auto color = glm::vec4(1, 0, 0, 0.5);
+        attenuation_program.Uniforms({
+          {u8"color", color}
+        });
+        attenuation_array.Bind();
+        glDrawArrays(attenuation.element_type, 0, attenuation.element_count);
       }
     }
 

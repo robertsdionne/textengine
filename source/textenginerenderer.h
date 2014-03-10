@@ -1,6 +1,7 @@
 #ifndef TEXTENGINE_TEXTENGINERENDERER_H_
 #define TEXTENGINE_TEXTENGINERENDERER_H_
 
+#include <chrono>
 #include <glm/glm.hpp>
 #include <iostream>
 
@@ -74,6 +75,8 @@ namespace textengine {
     Drawable attenuation, unit_circle, unit_square;
 
     int width, height, scroll0;
+    
+    std::chrono::high_resolution_clock::time_point last_attenuation_time;
   };
 
 }  // namespace textengine
