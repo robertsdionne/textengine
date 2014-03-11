@@ -38,7 +38,7 @@ int main(int argument_count, char *arguments[]) {
   textengine::Updater updater(
     kWindowWidth, kWindowHeight, reply_queue,
     playtest_log, input, mouse, keyboard, initial_state, scene);
-  textengine::WebSocketPrompt prompt(reply_queue, kPrompt);
+  textengine::WebSocketPrompt prompt(reply_queue, kPrompt, playtest_log);
   textengine::Editor editor(edit ? 2 * kWindowWidth : kWindowWidth, kWindowHeight, initial_state,
                             keyboard, mouse, scene);
   if (!edit) {

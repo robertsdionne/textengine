@@ -12,6 +12,7 @@
 
 namespace textengine {
 
+  class Log;
   class SynchronizedQueue;
   
   struct Resource {
@@ -20,7 +21,7 @@ namespace textengine {
 
   class WebSocketPrompt : public Prompt {
   public:
-    WebSocketPrompt(SynchronizedQueue &reply_queue, const std::string &prompt);
+    WebSocketPrompt(SynchronizedQueue &reply_queue, const std::string &prompt, Log &log);
 
     virtual ~WebSocketPrompt();
 
@@ -62,6 +63,7 @@ namespace textengine {
   private:
     SynchronizedQueue &reply_queue;
     const std::string &prompt;
+    Log &log;
     std::thread thread;
     libwebsocket_context *context;
   };

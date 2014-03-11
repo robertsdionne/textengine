@@ -7,6 +7,7 @@
 #include <thread>
 
 #include "checks.h"
+#include "log.h"
 #include "synchronizedqueue.h"
 #include "websocketprompt.h"
 
@@ -61,8 +62,9 @@ namespace textengine {
   WebSocketPrompt *WebSocketPrompt::instance = nullptr;
 
   WebSocketPrompt::WebSocketPrompt(SynchronizedQueue &reply_queue,
-                                   const std::string &prompt)
-  : reply_queue(reply_queue), prompt(prompt), thread(), context() {
+                                   const std::string &prompt,
+                                   Log &log)
+  : reply_queue(reply_queue), prompt(prompt), log(log), thread(), context() {
     instance = this;
   }
 
@@ -116,6 +118,7 @@ namespace textengine {
           std::ostringstream out;
           out << *response;
           const std::string json = out.str();
+          instance->log.LogMessage(json);
           unsigned char buffer[LWS_SEND_BUFFER_PRE_PADDING + 4096 + LWS_SEND_BUFFER_POST_PADDING];
           unsigned char *p = &buffer[LWS_SEND_BUFFER_PRE_PADDING];
           std::copy(json.begin(), json.end(), p);
