@@ -33,15 +33,15 @@ namespace textengine {
 
   float Input::GetXButton() const {
     const auto result = ArgMax({
-      joystick.IsButtonDown(Joystick::Button::kX),
-      keyboard.IsKeyDown(GLFW_KEY_SPACE)
+      static_cast<float>(joystick.IsButtonDown(Joystick::Button::kX)),
+      static_cast<float>(keyboard.IsKeyDown(GLFW_KEY_SPACE))
     });
     return glm::abs(result) > Joystick::kDeadZone ? result : 0.0f;
   }
 
   float Input::GetLookVelocity() const {
     const auto result = ArgMax({
-      joystick.GetButtonVelocity(Joystick::Button::kX),
+      static_cast<float>(joystick.GetButtonVelocity(Joystick::Button::kX)),
       keyboard.GetKeyVelocity(GLFW_KEY_SPACE)
     });
     return result;
@@ -49,15 +49,15 @@ namespace textengine {
 
   float Input::GetTriggerPressure() const {
     const auto result = ArgMax({
-      joystick.IsButtonDown(Joystick::Button::kR1),
-      keyboard.IsKeyDown(GLFW_KEY_LEFT_SHIFT)
+      static_cast<float>(joystick.IsButtonDown(Joystick::Button::kR1)),
+      static_cast<float>(keyboard.IsKeyDown(GLFW_KEY_LEFT_SHIFT))
     });
     return result;
   }
 
   float Input::GetTriggerVelocity() const {
     const auto result = ArgMax({
-      joystick.GetButtonVelocity(Joystick::Button::kR1),
+      static_cast<float>(joystick.GetButtonVelocity(Joystick::Button::kR1)),
       keyboard.GetKeyVelocity(GLFW_KEY_LEFT_SHIFT)
     });
     return result;

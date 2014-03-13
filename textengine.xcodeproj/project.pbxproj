@@ -6028,7 +6028,7 @@
 		463E3D5B1767FB9000A4466B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Robert Scott Dionne";
 			};
 			buildConfigurationList = 463E3D5E1767FB9000A4466B /* Build configuration list for PBXProject "textengine" */;
@@ -6310,6 +6310,7 @@
 					"GL_GLEXT_PROTOTYPES=1",
 					"_GLFW_USE_CONFIG_H=1",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
