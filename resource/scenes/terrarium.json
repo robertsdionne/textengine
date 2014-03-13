@@ -353,16 +353,16 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "TODO: describe area 27."
+                    "The tree shades its surroundings."
                 ],
                 "enter": [
-                    "TODO: enter area 27."
+                    "You entered the tree's shade."
                 ],
                 "exit": [
-                    "TODO: exit area 27."
+                    "You exited the shade."
                 ],
                 "inside": [
-                    "TODO: inside area 27."
+                    "You are beneath the shade of the tree."
                 ]
             },
             "name": "tree shade",
@@ -379,16 +379,16 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "TODO: describe area 30."
+                    "The tree shades its surroundings."
                 ],
                 "enter": [
-                    "TODO: enter area 30."
+                    "You entered the tree's shade."
                 ],
                 "exit": [
-                    "TODO: exit area 30."
+                    "You exited the shade."
                 ],
                 "inside": [
-                    "TODO: inside area 30."
+                    "You are beneath the shade of the tree."
                 ]
             },
             "name": "tree shade",
@@ -415,16 +415,16 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "TODO: describe area 31."
+                    "You see a field decorated with a fountain."
                 ],
                 "enter": [
-                    "TODO: enter area 31."
+                    "You've entered the field."
                 ],
                 "exit": [
-                    "TODO: exit area 31."
+                    "You left the field."
                 ],
                 "inside": [
-                    "TODO: inside area 31."
+                    "You stand in the field with the fountain."
                 ]
             },
             "name": "field",
@@ -446,46 +446,20 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "TODO: describe area 32."
+                    "A pool of water surrounds the fountain."
                 ],
                 "enter": [
-                    "TODO: enter area 32."
+                    "You wade into the pool."
                 ],
                 "exit": [
-                    "TODO: exit area 32."
+                    "You leave the fountain's pool."
                 ],
                 "inside": [
-                    "TODO: inside area 32."
+                    "You stand in the pool surrounding the fountain."
                 ]
             },
             "name": "pool",
             "quadratic_attenuation": 1
-        },
-        {
-            "base_attenuation": 0,
-            "invisible": false,
-            "linear_attenuation": 0,
-            "messages": {
-                "describe": [
-                    "TODO: describe area 33."
-                ],
-                "enter": [
-                    "TODO: enter area 33."
-                ],
-                "exit": [
-                    "TODO: exit area 33."
-                ],
-                "inside": [
-                    "TODO: inside area 33."
-                ]
-            },
-            "name": "fountain",
-            "position": {
-                "x": 15.547807693481445,
-                "y": 61.552345275878906
-            },
-            "quadratic_attenuation": 1,
-            "radius": 3.462017059326172
         }
     ],
     "messages": {
@@ -849,10 +823,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "TODO: describe object 28."
+                    "You see the tree."
                 ],
                 "touch": [
-                    "TODO: touch object 28."
+                    "You touch the bark of the tree."
                 ]
             },
             "name": "tree",
@@ -869,10 +843,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "TODO: describe object 29."
+                    "You see the tree."
                 ],
                 "touch": [
-                    "TODO: touch object 29."
+                    "You touch the bark of the tree."
                 ]
             },
             "name": "tree",
@@ -899,16 +873,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "TODO: describe area 33."
+                    "You see a locked chest shaded by the trees."
                 ],
-                "enter": [
-                    "TODO: enter area 33."
-                ],
-                "exit": [
-                    "TODO: exit area 33."
-                ],
-                "inside": [
-                    "TODO: inside area 33."
+                "touch": [
+                    "You touch the locked chest."
                 ]
             },
             "name": "locked chest",
@@ -930,14 +898,34 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "TODO: describe object 34."
+                    "You see a key glimmering on a stone in the field."
                 ],
                 "touch": [
-                    "TODO: touch object 34."
+                    "You try to take the key but it slips out of your hands."
                 ]
             },
             "name": "key",
             "quadratic_attenuation": 1
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "You see an elaborate fountain decorated with statues."
+                ],
+                "touch": [
+                    "You step up to the large bowl of the fountain."
+                ]
+            },
+            "name": "fountain",
+            "position": {
+                "x": 15.547807693481445,
+                "y": 61.552345275878906
+            },
+            "quadratic_attenuation": 1,
+            "radius": 3.462017059326172
         }
     ]
 }
