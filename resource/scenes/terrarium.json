@@ -460,6 +460,28 @@
             },
             "name": "pool",
             "quadratic_attenuation": 1
+        },
+        {
+            "base_attenuation": -330.87225341796875,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "You see a copse of trees."
+                ],
+                "enter": [],
+                "exit": [],
+                "inside": [
+                    "You stand nearby a copse of trees."
+                ]
+            },
+            "name": "trees",
+            "position": {
+                "x": -10.371500015258789,
+                "y": 40.03935241699219
+            },
+            "quadratic_attenuation": 1,
+            "radius": 6.300266265869141
         }
     ],
     "messages": {
@@ -876,7 +898,7 @@
                     "You see a locked chest shaded by the trees."
                 ],
                 "touch": [
-                    "You touch the locked chest."
+                    "You touch the locked chest but are unable to open it."
                 ]
             },
             "name": "locked chest",
@@ -908,7 +930,7 @@
             "quadratic_attenuation": 1
         },
         {
-            "base_attenuation": 0,
+            "base_attenuation": -330.87225341796875,
             "invisible": false,
             "linear_attenuation": 0,
             "messages": {
