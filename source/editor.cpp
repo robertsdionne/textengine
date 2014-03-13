@@ -209,44 +209,46 @@ namespace textengine {
       current_state.zoom = 1.0;
     }
     constexpr auto kMultiplier = 1.25;
-    if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_SLASH) > 0) {
-      current_state.selected_item->base_attenuation *= -1.0;
-    }
-    if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_7) > 0) {
-      current_state.selected_item->base_attenuation = 1.0;
-    }
-    if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_U) > 0) {
-      current_state.selected_item->base_attenuation *= kMultiplier;
-    }
-    if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_J) > 0) {
-      current_state.selected_item->base_attenuation /= kMultiplier;
-    }
-    if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_M) > 0) {
-      current_state.selected_item->base_attenuation = 0.0;
-    }
-    if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_8) > 0) {
-      current_state.selected_item->linear_attenuation = 1.0;
-    }
-    if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_I) > 0) {
-      current_state.selected_item->linear_attenuation *= kMultiplier;
-    }
-    if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_K) > 0) {
-      current_state.selected_item->linear_attenuation /= kMultiplier;
-    }
-    if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_COMMA) > 0) {
-      current_state.selected_item->linear_attenuation = 0.0;
-    }
-    if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_9) > 0) {
-      current_state.selected_item->quadratic_attenuation = 1.0;
-    }
-    if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_O) > 0) {
-      current_state.selected_item->quadratic_attenuation *= kMultiplier;
-    }
-    if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_L) > 0) {
-      current_state.selected_item->quadratic_attenuation /= kMultiplier;
-    }
-    if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_PERIOD) > 0) {
-      current_state.selected_item->quadratic_attenuation = 0.0;
+    if (!naming) {
+      if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_SLASH) > 0) {
+        current_state.selected_item->base_attenuation *= -1.0;
+      }
+      if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_7) > 0) {
+        current_state.selected_item->base_attenuation = 1.0;
+      }
+      if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_U) > 0) {
+        current_state.selected_item->base_attenuation *= kMultiplier;
+      }
+      if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_J) > 0) {
+        current_state.selected_item->base_attenuation /= kMultiplier;
+      }
+      if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_M) > 0) {
+        current_state.selected_item->base_attenuation = 0.0;
+      }
+      if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_8) > 0) {
+        current_state.selected_item->linear_attenuation = 1.0;
+      }
+      if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_I) > 0) {
+        current_state.selected_item->linear_attenuation *= kMultiplier;
+      }
+      if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_K) > 0) {
+        current_state.selected_item->linear_attenuation /= kMultiplier;
+      }
+      if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_COMMA) > 0) {
+        current_state.selected_item->linear_attenuation = 0.0;
+      }
+      if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_9) > 0) {
+        current_state.selected_item->quadratic_attenuation = 1.0;
+      }
+      if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_O) > 0) {
+        current_state.selected_item->quadratic_attenuation *= kMultiplier;
+      }
+      if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_L) > 0) {
+        current_state.selected_item->quadratic_attenuation /= kMultiplier;
+      }
+      if (current_state.selected_item && keyboard.GetKeyVelocity(GLFW_KEY_PERIOD) > 0) {
+        current_state.selected_item->quadratic_attenuation = 0.0;
+      }
     }
   }
 
