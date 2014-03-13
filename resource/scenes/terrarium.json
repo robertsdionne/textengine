@@ -346,6 +346,146 @@
             },
             "name": "last stone",
             "quadratic_attenuation": 1
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 27."
+                ],
+                "enter": [
+                    "TODO: enter area 27."
+                ],
+                "exit": [
+                    "TODO: exit area 27."
+                ],
+                "inside": [
+                    "TODO: inside area 27."
+                ]
+            },
+            "name": "tree shade",
+            "position": {
+                "x": -12.595885276794434,
+                "y": 40.16756820678711
+            },
+            "quadratic_attenuation": 1,
+            "radius": 1.3350563049316406
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 30."
+                ],
+                "enter": [
+                    "TODO: enter area 30."
+                ],
+                "exit": [
+                    "TODO: exit area 30."
+                ],
+                "inside": [
+                    "TODO: inside area 30."
+                ]
+            },
+            "name": "tree shade",
+            "position": {
+                "x": -10.06616497039795,
+                "y": 41.48686981201172
+            },
+            "quadratic_attenuation": 1,
+            "radius": 1.3350563049316406
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 21.363117218017578,
+                    "y": 67.47074127197266
+                },
+                "minimum": {
+                    "x": 9.804888725280762,
+                    "y": 55.841529846191406
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 31."
+                ],
+                "enter": [
+                    "TODO: enter area 31."
+                ],
+                "exit": [
+                    "TODO: exit area 31."
+                ],
+                "inside": [
+                    "TODO: inside area 31."
+                ]
+            },
+            "name": "field",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 19.009824752807617,
+                    "y": 64.62918090820312
+                },
+                "minimum": {
+                    "x": 12.085790634155273,
+                    "y": 58.47550964355469
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 32."
+                ],
+                "enter": [
+                    "TODO: enter area 32."
+                ],
+                "exit": [
+                    "TODO: exit area 32."
+                ],
+                "inside": [
+                    "TODO: inside area 32."
+                ]
+            },
+            "name": "pool",
+            "quadratic_attenuation": 1
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 33."
+                ],
+                "enter": [
+                    "TODO: enter area 33."
+                ],
+                "exit": [
+                    "TODO: exit area 33."
+                ],
+                "inside": [
+                    "TODO: inside area 33."
+                ]
+            },
+            "name": "fountain",
+            "position": {
+                "x": 15.547807693481445,
+                "y": 61.552345275878906
+            },
+            "quadratic_attenuation": 1,
+            "radius": 3.462017059326172
         }
     ],
     "messages": {
@@ -701,6 +841,102 @@
                 ]
             },
             "name": "giant-tortoise pen",
+            "quadratic_attenuation": 1
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 28."
+                ],
+                "touch": [
+                    "TODO: touch object 28."
+                ]
+            },
+            "name": "tree",
+            "position": {
+                "x": -12.60439395904541,
+                "y": 40.235076904296875
+            },
+            "quadratic_attenuation": 1,
+            "radius": 0.5
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 29."
+                ],
+                "touch": [
+                    "TODO: touch object 29."
+                ]
+            },
+            "name": "tree",
+            "position": {
+                "x": -10.16223430633545,
+                "y": 41.65428924560547
+            },
+            "quadratic_attenuation": 1,
+            "radius": 0.5
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": -11.36090087890625,
+                    "y": 42.326171875
+                },
+                "minimum": {
+                    "x": -12.36090087890625,
+                    "y": 41.326171875
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 33."
+                ],
+                "enter": [
+                    "TODO: enter area 33."
+                ],
+                "exit": [
+                    "TODO: exit area 33."
+                ],
+                "inside": [
+                    "TODO: inside area 33."
+                ]
+            },
+            "name": "locked chest",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 18.249826431274414,
+                    "y": 65.84121704101562
+                },
+                "minimum": {
+                    "x": 18.000844955444336,
+                    "y": 65.56255340576172
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 34."
+                ],
+                "touch": [
+                    "TODO: touch object 34."
+                ]
+            },
+            "name": "key",
             "quadratic_attenuation": 1
         }
     ]
