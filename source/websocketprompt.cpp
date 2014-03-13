@@ -23,7 +23,7 @@ namespace textengine {
       "interactive-fiction-protocol",
       WebSocketPrompt::InteractiveFictionCallback,
       0,
-      4096
+      8 * 4096
     },
     {nullptr, nullptr, 0, 0}
   };
@@ -119,7 +119,7 @@ namespace textengine {
           out << *response;
           const std::string json = out.str();
           instance->log.LogMessage(json);
-          unsigned char buffer[LWS_SEND_BUFFER_PRE_PADDING + 4096 + LWS_SEND_BUFFER_POST_PADDING];
+          unsigned char buffer[LWS_SEND_BUFFER_PRE_PADDING + 8 * 4096 + LWS_SEND_BUFFER_POST_PADDING];
           unsigned char *p = &buffer[LWS_SEND_BUFFER_PRE_PADDING];
           std::copy(json.begin(), json.end(), p);
           CHECK_STATE(!libwebsocket_write(wsi, p, json.size(), LWS_WRITE_TEXT));
