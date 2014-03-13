@@ -1,0 +1,2388 @@
+{
+    "areas": [
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 19.798017501831055,
+                    "y": -2.3538804054260254
+                },
+                "minimum": {
+                    "x": -5.248119831085205,
+                    "y": -3.305509090423584
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 3."
+                ],
+                "enter": [
+                    "TODO: enter area 3."
+                ],
+                "exit": [
+                    "TODO: exit area 3."
+                ],
+                "inside": [
+                    "TODO: inside area 3."
+                ]
+            },
+            "name": "stream",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 19.794519424438477,
+                    "y": 52.09086227416992
+                },
+                "minimum": {
+                    "x": 18.2951602935791,
+                    "y": -2.3691110610961914
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 4."
+                ],
+                "enter": [
+                    "TODO: enter area 4."
+                ],
+                "exit": [
+                    "TODO: exit area 4."
+                ],
+                "inside": [
+                    "TODO: inside area 4."
+                ]
+            },
+            "name": "stream",
+            "quadratic_attenuation": 1
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 7."
+                ],
+                "touch": [
+                    "TODO: touch object 7."
+                ]
+            },
+            "name": "tree shade",
+            "position": {
+                "x": -0.3797640800476074,
+                "y": 16.095123291015625
+            },
+            "quadratic_attenuation": 1,
+            "radius": 1.695633888244629
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 8."
+                ],
+                "enter": [
+                    "TODO: enter area 8."
+                ],
+                "exit": [
+                    "TODO: exit area 8."
+                ],
+                "inside": [
+                    "TODO: inside area 8."
+                ]
+            },
+            "name": "tree shade",
+            "position": {
+                "x": 2.180300235748291,
+                "y": 15.56761360168457
+            },
+            "quadratic_attenuation": 1,
+            "radius": 1.6956348419189453
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 9."
+                ],
+                "enter": [
+                    "TODO: enter area 9."
+                ],
+                "exit": [
+                    "TODO: exit area 9."
+                ],
+                "inside": [
+                    "TODO: inside area 9."
+                ]
+            },
+            "name": "tree shade",
+            "position": {
+                "x": -0.35870885848999023,
+                "y": 13.420555114746094
+            },
+            "quadratic_attenuation": 1,
+            "radius": 1.695633888244629
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 15."
+                ],
+                "enter": [
+                    "TODO: enter area 15."
+                ],
+                "exit": [
+                    "TODO: exit area 15."
+                ],
+                "inside": [
+                    "TODO: inside area 15."
+                ]
+            },
+            "name": "stream bend",
+            "position": {
+                "x": 18.055755615234375,
+                "y": -1.6532559394836426
+            },
+            "quadratic_attenuation": 1,
+            "radius": 2.3971900939941406
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 29.013450622558594,
+                    "y": 59.03398132324219
+                },
+                "minimum": {
+                    "x": 10.976177215576172,
+                    "y": 56.98298263549805
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 24."
+                ],
+                "enter": [
+                    "TODO: enter area 24."
+                ],
+                "exit": [
+                    "TODO: exit area 24."
+                ],
+                "inside": [
+                    "TODO: inside area 24."
+                ]
+            },
+            "name": "walkway",
+            "quadratic_attenuation": 1
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 25."
+                ],
+                "enter": [
+                    "TODO: enter area 25."
+                ],
+                "exit": [
+                    "TODO: exit area 25."
+                ],
+                "inside": [
+                    "TODO: inside area 25."
+                ]
+            },
+            "name": "entrance",
+            "position": {
+                "x": 10.623113632202148,
+                "y": 58.11016845703125
+            },
+            "quadratic_attenuation": 1,
+            "radius": 1.9138145446777344
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 26."
+                ],
+                "enter": [
+                    "TODO: enter area 26."
+                ],
+                "exit": [
+                    "TODO: exit area 26."
+                ],
+                "inside": [
+                    "TODO: inside area 26."
+                ]
+            },
+            "name": "exit",
+            "position": {
+                "x": 28.902124404907227,
+                "y": 57.99032974243164
+            },
+            "quadratic_attenuation": 1,
+            "radius": 1.9138145446777344
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 21.92142677307129,
+                    "y": 62.822486877441406
+                },
+                "minimum": {
+                    "x": 18.349191665649414,
+                    "y": 59.76020050048828
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 27."
+                ],
+                "enter": [
+                    "TODO: enter area 27."
+                ],
+                "exit": [
+                    "TODO: exit area 27."
+                ],
+                "inside": [
+                    "TODO: inside area 27."
+                ]
+            },
+            "name": "northern pool",
+            "quadratic_attenuation": 1.25
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 21.965272903442383,
+                    "y": 56.22257614135742
+                },
+                "minimum": {
+                    "x": 18.393037796020508,
+                    "y": 53.1602897644043
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 28."
+                ],
+                "enter": [
+                    "TODO: enter area 28."
+                ],
+                "exit": [
+                    "TODO: exit area 28."
+                ],
+                "inside": [
+                    "TODO: inside area 28."
+                ]
+            },
+            "name": "southern pool",
+            "quadratic_attenuation": 1
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 29."
+                ],
+                "enter": [
+                    "TODO: enter area 29."
+                ],
+                "exit": [
+                    "TODO: exit area 29."
+                ],
+                "inside": [
+                    "TODO: inside area 29."
+                ]
+            },
+            "name": "northern fountain",
+            "position": {
+                "x": 20.13530921936035,
+                "y": 61.291343688964844
+            },
+            "quadratic_attenuation": 1,
+            "radius": 1.7861175537109375
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 30."
+                ],
+                "enter": [
+                    "TODO: enter area 30."
+                ],
+                "exit": [
+                    "TODO: exit area 30."
+                ],
+                "inside": [
+                    "TODO: inside area 30."
+                ]
+            },
+            "name": "southern fountain",
+            "position": {
+                "x": 20.179155349731445,
+                "y": 54.69143295288086
+            },
+            "quadratic_attenuation": 1,
+            "radius": 1.7861175537109375
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 28."
+                ],
+                "enter": [
+                    "TODO: enter area 28."
+                ],
+                "exit": [
+                    "TODO: exit area 28."
+                ],
+                "inside": [
+                    "TODO: inside area 28."
+                ]
+            },
+            "name": "stream opening",
+            "position": {
+                "x": 19.02191734313965,
+                "y": 50.69215393066406
+            },
+            "quadratic_attenuation": 1,
+            "radius": 1.7861175537109375
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 28.5101261138916,
+                    "y": 60.716339111328125
+                },
+                "minimum": {
+                    "x": 25.658809661865234,
+                    "y": 55.4023551940918
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 29."
+                ],
+                "touch": [
+                    "TODO: touch object 29."
+                ]
+            },
+            "name": "roof",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 33.061363220214844,
+                    "y": 48.65218734741211
+                },
+                "minimum": {
+                    "x": 32.061363220214844,
+                    "y": 47.65218734741211
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 37."
+                ],
+                "enter": [
+                    "TODO: enter area 37."
+                ],
+                "exit": [
+                    "TODO: exit area 37."
+                ],
+                "inside": [
+                    "TODO: inside area 37."
+                ]
+            },
+            "name": "post 5d",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 40.04648971557617,
+                    "y": 40.35741424560547
+                },
+                "minimum": {
+                    "x": 39.04648971557617,
+                    "y": 39.35741424560547
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 38."
+                ],
+                "enter": [
+                    "TODO: enter area 38."
+                ],
+                "exit": [
+                    "TODO: exit area 38."
+                ],
+                "inside": [
+                    "TODO: inside area 38."
+                ]
+            },
+            "name": "post 4d",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 50.52436447143555,
+                    "y": 32.03400421142578
+                },
+                "minimum": {
+                    "x": 49.52436447143555,
+                    "y": 31.03400421142578
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 39."
+                ],
+                "enter": [
+                    "TODO: enter area 39."
+                ],
+                "exit": [
+                    "TODO: exit area 39."
+                ],
+                "inside": [
+                    "TODO: inside area 39."
+                ]
+            },
+            "name": "post 3d",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 59.652252197265625,
+                    "y": 23.383575439453125
+                },
+                "minimum": {
+                    "x": 58.652252197265625,
+                    "y": 22.383575439453125
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 40."
+                ],
+                "enter": [
+                    "TODO: enter area 40."
+                ],
+                "exit": [
+                    "TODO: exit area 40."
+                ],
+                "inside": [
+                    "TODO: inside area 40."
+                ]
+            },
+            "name": "post 2d",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 71.42538452148438,
+                    "y": 12.777992248535156
+                },
+                "minimum": {
+                    "x": 70.42538452148438,
+                    "y": 11.777992248535156
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 41."
+                ],
+                "enter": [
+                    "TODO: enter area 41."
+                ],
+                "exit": [
+                    "TODO: exit area 41."
+                ],
+                "inside": [
+                    "TODO: inside area 41."
+                ]
+            },
+            "name": "post 1d",
+            "quadratic_attenuation": 1
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 53."
+                ],
+                "enter": [
+                    "TODO: enter area 53."
+                ],
+                "exit": [
+                    "TODO: exit area 53."
+                ],
+                "inside": [
+                    "TODO: inside area 53."
+                ]
+            },
+            "name": "tree shade",
+            "position": {
+                "x": 81.66058349609375,
+                "y": 68.43167877197266
+            },
+            "quadratic_attenuation": 1,
+            "radius": 2.7301712036132812
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 54."
+                ],
+                "enter": [
+                    "TODO: enter area 54."
+                ],
+                "exit": [
+                    "TODO: exit area 54."
+                ],
+                "inside": [
+                    "TODO: inside area 54."
+                ]
+            },
+            "name": "tree shade",
+            "position": {
+                "x": 85.37994384765625,
+                "y": 68.16194152832031
+            },
+            "quadratic_attenuation": 1,
+            "radius": 2.7301712036132812
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 55."
+                ],
+                "enter": [
+                    "TODO: enter area 55."
+                ],
+                "exit": [
+                    "TODO: exit area 55."
+                ],
+                "inside": [
+                    "TODO: inside area 55."
+                ]
+            },
+            "name": "tree shade",
+            "position": {
+                "x": 86.40655517578125,
+                "y": 65.10953521728516
+            },
+            "quadratic_attenuation": 1,
+            "radius": 2.7301712036132812
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 56."
+                ],
+                "enter": [
+                    "TODO: enter area 56."
+                ],
+                "exit": [
+                    "TODO: exit area 56."
+                ],
+                "inside": [
+                    "TODO: inside area 56."
+                ]
+            },
+            "name": "tree shade",
+            "position": {
+                "x": 77.35153198242188,
+                "y": 38.791595458984375
+            },
+            "quadratic_attenuation": 1,
+            "radius": 2.7301712036132812
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 57."
+                ],
+                "enter": [
+                    "TODO: enter area 57."
+                ],
+                "exit": [
+                    "TODO: exit area 57."
+                ],
+                "inside": [
+                    "TODO: inside area 57."
+                ]
+            },
+            "name": "tree shade",
+            "position": {
+                "x": 81.22332763671875,
+                "y": 35.08346939086914
+            },
+            "quadratic_attenuation": 1,
+            "radius": 2.7301712036132812
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 58."
+                ],
+                "enter": [
+                    "TODO: enter area 58."
+                ],
+                "exit": [
+                    "TODO: exit area 58."
+                ],
+                "inside": [
+                    "TODO: inside area 58."
+                ]
+            },
+            "name": "tree shade",
+            "position": {
+                "x": 81.69184875488281,
+                "y": 39.118927001953125
+            },
+            "quadratic_attenuation": 1,
+            "radius": 2.7301712036132812
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 59."
+                ],
+                "enter": [
+                    "TODO: enter area 59."
+                ],
+                "exit": [
+                    "TODO: exit area 59."
+                ],
+                "inside": [
+                    "TODO: inside area 59."
+                ]
+            },
+            "name": "lake",
+            "position": {
+                "x": 78.70352935791016,
+                "y": 55.736671447753906
+            },
+            "quadratic_attenuation": 1,
+            "radius": 4.416351318359375
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 99.35585021972656,
+                    "y": 59.949317932128906
+                },
+                "minimum": {
+                    "x": 78.78659057617188,
+                    "y": 51.45658874511719
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 60."
+                ],
+                "enter": [
+                    "TODO: enter area 60."
+                ],
+                "exit": [
+                    "TODO: exit area 60."
+                ],
+                "inside": [
+                    "TODO: inside area 60."
+                ]
+            },
+            "name": "lake",
+            "quadratic_attenuation": 1
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 61."
+                ],
+                "enter": [
+                    "TODO: enter area 61."
+                ],
+                "exit": [
+                    "TODO: exit area 61."
+                ],
+                "inside": [
+                    "TODO: inside area 61."
+                ]
+            },
+            "name": "lake",
+            "position": {
+                "x": 99.98329162597656,
+                "y": 55.580379486083984
+            },
+            "quadratic_attenuation": 1,
+            "radius": 4.416351318359375
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 104.39999389648438,
+                    "y": 55.585472106933594
+                },
+                "minimum": {
+                    "x": 95.5588607788086,
+                    "y": 41.874393463134766
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 62."
+                ],
+                "enter": [
+                    "TODO: enter area 62."
+                ],
+                "exit": [
+                    "TODO: exit area 62."
+                ],
+                "inside": [
+                    "TODO: inside area 62."
+                ]
+            },
+            "name": "lake",
+            "quadratic_attenuation": 1
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 63."
+                ],
+                "enter": [
+                    "TODO: enter area 63."
+                ],
+                "exit": [
+                    "TODO: exit area 63."
+                ],
+                "inside": [
+                    "TODO: inside area 63."
+                ]
+            },
+            "name": "lake",
+            "position": {
+                "x": 100.0184097290039,
+                "y": 41.83803939819336
+            },
+            "quadratic_attenuation": 1,
+            "radius": 4.416351318359375
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 64."
+                ],
+                "enter": [
+                    "TODO: enter area 64."
+                ],
+                "exit": [
+                    "TODO: exit area 64."
+                ],
+                "inside": [
+                    "TODO: inside area 64."
+                ]
+            },
+            "name": "tree shade",
+            "position": {
+                "x": 52.60211181640625,
+                "y": 72.88544464111328
+            },
+            "quadratic_attenuation": 1,
+            "radius": 2.7301712036132812
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 65."
+                ],
+                "enter": [
+                    "TODO: enter area 65."
+                ],
+                "exit": [
+                    "TODO: exit area 65."
+                ],
+                "inside": [
+                    "TODO: inside area 65."
+                ]
+            },
+            "name": "area 65",
+            "position": {
+                "x": 85.45686340332031,
+                "y": 12.218502044677734
+            },
+            "quadratic_attenuation": 1,
+            "radius": 8.274276733398438
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 66."
+                ],
+                "enter": [
+                    "TODO: enter area 66."
+                ],
+                "exit": [
+                    "TODO: exit area 66."
+                ],
+                "inside": [
+                    "TODO: inside area 66."
+                ]
+            },
+            "name": "area 66",
+            "position": {
+                "x": 75.86729431152344,
+                "y": 103.39212036132812
+            },
+            "quadratic_attenuation": 1,
+            "radius": 8.274276733398438
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 67."
+                ],
+                "enter": [
+                    "TODO: enter area 67."
+                ],
+                "exit": [
+                    "TODO: exit area 67."
+                ],
+                "inside": [
+                    "TODO: inside area 67."
+                ]
+            },
+            "name": "tree shade",
+            "position": {
+                "x": 118.38361358642578,
+                "y": 46.47126007080078
+            },
+            "quadratic_attenuation": 1,
+            "radius": 2.7301712036132812
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 68."
+                ],
+                "enter": [
+                    "TODO: enter area 68."
+                ],
+                "exit": [
+                    "TODO: exit area 68."
+                ],
+                "inside": [
+                    "TODO: inside area 68."
+                ]
+            },
+            "name": "mouth of canyon wall",
+            "position": {
+                "x": 131.0927276611328,
+                "y": 56.270076751708984
+            },
+            "quadratic_attenuation": 1,
+            "radius": 8.274272918701172
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 81."
+                ],
+                "touch": [
+                    "TODO: touch object 81."
+                ]
+            },
+            "name": "radio tower",
+            "position": {
+                "x": 254.53610229492188,
+                "y": 97.15129089355469
+            },
+            "quadratic_attenuation": 1,
+            "radius": 13.099185943603516
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 87."
+                ],
+                "enter": [
+                    "TODO: enter area 87."
+                ],
+                "exit": [
+                    "TODO: exit area 87."
+                ],
+                "inside": [
+                    "TODO: inside area 87."
+                ]
+            },
+            "name": "camp 06",
+            "position": {
+                "x": 0.7832598686218262,
+                "y": -0.0430760383605957
+            },
+            "quadratic_attenuation": 1,
+            "radius": 1.695633888244629
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 88."
+                ],
+                "enter": [
+                    "TODO: enter area 88."
+                ],
+                "exit": [
+                    "TODO: exit area 88."
+                ],
+                "inside": [
+                    "TODO: inside area 88."
+                ]
+            },
+            "name": "camp 07",
+            "position": {
+                "x": 254.04591369628906,
+                "y": 67.6317138671875
+            },
+            "quadratic_attenuation": 1,
+            "radius": 1.6956329345703125
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 89."
+                ],
+                "enter": [
+                    "TODO: enter area 89."
+                ],
+                "exit": [
+                    "TODO: exit area 89."
+                ],
+                "inside": [
+                    "TODO: inside area 89."
+                ]
+            },
+            "name": "entrance",
+            "position": {
+                "x": 252.94622802734375,
+                "y": 67.70805358886719
+            },
+            "quadratic_attenuation": 1,
+            "radius": 0.40987396240234375
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 90."
+                ],
+                "enter": [
+                    "TODO: enter area 90."
+                ],
+                "exit": [
+                    "TODO: exit area 90."
+                ],
+                "inside": [
+                    "TODO: inside area 90."
+                ]
+            },
+            "name": "exit",
+            "position": {
+                "x": 1.986933708190918,
+                "y": 0.006765127182006836
+            },
+            "quadratic_attenuation": 1,
+            "radius": 0.35402798652648926
+        }
+    ],
+    "messages": {
+        "east": [
+            "You head to the east.",
+            "You move easterly.",
+            "You go eastward."
+        ],
+        "look": [
+            "You look around.",
+            "You observe your surroundings.",
+            "You inspect your environment."
+        ],
+        "north": [
+            "You head to the north.",
+            "You march northerly.",
+            "You move northward."
+        ],
+        "run": [
+            "You start to run.",
+            "You begin running.",
+            "You run.",
+            "You move briskly."
+        ],
+        "south": [
+            "You head south.",
+            "You go southerly.",
+            "You turn southward."
+        ],
+        "stop looking": [
+            "You return to your thoughts.",
+            "You are done observing.",
+            "You conclude your inspection."
+        ],
+        "walk": [
+            "You walk.",
+            "You start to walk.",
+            "You stop running.",
+            "You slow yourself."
+        ],
+        "west": [
+            "You go to the west.",
+            "You move westerly.",
+            "You head westward."
+        ]
+    },
+    "objects": [
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 1.9992984533309937,
+                    "y": 0.431321918964386
+                },
+                "minimum": {
+                    "x": -0.38415229320526123,
+                    "y": 0.17289215326309204
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 26."
+                ],
+                "touch": [
+                    "TODO: touch object 26."
+                ]
+            },
+            "name": "wall",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 1.9978764057159424,
+                    "y": -0.1729956865310669
+                },
+                "minimum": {
+                    "x": -0.3855743408203125,
+                    "y": -0.43142545223236084
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 27."
+                ],
+                "touch": [
+                    "TODO: touch object 27."
+                ]
+            },
+            "name": "wall",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": -0.13582491874694824,
+                    "y": 0.42957305908203125
+                },
+                "minimum": {
+                    "x": -0.38797295093536377,
+                    "y": -0.4304666519165039
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 28."
+                ],
+                "touch": [
+                    "TODO: touch object 28."
+                ]
+            },
+            "name": "wall",
+            "quadratic_attenuation": 1
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 10."
+                ],
+                "enter": [
+                    "TODO: enter area 10."
+                ],
+                "exit": [
+                    "TODO: exit area 10."
+                ],
+                "inside": [
+                    "TODO: inside area 10."
+                ]
+            },
+            "name": "tree",
+            "position": {
+                "x": -0.36715221405029297,
+                "y": 13.456802368164062
+            },
+            "quadratic_attenuation": 1,
+            "radius": 0.5070028305053711
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 11."
+                ],
+                "touch": [
+                    "TODO: touch object 11."
+                ]
+            },
+            "name": "tree",
+            "position": {
+                "x": -0.3319215774536133,
+                "y": 16.157794952392578
+            },
+            "quadratic_attenuation": 1,
+            "radius": 0.5070037841796875
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 13."
+                ],
+                "touch": [
+                    "TODO: touch object 13."
+                ]
+            },
+            "name": "waterfall",
+            "position": {
+                "x": -14.089296340942383,
+                "y": -10.466815948486328
+            },
+            "quadratic_attenuation": 1,
+            "radius": 12.03553581237793
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 14.392739295959473,
+                    "y": 57.401641845703125
+                },
+                "minimum": {
+                    "x": 11.541422843933105,
+                    "y": 52.08766174316406
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 16."
+                ],
+                "enter": [
+                    "TODO: enter area 16."
+                ],
+                "exit": [
+                    "TODO: exit area 16."
+                ],
+                "inside": [
+                    "TODO: inside area 16."
+                ]
+            },
+            "name": "southwest building",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 14.376465797424316,
+                    "y": 64.03646850585938
+                },
+                "minimum": {
+                    "x": 11.52514934539795,
+                    "y": 58.72248840332031
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 17."
+                ],
+                "touch": [
+                    "TODO: touch object 17."
+                ]
+            },
+            "name": "northwest building",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 28.489763259887695,
+                    "y": 64.02090454101562
+                },
+                "minimum": {
+                    "x": 25.638446807861328,
+                    "y": 58.7069206237793
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 18."
+                ],
+                "touch": [
+                    "TODO: touch object 18."
+                ]
+            },
+            "name": "northeast building",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 28.493600845336914,
+                    "y": 57.3986701965332
+                },
+                "minimum": {
+                    "x": 25.642284393310547,
+                    "y": 52.08469009399414
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 20."
+                ],
+                "touch": [
+                    "TODO: touch object 20."
+                ]
+            },
+            "name": "southeast building",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 25.6300048828125,
+                    "y": 52.520816802978516
+                },
+                "minimum": {
+                    "x": 14.399739265441895,
+                    "y": 52.08199691772461
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 21."
+                ],
+                "touch": [
+                    "TODO: touch object 21."
+                ]
+            },
+            "name": "southern wall",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 25.632261276245117,
+                    "y": 64.020751953125
+                },
+                "minimum": {
+                    "x": 14.401995658874512,
+                    "y": 63.581932067871094
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 22."
+                ],
+                "touch": [
+                    "TODO: touch object 22."
+                ]
+            },
+            "name": "northern wall",
+            "quadratic_attenuation": 1
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 12."
+                ],
+                "touch": [
+                    "TODO: touch object 12."
+                ]
+            },
+            "name": "tree",
+            "position": {
+                "x": 2.0784101486206055,
+                "y": 15.53092098236084
+            },
+            "quadratic_attenuation": 1,
+            "radius": 0.5070028305053711
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 152.28883361816406,
+                    "y": 131.74057006835938
+                },
+                "minimum": {
+                    "x": 134.8053741455078,
+                    "y": 73.33972930908203
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 70."
+                ],
+                "touch": [
+                    "TODO: touch object 70."
+                ]
+            },
+            "name": "canyon wall",
+            "quadratic_attenuation": 1
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 71."
+                ],
+                "touch": [
+                    "TODO: touch object 71."
+                ]
+            },
+            "name": "boulder",
+            "position": {
+                "x": 137.33450317382812,
+                "y": 70.9349136352539
+            },
+            "quadratic_attenuation": 1,
+            "radius": 3.23883056640625
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 72."
+                ],
+                "touch": [
+                    "TODO: touch object 72."
+                ]
+            },
+            "name": "boulder",
+            "position": {
+                "x": 144.82345581054688,
+                "y": 73.07061767578125
+            },
+            "quadratic_attenuation": 1,
+            "radius": 6.925685882568359
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 73."
+                ],
+                "touch": [
+                    "TODO: touch object 73."
+                ]
+            },
+            "name": "boulder",
+            "position": {
+                "x": 141.39358520507812,
+                "y": 50.856292724609375
+            },
+            "quadratic_attenuation": 1,
+            "radius": 6.925685882568359
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 74."
+                ],
+                "touch": [
+                    "TODO: touch object 74."
+                ]
+            },
+            "name": "boulder",
+            "position": {
+                "x": 157.12501525878906,
+                "y": 50.2485466003418
+            },
+            "quadratic_attenuation": 1,
+            "radius": 13.099185943603516
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 75."
+                ],
+                "touch": [
+                    "TODO: touch object 75."
+                ]
+            },
+            "name": "boulder",
+            "position": {
+                "x": 174.31576538085938,
+                "y": 67.43891143798828
+            },
+            "quadratic_attenuation": 1,
+            "radius": 13.099187850952148
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 76."
+                ],
+                "touch": [
+                    "TODO: touch object 76."
+                ]
+            },
+            "name": "boulder",
+            "position": {
+                "x": 172.11143493652344,
+                "y": 90.53070831298828
+            },
+            "quadratic_attenuation": 1,
+            "radius": 13.099189758300781
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 77."
+                ],
+                "touch": [
+                    "TODO: touch object 77."
+                ]
+            },
+            "name": "boulder",
+            "position": {
+                "x": 151.54727172851562,
+                "y": 116.69466400146484
+            },
+            "quadratic_attenuation": 1,
+            "radius": 13.099189758300781
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 78."
+                ],
+                "touch": [
+                    "TODO: touch object 78."
+                ]
+            },
+            "name": "boulder",
+            "position": {
+                "x": 174.84060668945312,
+                "y": 124.20218658447266
+            },
+            "quadratic_attenuation": 1,
+            "radius": 13.099189758300781
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 79."
+                ],
+                "touch": [
+                    "TODO: touch object 79."
+                ]
+            },
+            "name": "boulder",
+            "position": {
+                "x": 196.83578491210938,
+                "y": 115.97775268554688
+            },
+            "quadratic_attenuation": 1,
+            "radius": 13.099185943603516
+        },
+        {
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 80."
+                ],
+                "touch": [
+                    "TODO: touch object 80."
+                ]
+            },
+            "name": "boulder",
+            "position": {
+                "x": 189.92587280273438,
+                "y": 74.51083374023438
+            },
+            "quadratic_attenuation": 1,
+            "radius": 13.099185943603516
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 261.6098327636719,
+                    "y": 104.17107391357422
+                },
+                "minimum": {
+                    "x": 247.814208984375,
+                    "y": 90.73016357421875
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 82."
+                ],
+                "enter": [
+                    "TODO: enter area 82."
+                ],
+                "exit": [
+                    "TODO: exit area 82."
+                ],
+                "inside": [
+                    "TODO: inside area 82."
+                ]
+            },
+            "name": "radio tower",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 248.3529052734375,
+                    "y": 97.5993423461914
+                },
+                "minimum": {
+                    "x": 247.30638122558594,
+                    "y": 93.76902770996094
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 83."
+                ],
+                "touch": [
+                    "TODO: touch object 83."
+                ]
+            },
+            "name": "radio terminal",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 255.2920684814453,
+                    "y": 68.13906860351562
+                },
+                "minimum": {
+                    "x": 252.9086151123047,
+                    "y": 67.8806381225586
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 84."
+                ],
+                "touch": [
+                    "TODO: touch object 84."
+                ]
+            },
+            "name": "wall",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 255.29322814941406,
+                    "y": 67.5347900390625
+                },
+                "minimum": {
+                    "x": 252.90977478027344,
+                    "y": 67.27635955810547
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 85."
+                ],
+                "touch": [
+                    "TODO: touch object 85."
+                ]
+            },
+            "name": "wall",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 255.2932891845703,
+                    "y": 68.1357192993164
+                },
+                "minimum": {
+                    "x": 255.0411376953125,
+                    "y": 67.27568054199219
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 86."
+                ],
+                "touch": [
+                    "TODO: touch object 86."
+                ]
+            },
+            "name": "wall",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 86.15007019042969,
+                    "y": 4.050804138183594
+                },
+                "minimum": {
+                    "x": 85.15007019042969,
+                    "y": 3.0508041381835938
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 42."
+                ],
+                "enter": [
+                    "TODO: enter area 42."
+                ],
+                "exit": [
+                    "TODO: exit area 42."
+                ],
+                "inside": [
+                    "TODO: inside area 42."
+                ]
+            },
+            "name": "post 6c",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 96.67340850830078,
+                    "y": 13.813087463378906
+                },
+                "minimum": {
+                    "x": 95.67340850830078,
+                    "y": 12.813087463378906
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 52."
+                ],
+                "enter": [
+                    "TODO: enter area 52."
+                ],
+                "exit": [
+                    "TODO: exit area 52."
+                ],
+                "inside": [
+                    "TODO: inside area 52."
+                ]
+            },
+            "name": "post 5c",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 104.73063659667969,
+                    "y": 22.908424377441406
+                },
+                "minimum": {
+                    "x": 103.73063659667969,
+                    "y": 21.908424377441406
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 51."
+                ],
+                "enter": [
+                    "TODO: enter area 51."
+                ],
+                "exit": [
+                    "TODO: exit area 51."
+                ],
+                "inside": [
+                    "TODO: inside area 51."
+                ]
+            },
+            "name": "post 4c",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 39.12261199951172,
+                    "y": 75.74103546142578
+                },
+                "minimum": {
+                    "x": 38.12261199951172,
+                    "y": 74.74103546142578
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 32."
+                ],
+                "enter": [
+                    "TODO: enter area 32."
+                ],
+                "exit": [
+                    "TODO: exit area 32."
+                ],
+                "inside": [
+                    "TODO: inside area 32."
+                ]
+            },
+            "name": "post 2a",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 32.2738151550293,
+                    "y": 68.29829406738281
+                },
+                "minimum": {
+                    "x": 31.273815155029297,
+                    "y": 67.29829406738281
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 31."
+                ],
+                "enter": [
+                    "TODO: enter area 31."
+                ],
+                "exit": [
+                    "TODO: exit area 31."
+                ],
+                "inside": [
+                    "TODO: inside area 31."
+                ]
+            },
+            "name": "post 1a",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 47.08512496948242,
+                    "y": 83.91683959960938
+                },
+                "minimum": {
+                    "x": 46.08512496948242,
+                    "y": 82.91683959960938
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 33."
+                ],
+                "enter": [
+                    "TODO: enter area 33."
+                ],
+                "exit": [
+                    "TODO: exit area 33."
+                ],
+                "inside": [
+                    "TODO: inside area 33."
+                ]
+            },
+            "name": "post 3a",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 56.56143569946289,
+                    "y": 93.00897979736328
+                },
+                "minimum": {
+                    "x": 55.56143569946289,
+                    "y": 92.00897979736328
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 34."
+                ],
+                "enter": [
+                    "TODO: enter area 34."
+                ],
+                "exit": [
+                    "TODO: exit area 34."
+                ],
+                "inside": [
+                    "TODO: inside area 34."
+                ]
+            },
+            "name": "post 4a",
+            "quadratic_attenuation": 1.25
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 66.17759704589844,
+                    "y": 102.39787292480469
+                },
+                "minimum": {
+                    "x": 65.17759704589844,
+                    "y": 101.39787292480469
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 35."
+                ],
+                "enter": [
+                    "TODO: enter area 35."
+                ],
+                "exit": [
+                    "TODO: exit area 35."
+                ],
+                "inside": [
+                    "TODO: inside area 35."
+                ]
+            },
+            "name": "post 5a",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 75.79156494140625,
+                    "y": 112.66390228271484
+                },
+                "minimum": {
+                    "x": 74.79156494140625,
+                    "y": 111.66390228271484
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 36."
+                ],
+                "enter": [
+                    "TODO: enter area 36."
+                ],
+                "exit": [
+                    "TODO: exit area 36."
+                ],
+                "inside": [
+                    "TODO: inside area 36."
+                ]
+            },
+            "name": "post 1b",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 87.23098754882812,
+                    "y": 102.39787292480469
+                },
+                "minimum": {
+                    "x": 86.23098754882812,
+                    "y": 101.39787292480469
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 43."
+                ],
+                "enter": [
+                    "TODO: enter area 43."
+                ],
+                "exit": [
+                    "TODO: exit area 43."
+                ],
+                "inside": [
+                    "TODO: inside area 43."
+                ]
+            },
+            "name": "post 2b",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 99.21211242675781,
+                    "y": 92.81341552734375
+                },
+                "minimum": {
+                    "x": 98.21211242675781,
+                    "y": 91.81341552734375
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 44."
+                ],
+                "enter": [
+                    "TODO: enter area 44."
+                ],
+                "exit": [
+                    "TODO: exit area 44."
+                ],
+                "inside": [
+                    "TODO: inside area 44."
+                ]
+            },
+            "name": "post 4b",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 111.91825103759766,
+                    "y": 82.03456115722656
+                },
+                "minimum": {
+                    "x": 110.91825103759766,
+                    "y": 81.03456115722656
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 45."
+                ],
+                "enter": [
+                    "TODO: enter area 45."
+                ],
+                "exit": [
+                    "TODO: exit area 45."
+                ],
+                "inside": [
+                    "TODO: inside area 45."
+                ]
+            },
+            "name": "area 45",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 122.16508483886719,
+                    "y": 73.263671875
+                },
+                "minimum": {
+                    "x": 121.16508483886719,
+                    "y": 72.263671875
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 46."
+                ],
+                "enter": [
+                    "TODO: enter area 46."
+                ],
+                "exit": [
+                    "TODO: exit area 46."
+                ],
+                "inside": [
+                    "TODO: inside area 46."
+                ]
+            },
+            "name": "post 5b",
+            "quadratic_attenuation": 1.25
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 131.32785034179688,
+                    "y": 63.612464904785156
+                },
+                "minimum": {
+                    "x": 130.32785034179688,
+                    "y": 62.612464904785156
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 47."
+                ],
+                "enter": [
+                    "TODO: enter area 47."
+                ],
+                "exit": [
+                    "TODO: exit area 47."
+                ],
+                "inside": [
+                    "TODO: inside area 47."
+                ]
+            },
+            "name": "post 6b",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 131.12078857421875,
+                    "y": 49.71402359008789
+                },
+                "minimum": {
+                    "x": 130.12078857421875,
+                    "y": 48.71402359008789
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 48."
+                ],
+                "enter": [
+                    "TODO: enter area 48."
+                ],
+                "exit": [
+                    "TODO: exit area 48."
+                ],
+                "inside": [
+                    "TODO: inside area 48."
+                ]
+            },
+            "name": "post 1c",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 122.28990936279297,
+                    "y": 39.5018310546875
+                },
+                "minimum": {
+                    "x": 121.28990936279297,
+                    "y": 38.5018310546875
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 49."
+                ],
+                "enter": [
+                    "TODO: enter area 49."
+                ],
+                "exit": [
+                    "TODO: exit area 49."
+                ],
+                "inside": [
+                    "TODO: inside area 49."
+                ]
+            },
+            "name": "post 2c",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 113.14978790283203,
+                    "y": 30.225059509277344
+                },
+                "minimum": {
+                    "x": 112.14978790283203,
+                    "y": 29.225059509277344
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe area 50."
+                ],
+                "enter": [
+                    "TODO: enter area 50."
+                ],
+                "exit": [
+                    "TODO: exit area 50."
+                ],
+                "inside": [
+                    "TODO: inside area 50."
+                ]
+            },
+            "name": "post 3c",
+            "quadratic_attenuation": 1
+        },
+        {
+            "aabb": {
+                "maximum": {
+                    "x": 153.11305236816406,
+                    "y": 48.12767028808594
+                },
+                "minimum": {
+                    "x": 135.6295928955078,
+                    "y": -10.273170471191406
+                }
+            },
+            "base_attenuation": 0,
+            "invisible": false,
+            "linear_attenuation": 0,
+            "messages": {
+                "describe": [
+                    "TODO: describe object 91."
+                ],
+                "touch": [
+                    "TODO: touch object 91."
+                ]
+            },
+            "name": "object 91",
+            "quadratic_attenuation": 1
+        }
+    ]
+}
