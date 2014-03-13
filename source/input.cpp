@@ -49,7 +49,7 @@ namespace textengine {
 
   float Input::GetTriggerPressure() const {
     const auto result = ArgMax({
-      static_cast<float>(joystick.IsButtonDown(Joystick::Button::kR1)),
+      static_cast<float>(joystick.IsButtonDown(Joystick::Button::kL1)),
       static_cast<float>(keyboard.IsKeyDown(GLFW_KEY_LEFT_SHIFT))
     });
     return result;
@@ -57,7 +57,7 @@ namespace textengine {
 
   float Input::GetTriggerVelocity() const {
     const auto result = ArgMax({
-      static_cast<float>(joystick.GetButtonVelocity(Joystick::Button::kR1)),
+      static_cast<float>(joystick.GetButtonVelocity(Joystick::Button::kL1)),
       keyboard.GetKeyVelocity(GLFW_KEY_LEFT_SHIFT)
     });
     return result;
