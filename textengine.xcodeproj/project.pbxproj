@@ -206,6 +206,7 @@
 		461717F51826A5F80070ABED /* controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controller.h; sourceTree = "<group>"; };
 		461717FF1826A9D20070ABED /* shaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shaders.h; sourceTree = "<group>"; };
 		461879D117FB5E2E000B32F6 /* picojson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = picojson.h; sourceTree = "<group>"; };
+		461A8CCD18D869F200539C67 /* interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interface.h; sourceTree = "<group>"; };
 		462B4A5C17EA43AA006FE9BB /* vertexarray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vertexarray.h; sourceTree = "<group>"; };
 		462B4A5D17EA43AA006FE9BB /* vertexarray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vertexarray.cpp; sourceTree = "<group>"; };
 		462B4A5E17EA43AA006FE9BB /* shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shader.cpp; sourceTree = "<group>"; };
@@ -5774,6 +5775,7 @@
 				46B9875617E6A62500B59145 /* glfwapplication.h */,
 				463F38AD18316A39001326C3 /* input.cpp */,
 				463F38AE18316A39001326C3 /* input.h */,
+				461A8CCD18D869F200539C67 /* interface.h */,
 				464E367E1825B4BC00AC0AC0 /* joystick.cpp */,
 				464E367F1825B4BC00AC0AC0 /* joystick.h */,
 				460F81B117EA1C3B00D765F5 /* keyboard.cpp */,

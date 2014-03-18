@@ -9,7 +9,7 @@
 #include <picojson.h>
 #include <string>
 
-#include "base.h"
+#include "interface.h"
 
 namespace textengine {
   

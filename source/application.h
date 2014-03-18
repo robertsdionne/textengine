@@ -1,7 +1,7 @@
 #ifndef __textengine__application__
 #define __textengine__application__
 
-#include "base.h"
+#include "interface.h"
 
 namespace textengine {
 

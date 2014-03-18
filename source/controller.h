@@ -3,7 +3,7 @@
 
 #include <glm/glm.hpp>
 
-#include "base.h"
+#include "interface.h"
 
 namespace textengine {
   
