@@ -1164,6 +1164,26 @@
 		463CD6DF18CB99D3005835DB /* shaders.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = shaders.cpp; sourceTree = "<group>"; };
 		463F38AD18316A39001326C3 /* input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = input.cpp; sourceTree = "<group>"; };
 		463F38AE18316A39001326C3 /* input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = input.h; sourceTree = "<group>"; };
+		464D6B7718D8683400D1993D /* terrarium.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = terrarium.json; sourceTree = "<group>"; };
+		464D6B7818D8683400D1993D /* terrarium2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = terrarium2.json; sourceTree = "<group>"; };
+		464D6B8E18D8685900D1993D /* PS4_Circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_Circle.png; sourceTree = "<group>"; };
+		464D6B8F18D8685900D1993D /* PS4_Cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_Cross.png; sourceTree = "<group>"; };
+		464D6B9018D8685900D1993D /* PS4_Dpad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_Dpad.png; sourceTree = "<group>"; };
+		464D6B9118D8685900D1993D /* PS4_Dpad_Down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_Dpad_Down.png; sourceTree = "<group>"; };
+		464D6B9218D8685900D1993D /* PS4_Dpad_Left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_Dpad_Left.png; sourceTree = "<group>"; };
+		464D6B9318D8685900D1993D /* PS4_Dpad_Right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_Dpad_Right.png; sourceTree = "<group>"; };
+		464D6B9418D8685900D1993D /* PS4_Dpad_Up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_Dpad_Up.png; sourceTree = "<group>"; };
+		464D6B9518D8685900D1993D /* PS4_L1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_L1.png; sourceTree = "<group>"; };
+		464D6B9618D8685900D1993D /* PS4_L2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_L2.png; sourceTree = "<group>"; };
+		464D6B9718D8685900D1993D /* PS4_Left_Stick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_Left_Stick.png; sourceTree = "<group>"; };
+		464D6B9818D8685900D1993D /* PS4_Options.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_Options.png; sourceTree = "<group>"; };
+		464D6B9918D8685900D1993D /* PS4_R1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_R1.png; sourceTree = "<group>"; };
+		464D6B9A18D8685900D1993D /* PS4_R2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_R2.png; sourceTree = "<group>"; };
+		464D6B9B18D8685900D1993D /* PS4_Right_Stick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_Right_Stick.png; sourceTree = "<group>"; };
+		464D6B9C18D8685900D1993D /* PS4_Share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_Share.png; sourceTree = "<group>"; };
+		464D6B9D18D8685900D1993D /* PS4_Square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_Square.png; sourceTree = "<group>"; };
+		464D6B9E18D8685900D1993D /* PS4_Touch_Pad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_Touch_Pad.png; sourceTree = "<group>"; };
+		464D6B9F18D8685900D1993D /* PS4_Triangle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PS4_Triangle.png; sourceTree = "<group>"; };
 		464E367E1825B4BC00AC0AC0 /* joystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = joystick.cpp; sourceTree = "<group>"; };
 		464E367F1825B4BC00AC0AC0 /* joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = joystick.h; sourceTree = "<group>"; };
 		464E36851825D1B400AC0AC0 /* libbox2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbox2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3806,10 +3826,45 @@
 			indentWidth = 2;
 			sourceTree = "<group>";
 		};
+		464D6B8C18D8685900D1993D /* images */ = {
+			isa = PBXGroup;
+			children = (
+				464D6B8D18D8685900D1993D /* PS4 */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		464D6B8D18D8685900D1993D /* PS4 */ = {
+			isa = PBXGroup;
+			children = (
+				464D6B8E18D8685900D1993D /* PS4_Circle.png */,
+				464D6B8F18D8685900D1993D /* PS4_Cross.png */,
+				464D6B9018D8685900D1993D /* PS4_Dpad.png */,
+				464D6B9118D8685900D1993D /* PS4_Dpad_Down.png */,
+				464D6B9218D8685900D1993D /* PS4_Dpad_Left.png */,
+				464D6B9318D8685900D1993D /* PS4_Dpad_Right.png */,
+				464D6B9418D8685900D1993D /* PS4_Dpad_Up.png */,
+				464D6B9518D8685900D1993D /* PS4_L1.png */,
+				464D6B9618D8685900D1993D /* PS4_L2.png */,
+				464D6B9718D8685900D1993D /* PS4_Left_Stick.png */,
+				464D6B9818D8685900D1993D /* PS4_Options.png */,
+				464D6B9918D8685900D1993D /* PS4_R1.png */,
+				464D6B9A18D8685900D1993D /* PS4_R2.png */,
+				464D6B9B18D8685900D1993D /* PS4_Right_Stick.png */,
+				464D6B9C18D8685900D1993D /* PS4_Share.png */,
+				464D6B9D18D8685900D1993D /* PS4_Square.png */,
+				464D6B9E18D8685900D1993D /* PS4_Touch_Pad.png */,
+				464D6B9F18D8685900D1993D /* PS4_Triangle.png */,
+			);
+			path = PS4;
+			sourceTree = "<group>";
+		};
 		467437FE185A2BCE0062EE18 /* scenes */ = {
 			isa = PBXGroup;
 			children = (
 				467437FF185A2BCE0062EE18 /* field.json */,
+				464D6B7718D8683400D1993D /* terrarium.json */,
+				464D6B7818D8683400D1993D /* terrarium2.json */,
 			);
 			path = scenes;
 			sourceTree = "<group>";
@@ -5883,6 +5938,7 @@
 			isa = PBXGroup;
 			children = (
 				46743803185A2BE10062EE18 /* fonts */,
+				464D6B8C18D8685900D1993D /* images */,
 				467437FE185A2BCE0062EE18 /* scenes */,
 				46743800185A2BCE0062EE18 /* web */,
 			);
