@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_MOUSE_H_
-#define TEXTENGINE_MOUSE_H_
+#ifndef __textengine__mouse__
+#define __textengine__mouse__
 
 #include <chrono>
 #include <glm/glm.hpp>
@@ -40,4 +40,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_MOUSE_H_
+#endif /* defined(__textengine__mouse__) */

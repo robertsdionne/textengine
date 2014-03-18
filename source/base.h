@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_BASE_H_
-#define TEXTENGINE_BASE_H_
+#ifndef __textengine__base__
+#define __textengine__base__
 
 #include <memory>
 #include <vector>
@@ -24,4 +24,4 @@ std::vector<std::unique_ptr<T>> Unique(std::vector<T *> items) {
   return unique_items;
 }
 
-#endif  // TEXTENGINE_BASE_H_
+#endif /* defined(__textengine__base__) */

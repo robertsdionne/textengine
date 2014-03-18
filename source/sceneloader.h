@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_SCENELOADER_H_
-#define TEXTENGINE_SCENELOADER_H_
+#ifndef __textengine__sceneloader__
+#define __textengine__sceneloader__
 
 #include <glm/glm.hpp>
 #include <picojson.h>
@@ -45,4 +45,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_SCENELOADER_H_
+#endif /* defined(__textengine__sceneloader__) */

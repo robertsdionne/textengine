@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_TEXTENGINERENDERER_H_
-#define TEXTENGINE_TEXTENGINERENDERER_H_
+#ifndef __textengine__textenginerenderer__
+#define __textengine__textenginerenderer__
 
 #include <chrono>
 #include <glm/glm.hpp>
@@ -78,4 +78,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_TEXTENGINERENDERER_H_
+#endif /* defined(__textengine__textenginerenderer__) */

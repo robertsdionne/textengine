@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_GAMESTATE_H_
-#define TEXTENGINE_GAMESTATE_H_
+#ifndef __textengine__gamestate__
+#define __textengine__gamestate__
 
 #include <Box2D/Box2D.h>
 #include <chrono>
@@ -34,4 +34,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_GAMESTATE_H_
+#endif /* defined(__textengine__gamestate__) */

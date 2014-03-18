@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_DRAWABLE_H_
-#define TEXTENGINE_DRAWABLE_H_
+#ifndef __textengine__drawable__
+#define __textengine__drawable__
 
 #include <GLFW/glfw3.h>
 #include <memory>
@@ -23,4 +23,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_DRAWABLE_H_
+#endif /* defined(__textengine__drawable__) */

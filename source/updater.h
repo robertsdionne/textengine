@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_UPDATER_H_
-#define TEXTENGINE_UPDATER_H_
+#ifndef __textengine__updater__
+#define __textengine__updater__
 
 #include <Box2D/Box2D.h>
 #include <chrono>
@@ -84,4 +84,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_UPDATER_H_
+#endif /* defined(__textengine__updater__) */

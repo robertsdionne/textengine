@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_BUFFER_H_
-#define TEXTENGINE_BUFFER_H_
+#ifndef __textengine__buffer__
+#define __textengine__buffer__
 
 #include <GLFW/glfw3.h>
 
@@ -28,4 +28,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_BUFFER_H_
+#endif /* defined(__textengine__buffer__) */

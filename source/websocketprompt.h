@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_WEBSOCKETPROMPT_H_
-#define TEXTENGINE_WEBSOCKETPROMPT_H_
+#ifndef __textengine__websocketprompt__
+#define __textengine__websocketprompt__
 
 #include <libwebsockets.h>
 #include <memory>
@@ -70,4 +70,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_WEBSOCKETPROMPT_H_
+#endif /* defined(__textengine__websocketprompt__) */

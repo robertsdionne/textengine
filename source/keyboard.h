@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_KEYBOARD_H_
-#define TEXTENGINE_KEYBOARD_H_
+#ifndef __textengine__keyboard__
+#define __textengine__keyboard__
 
 #include <chrono>
 #include <functional>
@@ -35,4 +35,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_KEYBOARD_H_
+#endif /* defined(__textengine__keyboard__) */

@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_VERTEXFORMAT_H_
-#define TEXTENGINE_VERTEXFORMAT_H_
+#ifndef __textengine__vertexformat__
+#define __textengine__vertexformat__
 
 #include <GLFW/glfw3.h>
 #include <string>
@@ -35,4 +35,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_VERTEXFORMAT_H_
+#endif /* defined(__textengine__vertexformat__) */

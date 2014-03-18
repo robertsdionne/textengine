@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_LOG_H_
-#define TEXTENGINE_LOG_H_
+#ifndef __textengine__log__
+#define __textengine__log__
 
 #include <chrono>
 #include <fstream>
@@ -27,4 +27,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_LOG_H_
+#endif /* defined(__textengine__log__) */

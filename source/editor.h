@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_EDITOR_H_
-#define TEXTENGINE_EDITOR_H_
+#ifndef __textengine__editor__
+#define __textengine__editor__
 
 #include <glm/glm.hpp>
 
@@ -43,4 +43,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_EDITOR_H_
+#endif /* defined(__textengine__editor__) */

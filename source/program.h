@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_PROGRAM_H_
-#define TEXTENGINE_PROGRAM_H_
+#ifndef __textengine__program__
+#define __textengine__program__
 
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -50,4 +50,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_PROGRAM_H_
+#endif /* defined(__textengine__program__) */

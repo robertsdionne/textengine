@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_SCENESERIALIZER_H_
-#define TEXTENGINE_SCENESERIALIZER_H_
+#ifndef __textengine__sceneserializer__
+#define __textengine__sceneserializer__
 
 #include <glm/glm.hpp>
 #include <picojson.h>
@@ -30,4 +30,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_SCENESERIALIZER_H_
+#endif /* defined(__textengine__sceneserializer__) */

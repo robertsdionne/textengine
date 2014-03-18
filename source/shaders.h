@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_SHADERS_H_
-#define TEXTENGINE_SHADERS_H_
+#ifndef __textengine__shaders__
+#define __textengine__shaders__
 
 #include <memory>
 #include <set>
@@ -149,4 +149,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_SHADERS_H_
+#endif /* defined(__textengine__shaders__) */

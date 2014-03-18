@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_GLFWAPPLICATION_H_
-#define TEXTENGINE_GLFWAPPLICATION_H_
+#ifndef __textengine__glfwapplication__
+#define __textengine__glfwapplication__
 
 #include <GLFW/glfw3.h>
 #include <string>
@@ -56,4 +56,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_GLFWAPPLICATION_H_
+#endif /* defined(__textengine__glfwapplication__) */

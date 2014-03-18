@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_RENDERER_H_
-#define TEXTENGINE_RENDERER_H_
+#ifndef __textengine__renderer__
+#define __textengine__renderer__
 
 #include "base.h"
 
@@ -18,4 +18,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_RENDERER_H_
+#endif /* defined(__textengine__renderer__) */

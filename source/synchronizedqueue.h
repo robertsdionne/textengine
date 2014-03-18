@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_SYNCHRONIZEDQUEUE_H_
-#define TEXTENGINE_SYNCHRONIZEDQUEUE_H_
+#ifndef __textengine__synchronizedqueue__
+#define __textengine__synchronizedqueue__
 
 #include <glm/glm.hpp>
 #include <deque>
@@ -134,4 +134,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_SYNCHRONIZEDQUEUE_H_
+#endif /* defined(__textengine__synchronizedqueue__) */

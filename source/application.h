@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_APPLICATION_H_
-#define TEXTENGINE_APPLICATION_H_
+#ifndef __textengine__application__
+#define __textengine__application__
 
 #include "base.h"
 
@@ -14,4 +14,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_APPLICATION_H_
+#endif /* defined(__textengine__application__) */

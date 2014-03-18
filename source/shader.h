@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_SHADER_H_
-#define TEXTENGINE_SHADER_H_
+#ifndef __textengine__shader__
+#define __textengine__shader__
 
 #include <GLFW/glfw3.h>
 #include <string>
@@ -32,4 +32,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_SHADER_H_
+#endif /* defined(__textengine__shader__) */

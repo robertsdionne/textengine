@@ -1,13 +1,5 @@
-//
-//  checks.h
-//  textengine
-//
-//  Created by Robert Dionne on 9/15/13.
-//  Copyright (c) 2013 Robert Scott Dionne. All rights reserved.
-//
-
-#ifndef TEXTENGINE_CHECKS_H_
-#define TEXTENGINE_CHECKS_H_
+#ifndef __textengine__checks__
+#define __textengine__checks__
 
 #include <cstdlib>
 #include <iostream>
@@ -44,4 +36,4 @@ inline void Fail(const std::string &message, int line, const std::string &file) 
   exit(1);
 }
 
-#endif
+#endif /* defined(__textengine__checks__) */

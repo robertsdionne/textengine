@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_VERTEXARRAY_H_
-#define TEXTENGINE_VERTEXARRAY_H_
+#ifndef __textengine__vertexarray__
+#define __textengine__vertexarray__
 
 #include <GLFW/glfw3.h>
 
@@ -26,4 +26,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_VERTEXARRAY_H_
+#endif /* defined(__textengine__vertexarray__) */

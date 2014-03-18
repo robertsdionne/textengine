@@ -1,5 +1,5 @@
-#ifndef TEXTENGINE_PROMPT_H_
-#define TEXTENGINE_PROMPT_H_
+#ifndef __textengine__prompt__
+#define __textengine__prompt__
 
 #include "base.h"
 
@@ -14,4 +14,4 @@ namespace textengine {
 
 }  // namespace textengine
 
-#endif  // TEXTENGINE_PROMPT_H_
+#endif /* defined(__textengine__prompt__) */
