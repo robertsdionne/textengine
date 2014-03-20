@@ -41,7 +41,6 @@ namespace textengine {
     
     virtual bool is_movement() const override;
     
-  private:
     std::vector<std::unique_ptr<MixedMessage>> messages;
   };
   
@@ -55,7 +54,6 @@ namespace textengine {
     
     virtual bool is_movement() const override;
     
-  private:
     long id;
   };
   
@@ -69,7 +67,6 @@ namespace textengine {
     
     virtual bool is_movement() const override;
     
-  private:
     std::string report;
   };
   
@@ -84,7 +81,6 @@ namespace textengine {
     
     virtual bool is_movement() const override;
     
-  private:
     glm::vec2 position;
     glm::vec2 direction;
     std::map<long, glm::vec2> directions;
@@ -100,7 +96,6 @@ namespace textengine {
     
     virtual bool is_movement() const override;
     
-  private:
     std::string text;
   };
 

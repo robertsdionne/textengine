@@ -76,6 +76,7 @@
 		464E36801825B4BC00AC0AC0 /* joystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 464E367E1825B4BC00AC0AC0 /* joystick.cpp */; };
 		466E70FA17EB92F900CD9E9D /* gamestate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70F817EB92F900CD9E9D /* gamestate.cpp */; };
 		466E710017EB96D600CD9E9D /* updater.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 466E70FE17EB96D500CD9E9D /* updater.cpp */; };
+		4678DA6518DB2421003A8BA5 /* voiceprompt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4678DA6318DB2421003A8BA5 /* voiceprompt.cpp */; };
 		468E01471783DFA100301C1C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 468E01461783DFA100301C1C /* IOKit.framework */; };
 		469BE48118B0140C00F568DE /* editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469BE47F18B0140C00F568DE /* editor.cpp */; };
 		469FFA8B184EF3620074DA75 /* scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 469FFA89184EF3620074DA75 /* scene.cpp */; };
@@ -1217,6 +1218,8 @@
 		46743819185A2BE20062EE18 /* UbuntuMono-RI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "UbuntuMono-RI.ttf"; sourceTree = "<group>"; };
 		4674381A185A2BE20062EE18 /* Vetka.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Vetka.otf; sourceTree = "<group>"; };
 		4678DA6218DB2396003A8BA5 /* memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory.h; sourceTree = "<group>"; };
+		4678DA6318DB2421003A8BA5 /* voiceprompt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = voiceprompt.cpp; sourceTree = "<group>"; };
+		4678DA6418DB2421003A8BA5 /* voiceprompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = voiceprompt.h; sourceTree = "<group>"; };
 		468E01421783DF4C00301C1C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		468E01441783DF9200301C1C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		468E01461783DFA100301C1C /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -5809,6 +5812,8 @@
 				462B4A5C17EA43AA006FE9BB /* vertexarray.h */,
 				460FFA301810634C0053F813 /* vertexformat.cpp */,
 				460FFA311810634C0053F813 /* vertexformat.h */,
+				4678DA6318DB2421003A8BA5 /* voiceprompt.cpp */,
+				4678DA6418DB2421003A8BA5 /* voiceprompt.h */,
 				46FBD341180F572400F7C5F8 /* websocketprompt.cpp */,
 				46FBD342180F572400F7C5F8 /* websocketprompt.h */,
 			);
@@ -6117,6 +6122,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4678DA6518DB2421003A8BA5 /* voiceprompt.cpp in Sources */,
 				4645A78F18B185C4005FC551 /* sceneserializer.cpp in Sources */,
 				46B9A60A1771F0F800E43B24 /* main.cpp in Sources */,
 				46B9875917E6A62500B59145 /* glfwapplication.cpp in Sources */,

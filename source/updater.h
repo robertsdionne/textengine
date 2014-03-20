@@ -23,8 +23,9 @@ namespace textengine {
 
   class Updater : public Controller, public b2ContactListener {
   public:
-    Updater(int width, int height, SynchronizedQueue &reply_queue, Log &playtest_log,
-            Input &input, Mouse &mouse, Keyboard &keyboard, GameState &initial_state, Scene &scene);
+    Updater(int width, int height, SynchronizedQueue &reply_queue, SynchronizedQueue &voice_queue,
+            Log &playtest_log, Input &input, Mouse &mouse, Keyboard &keyboard,
+            GameState &initial_state, Scene &scene);
 
     virtual ~Updater() = default;
 
@@ -62,7 +63,7 @@ namespace textengine {
 
   private:
     int width, height;
-    SynchronizedQueue &reply_queue;
+    SynchronizedQueue &reply_queue, &voice_queue;
     Log &playtest_log;
     Input &input;
     Mouse &mouse;

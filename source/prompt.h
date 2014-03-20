@@ -9,7 +9,7 @@ namespace textengine {
     DECLARE_INTERFACE(Prompt);
     
   public:
-    void Run();
+    virtual void Run() = 0;
   };
 
 }  // namespace textengine

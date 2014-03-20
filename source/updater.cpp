@@ -28,9 +28,9 @@
 namespace textengine {
 
   Updater::Updater(int width, int height, SynchronizedQueue &reply_queue,
-                   Log &playtest_log, Input &input, Mouse &mouse, Keyboard &keyboard,
-                   GameState &initial_state, Scene &scene)
-  : width(width), height(height), reply_queue(reply_queue),
+                   SynchronizedQueue &voice_queue, Log &playtest_log, Input &input, Mouse &mouse,
+                   Keyboard &keyboard, GameState &initial_state, Scene &scene)
+  : width(width), height(height), reply_queue(reply_queue), voice_queue(voice_queue),
   playtest_log(playtest_log), input(input), mouse(mouse), keyboard(keyboard),
   current_state(initial_state), phrase_index(), scene(scene), model_view_projection() {}
 
@@ -43,6 +43,7 @@ namespace textengine {
       const auto enter = ChooseMessage(area->messages, "enter");
       if (!enter.empty()) {
         reply_queue.PushText(enter);
+        voice_queue.PushText(enter);
       }
     }
     const auto now = std::chrono::high_resolution_clock::now();
@@ -54,6 +55,7 @@ namespace textengine {
           new EntityMessage{object->id},
           new TextMessage{touch}
         });
+        voice_queue.PushText(touch);
       }
     }
   }
@@ -66,6 +68,7 @@ namespace textengine {
       const auto exit = ChooseMessage(area->messages, "exit");
       if (!exit.empty()) {
         reply_queue.PushText(exit);
+        voice_queue.PushText(exit);
       }
       inside.erase(area);
     }
@@ -214,7 +217,9 @@ namespace textengine {
       reply_queue.PushText("");
       for (auto &area : scene.areas) {
         if (Inside(area) && HasMessage(area->messages, "inside")) {
-          reply_queue.PushText(ChooseMessage(area->messages, "inside"));
+          const auto inside = ChooseMessage(area->messages, "inside");
+          reply_queue.PushText(inside);
+          voice_queue.PushText(inside);
         } else if (HasMessage(area->messages, "describe")) {
           nearby.push_back(area.get());
         }
@@ -230,10 +235,12 @@ namespace textengine {
       auto nth = nearby.begin() + 3;
       std::partial_sort(nearby.begin(), nth, nearby.end(), compare);
       for (auto element = nearby.begin(); element < nth; ++element) {
+        const auto describe = ChooseMessage((*element)->messages, "describe");
         reply_queue.PushMessages({
           new EntityMessage((*element)->id),
-          new TextMessage(ChooseMessage((*element)->messages, "describe"))
+          new TextMessage(describe)
         });
+        voice_queue.PushText(describe);
       }
       reply_queue.PushText("");
 
@@ -247,9 +254,13 @@ namespace textengine {
 
       const auto force = 200.0f * current_state.player_body->GetMass();
       if (input.GetTriggerVelocity() > 0) {
-        reply_queue.PushText(ChooseMessage(scene.messages_by_name, "run"));
+        const auto run = ChooseMessage(scene.messages_by_name, "run");
+        reply_queue.PushText(run);
+        voice_queue.PushText(run);
       } else if (input.GetTriggerVelocity() < 0) {
-        reply_queue.PushText(ChooseMessage(scene.messages_by_name, "walk"));
+        const auto walk = ChooseMessage(scene.messages_by_name, "walk");
+        reply_queue.PushText(walk);
+        voice_queue.PushText(walk);
       }
       const auto max_velocity = glm::mix(1.38f, 5.81f, input.GetTriggerPressure()) / 2.0f;
       current_state.player_body->ApplyForceToCenter(force * b2Vec2(offset.x, offset.y), true);

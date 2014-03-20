@@ -14,6 +14,7 @@
 #include "synchronizedqueue.h"
 #include "textenginerenderer.h"
 #include "updater.h"
+#include "voiceprompt.h"
 #include "websocketprompt.h"
 
 constexpr const char *kPlaytestLog = u8"playtest.log";
@@ -25,6 +26,7 @@ constexpr const char *kWindowTitle = u8"Palimpsest";
 int main(int argument_count, char *arguments[]) {
   const std::string filename = argument_count > 1 ? arguments[1] : "../resource/scenes/terrarium.json";
   const auto edit = argument_count > 2 && "edit" == std::string(arguments[2]);
+  const auto voice = true;
   textengine::Joystick joystick(GLFW_JOYSTICK_1);
   textengine::Keyboard keyboard;
   textengine::Mouse mouse;
@@ -34,15 +36,19 @@ int main(int argument_count, char *arguments[]) {
   scene = scene_loader.ReadScene(filename);
   textengine::GameState initial_state{scene};
   textengine::Log playtest_log(kPlaytestLog);
-  textengine::SynchronizedQueue reply_queue;
+  textengine::SynchronizedQueue reply_queue, voice_queue;
   textengine::Updater updater(
-    kWindowWidth, kWindowHeight, reply_queue,
+    kWindowWidth, kWindowHeight, reply_queue, voice_queue,
     playtest_log, input, mouse, keyboard, initial_state, scene);
   textengine::WebSocketPrompt prompt(reply_queue, kPrompt, playtest_log);
+  textengine::VoicePrompt voice_prompt(voice_queue);
   textengine::Editor editor(edit ? 2 * kWindowWidth : kWindowWidth, kWindowHeight, initial_state,
                             keyboard, mouse, scene);
   if (!edit) {
     prompt.Run();
+    if (voice) {
+      voice_prompt.Run();
+    }
   }
   textengine::Controller *controller = &updater;
   if (edit) {
