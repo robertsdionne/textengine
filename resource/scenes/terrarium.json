@@ -16,16 +16,16 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see an enclosed pasture with an open gate."
+                    "An enclosed pasture with an open gate."
                 ],
                 "enter": [
-                    "You have entered the pasture."
+                    "Enter the pasture."
                 ],
                 "exit": [
-                    "You have left the pasture."
+                    "Leave the pasture."
                 ],
                 "inside": [
-                    "You are standing inside the pasture."
+                    "Inside the pasture."
                 ]
             },
             "name": "pasture",
@@ -37,16 +37,16 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see the gate to the pasture."
+                    "The gate to the pasture."
                 ],
                 "enter": [
-                    "You approach the open gate."
+                    "Approach the open gate."
                 ],
                 "exit": [
-                    "You leave the open gate."
+                    "Leave the open gate."
                 ],
                 "inside": [
-                    "You stand within the open gate."
+                    "Within the open gate."
                 ]
             },
             "name": "open gate",
@@ -73,16 +73,16 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see an open field neighboring the pasture."
+                    "An open field neighboring the pasture."
                 ],
                 "enter": [
-                    "You've entered the field."
+                    "Enter the field."
                 ],
                 "exit": [
-                    "You left the field."
+                    "Leave the field."
                 ],
                 "inside": [
-                    "You stand in the field just outside the pasture."
+                    "In the field just outside the pasture."
                 ]
             },
             "name": "field",
@@ -97,13 +97,13 @@
                     "The eastern tree shades its surroundings."
                 ],
                 "enter": [
-                    "You entered the eastern tree's shade."
+                    "Enter the eastern tree's shade."
                 ],
                 "exit": [
-                    "You exited the shade."
+                    "Exit the shade."
                 ],
                 "inside": [
-                    "You are beneath the shade of the eastern tree."
+                    "Beneath the shade of the eastern tree."
                 ]
             },
             "name": "eastern tree shade",
@@ -123,13 +123,13 @@
                     "The western tree shades its surroundings."
                 ],
                 "enter": [
-                    "You entered the western tree's shade."
+                    "Enter the western tree's shade."
                 ],
                 "exit": [
-                    "You exited the shade."
+                    "Exit the shade."
                 ],
                 "inside": [
-                    "You are beneath the shade of the western tree."
+                    "Beneath the shade of the western tree."
                 ]
             },
             "name": "western tree shade",
@@ -156,16 +156,16 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see a mud puddle."
+                    "A mud puddle."
                 ],
                 "enter": [
-                    "You've stepped in a mud puddle."
+                    "Step in a mud puddle."
                 ],
                 "exit": [
-                    "You're glad you stepped out of the mud."
+                    "Glad to step out of the mud."
                 ],
                 "inside": [
-                    "You are standing in a mud puddle."
+                    "In a mud puddle."
                 ]
             },
             "name": "mud puddle",
@@ -187,16 +187,16 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see a dirt path leading out from the pasture."
+                    "A dirt path leading out from the pasture."
                 ],
                 "enter": [
-                    "You follow the dirt path."
+                    "Follow the dirt path."
                 ],
                 "exit": [
-                    "You stray from the dirt path."
+                    "Stray from the dirt path."
                 ],
                 "inside": [
-                    "You stand on the dirt path."
+                    "On the dirt path."
                 ]
             },
             "name": "dirt path",
@@ -218,14 +218,14 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see the first stone of the path."
+                    "The first stone of the path."
                 ],
                 "enter": [
-                    "You step on the first stone."
+                    "Step on the first stone."
                 ],
                 "exit": [],
                 "inside": [
-                    "You stand atop the first stone in the path."
+                    "Atop the first stone in the path."
                 ]
             },
             "name": "first stone",
@@ -247,14 +247,14 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see the second stone of the path."
+                    "The second stone of the path."
                 ],
                 "enter": [
-                    "You step on the second stone."
+                    "Step on the second stone."
                 ],
                 "exit": [],
                 "inside": [
-                    "You stand atop the second stone in the path."
+                    "Atop the second stone in the path."
                 ]
             },
             "name": "second stone",
@@ -276,14 +276,14 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see the third stone of the path."
+                    "The third stone of the path."
                 ],
                 "enter": [
-                    "You step on the third stone."
+                    "Step on the third stone."
                 ],
                 "exit": [],
                 "inside": [
-                    "You stand atop the third stone in the path."
+                    "Atop the third stone in the path."
                 ]
             },
             "name": "third stone",
@@ -305,14 +305,14 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see the fourth stone of the path."
+                    "The fourth stone of the path."
                 ],
                 "enter": [
-                    "You step on the fourth stone."
+                    "Step on the fourth stone."
                 ],
                 "exit": [],
                 "inside": [
-                    "You stand atop the fourth stone in the path."
+                    "Atop the fourth stone in the path."
                 ]
             },
             "name": "fourth stone",
@@ -334,14 +334,14 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see the last stone of the path."
+                    "The last stone of the path."
                 ],
                 "enter": [
-                    "You step on the last stone"
+                    "Step on the last stone"
                 ],
                 "exit": [],
                 "inside": [
-                    "You stand atop the last stone in the path."
+                    "Atop the last stone in the path."
                 ]
             },
             "name": "last stone",
@@ -356,13 +356,13 @@
                     "The tree shades its surroundings."
                 ],
                 "enter": [
-                    "You entered the tree's shade."
+                    "Enter the tree's shade."
                 ],
                 "exit": [
-                    "You exited the shade."
+                    "Exit the shade."
                 ],
                 "inside": [
-                    "You are beneath the shade of the tree."
+                    "Beneath the shade of the tree."
                 ]
             },
             "name": "tree shade",
@@ -382,13 +382,13 @@
                     "The tree shades its surroundings."
                 ],
                 "enter": [
-                    "You entered the tree's shade."
+                    "Enter the tree's shade."
                 ],
                 "exit": [
-                    "You exited the shade."
+                    "Exit the shade."
                 ],
                 "inside": [
-                    "You are beneath the shade of the tree."
+                    "Beneath the shade of the tree."
                 ]
             },
             "name": "tree shade",
@@ -415,16 +415,16 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see a field decorated with a fountain."
+                    "A field decorated with a fountain."
                 ],
                 "enter": [
-                    "You've entered the field."
+                    "Enter the field."
                 ],
                 "exit": [
-                    "You left the field."
+                    "Leave the field."
                 ],
                 "inside": [
-                    "You stand in the field with the fountain."
+                    "In the field with the fountain."
                 ]
             },
             "name": "field",
@@ -449,13 +449,13 @@
                     "A pool of water surrounds the fountain."
                 ],
                 "enter": [
-                    "You wade into the pool."
+                    "Wade into the pool."
                 ],
                 "exit": [
-                    "You leave the fountain's pool."
+                    "Leave the fountain's pool."
                 ],
                 "inside": [
-                    "You stand in the pool surrounding the fountain."
+                    "In the pool surrounding the fountain."
                 ]
             },
             "name": "pool",
@@ -467,12 +467,12 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see a copse of trees."
+                    "A copse of trees."
                 ],
                 "enter": [],
                 "exit": [],
                 "inside": [
-                    "You stand nearby a copse of trees."
+                    "Nearby a copse of trees."
                 ]
             },
             "name": "trees",
@@ -486,46 +486,46 @@
     ],
     "messages": {
         "east": [
-            "You head to the east.",
-            "You move easterly.",
-            "You go eastward."
+            "Head to the east.",
+            "Move easterly.",
+            "Go eastward."
         ],
         "look": [
-            "You look around.",
-            "You observe your surroundings.",
-            "You inspect your environment."
+            "Look around.",
+            "Observe surroundings.",
+            "Inspect environment."
         ],
         "north": [
-            "You head to the north.",
-            "You march northerly.",
-            "You move northward."
+            "Head to the north.",
+            "March northerly.",
+            "Move northward."
         ],
         "run": [
-            "You start to run.",
-            "You begin running.",
-            "You run.",
-            "You move briskly."
+            "Start to run.",
+            "Begin running.",
+            "Run.",
+            "Move briskly."
         ],
         "south": [
-            "You head south.",
-            "You go southerly.",
-            "You turn southward."
+            "Head south.",
+            "Go southerly.",
+            "Turn southward."
         ],
         "stop looking": [
-            "You return to your thoughts.",
-            "You are done observing.",
-            "You conclude your inspection."
+            "Return to thoughts.",
+            "Done observing.",
+            "Conclude the inspection."
         ],
         "walk": [
-            "You walk.",
-            "You start to walk.",
-            "You stop running.",
-            "You slow yourself."
+            "Walk.",
+            "Start to walk.",
+            "Stop running.",
+            "Slow down."
         ],
         "west": [
-            "You go to the west.",
-            "You move westerly.",
-            "You head westward."
+            "Go to the west.",
+            "Move westerly.",
+            "Head westward."
         ]
     },
     "objects": [
@@ -545,10 +545,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see a fence enclosing the pasture."
+                    "A fence enclosing the pasture."
                 ],
                 "touch": [
-                    "The fence blocks your path."
+                    "The fence blocks the path."
                 ]
             },
             "name": "fence",
@@ -570,10 +570,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see a fence enclosing the pasture."
+                    "A fence enclosing the pasture."
                 ],
                 "touch": [
-                    "The fence blocks your path."
+                    "The fence blocks the path."
                 ]
             },
             "name": "fence",
@@ -595,10 +595,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see a fence enclosing the pasture."
+                    "A fence enclosing the pasture."
                 ],
                 "touch": [
-                    "The fence blocks your path."
+                    "The fence blocks the path."
                 ]
             },
             "name": "fence",
@@ -620,10 +620,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see a fence enclosing the pasture."
+                    "A fence enclosing the pasture."
                 ],
                 "touch": [
-                    "The fence blocks your path."
+                    "The fence blocks the path."
                 ]
             },
             "name": "fence",
@@ -645,10 +645,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see a fence enclosing the pasture."
+                    "A fence enclosing the pasture."
                 ],
                 "touch": [
-                    "The fence blocks your path."
+                    "The fence blocks the path."
                 ]
             },
             "name": "fence",
@@ -660,10 +660,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see the western tree."
+                    "The western tree."
                 ],
                 "touch": [
-                    "You touch the bark of the western tree."
+                    "Touch the bark of the western tree."
                 ]
             },
             "name": "western tree",
@@ -680,10 +680,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see the eastern tree."
+                    "The eastern tree."
                 ],
                 "touch": [
-                    "You touch the bark of the eastern tree."
+                    "Touch the bark of the eastern tree."
                 ]
             },
             "name": "eastern tree",
@@ -710,10 +710,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see the wolf kennel."
+                    "The wolf kennel."
                 ],
                 "touch": [
-                    "You brush against the walls of the kennel."
+                    "Brush against the walls of the kennel."
                 ]
             },
             "name": "kennel",
@@ -735,10 +735,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see the big-cat abode."
+                    "The big-cat abode."
                 ],
                 "touch": [
-                    "You brush against the walls of the big-cat abode."
+                    "Brush against the walls of the big-cat abode."
                 ]
             },
             "name": "big-cat abode",
@@ -760,10 +760,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see your robotic sleeping quarters nearby."
+                    "Robotic sleeping quarters nearby."
                 ],
                 "touch": [
-                    "You are beside your sleeping quarters."
+                    "Beside sleeping quarters."
                 ]
             },
             "name": "humanoid robot quarters",
@@ -785,10 +785,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see the pig pen."
+                    "The pig pen."
                 ],
                 "touch": [
-                    "You brush against the walls of the pig pen."
+                    "Brush against the walls of the pig pen."
                 ]
             },
             "name": "pig pen",
@@ -800,10 +800,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "Your charging station juts out from the wall of your sleeping quarters."
+                    "Charging station juts out from the wall of the sleeping quarters."
                 ],
                 "touch": [
-                    "You plug yourself briefly into your charging station."
+                    "Plug self briefly into charging station."
                 ]
             },
             "name": "charging station",
@@ -830,10 +830,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see the giant-tortoise pen."
+                    "The giant-tortoise pen."
                 ],
                 "touch": [
-                    "You brush against the giant-tortoise pen's walls."
+                    "Brush against the giant-tortoise pen's walls."
                 ]
             },
             "name": "giant-tortoise pen",
@@ -845,10 +845,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see the tree."
+                    "A tree."
                 ],
                 "touch": [
-                    "You touch the bark of the tree."
+                    "Touch the bark of the tree."
                 ]
             },
             "name": "tree",
@@ -865,10 +865,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see the tree."
+                    "A tree."
                 ],
                 "touch": [
-                    "You touch the bark of the tree."
+                    "Touch the bark of the tree."
                 ]
             },
             "name": "tree",
@@ -895,10 +895,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see a locked chest shaded by the trees."
+                    "A locked chest shaded by the trees."
                 ],
                 "touch": [
-                    "You touch the locked chest but are unable to open it."
+                    "Touch the locked chest but unable to open it."
                 ]
             },
             "name": "locked chest",
@@ -920,10 +920,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see a key glimmering on a stone in the field."
+                    "A key glimmering on a stone in the field."
                 ],
                 "touch": [
-                    "You try to take the key but it slips out of your hands."
+                    "Try to take the key but it slips out of hand."
                 ]
             },
             "name": "key",
@@ -935,10 +935,10 @@
             "linear_attenuation": 0,
             "messages": {
                 "describe": [
-                    "You see an elaborate fountain decorated with statues."
+                    "An elaborate fountain decorated with statues."
                 ],
                 "touch": [
-                    "You step up to the large bowl of the fountain."
+                    "Step up to the large bowl of the fountain."
                 ]
             },
             "name": "fountain",
