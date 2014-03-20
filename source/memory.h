@@ -1,5 +1,5 @@
-#ifndef textengine__base_h
-#define textengine__base_h
+#ifndef textengine__memory_h
+#define textengine__memory_h
 
 #include <memory>
 #include <vector>

@@ -1,7 +1,7 @@
 #ifndef __textengine__renderer__
 #define __textengine__renderer__
 
-#include "base.h"
+#include "memory.h"
 
 namespace textengine {
 

@@ -5,7 +5,7 @@
 #include <set>
 #include <string>
 
-#include "base.h"
+#include "memory.h"
 #include "scene.h"
 
 namespace textengine {

@@ -1,7 +1,7 @@
 #ifndef __textengine__prompt__
 #define __textengine__prompt__
 
-#include "base.h"
+#include "memory.h"
 
 namespace textengine {
 

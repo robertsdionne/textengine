@@ -4,7 +4,7 @@
 #include <sstream>
 #include <string>
 
-#include "base.h"
+#include "memory.h"
 #include "synchronizedqueue.h"
 
 namespace textengine {
