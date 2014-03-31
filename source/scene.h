@@ -87,7 +87,7 @@ namespace textengine {
           return glm::length(aabb.center() - position) < aabb.radius();
           break;
         default:
-          return std::numeric_limits<float>::infinity();
+          return false;
           break;
       }
     }

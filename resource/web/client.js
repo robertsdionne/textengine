@@ -217,11 +217,14 @@ var drawArrow = function(canvas, context, x, y) {
   context.scale(1, 1);
   context.translate(canvas.width / 2, canvas.height / 2);
   context.beginPath();
-  context.moveTo(-x, -y);
-  context.lineTo(x, y);
-  context.moveTo(x / 2 + x2 / 3, y / 2 + y2 / 3);
-  context.lineTo(x, y);
-  context.lineTo(x / 2 - x2 / 3, y / 2 - y2 / 3);
+  context.lineJoin = 'miter';
+  context.moveTo(-x * 61.0 / 90.0 + x2 / 3.0, -y * 61.0 / 90.0 + y2 / 3.0);
+  context.lineTo(x / 2.0, y / 2.0);
+  context.lineTo(-x * 61.0 / 90.0 - x2 / 3.0, -y * 61.0 / 90.0 - y2 / 3.0);
+  context.stroke();
+  context.lineJoin = 'round'
+  context.moveTo(-x * 61.0 / 90.0 + x2 / 3.0, -y * 61.0 / 90.0 + y2 / 3.0);
+  context.lineTo(-x * 61.0 / 90.0 - x2 / 3.0, -y * 61.0 / 90.0 - y2 / 3.0);
   context.stroke();
   context.closePath();
   context.restore();
